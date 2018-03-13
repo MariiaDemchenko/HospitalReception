@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 
 namespace UniversalComparer
 {
@@ -13,16 +13,34 @@ namespace UniversalComparer
         /// <returns>Object corresponding to the sort field</returns>
         public static object GetObjectByProperties(this object value, string[] sortFieldProperties)
         {
-            var properties = value?.GetType().GetProperties();
-
             foreach (var propertyName in sortFieldProperties)
             {
-                var property = properties?.FirstOrDefault(p => p.Name == propertyName);
+                var property = value?.GetType().GetProperty(propertyName);
                 value = property?.GetValue(value, null);
-                properties = value?.GetType().GetProperties();
             }
-
             return value;
+        }
+
+        /// <summary>
+        /// Run all the properties of the sort field, 
+        /// check if properties exist
+        /// </summary>
+        /// <param name="type">Base type</param>
+        /// <param name="sortFieldProperties">Sort properties splitted in sort field string with '.'</param>
+        /// <returns>Check result</returns>
+        public static bool CheckPropertiesExist(this Type type, string[] sortFieldProperties)
+        {
+            foreach (var propertyName in sortFieldProperties)
+            {
+                var property = type?.GetProperty(propertyName);
+                type = property?.PropertyType;
+            }
+            return type != null;
+        }
+
+        public static bool IsComparable(this object value)
+        {
+            return value == null || value is IComparable;
         }
     }
 }

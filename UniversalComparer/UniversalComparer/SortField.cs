@@ -20,7 +20,7 @@
         /// <returns>Check result</returns>
         private bool IsSortOrderSet(string field)
         {
-            return field.Contains(Constants.Asc) || field.Contains(Constants.Desc);
+            return field.EndsWith(Constants.Asc) || field.EndsWith(Constants.Desc);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@
             }
             else
             {
-                var symbolsToRemove = field.Contains(Constants.Asc) ? 4 : 5;
+                var symbolsToRemove = field.EndsWith(Constants.Asc) ? 4 : 5;
                 FieldName = field.Remove(field.LastIndexOf(Constants.WhiteSpace), symbolsToRemove);
             }
         }
@@ -54,7 +54,7 @@
         /// <param name="field">Sort field with/without asс/desc modifiers</param>
         private void SetSortType(string field)
         {
-            SortType = !IsSortOrderSet(field) || field.Contains(Constants.Asc)
+            SortType = !IsSortOrderSet(field) || field.EndsWith(Constants.Asc)
                 ? Constants.SortType.Asc
                 : Constants.SortType.Desc;
         }

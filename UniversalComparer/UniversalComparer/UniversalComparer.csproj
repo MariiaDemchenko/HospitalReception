@@ -46,6 +46,7 @@
     <Compile Include="CompareHelper.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="SortField.cs" />
+    <Compile Include="TestDataHelper.cs" />
     <Compile Include="UniversalComparer.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Person.cs" />
