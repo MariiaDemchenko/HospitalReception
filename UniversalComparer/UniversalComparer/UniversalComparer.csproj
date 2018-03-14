@@ -45,6 +45,7 @@
     <Compile Include="ComparablePair.cs" />
     <Compile Include="CompareHelper.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="OutputDataHelper.cs" />
     <Compile Include="SortField.cs" />
     <Compile Include="TestDataHelper.cs" />
     <Compile Include="UniversalComparer.cs" />

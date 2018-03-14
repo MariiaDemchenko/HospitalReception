@@ -17,5 +17,11 @@
             Asc,
             Desc
         }
+
+        public enum ErrorType
+        {
+            PropertiesSetError,
+            SortError
+        }
     }
 }

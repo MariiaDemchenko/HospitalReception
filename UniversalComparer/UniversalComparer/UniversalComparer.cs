@@ -13,14 +13,30 @@ namespace UniversalComparer
         public string SortString { get; set; }
         public bool PropertiesSetSuccess { get; set; }
         public bool SortSuccess { get; set; }
+        public List<string> ErrorPropertiesSetFields { get; set; }
         public List<string> ErrorSortFields { get; set; }
-        public List<string> ErrorCompareFields { get; set; }
 
         public UniversalComparer(string sortString, bool nullValuesSmallest)
         {
             _comparer = Comparer.Default;
-            ErrorCompareFields = new List<string>();
+            ErrorSortFields = new List<string>();
             SetComparerProperties(sortString, nullValuesSmallest);
+        }
+
+        /// <summary>
+        /// Check if objects are comparable
+        /// </summary>
+        /// <param name="comparablePair">The pair of comparable objects</param>
+        /// <param name="sortField">Sort field</param>
+        /// <returns>Check result</returns>
+        private bool CheckObjectsAreComparable(ComparablePair comparablePair, string sortField)
+        {
+            if (!(comparablePair.ObjectA.IsComparable() && comparablePair.ObjectB.IsComparable()))
+            {
+                ErrorSortFields.AddUnique(sortField);
+                SortSuccess = false;
+            }
+            return SortSuccess;
         }
 
         /// <summary>
@@ -38,15 +54,7 @@ namespace UniversalComparer
                 var comparableHelper = new CompareHelper();
                 ComparablePair comparablePair = comparableHelper.GetComparableObjectsPair(objectA, objectB, sortField);
 
-                if (!(comparablePair.ObjectA.IsComparable() && comparablePair.ObjectB.IsComparable()))
-                {
-                    if (!ErrorCompareFields.Contains(sortField.FieldName))
-                    {
-                        ErrorCompareFields.Add(sortField.FieldName);
-                        SortSuccess = false;
-                    }
-                }
-                else
+                if (CheckObjectsAreComparable(comparablePair, sortField.FieldName))
                 {
                     compareResultCode = CompareNullable(comparablePair.ObjectA, comparablePair.ObjectB);
                 }
@@ -87,6 +95,11 @@ namespace UniversalComparer
             return SortString.Split(Constants.Comma).Select(p => p.Trim(Constants.WhiteSpace));
         }
 
+        /// <summary>
+        /// Set comparer properties
+        /// </summary>
+        /// <param name="sortString">Sort string</param>
+        /// <param name="nullValuesSmallest">Null values smallest condition</param>
         private void SetComparerProperties(string sortString, bool nullValuesSmallest)
         {
             NullValuesSmallest = nullValuesSmallest;
@@ -94,9 +107,9 @@ namespace UniversalComparer
             SortFields = new List<SortField>();
             SortFields.AddRange(GetSortFields().Select(s => new SortField(s)));
             var comparableObjectsType = typeof(T);
-            ErrorSortFields = new List<string>();
-            ErrorSortFields.AddRange(SortFields.Where(s => !comparableObjectsType.CheckPropertiesExist(s.SortProperties)).Select(s => s.FieldName));
-            PropertiesSetSuccess = ErrorSortFields.Count == 0;
+            ErrorPropertiesSetFields = new List<string>();
+            ErrorPropertiesSetFields.AddRange(SortFields.Where(s => !comparableObjectsType.CheckPropertiesExist(s.SortProperties)).Select(s => s.FieldName));
+            PropertiesSetSuccess = ErrorPropertiesSetFields.Count == 0;
             SortSuccess = true;
         }
     }
