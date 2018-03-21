@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Balance";
+}
+@model CacheMachine.Models.Operation
+
+<content id="operationContent">
+    <form id="operationForm" class="form-signin" width="auto">
+        <h2 class="form-signin-heading ">Результат операции</h2>
+        <table class="table-striped table-bordered" width="310">
+            <tbody width="310">
+                <tr>
+                    <th>Номер карты</th>
+                    <th>@Model.CardId</th>
+                </tr>
+                <tr>
+                    <th>Дата</th>
+                    <th>@Model.OperationDate.ToString("d")</th>
+                </tr>
+            <tr>
+                <th>Снятая сумма</th>
+                <th>@Model.Sum</th>
+            </tr>
+            <tr>
+                <th>Остаток на счету</th>
+                <th>@Model.Card.Sum</th>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <button id="btnBack" class="btn-warning col-sm-6">Назад</button>
+            <button id="btnExit" class="btn-danger col-sm-6">Выход</button>
+        </div>
+
+    </form>
+</content>
+
+<script>
+    $("#btnBack").click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: "Cache",
+            data: { id: @Model.CardId },
+            success: function (data) {
+                $('#content').html(data);
+            },
+            error: function (xhr, error) {
+                console.log('Error' + error);
+            }
+        });
+    });
+
+    $("#btnExit").click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            //TODO: вынести в отдельное представление ввод номера карты
+            url: "Index",
+            success: function (data) {
+                $('#content').html(data);
+            },
+            error: function (xhr, error) {
+                console.log('Error' + error);
+            }
+        });
+    });
+</script>

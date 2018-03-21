@@ -1,0 +1,9 @@
+﻿<div class=" row numpad">
+    @{
+        for (var i = 1; i < 8; i += 3)
+        {
+            @Html.Partial("Numpad/NumRow", i)
+        }
+    }
+    @Html.Partial("Numpad/NumRow", 0)
+</div>

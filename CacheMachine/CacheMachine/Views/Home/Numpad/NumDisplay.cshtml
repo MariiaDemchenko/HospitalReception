@@ -1,0 +1,11 @@
+﻿@model string
+@{
+    if (Model==Constants.PinCodeMask)
+    {
+        @Html.Partial("Numpad/PasswordNumDisplay");
+    }
+    else
+    {
+        @Html.Partial("Numpad/TextNumDisplay", Model);
+    }
+}

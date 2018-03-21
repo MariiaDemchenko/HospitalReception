@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Pin Code";
+}
+
+<h3>@ViewBag.Message</h3>
+@model long
+
+<content id="pinCodeContent">
+    <form id="cacheForm" class="form-signin">
+        <h2 class="form-signin-heading ">Cнятие денег</h2>
+        @Html.Partial("Numpad/Numpad", string.Empty)
+        <button id="btnOk"class="btn-lg btn-primary btn-block">OK</button>
+        <button id="btnExit" class="btn-lg btn-primary btn-block">Выход</button>
+    </form>
+</content>
+
+<script>
+    $("#btnOk").click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: "OperationResult",
+            data: { id: @Model, sum: $('#inputField').val() },
+            success: function (data) {
+                $('#content').html(data);
+            },
+            error: function (xhr, error) {
+                console.log('Error' + error);
+            }
+        });
+    });
+
+    $("#btnExit").click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: "Index",
+            success: function (data) {
+                $('#content').html(data);
+            },
+            error: function (xhr, error) {
+                console.log('Error' + error);
+            }
+        });
+    });
+</script>

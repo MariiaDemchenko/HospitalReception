@@ -1,0 +1,19 @@
+﻿@model int
+<div class="row num-row">
+    @{
+        if (Model == 0)
+        {
+            @Html.Partial("Numpad/NumButton", 0)
+            <div class=" col-sm-8">
+                <button class="btn-lg btn-default" id="btnClear">Очистить</button>
+            </div>
+        }
+        else
+        {
+            for (var i = Model; i < Model + 3; i++)
+            {
+                @Html.Partial("Numpad/NumButton", i)
+            }
+        }
+    }
+</div>

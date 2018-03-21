@@ -1,0 +1,28 @@
+﻿<div id="content">
+    <form id="cardNumForm" class="form-signin">
+    @{
+        //TODO: оптимально вынести и использовать Numpad и все связанные PartialView
+    }
+    <h2 class="form-signin-heading ">Введите номер карты</h2>
+    @Html.Partial("Numpad/Numpad", Constants.CardNumMask)
+    <button class="btn-lg btn-primary btn-block" type="submit" id="submitButton">Продолжить</button>
+</form>
+
+<script>
+    $("#cardNumForm").submit(function (event) {
+        event.preventDefault();
+        if ($(this).valid()) {
+            $.ajax({
+                url: "CheckCardNum",
+                data: { cardNum: $('#inputField').val() },
+                success: function (data) {
+                    $('#content').html(data);
+                },
+                error: function (xhr, error) {
+                    console.log('Error' + error);
+                }
+            });
+        }
+    });
+</script>
+</div>

@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Pin Code";
+}
+
+<h3>@ViewBag.Message</h3>
+@model CacheMachine.Models.Card
+
+<content id="pinCodeContent">
+    <form id="pinCodeForm" class="form-signin">
+        <h2 class="form-signin-heading ">Введите пин-код</h2>
+        @Html.Partial("Numpad/Numpad", Constants.PinCodeMask)
+        <button class="btn-lg btn-primary btn-block" type="submit">Продолжить</button>
+    </form>
+</content>
+
+<script>
+    $("#pinCodeForm").submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: "CheckPinCode",
+            data: { id: @Model.Id, pinCode: $('#inputField').val() },
+            success: function (data) {
+                $('#content').html(data);
+            },
+            error: function (xhr, error) {
+                console.log('Error' + error);
+            }
+        });
+    });
+</script>

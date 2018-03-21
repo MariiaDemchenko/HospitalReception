@@ -1,0 +1,52 @@
+﻿@model string
+
+@Html.Partial("Numpad/NumDisplay", Model)
+@Html.Partial("Numpad/NumKeyboard")
+
+<script>
+    $(".btn-num").click(function () {  
+        event.preventDefault();
+        var num = $(this).attr('num');
+        var inputMaskLength = @Model.Length;
+        if (inputMaskLength === 0 || $('#inputField').val().length < inputMaskLength) {
+            updateInput(num);
+        }          
+    });
+
+    $("#inputField").keydown(function () {  
+        return false;   
+    });
+
+    function appendSymbol(symbol) {
+        var inputField = $("#inputField");
+        inputField.val(inputField.val() + symbol);
+    }
+
+    function autoCompleteCardNum(currentValue) {
+        if (currentValue.match(/^\d{4}$/) !== null ||
+            currentValue.match(/^\d{4}\-\d{4}$/) !== null ||
+            currentValue.match(/^\d{4}\-\d{4}-\d{4}$/) !== null) {
+            appendSymbol('-');
+        }
+    }
+
+    function updateInput(symbol) {
+        appendSymbol(symbol);
+
+        var inputField = $("#inputField");
+
+        $('.card-num').on("valueChanged", function () {
+                autoCompleteCardNum(inputField.val());
+            }
+        );
+
+        inputField.trigger("valueChanged");
+    }
+
+    $("#btnClear").click(function () {
+        var inputField = $('#inputField');
+        inputField.val("");
+        inputField.focus();
+        event.preventDefault();
+    });
+</script>
