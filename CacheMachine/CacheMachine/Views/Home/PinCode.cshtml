@@ -6,11 +6,12 @@
 @model CacheMachine.Models.Card
 
 <content id="pinCodeContent">
-    @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Get, new {@class = "form-signin"}))
+    @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Get, new { @class = "form-signin" }))
     {
         <h2 class="form-signin-heading ">Введите пин-код</h2>
         @Html.Partial("Numpad/Numpad", Constants.PinCodeMask)
-        @Html.HiddenFor(m=>m.Id)
-        <button class="btn btn-primary btn-block" type="submit">Продолжить</button>
+        @Html.HiddenFor(m => m.Id)
+        @Html.Partial("OkButton")
+        @Html.Partial("ExitButton")
     }
 </content>

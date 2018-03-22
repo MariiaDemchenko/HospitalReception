@@ -103,5 +103,17 @@ namespace CacheMachine.Repository
             }
             return card;
         }
+
+        public Card BlockCard(long cardNum)
+        {
+            var card = GetCardById(cardNum);
+            card.IsBlocked = true;
+            using (var db = new CacheMachineContext())
+            {
+                db.Entry(card).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return card;
+        }
     }
 }

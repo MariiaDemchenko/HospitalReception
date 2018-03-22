@@ -26,5 +26,7 @@ namespace CacheMachine.Repository
         Models.Action GetActionByDescription(string description);
 
         Operation GetOperationIncludeCardById(int id);
+
+        Card BlockCard(long cardNum);
     }
 }

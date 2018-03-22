@@ -4,9 +4,6 @@
         //TODO: оптимально вынести и использовать Numpad и все связанные PartialView
         <h2 class="form-signin-heading ">Введите номер карты</h2>
         @Html.Partial("Numpad/Numpad", Constants.CardNumMask)
-
-        <button class="btn btn-primary btn-block" type="submit" id="submitButton">Продолжить</button>
+        @Html.Partial("OkButton")
     }
-
-
 </div>

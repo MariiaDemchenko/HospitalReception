@@ -1,6 +1,8 @@
 ﻿using CacheMachine.Models;
+using CacheMachine.Properties;
 using CacheMachine.Repository;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 public class HomeController : Controller
@@ -26,7 +28,7 @@ public class HomeController : Controller
             var cardNumber = long.Parse(cardNum.Replace("-", string.Empty));
             card = _repository.GetCardById(cardNumber);
         }
-        return card != null ? RedirectToAction("PinCode", new { id = card.Id }) : RedirectToAction("Error", new { message = "Карта не найдена" });
+        return card != null ? RedirectToAction("PinCode", new { id = card.Id }) : RedirectToAction("Error", new { message = Resources.CardNotFound });
     }
 
     public ActionResult Cache(long id)
@@ -40,15 +42,17 @@ public class HomeController : Controller
         var card = _repository.GetCardByIdAndPinCode(id, pinCode);
         if (card != null)
         {
+            NullifyTriesCount(id);
             return RedirectToAction("Operation", new { id = card.Id });
         }
 
-        return RedirectToAction("Error", new { message = "Неверный пин-код" });
+        var message = CheckTriesCountIsValid(id) ? Resources.InvalidPinCode : Resources.CardIsBlocked;
+
+        return RedirectToAction("Error", new { message });
     }
 
     public ActionResult PinCode(long id)
     {
-        //TODO: проверка 4-кратного ввода ошибочного пароля
         return View(new Card { Id = id });
     }
 
@@ -70,7 +74,7 @@ public class HomeController : Controller
 
         if (action == null || card == null)
         {
-            return RedirectToAction("Error", new { message = "Произошла ошибка при отображении данных о балансе" });
+            return RedirectToAction("Error", new { message = Resources.ErrorShowingBalance });
         }
 
         var operation = new Operation
@@ -93,14 +97,14 @@ public class HomeController : Controller
 
         if (action == null || card == null)
         {
-            return RedirectToAction("Error", new { message = "Произошла ошибка при попытке снятия денег" });
+            return RedirectToAction("Error", new { message = Resources.ErrorGettingCache });
         }
 
         card.Sum -= sum;
 
         if (card.Sum < 0)
         {
-            return RedirectToAction("Error", new { message = "Недостаточно средств" });
+            return RedirectToAction("Error", new { message = Resources.NotEnoughMoney });
         }
 
         var operation = new Operation
@@ -115,5 +119,37 @@ public class HomeController : Controller
         _repository.EditCard(card);
 
         return View(_repository.GetOperationIncludeCardById(operation.Id));
+    }
+
+    private bool CheckTriesCountIsValid(long id)
+    {
+        var invalidPinCodes = GetInvalidPinCodes();
+        if (!invalidPinCodes.ContainsKey(id))
+        {
+            invalidPinCodes.Add(id, 1);
+        }
+        else
+        {
+            if (invalidPinCodes[id] == 3)
+            {
+                _repository.BlockCard(id);
+            }
+            invalidPinCodes[id]++;
+        }
+        return invalidPinCodes[id] <= 3;
+    }
+
+    private void NullifyTriesCount(long id)
+    {
+        var invalidPinCodes = GetInvalidPinCodes();
+        if (invalidPinCodes.ContainsKey(id))
+        {
+            invalidPinCodes[id] = 0;
+        }
+    }
+
+    private Dictionary<long, int> GetInvalidPinCodes()
+    {
+        return System.Web.HttpContext.Current.Session["InvalidPinCodes"] as Dictionary<long, int>;
     }
 }

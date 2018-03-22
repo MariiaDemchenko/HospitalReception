@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using Autofac;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -16,6 +18,15 @@ namespace CacheMachine
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        protected void Session_Start(Object sender, EventArgs e)
+        {
+            var context = HttpContext.Current;
+            if (context != null)
+            {
+                context.Session["InvalidPinCodes"] = new Dictionary<long, int>();
+            }
         }
     }
 }
