@@ -25,7 +25,7 @@ namespace CacheMachine
             var context = HttpContext.Current;
             if (context != null)
             {
-                context.Session["InvalidPinCodes"] = new Dictionary<long, int>();
+                context.Session["InvalidPinCodes"] = new Dictionary<string, int>();
             }
         }
     }

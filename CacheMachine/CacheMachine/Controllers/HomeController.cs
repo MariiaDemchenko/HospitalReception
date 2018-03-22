@@ -1,4 +1,5 @@
-﻿using CacheMachine.Models;
+﻿using CacheMachine;
+using CacheMachine.Models;
 using CacheMachine.Properties;
 using CacheMachine.Repository;
 using System;
@@ -25,20 +26,20 @@ public class HomeController : Controller
         Card card = null;
         if (!string.IsNullOrEmpty(cardNum))
         {
-            var cardNumber = long.Parse(cardNum.Replace("-", string.Empty));
+            var cardNumber = cardNum.Replace("-", string.Empty);
             card = _repository.GetCardById(cardNumber);
         }
         return card != null ? RedirectToAction("PinCode", new { id = card.Id }) : RedirectToAction("Error", new { message = Resources.CardNotFound });
     }
 
-    public ActionResult Cache(long id)
+    public ActionResult Cache(string id)
     {
-        return View(id);
+        return View(id as object);
     }
 
-    public ActionResult CheckPinCode(long id, string inputField)
+    public ActionResult CheckPinCode(string id, string inputField)
     {
-        int.TryParse(inputField, out var pinCode);
+        var pinCode = inputField;
         var card = _repository.GetCardByIdAndPinCode(id, pinCode);
         if (card != null)
         {
@@ -51,7 +52,7 @@ public class HomeController : Controller
         return RedirectToAction("Error", new { message });
     }
 
-    public ActionResult PinCode(long id)
+    public ActionResult PinCode(string id)
     {
         return View(new Card { Id = id });
     }
@@ -62,12 +63,12 @@ public class HomeController : Controller
         return View();
     }
 
-    public ActionResult Operation(long id)
+    public ActionResult Operation(string id)
     {
-        return View(id);
+        return View(id as object);
     }
 
-    public ActionResult Balance(long id)
+    public ActionResult Balance(string id)
     {
         var action = _repository.GetActionByDescription("Просмотр баланса");
         var card = _repository.GetCardById(id);
@@ -81,7 +82,7 @@ public class HomeController : Controller
         {
             OperationDate = DateTime.Now,
             CardId = card.Id,
-            OptionId = action.Id
+            ActionId = action.Id
         };
 
         _repository.AddOperation(operation);
@@ -89,9 +90,9 @@ public class HomeController : Controller
         return View(_repository.GetOperationIncludeCardById(operation.Id));
     }
 
-    public ActionResult OperationResult(long id, string inputField = "")
+    public ActionResult OperationResult(string id, string inputField = "")
     {
-        var sum = int.Parse(inputField);
+        int.TryParse(inputField, out var sum);
         var action = _repository.GetActionByDescription("Снятие денег");
         var card = _repository.GetCardById(id);
 
@@ -112,7 +113,7 @@ public class HomeController : Controller
             OperationDate = DateTime.Now,
             Sum = sum,
             CardId = card.Id,
-            OptionId = action.Id
+            ActionId = action.Id
         };
 
         _repository.AddOperation(operation);
@@ -121,7 +122,7 @@ public class HomeController : Controller
         return View(_repository.GetOperationIncludeCardById(operation.Id));
     }
 
-    private bool CheckTriesCountIsValid(long id)
+    private bool CheckTriesCountIsValid(string id)
     {
         var invalidPinCodes = GetInvalidPinCodes();
         if (!invalidPinCodes.ContainsKey(id))
@@ -130,16 +131,16 @@ public class HomeController : Controller
         }
         else
         {
-            if (invalidPinCodes[id] == 3)
+            if (invalidPinCodes[id] == Constants.ValidPinCodeTriesCount)
             {
                 _repository.BlockCard(id);
             }
             invalidPinCodes[id]++;
         }
-        return invalidPinCodes[id] <= 3;
+        return invalidPinCodes[id] <= Constants.ValidPinCodeTriesCount;
     }
 
-    private void NullifyTriesCount(long id)
+    private void NullifyTriesCount(string id)
     {
         var invalidPinCodes = GetInvalidPinCodes();
         if (invalidPinCodes.ContainsKey(id))
@@ -148,8 +149,8 @@ public class HomeController : Controller
         }
     }
 
-    private Dictionary<long, int> GetInvalidPinCodes()
+    private Dictionary<string, int> GetInvalidPinCodes()
     {
-        return System.Web.HttpContext.Current.Session["InvalidPinCodes"] as Dictionary<long, int>;
+        return System.Web.HttpContext.Current.Session["InvalidPinCodes"] as Dictionary<string, int>;
     }
 }

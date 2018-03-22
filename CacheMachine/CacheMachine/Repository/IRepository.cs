@@ -15,18 +15,18 @@ namespace CacheMachine.Repository
 
         List<Models.Action> GetAllActions();
 
-        Card GetCardById(long cardNum);
+        Card GetCardById(string cardNum);
 
         Operation AddOperation(Operation operation);
 
         Card EditCard(Card card);
 
-        Card GetCardByIdAndPinCode(long cardNum, int pinCode);
+        Card GetCardByIdAndPinCode(string cardNum, string pinCode);
 
         Models.Action GetActionByDescription(string description);
 
         Operation GetOperationIncludeCardById(int id);
 
-        Card BlockCard(long cardNum);
+        Card BlockCard(string cardNum);
     }
 }

@@ -9,6 +9,13 @@ namespace CacheMachine.Repository
     //TODO: оптимизировать/убрать ненужные методы
     public class CacheMachineRepository : IRepository
     {
+        private readonly HashcodeHelper _hashHelper;
+
+        public CacheMachineRepository()
+        {
+            _hashHelper = new HashcodeHelper();
+        }
+
         public List<Card> GetAllCards()
         {
             List<Card> users;
@@ -31,7 +38,7 @@ namespace CacheMachine.Repository
             return operations;
         }
 
-        public Card GetCardById(long cardNum)
+        public Card GetCardById(string cardNum)
         {
             Card card;
             using (var context = new CacheMachineContext())
@@ -41,14 +48,16 @@ namespace CacheMachine.Repository
             return card;
         }
 
-        public Card GetCardByIdAndPinCode(long cardNum, int pinCode)
+        public Card GetCardByIdAndPinCode(string cardNum, string pinCode)
         {
             Card card;
+            bool match;
             using (var context = new CacheMachineContext())
             {
-                card = context.Cards.FirstOrDefault(c => c.Id == cardNum && c.PinCode == pinCode && !c.IsBlocked);
+                card = context.Cards.FirstOrDefault(c => c.Id == cardNum && !c.IsBlocked);
+                match = _hashHelper.CheckHashMatch(pinCode, card?.PinCodeSalt, card?.PinCodeHash);
             }
-            return card;
+            return match ? card : null;
         }
 
         public List<Action> GetAllActions()
@@ -104,7 +113,7 @@ namespace CacheMachine.Repository
             return card;
         }
 
-        public Card BlockCard(long cardNum)
+        public Card BlockCard(string cardNum)
         {
             var card = GetCardById(cardNum);
             card.IsBlocked = true;

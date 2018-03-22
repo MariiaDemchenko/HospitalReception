@@ -6,14 +6,13 @@ namespace CacheMachine.Models
 {
     public class Card
     {
-        //TODO: Id хранить в String
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Id { get; set; }
+        public string Id { get; set; }
         public bool IsBlocked { get; set; }
-        public int PinCode { get; set; }
+        public string PinCodeHash { get; set; }
+        public string PinCodeSalt { get; set; }
         public int Sum { get; set; }
-
         public virtual ICollection<Operation> Operations { get; set; }
     }
 }

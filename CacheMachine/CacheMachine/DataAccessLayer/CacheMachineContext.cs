@@ -6,11 +6,6 @@ namespace CacheMachine.DataAccessLayer
 {
     public class CacheMachineContext : DbContext
     {
-        public CacheMachineContext() : base("CacheMachineContext")
-        {
-
-        }
-
         public DbSet<Card> Cards { get; set; }
         public DbSet<Action> Actions { get; set; }
         public DbSet<Operation> Operations { get; set; }

@@ -13,7 +13,7 @@ namespace CacheMachine.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201803151341262_Init"; }
+            get { return "201803221455262_Init"; }
         }
         
         string IMigrationMetadata.Source

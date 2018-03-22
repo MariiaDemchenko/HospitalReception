@@ -8,33 +8,6 @@ namespace CacheMachine.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.Card",
-                c => new
-                    {
-                        Id = c.Long(nullable: false),
-                        IsBlocked = c.Boolean(nullable: false),
-                        PinCode = c.Int(nullable: false),
-                        Sum = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Operation",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        CardId = c.Long(nullable: false),
-                        OptionId = c.Int(nullable: false),
-                        OperationDate = c.DateTime(nullable: false),
-                        Sum = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Card", t => t.CardId, cascadeDelete: true)
-                .ForeignKey("dbo.Action", t => t.OptionId, cascadeDelete: true)
-                .Index(t => t.CardId)
-                .Index(t => t.OptionId);
-            
-            CreateTable(
                 "dbo.Action",
                 c => new
                     {
@@ -43,17 +16,45 @@ namespace CacheMachine.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
+            CreateTable(
+                "dbo.Operation",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        CardId = c.String(maxLength: 128),
+                        ActionId = c.Int(nullable: false),
+                        OperationDate = c.DateTime(nullable: false),
+                        Sum = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Action", t => t.ActionId, cascadeDelete: true)
+                .ForeignKey("dbo.Card", t => t.CardId)
+                .Index(t => t.CardId)
+                .Index(t => t.ActionId);
+            
+            CreateTable(
+                "dbo.Card",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        IsBlocked = c.Boolean(nullable: false),
+                        PinCodeHash = c.String(),
+                        PinCodeSalt = c.String(),
+                        Sum = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Operation", "OptionId", "dbo.Action");
             DropForeignKey("dbo.Operation", "CardId", "dbo.Card");
-            DropIndex("dbo.Operation", new[] { "OptionId" });
+            DropForeignKey("dbo.Operation", "ActionId", "dbo.Action");
+            DropIndex("dbo.Operation", new[] { "ActionId" });
             DropIndex("dbo.Operation", new[] { "CardId" });
-            DropTable("dbo.Action");
-            DropTable("dbo.Operation");
             DropTable("dbo.Card");
+            DropTable("dbo.Operation");
+            DropTable("dbo.Action");
         }
     }
 }
