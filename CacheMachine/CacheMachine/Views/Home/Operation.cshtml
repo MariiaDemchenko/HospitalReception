@@ -1,45 +1,14 @@
 ﻿@{
     ViewBag.Title = "Operation";
 }
-
 <h3>@ViewBag.Message</h3>
 @model long
 
 <content id="operationContent">
-    <form id="operationForm" class="form-signin">
-        <h2 class="form-signin-heading ">Введите пин-код</h2>
-        <button id="btnBalance" class="btn-lg btn-primary btn-block">Баланс</button>
-        <button id="btnGetCache" class="btn-lg btn-success btn-block">Снять сумму</button>
-        <button id="Exit" class="btn-lg btn-default btn-block">Выход</button>
+    <form class="form-signin">
+        <h2 class="form-signin-heading ">Список операций</h2>
+        @Html.ActionLink("Баланс", "Balance", new { id = Model }, new { @class = "btn btn-primary btn-block btn-num" })
+        @Html.ActionLink("Снять сумму", "Cache", new { id = Model }, new { @class = "btn btn-primary btn-block btn-num" })
+        @Html.Partial("ExitButton")
     </form>
 </content>
-
-<script>
-    $("#btnBalance").click(function (event) {
-        event.preventDefault();
-        $.ajax({
-            url: "Balance",
-            data: { id: @Model},
-            success: function (data) {
-                $('#content').html(data);
-            },
-            error: function (xhr, error) {
-                console.log('Error' + error);
-            }
-        });
-    });
-
-    $("#btnGetCache").click(function (event) {
-        event.preventDefault();
-        $.ajax({
-            url: "Cache",
-            data: { id: @Model},
-            success: function (data) {
-                $('#content').html(data);
-            },
-            error: function (xhr, error) {
-                console.log('Error' + error);
-            }
-        });
-    });
-</script>

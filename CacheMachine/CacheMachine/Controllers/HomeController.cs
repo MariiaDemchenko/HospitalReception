@@ -17,8 +17,9 @@ public class HomeController : Controller
         return View();
     }
 
-    public ActionResult CheckCardNum(string cardNum)
+    public ActionResult CheckCardNum(string inputField)
     {
+        var cardNum = inputField;
         Card card = null;
         if (!string.IsNullOrEmpty(cardNum))
         {
@@ -30,11 +31,12 @@ public class HomeController : Controller
 
     public ActionResult Cache(long id)
     {
-        return PartialView(id);
+        return View(id);
     }
 
-    public ActionResult CheckPinCode(long id, int pinCode)
+    public ActionResult CheckPinCode(long id, string inputField)
     {
+        int.TryParse(inputField, out var pinCode);
         var card = _repository.GetCardByIdAndPinCode(id, pinCode);
         if (card != null)
         {
@@ -47,19 +49,18 @@ public class HomeController : Controller
     public ActionResult PinCode(long id)
     {
         //TODO: проверка 4-кратного ввода ошибочного пароля
-        return PartialView(new Card { Id = id });
+        return View(new Card { Id = id });
     }
 
     public ActionResult Error(string message = "")
     {
-        //TODO: кнопка назад + обработать все ситуации ошибок
         ViewBag.Message = message;
-        return PartialView();
+        return View();
     }
 
     public ActionResult Operation(long id)
     {
-        return PartialView(id);
+        return View(id);
     }
 
     public ActionResult Balance(long id)
@@ -69,7 +70,7 @@ public class HomeController : Controller
 
         if (action == null || card == null)
         {
-            return RedirectToAction("Error");
+            return RedirectToAction("Error", new { message = "Произошла ошибка при отображении данных о балансе" });
         }
 
         var operation = new Operation
@@ -81,24 +82,25 @@ public class HomeController : Controller
 
         _repository.AddOperation(operation);
 
-        return PartialView(_repository.GetOperationIncludeCardById(operation.Id));
+        return View(_repository.GetOperationIncludeCardById(operation.Id));
     }
 
-    public ActionResult OperationResult(long id, int sum = 0)
+    public ActionResult OperationResult(long id, string inputField = "")
     {
+        var sum = int.Parse(inputField);
         var action = _repository.GetActionByDescription("Снятие денег");
         var card = _repository.GetCardById(id);
 
         if (action == null || card == null)
         {
-            return RedirectToAction("Error");
+            return RedirectToAction("Error", new { message = "Произошла ошибка при попытке снятия денег" });
         }
 
         card.Sum -= sum;
 
         if (card.Sum < 0)
         {
-            return RedirectToAction("Error");
+            return RedirectToAction("Error", new { message = "Недостаточно средств" });
         }
 
         var operation = new Operation
@@ -112,6 +114,6 @@ public class HomeController : Controller
         _repository.AddOperation(operation);
         _repository.EditCard(card);
 
-        return PartialView(_repository.GetOperationIncludeCardById(operation.Id));
+        return View(_repository.GetOperationIncludeCardById(operation.Id));
     }
 }

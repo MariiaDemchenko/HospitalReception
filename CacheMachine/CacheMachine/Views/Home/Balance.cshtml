@@ -4,7 +4,7 @@
 @model CacheMachine.Models.Operation
 
 <content id="operationContent">
-    <form id="operationForm" class="form-signin" width="auto">
+    <form class="form-signin">
         <h2 class="form-signin-heading ">Информация о карте</h2>
         <table class="table-striped table-bordered" width="310">
             <tbody width="310">
@@ -23,38 +23,8 @@
             </tbody>
         </table>
         <div class="row">
-            <button id="btnBack" class="btn-warning col-sm-6">Назад</button>
-            <button id="btnExit" class="btn-danger col-sm-6">Выход</button>
+            @Html.Partial("BackButton")
+            @Html.Partial("ExitButton")
         </div>
-        
     </form>
 </content>
-
-<script>
-    $("#btnBack").click(function (event) {
-        event.preventDefault();
-        $.ajax({
-            url: "Operation",
-            data: { id: @Model.CardId },
-            success: function (data) {
-                $('#content').html(data);
-            },
-            error: function (xhr, error) {
-                console.log('Error! ' + error);
-            }
-        });
-    });
-
-    $("#btnExit").click(function (event) {
-        event.preventDefault();
-        $.ajax({
-            url: "Index",
-            success: function (data) {
-                $('#content').html(data);
-            },
-            error: function (xhr, error) {
-                console.log('Error' + error);
-            }
-        });
-    });
-</script>

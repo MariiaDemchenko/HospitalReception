@@ -234,6 +234,8 @@
     <Content Include="Views\Home\Numpad\PasswordNumDisplay.cshtml" />
     <Content Include="Views\Home\Numpad\TextNumDisplay.cshtml" />
     <Content Include="Views\Home\Numpad\NumKeyboard.cshtml" />
+    <Content Include="Views\Home\BackButton.cshtml" />
+    <Content Include="Views\Home\ExitButton.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

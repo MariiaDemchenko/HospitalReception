@@ -1,4 +1,4 @@
 ﻿@{
   var className = string.IsNullOrEmpty(Model) ? string.Empty : "card-num";
 }
-@Html.TextBox("inputField", null, new { @class = $"form-control {className}", placeholder = Model, onkeydown = "return false;" })
+@Html.TextBox("inputField", null, new { @class = $"form-control {className}", placeholder = Model, onkeydown = "return false;", autocomplete = "off" })

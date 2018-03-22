@@ -6,25 +6,11 @@
 @model CacheMachine.Models.Card
 
 <content id="pinCodeContent">
-    <form id="pinCodeForm" class="form-signin">
+    @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Get, new {@class = "form-signin"}))
+    {
         <h2 class="form-signin-heading ">Введите пин-код</h2>
         @Html.Partial("Numpad/Numpad", Constants.PinCodeMask)
-        <button class="btn-lg btn-primary btn-block" type="submit">Продолжить</button>
-    </form>
+        @Html.HiddenFor(m=>m.Id)
+        <button class="btn btn-primary btn-block" type="submit">Продолжить</button>
+    }
 </content>
-
-<script>
-    $("#pinCodeForm").submit(function (event) {
-        event.preventDefault();
-        $.ajax({
-            url: "CheckPinCode",
-            data: { id: @Model.Id, pinCode: $('#inputField').val() },
-            success: function (data) {
-                $('#content').html(data);
-            },
-            error: function (xhr, error) {
-                console.log('Error' + error);
-            }
-        });
-    });
-</script>
