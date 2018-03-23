@@ -1,21 +1,33 @@
 ﻿@model string
-
+@using CacheMachine.Common
 @Html.Partial("Numpad/NumDisplay", Model)
 @Html.Partial("Numpad/NumKeyboard")
 
 <script>
-    $(".btn-num").click(function () {  
+    $(".btn-num").click(function () {
         event.preventDefault();
         var num = $(this).attr('num');
-        var inputMaskLength = @Model.Length;
-        if (inputMaskLength === 0 || $('#inputField').val().length < inputMaskLength) {
+        if (checkUpdateInput()) {
             updateInput(num);
-        }          
+        }
     });
 
-    $("#inputField").keydown(function () {  
-        return false;   
+    $("#inputField").keydown(function (e) {
+        var keyCode = e.keyCode;
+        if (checkUpdateInput()) {
+            if (keyCode >= @Constants.KeyCode0 && keyCode <= @Constants.KeyCode9 ||
+                keyCode >= @Constants.KeyCode0NumPad && keyCode <= @Constants.KeyCode9NumPad) {
+                updateInput('');
+                return true;
+            }
+        }
+        return false;
     });
+
+    function checkUpdateInput() {
+        var inputMaskLength = @Model.Length;
+        return inputMaskLength === 0 || $('#inputField').val().length < inputMaskLength;
+    }
 
     function appendSymbol(symbol) {
         var inputField = $("#inputField");
@@ -25,7 +37,7 @@
     function autoCompleteCardNum(currentValue) {
         if (currentValue.match(/^\d{4}$/) !== null ||
             currentValue.match(/^\d{4}\-\d{4}$/) !== null ||
-            currentValue.match(/^\d{4}\-\d{4}-\d{4}$/) !== null) {
+            currentValue.match(/^\d{4}(-\d{4}){2}$/) !== null) {
             appendSymbol('-');
         }
     }

@@ -1,11 +1,7 @@
-﻿using System;
+﻿using CacheMachine.DAL.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CacheMachine.Models;
 
-namespace CacheMachine.Repository
+namespace CacheMachine.DAL.Repository
 {
     public interface IRepository
     {
@@ -13,7 +9,7 @@ namespace CacheMachine.Repository
 
         List<Operation> GetAllOperations();
 
-        List<Models.Action> GetAllActions();
+        List<Action> GetAllActions();
 
         Card GetCardById(string cardNum);
 
@@ -23,7 +19,7 @@ namespace CacheMachine.Repository
 
         Card GetCardByIdAndPinCode(string cardNum, string pinCode);
 
-        Models.Action GetActionByDescription(string description);
+        Action GetActionByDescription(string description);
 
         Operation GetOperationIncludeCardById(int id);
 

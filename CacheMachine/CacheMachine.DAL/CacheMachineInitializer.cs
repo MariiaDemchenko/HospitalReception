@@ -1,7 +1,8 @@
-﻿using CacheMachine.Models;
+﻿using CacheMachine.Common;
+using CacheMachine.DAL.Models;
 using System.Collections.Generic;
 
-namespace CacheMachine.DataAccessLayer
+namespace CacheMachine.DAL
 {
     public class CacheMachineInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<CacheMachineContext>
     {
@@ -44,8 +45,8 @@ namespace CacheMachine.DataAccessLayer
 
             var options = new List<Action>
             {
-            new Action{Id=1, Description = "Просмотр баланса"},
-            new Action{Id=2, Description = "Снятие денег"}
+            new Action{Id=1, Description = Resources.ViewBalance},
+            new Action{Id=2, Description = Resources.GetCache}
             };
 
             options.ForEach(o => context.Actions.Add(o));

@@ -2,15 +2,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CacheMachine.Models
+namespace CacheMachine.DAL.Models
 {
-    public class Action
+    public class Card
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
-        public string Description { get; set; }
-
+        public string Id { get; set; }
+        public bool IsBlocked { get; set; }
+        public string PinCodeHash { get; set; }
+        public string PinCodeSalt { get; set; }
+        public int Sum { get; set; }
         public virtual ICollection<Operation> Operations { get; set; }
     }
 }

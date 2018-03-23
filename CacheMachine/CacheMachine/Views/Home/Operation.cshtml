@@ -1,13 +1,14 @@
-﻿@model string
+﻿@using CacheMachine.Common
+@model string
 @{
     ViewBag.Title = "Operation";
 }
 
 <content id="operationContent">
     <form class="form-signin">
-        <h2 class="form-signin-heading ">Список операций</h2>
-        @Html.ActionLink("Баланс", "Balance", new { id = Model }, new { @class = "btn btn-primary btn-block btn-num" })
-        @Html.ActionLink("Снять сумму", "Cache", new { id = Model }, new { @class = "btn btn-primary btn-block btn-num" })
+        <h2 class="form-signin-heading ">@Resources.OperationsList</h2>
+        @Html.ActionLink(Resources.Balance, "Balance", new { id = Model }, new { @class = "btn btn-primary btn-block btn-num" })
+        @Html.ActionLink(Resources.GetSum, "Cache", new { id = Model }, new { @class = "btn btn-primary btn-block btn-num" })
         @Html.Partial("ExitButton")
     </form>
 </content>

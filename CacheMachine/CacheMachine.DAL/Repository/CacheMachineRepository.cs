@@ -1,12 +1,12 @@
-﻿using CacheMachine.DataAccessLayer;
-using CacheMachine.Models;
+﻿using CacheMachine.Common;
+using CacheMachine.DAL.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace CacheMachine.Repository
+namespace CacheMachine.DAL.Repository
 {
-    //TODO: оптимизировать/убрать ненужные методы
+    //TODO: optimize/clear methods
     public class CacheMachineRepository : IRepository
     {
         private readonly HashcodeHelper _hashHelper;
@@ -23,7 +23,6 @@ namespace CacheMachine.Repository
             {
                 users = context.Cards.ToList();
             }
-
             return users;
         }
 
@@ -34,7 +33,6 @@ namespace CacheMachine.Repository
             {
                 operations = context.Operations.ToList();
             }
-
             return operations;
         }
 

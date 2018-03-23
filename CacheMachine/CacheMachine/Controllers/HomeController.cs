@@ -1,7 +1,6 @@
-﻿using CacheMachine;
-using CacheMachine.Models;
-using CacheMachine.Properties;
-using CacheMachine.Repository;
+﻿using CacheMachine.Common;
+using CacheMachine.DAL.Models;
+using CacheMachine.DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -26,7 +25,7 @@ public class HomeController : Controller
         Card card = null;
         if (!string.IsNullOrEmpty(cardNum))
         {
-            var cardNumber = cardNum.Replace("-", string.Empty);
+            var cardNumber = cardNum.Replace(Constants.Dash, string.Empty);
             card = _repository.GetCardById(cardNumber);
         }
         return card != null ? RedirectToAction("PinCode", new { id = card.Id }) : RedirectToAction("Error", new { message = Resources.CardNotFound });
@@ -57,7 +56,7 @@ public class HomeController : Controller
         return View(new Card { Id = id });
     }
 
-    public ActionResult Error(string message = "")
+    public ActionResult Error(string message)
     {
         ViewBag.Message = message;
         return View();
@@ -70,7 +69,7 @@ public class HomeController : Controller
 
     public ActionResult Balance(string id)
     {
-        var action = _repository.GetActionByDescription("Просмотр баланса");
+        var action = _repository.GetActionByDescription(Resources.ViewBalance);
         var card = _repository.GetCardById(id);
 
         if (action == null || card == null)
@@ -90,10 +89,10 @@ public class HomeController : Controller
         return View(_repository.GetOperationIncludeCardById(operation.Id));
     }
 
-    public ActionResult OperationResult(string id, string inputField = "")
+    public ActionResult OperationResult(string id, string inputField = Constants.Empty)
     {
         int.TryParse(inputField, out var sum);
-        var action = _repository.GetActionByDescription("Снятие денег");
+        var action = _repository.GetActionByDescription(Resources.GetCache);
         var card = _repository.GetCardById(id);
 
         if (action == null || card == null)

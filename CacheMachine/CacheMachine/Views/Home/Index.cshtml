@@ -1,8 +1,9 @@
-﻿<div id="content">
+﻿@using CacheMachine.Common
+<div id="content">
     @using (Html.BeginForm("CheckCardNum", "Home", FormMethod.Get, new { @class = "form-signin" }))
     {
-        //TODO: оптимально вынести и использовать Numpad и все связанные PartialView
-        <h2 class="form-signin-heading ">Введите номер карты</h2>
+        //TODO: separate Numpad and all the connected PartialViews correctly
+        <h2 class="form-signin-heading ">@Resources.InputCardNum</h2>
         @Html.Partial("Numpad/Numpad", Constants.CardNumMask)
         @Html.Partial("OkButton")
     }

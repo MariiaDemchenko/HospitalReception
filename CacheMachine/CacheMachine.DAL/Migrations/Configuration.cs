@@ -1,18 +1,19 @@
-using CacheMachine.Models;
+using CacheMachine.Common;
+using CacheMachine.DAL.Models;
 using System.Collections.Generic;
 
-namespace CacheMachine.Migrations
+namespace CacheMachine.DAL.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataAccessLayer.CacheMachineContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CacheMachineContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DataAccessLayer.CacheMachineContext context)
+        protected override void Seed(CacheMachineContext context)
         {
             var hashHelper = new HashcodeHelper();
 
@@ -51,8 +52,8 @@ namespace CacheMachine.Migrations
 
             var options = new List<Action>
             {
-            new Action{Id=1, Description = "Просмотр баланса"},
-            new Action{Id=2, Description = "Снятие денег"}
+            new Action{Id=1, Description = Resources.ViewBalance},
+            new Action{Id=2, Description = Resources.GetCache}
             };
 
             options.ForEach(o => context.Actions.Add(o));

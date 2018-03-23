@@ -2,16 +2,16 @@
     ViewBag.Title = "Pin Code";
 }
 
-<h3>@ViewBag.Message</h3>
+@using CacheMachine.Common
 @model string
 
 <content id="pinCodeContent">
     @using (Html.BeginForm("OperationResult", "Home", FormMethod.Get, new { @class = "form-signin" }))
     {
-        <h2 class="form-signin-heading ">Cнятие денег</h2>
+        <h2 class="form-signin-heading ">@Resources.GetCache</h2>
         @Html.Partial("Numpad/Numpad", string.Empty)
         @Html.Hidden("id", Model)
-        <button id="btnOk" class="btn btn-primary btn-block btn-num">OK</button>
+        @Html.Partial("OkButton")
         @Html.Partial("ExitButton")
     }
 </content>

@@ -117,10 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Target" xml:space="preserve">
-    <value>H4sIAAAAAAAEAOVa227bNhi+H7B3EHS1DallpzddYLdInWQz2hwQp8XuAlr67RClKE2kAhvDnmwXe6S9wn7qLFKypRycdkOAwCb5H/gfyY/+56+/x+/WPrPuIRI04BN7NBjaFnA38ChfTexYLl+9sd+9/f678annr63P+brXah1ScjGx76QMjxxHuHfgEzHwqRsFIljKgRv4DvEC53A4/NkZjRxAFjbysqzxdcwl9SH5gl+nAXchlDFh54EHTGTjODNPuFoXxAcREhcm9pTg0Dn+oxwGJ0SSY9cFIT6SDUS2dcwoQZ3mwJa2RTgPJJGo8dEnAXMZBXw1D3GAsJtNCLhuSZiAbCdH5fKumxoeqk05JWHOyo2FDPyeDEevMys5OvmDbG0XVkQ7nqK95UbtOrHlxD52U8a6qKMpi9QyzdCpXwYp1YFVnTsowgKjR/3hdMxkHMGEQywjwg6sq3jBqPsBNjfBF+ATHjNWVQ8VxLnaAA5dRUEIkdxcwzJTeubZllOnc3TCgqxCk25oxuXrQ9u6QOFkwaDwfmXzcxlE8AtwiIgE74pICRE67yLgYEjW5JyAcCMaplZNBWLEYRrZ1jlZfwS+kncTGz/a1hldg5ePZEp84hSzDolkFJuyLsg9XSUqalIvQ6UqjgvbugaWfryjYZoCg2L6Nvf3WRT41wGrkmZztzckWoFE5YOWBfMgjlxNubFThtbWgCu49Y25gvB/F3YzDxIr7gq9KYm8Ul5D1I0O3zwk6jQxaRTs3th2LoU7sXZDzkp9vsGG0JvbPPZ7qtOaSnmGPDaN8ixpTaM8z7oqptzbqJaauK1WgFIrbcrIbX3+UamdKtgvqxXNN5rQj0iwZ+o9M/GeBe4XKFR8H6CXCe+dTleUT1HdX4m4e/om1ixrTph8dllPWCZ2dNweOakXirac7ZKTx0IELk0IdT3zmlXf3yn3rF0FLPVJrQCibzAnaYhZiFpM7J8Mw21hXBShknFeT+tcR7aew5f8BBhIsFICZSzhEs/0G9rHq49g2kOkGilheM8QWEgol2aNoNylIWE7dNfoOlYXpVchQZ85gRC46vQ7/NFFdNmiTQUKOZrBdtln7FSCa3vM6cHfFhmtmVAGRtpT6mExHAxGW+Kttec9KI4fFDYtG9tD1LRsvovk/Pi4h5BJixfSSKSAqFCgPAWoOVjLhuMEXuGzE4XIir4eCIr3HGQtF7AClxVTKzpGJNUZVKu4waMSSTvYKPM2cUgjXCOu2K1BkeL4WVnWdkTVndmh4Bea1/duxEWHEl9hVfhBr9T1vXawg9FbTTNsrUCdalBF88xzW/bfVnI6WXKLBfI2X2RKiYg5KSSWQ2dOC3Y2PidhiIepCpaWjVjzDEh7Ne+PK/kpD8cVDfBSoW0hCY+0ZAXaLIpGTc9oJKTC7xZEHb+mnm8ua6gLLbmWS6ynvum4PAfz9eqzWYR0XHHQnFOlTc9wm74qxskh3gh+kzCBNgkjUcMtYxqw2OftXaGduoZBVdnUJkx+Y0fbh9EJDMsZp666Izq5aWuePtBTZV3u76wttM/jr7zzVjm0deN2LuWhr8qn/SjYzknDZqrstKnuPJOrV5VTMvDVxGBa458s/JKm3j/ymsmeJ+gqYEGNSTncnVcNL6hyq0305pdiAg380olvLPiMZq4vKaQXTV1r3uOskXZ4HdM7a7rEttAw99RTXXW+ERL8JHIH89/ZlFHcb7ngnHC6BCFThM0+HI4OtWe1r+eJyxHCY53eufYOElJl057oW8MTEr8nkXtHoh98sv6xytBEvR7wEvMyVtn52tHTbPXnj9xiDTfIGd5l1xP7j4TuyJr9dpuSHliXEUb+kTW0/jRh3W023/1Ikuy4gyY5XV2Xp3hb8fCzfOTbyu5o7vdYsPfAK6Oi3b2djGJA7QvaP9EbYPYeid4JSn8Uvyfx/CMg6Rzm2C9Q3ABr7BU8bL1kPh/E/F8DlR8LIb+M41suDS/s9peHhQ2UqAvguwXvTc/C2BEXAfo3LWh9seDtUHCThH5IcStQ3MT6xSDkuqmrSFcntLgZIP0aEWIDD97TBnsAwObdEDOx8vtKLAOCrkoW6teWHNxaDhZrZnwZ5KVA0yhfop0VzkEST6EgkaRL4kqcVnBI8o7/mbAYl5z6C/Bm/DKWYSxxy+AvWO1HTaqkbJOfoNx1nceXyT1JPMUWUE2qTsmX/H1MmVfofdZw2GlhoWpVdqVRvpTqarPaFJzMH3G0McrMV5TYG/BDhszEJZ+Te3iIbp8EfIQVcTf5Fb+dyW5H1M0+PqFkFRFfZDxKevyKMez567f/Ao+J2XtmLAAA</value>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
   </data>
-  <data name="DefaultSchema" xml:space="preserve">
-    <value>dbo</value>
+  <data name="Balance" xml:space="preserve">
+    <value>Баланс</value>
+  </data>
+  <data name="CacheSum" xml:space="preserve">
+    <value>Снятая сумма</value>
+  </data>
+  <data name="CardInformation" xml:space="preserve">
+    <value>Информация о карте</value>
+  </data>
+  <data name="CardIsBlocked" xml:space="preserve">
+    <value>Карта заблокирована</value>
+  </data>
+  <data name="CardNotFound" xml:space="preserve">
+    <value>Карта не найдена</value>
+  </data>
+  <data name="CardNumber" xml:space="preserve">
+    <value>Номер карты</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="ErrorGettingCache" xml:space="preserve">
+    <value>Произошла ошибка при попытке снятия денег</value>
+  </data>
+  <data name="ErrorShowingBalance" xml:space="preserve">
+    <value>Произошла ошибка при отображении данных о балансе</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="GetCache" xml:space="preserve">
+    <value>Снятие денег</value>
+  </data>
+  <data name="GetSum" xml:space="preserve">
+    <value>Снять сумму</value>
+  </data>
+  <data name="InputCardNum" xml:space="preserve">
+    <value>Введите номер карты</value>
+  </data>
+  <data name="InputPinCode" xml:space="preserve">
+    <value>Введите пин-код</value>
+  </data>
+  <data name="InvalidPinCode" xml:space="preserve">
+    <value>Неверный пин-код</value>
+  </data>
+  <data name="NotEnoughMoney" xml:space="preserve">
+    <value>Недостаточно средств</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OperationResult" xml:space="preserve">
+    <value>Результат операции</value>
+  </data>
+  <data name="OperationsList" xml:space="preserve">
+    <value>Список операций</value>
+  </data>
+  <data name="RemainSum" xml:space="preserve">
+    <value>Остаток на счету</value>
+  </data>
+  <data name="SumAvailable" xml:space="preserve">
+    <value>Сумма на счету</value>
+  </data>
+  <data name="ViewBalance" xml:space="preserve">
+    <value>Просмотр баланса</value>
   </data>
 </root>

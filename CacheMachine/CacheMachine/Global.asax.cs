@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Autofac;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -10,8 +9,6 @@ namespace CacheMachine
 {
     public class MvcApplication : HttpApplication
     {
-        public static IContainer Container { get; set; }
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

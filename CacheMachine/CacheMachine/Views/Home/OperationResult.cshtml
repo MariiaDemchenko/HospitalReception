@@ -1,27 +1,28 @@
 ﻿@{
     ViewBag.Title = "Balance";
 }
-@model CacheMachine.Models.Operation
+@using CacheMachine.Common
+@model CacheMachine.DAL.Models.Operation
 
 <content id="operationContent">
     <form class="form-signin">
-        <h2 class="form-signin-heading ">Результат операции</h2>
+        <h2 class="form-signin-heading ">@Resources.OperationResult</h2>
         <table class="table-striped table-bordered" width="310">
             <tbody width="310">
                 <tr>
-                    <th>Номер карты</th>
+                    <th>@Resources.CardNumber</th>
                     <th>@Model.CardId</th>
                 </tr>
                 <tr>
-                    <th>Дата</th>
+                    <th>@Resources.Date</th>
                     <th>@Model.OperationDate.ToString("G")</th>
                 </tr>
             <tr>
-                <th>Снятая сумма</th>
+                <th>@Resources.CacheSum</th>
                 <th>@Model.Sum</th>
             </tr>
             <tr>
-                <th>Остаток на счету</th>
+                <th>@Resources.RemainSum</th>
                 <th>@Model.Card.Sum</th>
             </tr>
             </tbody>

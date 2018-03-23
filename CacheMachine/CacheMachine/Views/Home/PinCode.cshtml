@@ -2,13 +2,13 @@
     ViewBag.Title = "Pin Code";
 }
 
-<h3>@ViewBag.Message</h3>
-@model CacheMachine.Models.Card
+@using CacheMachine.Common
+@model CacheMachine.DAL.Models.Card
 
 <content id="pinCodeContent">
     @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Get, new { @class = "form-signin" }))
     {
-        <h2 class="form-signin-heading ">Введите пин-код</h2>
+        <h2 class="form-signin-heading ">@Resources.InputPinCode</h2>
         @Html.Partial("Numpad/Numpad", Constants.PinCodeMask)
         @Html.HiddenFor(m => m.Id)
         @Html.Partial("OkButton")

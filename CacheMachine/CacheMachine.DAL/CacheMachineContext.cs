@@ -1,8 +1,8 @@
-﻿using CacheMachine.Models;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using CacheMachine.DAL.Models;
 
-namespace CacheMachine.DataAccessLayer
+namespace CacheMachine.DAL
 {
     public class CacheMachineContext : DbContext
     {

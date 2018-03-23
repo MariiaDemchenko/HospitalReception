@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CacheMachine.Models
+namespace CacheMachine.DAL.Models
 {
     public class Operation
     {
