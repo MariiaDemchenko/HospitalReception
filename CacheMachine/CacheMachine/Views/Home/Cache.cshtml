@@ -6,7 +6,7 @@
 @model string
 
 <content id="pinCodeContent">
-    @using (Html.BeginForm("OperationResult", "Home", FormMethod.Get, new { @class = "form-signin" }))
+    @using (Html.BeginForm("OperationResult", "Home", FormMethod.Post, new { @class = "form-signin" }))
     {
         <h2 class="form-signin-heading ">@Resources.GetCache</h2>
         @Html.Partial("Numpad/Numpad", string.Empty)

@@ -13,11 +13,19 @@
     });
 
     $("#inputField").keydown(function (e) {
+        var key = e.key;
         var keyCode = e.keyCode;
-        if (checkUpdateInput()) {
-            if (keyCode >= @Constants.KeyCode0 && keyCode <= @Constants.KeyCode9 ||
-                keyCode >= @Constants.KeyCode0NumPad && keyCode <= @Constants.KeyCode9NumPad) {
-                updateInput('');
+        if (keyCode >= @Constants.KeyCode0NumPad && keyCode <= @Constants.KeyCode9NumPad) {
+            keyCode -= @Constants.KeyCode0;
+        }
+
+        var isBackspaceDeleteSymbol = key == "Backspace" || key == "Delete";
+        if (checkUpdateInput() || isBackspaceDeleteSymbol) {
+            var symbol = String.fromCharCode(keyCode);
+            if (jQuery.isNumeric(symbol)) {
+                updateInput(symbol);
+            }
+            else if (isBackspaceDeleteSymbol) {
                 return true;
             }
         }

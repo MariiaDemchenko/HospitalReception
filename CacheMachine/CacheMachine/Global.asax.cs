@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using CacheMachine.Helpers;
 
 namespace CacheMachine
 {
@@ -19,11 +20,15 @@ namespace CacheMachine
 
         protected void Session_Start(Object sender, EventArgs e)
         {
+            var session = new SessionHelper();
             var context = HttpContext.Current;
-            if (context != null)
+            if (context == null)
             {
-                context.Session["InvalidPinCodes"] = new Dictionary<string, int>();
+                return;
             }
+            session.IsAuthorized = false;
+            session.CardNumber = null;
+            session.InvalidPinCodes = new Dictionary<string, int>();
         }
     }
 }

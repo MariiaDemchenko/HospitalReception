@@ -1,6 +1,6 @@
 ﻿@using CacheMachine.Common
 <div id="content">
-    @using (Html.BeginForm("CheckCardNum", "Home", FormMethod.Get, new { @class = "form-signin" }))
+    @using (Html.BeginForm("CheckCardNum", "Home", FormMethod.Post, new { @class = "form-signin" }))
     {
         //TODO: separate Numpad and all the connected PartialViews correctly
         <h2 class="form-signin-heading ">@Resources.InputCardNum</h2>

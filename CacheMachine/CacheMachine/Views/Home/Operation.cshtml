@@ -7,8 +7,8 @@
 <content id="operationContent">
     <form class="form-signin">
         <h2 class="form-signin-heading ">@Resources.OperationsList</h2>
-        @Html.ActionLink(Resources.Balance, "Balance", new { id = Model }, new { @class = "btn btn-primary btn-block btn-num" })
-        @Html.ActionLink(Resources.GetSum, "Cache", new { id = Model }, new { @class = "btn btn-primary btn-block btn-num" })
+        @Html.ActionLink(Resources.Balance, "Balance", null, new { @class = "btn btn-primary btn-block btn-num" })
+        @Html.ActionLink(Resources.GetSum, "Cache", null, new { @class = "btn btn-primary btn-block btn-num" })
         @Html.Partial("ExitButton")
     </form>
 </content>

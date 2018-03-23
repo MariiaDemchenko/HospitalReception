@@ -259,6 +259,15 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Пользователь не авторизован.
+        /// </summary>
+        public static string UserIsUnauthorized {
+            get {
+                return ResourceManager.GetString("UserIsUnauthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Просмотр баланса.
         /// </summary>
         public static string ViewBalance {

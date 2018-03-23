@@ -11,7 +11,6 @@
         public const int SaltSize = 24;
 
         public const int KeyCode0 = 48;
-        public const int KeyCode9 = 57;
         public const int KeyCode0NumPad = 96;
         public const int KeyCode9NumPad = 105;
     }

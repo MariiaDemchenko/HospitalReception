@@ -183,6 +183,9 @@
   <data name="SumAvailable" xml:space="preserve">
     <value>Сумма на счету</value>
   </data>
+  <data name="UserIsUnauthorized" xml:space="preserve">
+    <value>Пользователь не авторизован</value>
+  </data>
   <data name="ViewBalance" xml:space="preserve">
     <value>Просмотр баланса</value>
   </data>

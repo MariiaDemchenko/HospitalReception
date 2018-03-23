@@ -3,14 +3,12 @@
 }
 
 @using CacheMachine.Common
-@model CacheMachine.DAL.Models.Card
 
 <content id="pinCodeContent">
-    @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Get, new { @class = "form-signin" }))
+    @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Post, new { @class = "form-signin" }))
     {
         <h2 class="form-signin-heading ">@Resources.InputPinCode</h2>
         @Html.Partial("Numpad/Numpad", Constants.PinCodeMask)
-        @Html.HiddenFor(m => m.Id)
         @Html.Partial("OkButton")
         @Html.Partial("ExitButton")
     }
