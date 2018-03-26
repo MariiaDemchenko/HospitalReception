@@ -61,7 +61,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Назад.
+        ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string Back {
             get {
@@ -70,7 +70,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Баланс.
+        ///   Looks up a localized string similar to Balance.
         /// </summary>
         public static string Balance {
             get {
@@ -79,7 +79,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Снятая сумма.
+        ///   Looks up a localized string similar to Cache sum.
         /// </summary>
         public static string CacheSum {
             get {
@@ -88,7 +88,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Информация о карте.
+        ///   Looks up a localized string similar to Card information.
         /// </summary>
         public static string CardInformation {
             get {
@@ -97,7 +97,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Карта заблокирована.
+        ///   Looks up a localized string similar to Card is blocked.
         /// </summary>
         public static string CardIsBlocked {
             get {
@@ -106,7 +106,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Карта не найдена.
+        ///   Looks up a localized string similar to Card was not found.
         /// </summary>
         public static string CardNotFound {
             get {
@@ -115,7 +115,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Номер карты.
+        ///   Looks up a localized string similar to Card number.
         /// </summary>
         public static string CardNumber {
             get {
@@ -124,7 +124,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Дата.
+        ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {
             get {
@@ -133,7 +133,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Произошла ошибка при попытке снятия денег.
+        ///   Looks up a localized string similar to Error getting cache.
         /// </summary>
         public static string ErrorGettingCache {
             get {
@@ -142,7 +142,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Произошла ошибка при отображении данных о балансе.
+        ///   Looks up a localized string similar to Error showing balance.
         /// </summary>
         public static string ErrorShowingBalance {
             get {
@@ -151,7 +151,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Выход.
+        ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string Exit {
             get {
@@ -160,7 +160,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Снятие денег.
+        ///   Looks up a localized string similar to Get cache.
         /// </summary>
         public static string GetCache {
             get {
@@ -169,7 +169,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Снять сумму.
+        ///   Looks up a localized string similar to Get sum.
         /// </summary>
         public static string GetSum {
             get {
@@ -178,7 +178,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Введите номер карты.
+        ///   Looks up a localized string similar to Input card number.
         /// </summary>
         public static string InputCardNum {
             get {
@@ -187,7 +187,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Введите пин-код.
+        ///   Looks up a localized string similar to Input pin-code.
         /// </summary>
         public static string InputPinCode {
             get {
@@ -196,7 +196,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Неверный пин-код.
+        ///   Looks up a localized string similar to Invalid pin-code.
         /// </summary>
         public static string InvalidPinCode {
             get {
@@ -205,7 +205,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Недостаточно средств.
+        ///   Looks up a localized string similar to Not enough money.
         /// </summary>
         public static string NotEnoughMoney {
             get {
@@ -223,7 +223,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Результат операции.
+        ///   Looks up a localized string similar to Operation result.
         /// </summary>
         public static string OperationResult {
             get {
@@ -232,7 +232,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Список операций.
+        ///   Looks up a localized string similar to Operations list.
         /// </summary>
         public static string OperationsList {
             get {
@@ -241,7 +241,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Остаток на счету.
+        ///   Looks up a localized string similar to Remain sum.
         /// </summary>
         public static string RemainSum {
             get {
@@ -250,7 +250,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Сумма на счету.
+        ///   Looks up a localized string similar to Sum available.
         /// </summary>
         public static string SumAvailable {
             get {
@@ -259,7 +259,7 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Пользователь не авторизован.
+        ///   Looks up a localized string similar to User is not authorized.
         /// </summary>
         public static string UserIsUnauthorized {
             get {
@@ -268,11 +268,20 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Просмотр баланса.
+        ///   Looks up a localized string similar to View balance.
         /// </summary>
         public static string ViewBalance {
             get {
                 return ResourceManager.GetString("ViewBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Сlear {
+            get {
+                return ResourceManager.GetString("Сlear", resourceCulture);
             }
         }
     }

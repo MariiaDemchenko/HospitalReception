@@ -1,11 +1,12 @@
-﻿@model int?
+﻿@using CacheMachine.Common
+@model int?
 <div class="row num-row">
     @{
         if (Model == 0)
         {
             @Html.Partial("Numpad/NumButton", 0)
             <div class=" col-sm-8">
-                <button class="btn-lg btn-default" id="btnClear">Очистить</button>
+                <button class="btn-lg btn-num btn-default" id="btnClear">@Resources.Сlear</button>
             </div>
         }
         else

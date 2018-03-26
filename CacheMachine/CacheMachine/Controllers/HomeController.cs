@@ -1,26 +1,25 @@
 ﻿using CacheMachine.Common;
 using CacheMachine.DAL.Models;
 using CacheMachine.DAL.Repository;
+using CacheMachine.Extensions;
 using CacheMachine.Filters;
-using CacheMachine.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 public class HomeController : Controller
 {
     private readonly IRepository _repository;
-    private readonly SessionHelper _session;
 
-    public HomeController()
+    public HomeController(IRepository repository)
     {
-        _repository = new CacheMachineRepository();
-        _session = new SessionHelper();
+        _repository = repository;
     }
 
     public ActionResult Index()
     {
-        _session.IsAuthorized = false;
-        _session.CardNumber = null;
+        Session.SetDataToSession<bool>("IsAuthorized", false);
+        Session.SetDataToSession<string>("CardNumber", null);
         return View();
     }
 
@@ -38,7 +37,7 @@ public class HomeController : Controller
             return RedirectToAction("Error", new { message = Resources.CardNotFound });
         }
 
-        _session.CardNumber = cardNumber;
+        Session.SetDataToSession<string>("CardNumber", cardNumber);
         return RedirectToAction("PinCode");
     }
 
@@ -50,13 +49,13 @@ public class HomeController : Controller
 
     public ActionResult CheckPinCode(string inputField)
     {
-        var id = _session.CardNumber;
+        var id = Session.GetDataFromSession<string>("CardNumber");
         var pinCode = inputField;
         var card = _repository.GetCardByIdAndPinCode(id, pinCode);
         if (card != null)
         {
             NullifyTriesCount(id);
-            _session.IsAuthorized = true;
+            Session.SetDataToSession<bool>("IsAuthorized", true);
             return RedirectToAction("Operation");
         }
 
@@ -67,8 +66,8 @@ public class HomeController : Controller
 
     public ActionResult PinCode()
     {
-        _session.IsAuthorized = false;
-        if (_session.CardNumber == null)
+        Session.SetDataToSession<bool>("IsAuthorized", false);
+        if (Session.GetDataFromSession<string>("CardNumber") == null)
         {
             return RedirectToAction("Index");
         }
@@ -84,14 +83,14 @@ public class HomeController : Controller
     [Authorized]
     public ActionResult Operation()
     {
-        return View(_session.CardNumber as object);
+        return View(Session.GetDataFromSession<object>("CardNumber"));
     }
 
     [Authorized]
     public ActionResult Balance()
     {
         var action = _repository.GetActionByDescription(Resources.ViewBalance);
-        var card = _repository.GetCardById(_session.CardNumber);
+        var card = _repository.GetCardById(Session.GetDataFromSession<string>("CardNumber"));
 
         if (action == null || card == null)
         {
@@ -115,11 +114,16 @@ public class HomeController : Controller
     {
         int.TryParse(inputField, out var sum);
         var action = _repository.GetActionByDescription(Resources.GetCache);
-        var card = _repository.GetCardById(_session.CardNumber);
+        var card = _repository.GetCardById(Session.GetDataFromSession<string>("CardNumber"));
 
         if (action == null || card == null)
         {
             return RedirectToAction("Error", new { message = Resources.ErrorGettingCache });
+        }
+
+        if (sum < 0)
+        {
+            sum = 0;
         }
 
         card.Sum -= sum;
@@ -145,7 +149,12 @@ public class HomeController : Controller
 
     private bool CheckTriesCountIsValid(string id)
     {
-        var invalidPinCodes = _session.InvalidPinCodes;
+        var invalidPinCodes = Session.GetDataFromSession<Dictionary<string, int>>("InvalidPinCodes");
+        if (invalidPinCodes == null)
+        {
+            Session.SetDataToSession<Dictionary<string, int>>("InvalidPinCodes", new Dictionary<string, int>());
+            invalidPinCodes = Session.GetDataFromSession<Dictionary<string, int>>("InvalidPinCodes");
+        }
         if (!invalidPinCodes.ContainsKey(id))
         {
             invalidPinCodes.Add(id, 1);
@@ -163,8 +172,8 @@ public class HomeController : Controller
 
     private void NullifyTriesCount(string id)
     {
-        var invalidPinCodes = _session.InvalidPinCodes;
-        if (invalidPinCodes.ContainsKey(id))
+        var invalidPinCodes = Session.GetDataFromSession<Dictionary<string, int>>("InvalidPinCodes");
+        if (invalidPinCodes != null && invalidPinCodes.ContainsKey(id))
         {
             invalidPinCodes[id] = 0;
         }

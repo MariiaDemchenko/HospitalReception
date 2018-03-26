@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using CacheMachine.Helpers;
 
 namespace CacheMachine
 {
@@ -12,23 +12,22 @@ namespace CacheMachine
     {
         protected void Application_Start()
         {
+            AutofacConfig.RegisterDependencies();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        protected void Session_Start(Object sender, EventArgs e)
+        protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
-            var session = new SessionHelper();
-            var context = HttpContext.Current;
-            if (context == null)
+            var culture = "en-US";
+            if (Request.UserLanguages != null)
             {
-                return;
+                culture = Request.UserLanguages[0];
             }
-            session.IsAuthorized = false;
-            session.CardNumber = null;
-            session.InvalidPinCodes = new Dictionary<string, int>();
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
         }
     }
 }
