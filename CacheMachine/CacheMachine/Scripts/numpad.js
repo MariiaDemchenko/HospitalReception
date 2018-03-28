@@ -59,7 +59,7 @@ $(document).ready(function () {
         return maskLength;
     }
 
-    $(displayId).keydown(function (e) {
+    $(".num-display").keydown(function (e) {
         var key = e.key;
         var keyCode = getKeyCode(e.keyCode);
 
