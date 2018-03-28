@@ -49,11 +49,6 @@
   <ItemGroup>
     <Compile Include="CacheMachineContext.cs" />
     <Compile Include="CacheMachineInitializer.cs" />
-    <Compile Include="Migrations\201803230641165_Init.cs" />
-    <Compile Include="Migrations\201803230641165_Init.Designer.cs">
-      <DependentUpon>201803230641165_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Cache.cs" />
     <Compile Include="Models\Card.cs" />
@@ -71,11 +66,6 @@
       <Project>{fe5cc164-7274-41e5-962c-7e5e96e08681}</Project>
       <Name>CacheMachine.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803230641165_Init.resx">
-      <DependentUpon>201803230641165_Init.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

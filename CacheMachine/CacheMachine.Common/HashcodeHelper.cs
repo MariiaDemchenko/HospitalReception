@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 
 namespace CacheMachine.Common
 {
@@ -24,7 +25,7 @@ namespace CacheMachine.Common
         /// <returns>String</returns>
         private string ConvertBytesToString(byte[] bytes)
         {
-            return System.Text.Encoding.UTF8.GetString(bytes);
+            return Convert.ToBase64String(bytes);
         }
 
         /// <summary>

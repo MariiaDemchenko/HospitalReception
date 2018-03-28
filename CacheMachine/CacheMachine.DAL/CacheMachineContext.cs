@@ -10,6 +10,11 @@ namespace CacheMachine.DAL
         public DbSet<Action> Actions { get; set; }
         public DbSet<Operation> Operations { get; set; }
 
+        public CacheMachineContext() : base("CacheMachineContext")
+        {
+            Database.SetInitializer<CacheMachineContext>(new CacheMachineInitializer());
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

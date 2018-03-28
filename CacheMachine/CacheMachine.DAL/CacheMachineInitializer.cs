@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CacheMachine.DAL
 {
-    public class CacheMachineInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<CacheMachineContext>
+    public class CacheMachineInitializer : System.Data.Entity.CreateDatabaseIfNotExists<CacheMachineContext>
     {
         protected override void Seed(CacheMachineContext context)
         {
