@@ -8,10 +8,12 @@
         <div class="page-header">
             <h2>@Resources.OperationsList</h2>
         </div>
-        @Html.ActionLink(Resources.Balance, "Balance", null, new { @class = "btn btn-primary btn-block btn-menu" })
-        @Html.ActionLink(Resources.GetSum, "Cache", null, new { @class = "btn btn-primary btn-block btn-menu" })
-        <div class="btn-menu btn-block">
-            @Html.Partial("ExitButton")
+        <div class="cache-machine-content">
+            @Html.ActionLink(Resources.Balance, "Balance", null, new { @class = "btn btn-primary btn-block btn-menu" })
+            @Html.ActionLink(Resources.GetSum, "Cache", null, new { @class = "btn btn-primary btn-block btn-menu" })
+            <div class="btn-menu btn-block">
+                @Html.Partial("ExitButton")
+            </div>
         </div>
     </form>
 </content>

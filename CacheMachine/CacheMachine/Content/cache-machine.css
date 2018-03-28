@@ -47,3 +47,7 @@
     border-bottom: 1px solid #ddd;
     text-align: center;
 }
+
+.cache-machine-content {
+    margin: 10px auto;
+}

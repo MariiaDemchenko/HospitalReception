@@ -1,5 +1,4 @@
 ﻿@using CacheMachine.Common
-<div id="content" class="container">
     @using (Html.BeginForm("CheckCardNum", "Home", FormMethod.Post, new { @class = "form-cache-machine" }))
     {
         //TODO: separate Numpad and all the connected PartialViews correctly
@@ -8,7 +7,6 @@
         </div>
         @Html.Partial("Numpad/Numpad", Constants.CardNumMask)
     }
-</div>
 <script>
     $(document).ready(function () {
         initNumpad("inputField", "card-num");
