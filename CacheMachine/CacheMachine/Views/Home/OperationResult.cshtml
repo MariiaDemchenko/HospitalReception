@@ -5,29 +5,37 @@
 @model CacheMachine.DAL.Models.Operation
 
 <content id="operationContent">
-    <form class="form-signin">
-        <h2 class="form-signin-heading ">@Resources.OperationResult</h2>
-        <table class="table-striped table-bordered" width="310">
-            <tbody width="310">
+    <form class="form-cache-machine">
+        <div class="page-header">
+            <h2>@Resources.OperationResult</h2>
+        </div>
+        <table class="table table-striped table-bordered">
+            <tbody>
                 <tr>
-                    <th>@Resources.CardNumber</th>
-                    <th>@Model.CardId</th>
+                    <td>@Resources.CardNumber</td>
+                    <td>@Model.CardId</td>
                 </tr>
                 <tr>
-                    <th>@Resources.Date</th>
-                    <th>@Model.OperationDate.ToString("G")</th>
+                    <td>@Resources.Date</td>
+                    <td>@Model.OperationDate.ToString("g")</td>
                 </tr>
-            <tr>
-                <th>@Resources.CacheSum</th>
-                <th>@Model.Sum</th>
-            </tr>
-            <tr>
-                <th>@Resources.RemainSum</th>
-                <th>@Model.Card.Sum</th>
-            </tr>
+                <tr>
+                    <td>@Resources.CacheSum</td>
+                    <td>@Model.Sum</td>
+                </tr>
+                <tr>
+                    <td>@Resources.RemainSum</td>
+                    <td>@Model.Card.Sum</td>
+                </tr>
             </tbody>
         </table>
-            @Html.Partial("BackButton")
-            @Html.Partial("ExitButton")
+        <div class="row">
+            <div class="col-lg-6">
+                @Html.Partial("BackButton")
+            </div>
+            <div class="col-lg-6">
+                @Html.Partial("ExitButton")
+            </div>
+        </div>
     </form>
 </content>

@@ -1,8 +1,13 @@
 ﻿@{
     ViewBag.Title = "Error";
 }
-<form class="form-signin">
-    <h2>@ViewBag.Message</h2>
-    @Html.Partial("BackButton")
+<form class="form-cache-machine">
+    <div class="alert alert-danger">
+        <strong>Error:</strong> @ViewBag.Message.
+    </div>
+    <div class="btn-menu">
+        @Html.Partial("BackButton")
+    </div>
+    
 </form>
 

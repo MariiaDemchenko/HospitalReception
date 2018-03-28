@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace CacheMachine
 {
@@ -23,10 +22,16 @@ namespace CacheMachine
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/numpad").Include(
+                "~/Scripts/numpad.js"
+            ));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/cache-machine.css",
-                      "~/Content/site.css"));
+                "~/Content/font-awesome.min.css",
+                "~/Content/bootstrap.min.css",
+                "~/Content/site.css",
+                "~/Content/cache-machine.css"
+                ));
         }
     }
 }

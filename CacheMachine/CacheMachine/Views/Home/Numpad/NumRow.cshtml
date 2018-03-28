@@ -4,9 +4,13 @@
     @{
         if (Model == 0)
         {
+            <div class="col-lg-4">
+            </div>
             @Html.Partial("Numpad/NumButton", 0)
-            <div class=" col-sm-8">
-                <button class="btn-lg btn-num btn-default" id="btnClear">@Resources.Сlear</button>
+            <div class="col-lg-4">
+                <button class="btn btn-light btn-lg btn-clear" id="btnClear">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>
         }
         else

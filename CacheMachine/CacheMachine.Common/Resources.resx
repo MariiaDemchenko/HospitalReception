@@ -141,6 +141,9 @@
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error:</value>
+  </data>
   <data name="ErrorGettingCache" xml:space="preserve">
     <value>Error getting cache</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="SumAvailable" xml:space="preserve">
     <value>Sum available</value>
+  </data>
+  <data name="SumExceedsLimit" xml:space="preserve">
+    <value>Requested sum exceeds limit</value>
   </data>
   <data name="UserIsUnauthorized" xml:space="preserve">
     <value>User is not authorized</value>

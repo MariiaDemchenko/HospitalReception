@@ -13,5 +13,9 @@
         public const int KeyCode0 = 48;
         public const int KeyCode0NumPad = 96;
         public const int KeyCode9NumPad = 105;
+
+        public const string IsAuthorized = "IsAuthorized";
+        public const string CardNumber = "CardNumber";
+        public const string InvalidPinCodes = "InvalidPinCodes";
     }
 }

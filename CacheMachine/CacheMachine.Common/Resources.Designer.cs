@@ -133,6 +133,15 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error:.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error getting cache.
         /// </summary>
         public static string ErrorGettingCache {
@@ -255,6 +264,15 @@ namespace CacheMachine.Common {
         public static string SumAvailable {
             get {
                 return ResourceManager.GetString("SumAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requested sum exceeds limit.
+        /// </summary>
+        public static string SumExceedsLimit {
+            get {
+                return ResourceManager.GetString("SumExceedsLimit", resourceCulture);
             }
         }
         

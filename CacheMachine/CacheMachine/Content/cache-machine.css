@@ -1,47 +1,49 @@
 ﻿body {
-    padding-top: 40px;
-    padding-bottom: 40px;
     background-color: #eee;
 }
 
-.form-signin {
-    max-width: 340px;
+.form-cache-machine {
+    max-width: 40%;
     padding: 15px;
     margin: 0 auto;
 }
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-    margin-bottom: 10px;
-}
-.form-signin .checkbox {
-    font-weight: normal;
-}
-.form-signin .form-control {
-    position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 10px;
-    font-size: 16px;
-}
 
-.form-signin .form-control:focus {
-    z-index: 2;
-}
+    .form-cache-machine .form-control {
+        position: relative;
+        height: auto;
+        padding: 15px;
+        font-size: 18px;
+    }
 
-.num-row {
+.container .num-row {
+    margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-}
-
-.btn-num {
-    margin: 5px;
+    text-align: center
 }
 
 .numpad {
-    max-width: 80%;
-    margin: 0 auto;
-    padding: 5px;
+    max-width: 60%;
+    margin: 10px auto;
 }
 
+.btn-menu {
+    max-width: 60%;
+    margin: 0 auto;
+}
+
+.btn-num, .btn-clear {
+    width: 100%;
+}
+
+.num-display {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 2px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}

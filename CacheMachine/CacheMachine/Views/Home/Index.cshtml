@@ -1,10 +1,16 @@
 ﻿@using CacheMachine.Common
-<div id="content">
-    @using (Html.BeginForm("CheckCardNum", "Home", FormMethod.Post, new { @class = "form-signin" }))
+<div id="content" class="container">
+    @using (Html.BeginForm("CheckCardNum", "Home", FormMethod.Post, new { @class = "form-cache-machine" }))
     {
         //TODO: separate Numpad and all the connected PartialViews correctly
-        <h2 class="form-signin-heading ">@Resources.InputCardNum</h2>
+        <div class="page-header">
+            <h2>@Resources.InputCardNum</h2>
+        </div>
         @Html.Partial("Numpad/Numpad", Constants.CardNumMask)
-        @Html.Partial("OkButton")
     }
 </div>
+<script>
+    $(document).ready(function () {
+        initNumpad("inputField", "card-num");
+    });
+</script>

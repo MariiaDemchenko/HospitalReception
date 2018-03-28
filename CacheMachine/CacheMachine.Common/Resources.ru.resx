@@ -144,6 +144,9 @@
   <data name="Date" xml:space="preserve">
     <value>Дата</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка:</value>
+  </data>
   <data name="ErrorGettingCache" xml:space="preserve">
     <value>Произошла ошибка при попытке снятия денег</value>
   </data>
@@ -185,6 +188,9 @@
   </data>
   <data name="SumAvailable" xml:space="preserve">
     <value>Сумма на счету</value>
+  </data>
+  <data name="SumExceedsLimit" xml:space="preserve">
+    <value>Превышен лимит запрашиваемой суммы</value>
   </data>
   <data name="UserIsUnauthorized" xml:space="preserve">
     <value>Пользователь не авторизован</value>

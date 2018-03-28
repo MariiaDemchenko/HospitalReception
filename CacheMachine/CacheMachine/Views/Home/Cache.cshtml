@@ -1,17 +1,22 @@
 ﻿@{
     ViewBag.Title = "Pin Code";
 }
-
 @using CacheMachine.Common
-@model string
 
 <content id="pinCodeContent">
-    @using (Html.BeginForm("OperationResult", "Home", FormMethod.Post, new { @class = "form-signin" }))
+    @using (Html.BeginForm("OperationResult", "Home", FormMethod.Post, new { @class = "form-cache-machine" }))
     {
-        <h2 class="form-signin-heading ">@Resources.GetCache</h2>
+        <div class="page-header">
+            <h2>@Resources.GetCache</h2>
+        </div>
         @Html.Partial("Numpad/Numpad", string.Empty)
-        @Html.Hidden("id", Model)
-        @Html.Partial("OkButton")
-        @Html.Partial("ExitButton")
+        <div class="btn-menu">
+            @Html.Partial("ExitButton")
+        </div>
     }
 </content>
+<script>
+    $(document).ready(function () {
+        initNumpad("inputField", "sum");
+    });
+</script>

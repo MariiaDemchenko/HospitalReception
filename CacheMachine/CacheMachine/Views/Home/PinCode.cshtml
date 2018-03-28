@@ -5,11 +5,20 @@
 @using CacheMachine.Common
 
 <content id="pinCodeContent">
-    @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Post, new { @class = "form-signin" }))
+    @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Post, new { @class = "form-cache-machine" }))
     {
-        <h2 class="form-signin-heading ">@Resources.InputPinCode</h2>
+        <div class="page-header">
+            <h2>@Resources.InputPinCode</h2>
+        </div>
         @Html.Partial("Numpad/Numpad", Constants.PinCodeMask)
-        @Html.Partial("OkButton")
-        @Html.Partial("ExitButton")
+        <div class="btn-menu">
+            @Html.Partial("ExitButton")
+        </div>
+        
     }
 </content>
+<script>
+    $(document).ready(function () {
+        initNumpad("inputField", "pin-code");
+    });
+</script>
