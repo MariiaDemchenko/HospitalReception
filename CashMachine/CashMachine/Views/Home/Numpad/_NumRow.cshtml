@@ -1,0 +1,24 @@
+﻿@using CashMachine.ViewModels
+@model NumRowViewModel
+<div class="row num-row">
+    @{
+        if (Model.RowId == 0)
+        {
+            <div class="col-lg-4">
+            </div>
+            @Html.Partial("Numpad/_NumButton", new NumButtonViewModel { DisplayId = Model.DisplayId, Number = 0 })
+            <div class="col-lg-4">
+                <button class="btn btn-light btn-lg btn-clear" id="btnClear" displayId=@Model.DisplayId>
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        }
+        else
+        {
+            for (var i = Model.RowId; i < Model.RowId + 3; i++)
+            {
+                @Html.Partial("Numpad/_NumButton", new NumButtonViewModel { DisplayId = Model.DisplayId, Number = i })
+            }
+        }
+    }
+</div>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Pin Code";
+}
+@using CashMachine.Common
+@using CashMachine.ViewModels
+<content id="pinCodeContent">
+    @using (Html.BeginForm("OperationResult", "Home", FormMethod.Post, new { @class = "form-cash-machine" }))
+    {
+        <div class="page-header">
+            <h2>@Resources.GetCash</h2>
+        </div>
+        @Html.Partial("Numpad/_Numpad", new NumDisplayViewModel { Id = "inputSum", Mask = string.Empty })
+        <div class="btn-menu">
+            @Html.Partial("_ExitButton")
+        </div>
+    }
+</content>

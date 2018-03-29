@@ -1,0 +1,18 @@
+﻿@using CashMachine.Common
+@{
+    ViewBag.Title = "Operation";
+}
+<content id="operationContent">
+    <form class="form-cash-machine">
+        <div class="page-header">
+            <h2>@Resources.OperationsList</h2>
+        </div>
+        <div class="cash-machine-content">
+            @Html.ActionLink(Resources.Balance, "Balance", null, new { @class = "btn btn-primary btn-block btn-menu" })
+            @Html.ActionLink(Resources.GetSum, "Cash", null, new { @class = "btn btn-primary btn-block btn-menu" })
+            <div class="btn-menu btn-block">
+                @Html.Partial("_ExitButton")
+            </div>
+        </div>
+    </form>
+</content>

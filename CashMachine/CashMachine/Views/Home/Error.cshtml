@@ -1,0 +1,12 @@
+﻿@using CashMachine.Common
+@{
+    ViewBag.Title = "Error";
+}
+<form class="form-cash-machine">
+    <div class="alert alert-danger">
+        <strong>Error:</strong> @TempData[Constants.ErrorTextKey]
+    </div>
+    <div class="btn-menu">
+        @Html.Partial("_BackButton")
+    </div>
+</form>

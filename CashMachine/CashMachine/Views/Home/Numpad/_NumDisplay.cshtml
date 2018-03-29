@@ -1,0 +1,12 @@
+﻿@using CashMachine.Common
+@model CashMachine.ViewModels.NumDisplayViewModel
+@{
+    if (Model.Mask == Constants.PinCodeMask)
+    {
+        @Html.Partial("Numpad/_PasswordNumDisplay", Model);
+    }
+    else
+    {
+        @Html.Partial("Numpad/_TextNumDisplay", Model);
+    }
+}
