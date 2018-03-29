@@ -1,28 +1,21 @@
 ﻿using CacheMachine.DAL.Models;
-using System.Collections.Generic;
 
 namespace CacheMachine.DAL.Repository
 {
     public interface IRepository
     {
-        List<Card> GetAllCards();
+        Operation AddOperation(string cardId, int actionId, int? sum = null);
 
-        List<Operation> GetAllOperations();
-
-        List<Action> GetAllActions();
-
-        Card GetCardById(string cardNum);
-
-        Operation AddOperation(Operation operation);
+        Card BlockCard(string cardNum);
 
         Card EditCard(Card card);
 
-        Card GetCardByIdAndPinCode(string cardNum, string pinCode);
-
         Action GetActionByDescription(string description);
 
-        Operation GetOperationIncludeCardById(int id);
+        Card GetCardById(string cardNum);
 
-        Card BlockCard(string cardNum);
+        Card GetCardByIdAndPinCode(string cardNum, string pinCode);
+
+        Operation GetOperationIncludeCardById(int id);
     }
 }

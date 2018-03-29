@@ -1,12 +1,12 @@
 ﻿using CacheMachine.Common;
 using CacheMachine.DAL.Models;
-using System.Collections.Generic;
+using System;
 using System.Data.Entity;
 using System.Linq;
+using Action = CacheMachine.DAL.Models.Action;
 
 namespace CacheMachine.DAL.Repository
 {
-    //TODO: optimize/clear methods
     public class CacheMachineRepository : IRepository
     {
         private readonly HashcodeHelper _hashHelper;
@@ -16,24 +16,56 @@ namespace CacheMachine.DAL.Repository
             _hashHelper = new HashcodeHelper();
         }
 
-        public List<Card> GetAllCards()
+        public Operation AddOperation(string cardId, int actionId, int? sum = null)
         {
-            List<Card> users;
-            using (var context = new CacheMachineContext())
+            var operation = new Operation
             {
-                users = context.Cards.ToList();
+                OperationDate = DateTime.Now,
+                CardId = cardId,
+                ActionId = actionId,
+                Sum = sum
+            };
+
+            using (var db = new CacheMachineContext())
+            {
+                db.Operations.Add(operation);
+                db.SaveChanges();
             }
-            return users;
+
+            return operation;
         }
 
-        public List<Operation> GetAllOperations()
+        public Card BlockCard(string cardNum)
         {
-            List<Operation> operations;
+            var card = GetCardById(cardNum);
+            card.IsBlocked = true;
+            using (var db = new CacheMachineContext())
+            {
+                db.Entry(card).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return card;
+        }
+
+        public Card EditCard(Card card)
+        {
+            using (var db = new CacheMachineContext())
+            {
+                db.Entry(card).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return card;
+        }
+
+        public Action GetActionByDescription(string description)
+        {
+            Action action;
             using (var context = new CacheMachineContext())
             {
-                operations = context.Operations.ToList();
+                action = context.Actions.FirstOrDefault(a => a.Description == description);
             }
-            return operations;
+
+            return action;
         }
 
         public Card GetCardById(string cardNum)
@@ -58,39 +90,6 @@ namespace CacheMachine.DAL.Repository
             return match ? card : null;
         }
 
-        public List<Action> GetAllActions()
-        {
-            List<Action> actions;
-            using (var context = new CacheMachineContext())
-            {
-                actions = context.Actions.ToList();
-            }
-
-            return actions;
-        }
-
-        public Action GetActionByDescription(string description)
-        {
-            Action action;
-            using (var context = new CacheMachineContext())
-            {
-                action = context.Actions.FirstOrDefault(a => a.Description == description);
-            }
-
-            return action;
-        }
-
-        public Operation AddOperation(Operation operation)
-        {
-            using (var db = new CacheMachineContext())
-            {
-                db.Operations.Add(operation);
-                db.SaveChanges();
-            }
-
-            return operation;
-        }
-
         public Operation GetOperationIncludeCardById(int id)
         {
             Operation operation;
@@ -99,28 +98,6 @@ namespace CacheMachine.DAL.Repository
                 operation = context.Operations.Include(o => o.Card).FirstOrDefault(oper => oper.Id == id);
             }
             return operation;
-        }
-
-        public Card EditCard(Card card)
-        {
-            using (var db = new CacheMachineContext())
-            {
-                db.Entry(card).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return card;
-        }
-
-        public Card BlockCard(string cardNum)
-        {
-            var card = GetCardById(cardNum);
-            card.IsBlocked = true;
-            using (var db = new CacheMachineContext())
-            {
-                db.Entry(card).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return card;
         }
     }
 }

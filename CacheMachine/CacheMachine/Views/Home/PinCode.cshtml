@@ -9,9 +9,9 @@
         <div class="page-header">
             <h2>@Resources.InputPinCode</h2>
         </div>
-        @Html.Partial("Numpad/Numpad", new NumDisplayViewModel { Id = "inputPinCode", Mask = Constants.PinCodeMask })
+        @Html.Partial("Numpad/_Numpad", new NumDisplayViewModel { Id = "inputPinCode", Mask = Constants.PinCodeMask })
         <div class="btn-menu">
-            @Html.Partial("ExitButton")
+            @Html.Partial("_ExitButton")
         </div>
     }
 </content>

@@ -144,6 +144,9 @@
   <data name="Date" xml:space="preserve">
     <value>Дата</value>
   </data>
+  <data name="DefaultErrorMessage" xml:space="preserve">
+    <value>Произошла ошибка</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Ошибка:</value>
   </data>
@@ -157,7 +160,7 @@
     <value>Выход</value>
   </data>
   <data name="GetCache" xml:space="preserve">
-    <value>GetCache</value>
+    <value>Снятие денег</value>
   </data>
   <data name="GetSum" xml:space="preserve">
     <value>Снять сумму</value>
@@ -194,8 +197,5 @@
   </data>
   <data name="UserIsUnauthorized" xml:space="preserve">
     <value>Пользователь не авторизован</value>
-  </data>
-  <data name="ViewBalance" xml:space="preserve">
-    <value>ViewBalance</value>
   </data>
 </root>

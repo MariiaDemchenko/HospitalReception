@@ -12,7 +12,7 @@ namespace CacheMachine.DAL
 
         public CacheMachineContext() : base("CacheMachineContext")
         {
-            Database.SetInitializer<CacheMachineContext>(new CacheMachineInitializer());
+            Database.SetInitializer(new CacheMachineInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

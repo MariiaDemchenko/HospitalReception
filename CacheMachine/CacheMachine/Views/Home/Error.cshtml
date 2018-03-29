@@ -1,11 +1,12 @@
-﻿@{
+﻿@using CacheMachine.Common
+@{
     ViewBag.Title = "Error";
 }
 <form class="form-cache-machine">
     <div class="alert alert-danger">
-        <strong>Error:</strong> @ViewBag.Message.
+        <strong>Error:</strong> @TempData[Constants.ErrorTextKey]
     </div>
     <div class="btn-menu">
-        @Html.Partial("BackButton")
+        @Html.Partial("_BackButton")
     </div>
 </form>

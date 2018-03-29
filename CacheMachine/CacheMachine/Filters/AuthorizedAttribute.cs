@@ -13,11 +13,11 @@ namespace CacheMachine.Filters
                                                   filterContext.ActionDescriptor.ActionName);
             if (!(bool)HttpContext.Current.Session["IsAuthorized"])
             {
+                filterContext.Controller.TempData[Constants.ErrorTextKey] = Resources.UserIsUnauthorized;
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary{
                         {"controller", "Home"},
-                        {"action", "Error"},
-                        {"message", Resources.UserIsUnauthorized}
+                        {"action", "Error"}
                     });
             }
 

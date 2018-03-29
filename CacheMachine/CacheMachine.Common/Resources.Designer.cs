@@ -133,6 +133,15 @@ namespace CacheMachine.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occured.
+        /// </summary>
+        public static string DefaultErrorMessage {
+            get {
+                return ResourceManager.GetString("DefaultErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error:.
         /// </summary>
         public static string Error {
@@ -282,15 +291,6 @@ namespace CacheMachine.Common {
         public static string UserIsUnauthorized {
             get {
                 return ResourceManager.GetString("UserIsUnauthorized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View balance.
-        /// </summary>
-        public static string ViewBalance {
-            get {
-                return ResourceManager.GetString("ViewBalance", resourceCulture);
             }
         }
         

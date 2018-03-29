@@ -23,7 +23,7 @@ namespace CacheMachine
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/numpad").Include(
-                "~/Scripts/numpad.js"
+                "~/Scripts/App/numpad.js"
             ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

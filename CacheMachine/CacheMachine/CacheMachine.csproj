@@ -222,7 +222,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\numpad.js" />
+    <Content Include="Scripts\App\numpad.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config" />
@@ -242,17 +242,17 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\Balance.cshtml" />
     <Content Include="Views\Home\Cache.cshtml" />
-    <Content Include="Views\Home\Numpad\Numpad.cshtml" />
+    <Content Include="Views\Home\Numpad\_Numpad.cshtml" />
     <Content Include="Views\Home\OperationResult.cshtml" />
-    <Content Include="Views\Home\Numpad\NumButton.cshtml" />
-    <Content Include="Views\Home\Numpad\NumRow.cshtml" />
-    <Content Include="Views\Home\Numpad\NumDisplay.cshtml" />
-    <Content Include="Views\Home\Numpad\PasswordNumDisplay.cshtml" />
-    <Content Include="Views\Home\Numpad\TextNumDisplay.cshtml" />
-    <Content Include="Views\Home\Numpad\NumKeyboard.cshtml" />
-    <Content Include="Views\Home\BackButton.cshtml" />
-    <Content Include="Views\Home\ExitButton.cshtml" />
-    <Content Include="Views\Home\OkButton.cshtml" />
+    <Content Include="Views\Home\Numpad\_NumButton.cshtml" />
+    <Content Include="Views\Home\Numpad\_NumRow.cshtml" />
+    <Content Include="Views\Home\Numpad\_NumDisplay.cshtml" />
+    <Content Include="Views\Home\Numpad\_PasswordNumDisplay.cshtml" />
+    <Content Include="Views\Home\Numpad\_TextNumDisplay.cshtml" />
+    <Content Include="Views\Home\Numpad\_NumKeyboard.cshtml" />
+    <Content Include="Views\Home\_BackButton.cshtml" />
+    <Content Include="Views\Home\_ExitButton.cshtml" />
+    <Content Include="Views\Home\_OkButton.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

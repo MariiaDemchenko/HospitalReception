@@ -9,9 +9,9 @@
         <div class="page-header">
             <h2>@Resources.GetCache</h2>
         </div>
-        @Html.Partial("Numpad/Numpad", new NumDisplayViewModel { Id = "inputSum", Mask = string.Empty })
+        @Html.Partial("Numpad/_Numpad", new NumDisplayViewModel { Id = "inputSum", Mask = string.Empty })
         <div class="btn-menu">
-            @Html.Partial("ExitButton")
+            @Html.Partial("_ExitButton")
         </div>
     }
 </content>

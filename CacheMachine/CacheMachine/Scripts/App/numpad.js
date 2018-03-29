@@ -1,19 +1,20 @@
-﻿var cardNumMaskLength = 16;
-var pinCodeMaskLength = 4;
+﻿$(function () {
+    var cardNumMaskLength = 16;
+    var pinCodeMaskLength = 4;
 
-var keyCode0NumPad = 96;
-var keyCode9NumPad = 105;
-var keyCode0 = 48;
+    var keyCode0NumPad = 96;
+    var keyCode9NumPad = 105;
+    var keyCode0 = 48;
 
-var cardNumClassName = "card-num";
-var pinCodeClassName = "pin-code";
+    var cardNumClassName = "card-num";
+    var pinCodeClassName = "pin-code";
 
-var numAttribute = "num";
-var displayIdAttribute = "displayId";
+    var numAttribute = "num";
 
-var allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight"];
+    var displayIdAttribute = "displayId";
 
-$(document).ready(function () {
+    var allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight"];
+
     var displayId;
     var displayElementId;
 
@@ -22,7 +23,7 @@ $(document).ready(function () {
         displayElementId = id;
     }
 
-    $(".btn-num").click(function () {
+    $(".btn-num").on("click", function () {
         event.preventDefault();
         var num = $(this).attr(numAttribute);
         setDisplayId($(this).attr(displayIdAttribute));
@@ -30,7 +31,7 @@ $(document).ready(function () {
         $(displayId).focus();
     });
 
-    $(".btn-clear").click(function () {
+    $(".btn-clear").on("click", function () {
         setDisplayId($(this).attr(displayIdAttribute));
         var inputField = $(displayId);
         inputField.val("");
@@ -38,7 +39,7 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
-    $(".btn-back").click(function (event) {
+    $(".btn-back").on("click", function (event) {
         event.preventDefault();
         history.go(-1);
     });
@@ -72,7 +73,7 @@ $(document).ready(function () {
         return maskLength;
     }
 
-    $(".num-display").keydown(function (e) {
+    $(".num-display").on("keydown", function (e) {
         setDisplayId($(this).attr("id"));
         var key = e.key;
         var keyCode = getKeyCode(e.keyCode);

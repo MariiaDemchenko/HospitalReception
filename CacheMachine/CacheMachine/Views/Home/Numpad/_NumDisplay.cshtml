@@ -3,10 +3,10 @@
 @{
     if (Model.Mask == Constants.PinCodeMask)
     {
-        @Html.Partial("Numpad/PasswordNumDisplay", Model);
+        @Html.Partial("Numpad/_PasswordNumDisplay", Model);
     }
     else
     {
-        @Html.Partial("Numpad/TextNumDisplay", Model);
+        @Html.Partial("Numpad/_TextNumDisplay", Model);
     }
 }
