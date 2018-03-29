@@ -1,23 +1,23 @@
-﻿@using CacheMachine.Common
-@model int?
+﻿@using CacheMachine.ViewModels
+@model NumRowViewModel
 <div class="row num-row">
     @{
-        if (Model == 0)
+        if (Model.RowId == 0)
         {
             <div class="col-lg-4">
             </div>
-            @Html.Partial("Numpad/NumButton", 0)
+            @Html.Partial("Numpad/NumButton", new NumButtonViewModel { DisplayId = Model.DisplayId, Number = 0 })
             <div class="col-lg-4">
-                <button class="btn btn-light btn-lg btn-clear" id="btnClear">
+                <button class="btn btn-light btn-lg btn-clear" id="btnClear" displayId=@Model.DisplayId>
                     <i class="fa fa-times"></i>
                 </button>
             </div>
         }
         else
         {
-            for (var i = Model; i < Model + 3; i++)
+            for (var i = Model.RowId; i < Model.RowId + 3; i++)
             {
-                @Html.Partial("Numpad/NumButton", i)
+                @Html.Partial("Numpad/NumButton", new NumButtonViewModel { DisplayId = Model.DisplayId, Number = i })
             }
         }
     }

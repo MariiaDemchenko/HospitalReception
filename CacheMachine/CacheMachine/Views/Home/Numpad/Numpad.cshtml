@@ -1,6 +1,6 @@
-﻿@model string
+﻿@model CacheMachine.ViewModels.NumDisplayViewModel
 <div class="numpad">
     @Html.Partial("Numpad/NumDisplay", Model)
-    @Html.Partial("Numpad/NumKeyboard")
+    @Html.Partial("Numpad/NumKeyboard", Model.Id)
     @Html.Partial("OkButton")
 </div>

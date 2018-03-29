@@ -1,4 +1,5 @@
-﻿@{
-    var className = string.IsNullOrEmpty(Model) ? string.Empty : "card-num";
+﻿@model CacheMachine.ViewModels.NumDisplayViewModel
+@{
+    var className = string.IsNullOrEmpty(Model.Mask) ? string.Empty : "card-num";
 }
-@Html.TextBox("inputField", null, new { @class = $"num-display form-control  {className}", placeholder = Model, autocomplete = "off", autofocus = "true" })
+@Html.TextBox(Model.Id, null, new { @class = $"num-display form-control  {className}", placeholder = Model.Mask, autocomplete = "off", autofocus = "true" })

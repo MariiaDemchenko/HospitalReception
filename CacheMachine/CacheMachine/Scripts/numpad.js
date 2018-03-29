@@ -1,38 +1,50 @@
-﻿var displayId;
-var displayElementId;
-var className;
-var cardNumClassName = "card-num";
-var pinCodeClassName = "pin-code";
-var cardNumMaskLength = 16;
+﻿var cardNumMaskLength = 16;
 var pinCodeMaskLength = 4;
+
 var keyCode0NumPad = 96;
 var keyCode9NumPad = 105;
 var keyCode0 = 48;
-var numAttribute = "num";
 
-function initNumpad(numpadId, numpadClassName) {
-    displayId = "#" + numpadId;
-    displayElementId = numpadId;
-    className = numpadClassName;
-}
+var cardNumClassName = "card-num";
+var pinCodeClassName = "pin-code";
+
+var numAttribute = "num";
+var displayIdAttribute = "displayId";
+
+var allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight"];
 
 $(document).ready(function () {
+    var displayId;
+    var displayElementId;
+
+    function setDisplayId(id) {
+        displayId = "#" + id;
+        displayElementId = id;
+    }
+
     $(".btn-num").click(function () {
         event.preventDefault();
         var num = $(this).attr(numAttribute);
+        setDisplayId($(this).attr(displayIdAttribute));
         updateInput(num);
         $(displayId).focus();
     });
 
     $(".btn-clear").click(function () {
-        var inputField = $(".num-display");
+        setDisplayId($(this).attr(displayIdAttribute));
+        var inputField = $(displayId);
         inputField.val("");
         inputField.focus();
         event.preventDefault();
     });
 
+    $(".btn-back").click(function (event) {
+        event.preventDefault();
+        history.go(-1);
+    });
+
     function checkIsSymbolAllowed(symbol) {
-        return symbol === "Backspace" || symbol === "Delete" || symbol === "ArrowLeft" || symbol === "ArrowRight";
+        return allowedKeys.includes(symbol);
     }
 
     function getKeyCode(keyCode) {
@@ -47,8 +59,9 @@ $(document).ready(function () {
     }
 
     function getMaskLength() {
-        var isCardNum = className === cardNumClassName;
-        var isPassword = className === pinCodeClassName;
+        var inputElement = $(displayId);
+        var isCardNum = inputElement.hasClass(cardNumClassName);
+        var isPassword = inputElement.hasClass(pinCodeClassName);
 
         var maskLength = 0;
         if (isCardNum) {
@@ -60,6 +73,7 @@ $(document).ready(function () {
     }
 
     $(".num-display").keydown(function (e) {
+        setDisplayId($(this).attr("id"));
         var key = e.key;
         var keyCode = getKeyCode(e.keyCode);
 

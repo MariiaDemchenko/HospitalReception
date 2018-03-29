@@ -1,14 +1,10 @@
 ﻿@using CacheMachine.Common
-    @using (Html.BeginForm("CheckCardNum", "Home", FormMethod.Post, new { @class = "form-cache-machine" }))
-    {
-        //TODO: separate Numpad and all the connected PartialViews correctly
-        <div class="page-header">
-            <h2>@Resources.InputCardNum</h2>
-        </div>
-        @Html.Partial("Numpad/Numpad", Constants.CardNumMask)
-    }
-<script>
-    $(document).ready(function () {
-        initNumpad("inputField", "card-num");
-    });
-</script>
+@using CacheMachine.ViewModels
+@using (Html.BeginForm("CheckCardNum", "Home", FormMethod.Post, new { @class = "form-cache-machine" }))
+{
+    //TODO: separate Numpad and all the connected PartialViews correctly
+    <div class="page-header">
+        <h2>@Resources.InputCardNum</h2>
+    </div>
+    @Html.Partial("Numpad/Numpad", new NumDisplayViewModel { Id = "inputCardNum", Mask = Constants.CardNumMask })
+}

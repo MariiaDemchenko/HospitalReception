@@ -1,24 +1,17 @@
 ﻿@{
     ViewBag.Title = "Pin Code";
 }
-
 @using CacheMachine.Common
-
+@using CacheMachine.ViewModels
 <content id="pinCodeContent">
     @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Post, new { @class = "form-cache-machine" }))
     {
         <div class="page-header">
             <h2>@Resources.InputPinCode</h2>
         </div>
-        @Html.Partial("Numpad/Numpad", Constants.PinCodeMask)
+        @Html.Partial("Numpad/Numpad", new NumDisplayViewModel { Id = "inputPinCode", Mask = Constants.PinCodeMask })
         <div class="btn-menu">
             @Html.Partial("ExitButton")
         </div>
-        
     }
 </content>
-<script>
-    $(document).ready(function () {
-        initNumpad("inputField", "pin-code");
-    });
-</script>

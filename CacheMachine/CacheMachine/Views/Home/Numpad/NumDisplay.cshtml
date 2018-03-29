@@ -1,9 +1,9 @@
 ﻿@using CacheMachine.Common
-@model string
+@model CacheMachine.ViewModels.NumDisplayViewModel
 @{
-    if (Model==Constants.PinCodeMask)
+    if (Model.Mask == Constants.PinCodeMask)
     {
-        @Html.Partial("Numpad/PasswordNumDisplay");
+        @Html.Partial("Numpad/PasswordNumDisplay", Model);
     }
     else
     {

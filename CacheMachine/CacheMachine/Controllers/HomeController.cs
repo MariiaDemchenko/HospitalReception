@@ -25,14 +25,14 @@ namespace CacheMachine.Controllers
             return View();
         }
 
-        public ActionResult CheckCardNum(string inputField)
+        public ActionResult CheckCardNum(string inputCardNum)
         {
-            if (string.IsNullOrEmpty(inputField))
+            if (string.IsNullOrEmpty(inputCardNum))
             {
                 return RedirectToAction("Error", new { message = Resources.CardNotFound });
             }
 
-            var cardNumber = inputField.Replace(Constants.Dash, string.Empty);
+            var cardNumber = inputCardNum.Replace(Constants.Dash, string.Empty);
             Card card = _repository.GetCardById(cardNumber);
             if (card == null)
             {
@@ -49,10 +49,10 @@ namespace CacheMachine.Controllers
             return View("Cache");
         }
 
-        public ActionResult CheckPinCode(string inputField)
+        public ActionResult CheckPinCode(string inputPinCode)
         {
             var id = Session.GetDataFromSession<string>(Constants.CardNumber);
-            var pinCode = inputField;
+            var pinCode = inputPinCode;
             var card = _repository.GetCardByIdAndPinCode(id, pinCode);
             if (card != null)
             {
@@ -112,11 +112,11 @@ namespace CacheMachine.Controllers
         }
 
         [Authorized]
-        public ActionResult OperationResult(string inputField = Constants.Empty)
+        public ActionResult OperationResult(string inputSum = Constants.Empty)
         {
-            inputField = inputField.TrimStart('0');
-            int.TryParse(inputField, out var sum);
-            if (!string.IsNullOrEmpty(inputField) && sum == 0)
+            inputSum = inputSum.TrimStart('0');
+            int.TryParse(inputSum, out var sum);
+            if (!string.IsNullOrEmpty(inputSum) && sum == 0)
             {
                 return RedirectToAction("Error", new { message = Resources.SumExceedsLimit });
             }
