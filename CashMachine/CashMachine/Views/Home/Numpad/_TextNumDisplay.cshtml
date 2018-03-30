@@ -1,5 +1,6 @@
-﻿@model CashMachine.ViewModels.NumDisplayViewModel
-@{
-    var className = string.IsNullOrEmpty(Model.Mask) ? string.Empty : "card-num";
-}
-@Html.TextBox(Model.Id, null, new { @class = $"num-display form-control  {className}", placeholder = Model.Mask, autocomplete = "off", autofocus = "true" })
+﻿@using CashMachine.Common
+@model CashMachine.ViewModels.NumDisplayViewModel
+@Html.TextBox(Model.Id, null, new { @class = "num-display form-control card-num", placeholder = Model.Mask, autocomplete = "off", autofocus = "true", pattern = ".{19,}", required = "" })
+<div class="invalid-feedback">
+    @Resources.CardNumIsInvalid
+</div>

@@ -124,6 +124,15 @@ namespace CashMachine.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Card number must be a numeric 16-digit value.
+        /// </summary>
+        public static string CardNumIsInvalid {
+            get {
+                return ResourceManager.GetString("CardNumIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {
@@ -255,6 +264,15 @@ namespace CashMachine.Common {
         public static string OperationsList {
             get {
                 return ResourceManager.GetString("OperationsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin-code must be a numeric 4-digit value.
+        /// </summary>
+        public static string PinCodeIsInvalid {
+            get {
+                return ResourceManager.GetString("PinCodeIsInvalid", resourceCulture);
             }
         }
         

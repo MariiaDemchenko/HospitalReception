@@ -23,12 +23,12 @@
 }
 
 .numpad {
-    max-width: 60%;
+    width: 70%;
     margin: 10px auto;
 }
 
 .btn-menu {
-    max-width: 60%;
+    max-width: 70%;
     margin: 0 auto;
 }
 

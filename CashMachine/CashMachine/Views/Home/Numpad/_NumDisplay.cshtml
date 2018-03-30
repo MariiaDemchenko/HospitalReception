@@ -5,8 +5,12 @@
     {
         @Html.Partial("Numpad/_PasswordNumDisplay", Model);
     }
-    else
+    else if (Model.Mask == Constants.CardNumMask)
     {
         @Html.Partial("Numpad/_TextNumDisplay", Model);
+    }
+    else
+    {
+        @Html.Partial("Numpad/_SumDisplay", Model);
     }
 }

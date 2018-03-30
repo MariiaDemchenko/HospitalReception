@@ -253,6 +253,7 @@
     <Content Include="Views\Home\_BackButton.cshtml" />
     <Content Include="Views\Home\_ExitButton.cshtml" />
     <Content Include="Views\Home\_OkButton.cshtml" />
+    <Content Include="Views\Home\Numpad\_SumDisplay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

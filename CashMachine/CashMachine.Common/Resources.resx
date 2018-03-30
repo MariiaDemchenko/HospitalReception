@@ -138,6 +138,9 @@
   <data name="CardNumber" xml:space="preserve">
     <value>Card number</value>
   </data>
+  <data name="CardNumIsInvalid" xml:space="preserve">
+    <value>Card number must be a numeric 16-digit value</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="OperationsList" xml:space="preserve">
     <value>Operations list</value>
+  </data>
+  <data name="PinCodeIsInvalid" xml:space="preserve">
+    <value>Pin-code must be a numeric 4-digit value</value>
   </data>
   <data name="RemainSum" xml:space="preserve">
     <value>Remain sum</value>

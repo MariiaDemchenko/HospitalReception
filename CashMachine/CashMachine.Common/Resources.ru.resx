@@ -138,6 +138,9 @@
   <data name="CardNumber" xml:space="preserve">
     <value>Номер карты</value>
   </data>
+  <data name="CardNumIsInvalid" xml:space="preserve">
+    <value>Номер карты должен содержать 16 цифр</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>Очистить</value>
   </data>
@@ -185,6 +188,9 @@
   </data>
   <data name="OperationsList" xml:space="preserve">
     <value>Список операций</value>
+  </data>
+  <data name="PinCodeIsInvalid" xml:space="preserve">
+    <value>Пин-код должен содержать 4 цифры</value>
   </data>
   <data name="RemainSum" xml:space="preserve">
     <value>Остаток на счету</value>

@@ -4,12 +4,14 @@
 @using CashMachine.Common
 @using CashMachine.ViewModels
 <content id="pinCodeContent">
-    @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Post, new { @class = "form-cash-machine" }))
+    @using (Html.BeginForm("CheckPinCode", "Home", FormMethod.Post, new { id="needs-validation", novalidate="", @class = "form-cash-machine" }))
     {
         <div class="page-header">
             <h2>@Resources.InputPinCode</h2>
         </div>
-        @Html.Partial("Numpad/_Numpad", new NumDisplayViewModel { Id = "inputPinCode", Mask = Constants.PinCodeMask })
+        <div class="form-row">
+            @Html.Partial("Numpad/_Numpad", new NumDisplayViewModel { Id = "inputPinCode", Mask = Constants.PinCodeMask })
+        </div>
         <div class="btn-menu">
             @Html.Partial("_ExitButton")
         </div>
