@@ -17,26 +17,10 @@ namespace CashMachine.Controllers
             _repository = repository;
         }
 
-        [Authorized]
-        public ActionResult Balance()
+        public ActionResult Index()
         {
-            var action = _repository.GetActionByDescription(Constants.ViewBalanceDescription);
-            var card = _repository.GetCardById(Session.GetDataFromSession<string>(Constants.CardNumberKey));
-
-            if (action == null || card == null)
-            {
-                TempData[Constants.ErrorTextKey] = Resources.ErrorShowingBalance;
-                return RedirectToAction("Error");
-            }
-
-            var operation = _repository.AddOperation(card.Id, action.Id);
-
-            return View(_repository.GetOperationIncludeCardById(operation.Id));
-        }
-
-        [Authorized]
-        public ActionResult Cash()
-        {
+            Session.SetDataToSession<bool>(Constants.IsAuthorizedKey, false);
+            Session.SetDataToSession<string>(Constants.CardNumberKey, null);
             return View();
         }
 
@@ -60,6 +44,16 @@ namespace CashMachine.Controllers
             return RedirectToAction("PinCode");
         }
 
+        public ActionResult PinCode()
+        {
+            Session.SetDataToSession<bool>(Constants.IsAuthorizedKey, false);
+            if (Session.GetDataFromSession<string>(Constants.CardNumberKey) == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
         public ActionResult CheckPinCode(string inputPinCode)
         {
             var id = Session.GetDataFromSession<string>(Constants.CardNumberKey);
@@ -77,56 +71,31 @@ namespace CashMachine.Controllers
             return RedirectToAction("Error");
         }
 
-        private bool CheckTriesCountIsValid(string id)
+        [Authorized]
+        public ActionResult Operation()
         {
-            var invalidPinCodes = Session.GetDataFromSession<Dictionary<string, int>>(Constants.InvalidPinCodesKey);
-            if (invalidPinCodes == null)
-            {
-                Session.SetDataToSession<Dictionary<string, int>>(Constants.InvalidPinCodesKey, new Dictionary<string, int>());
-                invalidPinCodes = Session.GetDataFromSession<Dictionary<string, int>>(Constants.InvalidPinCodesKey);
-            }
-            if (!invalidPinCodes.ContainsKey(id))
-            {
-                invalidPinCodes.Add(id, 1);
-            }
-            else
-            {
-                if (invalidPinCodes[id] == Constants.ValidPinCodeTriesCount)
-                {
-                    _repository.BlockCard(id);
-                }
-                invalidPinCodes[id]++;
-            }
-            return invalidPinCodes[id] <= Constants.ValidPinCodeTriesCount;
-        }
-
-        public ActionResult Error()
-        {
-            if (TempData[Constants.ErrorTextKey] == null)
-            {
-                TempData[Constants.ErrorTextKey] = Resources.DefaultErrorMessage;
-            }
             return View();
-        }
-
-        public ActionResult Index()
-        {
-            Session.SetDataToSession<bool>(Constants.IsAuthorizedKey, false);
-            Session.SetDataToSession<string>(Constants.CardNumberKey, null);
-            return View();
-        }
-
-        private void NullifyTriesCount(string id)
-        {
-            var invalidPinCodes = Session.GetDataFromSession<Dictionary<string, int>>(Constants.InvalidPinCodesKey);
-            if (invalidPinCodes != null && invalidPinCodes.ContainsKey(id))
-            {
-                invalidPinCodes[id] = 0;
-            }
         }
 
         [Authorized]
-        public ActionResult Operation()
+        public ActionResult Balance()
+        {
+            var action = _repository.GetActionByDescription(Constants.ViewBalanceDescription);
+            var card = _repository.GetCardById(Session.GetDataFromSession<string>(Constants.CardNumberKey));
+
+            if (action == null || card == null)
+            {
+                TempData[Constants.ErrorTextKey] = Resources.ErrorShowingBalance;
+                return RedirectToAction("Error");
+            }
+
+            var operation = _repository.AddOperation(card.Id, action.Id);
+
+            return View(_repository.GetOperationIncludeCardById(operation.Id));
+        }
+
+        [Authorized]
+        public ActionResult Cash()
         {
             return View();
         }
@@ -170,14 +139,45 @@ namespace CashMachine.Controllers
             return View(_repository.GetOperationIncludeCardById(operation.Id));
         }
 
-        public ActionResult PinCode()
+        public ActionResult Error()
         {
-            Session.SetDataToSession<bool>(Constants.IsAuthorizedKey, false);
-            if (Session.GetDataFromSession<string>(Constants.CardNumberKey) == null)
+            if (TempData[Constants.ErrorTextKey] == null)
             {
-                return RedirectToAction("Index");
+                TempData[Constants.ErrorTextKey] = Resources.DefaultErrorMessage;
             }
             return View();
+        }
+
+        private bool CheckTriesCountIsValid(string id)
+        {
+            var invalidPinCodes = Session.GetDataFromSession<Dictionary<string, int>>(Constants.InvalidPinCodesKey);
+            if (invalidPinCodes == null)
+            {
+                Session.SetDataToSession<Dictionary<string, int>>(Constants.InvalidPinCodesKey, new Dictionary<string, int>());
+                invalidPinCodes = Session.GetDataFromSession<Dictionary<string, int>>(Constants.InvalidPinCodesKey);
+            }
+            if (!invalidPinCodes.ContainsKey(id))
+            {
+                invalidPinCodes.Add(id, 1);
+            }
+            else
+            {
+                if (invalidPinCodes[id] == Constants.ValidPinCodeTriesCount)
+                {
+                    _repository.BlockCard(id);
+                }
+                invalidPinCodes[id]++;
+            }
+            return invalidPinCodes[id] <= Constants.ValidPinCodeTriesCount;
+        }
+
+        private void NullifyTriesCount(string id)
+        {
+            var invalidPinCodes = Session.GetDataFromSession<Dictionary<string, int>>(Constants.InvalidPinCodesKey);
+            if (invalidPinCodes != null && invalidPinCodes.ContainsKey(id))
+            {
+                invalidPinCodes[id] = 0;
+            }
         }
     }
 }
