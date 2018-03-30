@@ -1,9 +1,0 @@
-﻿@using CacheMachine.Common
-@using CacheMachine.ViewModels
-@using (Html.BeginForm("CheckCardNum", "Home", FormMethod.Post, new { @class = "form-cache-machine" }))
-{
-    <div class="page-header">
-        <h2>@Resources.InputCardNum</h2>
-    </div>
-    @Html.Partial("Numpad/_Numpad", new NumDisplayViewModel { Id = "inputCardNum", Mask = Constants.CardNumMask })
-}
