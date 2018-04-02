@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoManager", "PhotoManager\PhotoManager.csproj", "{7AB824AA-B653-46B7-B965-AD053CEC1E64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoManager.DAL", "PhotoManager.DAL\PhotoManager.DAL.csproj", "{92A2F693-DBD5-4403-8751-4813E83BFB16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7AB824AA-B653-46B7-B965-AD053CEC1E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB824AA-B653-46B7-B965-AD053CEC1E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB824AA-B653-46B7-B965-AD053CEC1E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB824AA-B653-46B7-B965-AD053CEC1E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92A2F693-DBD5-4403-8751-4813E83BFB16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92A2F693-DBD5-4403-8751-4813E83BFB16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92A2F693-DBD5-4403-8751-4813E83BFB16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92A2F693-DBD5-4403-8751-4813E83BFB16}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {85D502EA-C8E5-489F-A77E-1CC09BAE39A1}
+	EndGlobalSection
+EndGlobal
