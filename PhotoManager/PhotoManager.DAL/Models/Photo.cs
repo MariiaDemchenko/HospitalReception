@@ -17,6 +17,6 @@ namespace PhotoManager.DAL.Models
 
         public virtual ApplicationUser Owner { get; set; }
         public virtual CameraSettings CameraSettings { get; set; }
-        public virtual ICollection<Photo2Album> Photo2Albums { get; set; }
+        public virtual ICollection<Album> Albums { get; set; }
     }
 }

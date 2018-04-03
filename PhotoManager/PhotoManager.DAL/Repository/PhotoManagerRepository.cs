@@ -1,19 +1,22 @@
-﻿using PhotoManager.DAL.Models;
+﻿using PhotoManager.DAL.Contracts;
+using PhotoManager.DAL.Models;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace PhotoManager.DAL.Repository
 {
-    public class PhotoManagerRepository
+    public class PhotoManagerRepository : IPhotoManagerRepository
     {
+        private readonly IPhotoManagerDbContext _context;
+
+        public PhotoManagerRepository(IPhotoManagerDbContext photoManagerContext)
+        {
+            _context = photoManagerContext;
+        }
+
         public List<Photo> GetPhotos()
         {
-            List<Photo> photos;
-            using (var context = new PhotoManagerContext())
-            {
-                photos = context.Photos.ToList();
-            }
-            return photos;
+            return _context.Photos.ToList();
         }
     }
 }

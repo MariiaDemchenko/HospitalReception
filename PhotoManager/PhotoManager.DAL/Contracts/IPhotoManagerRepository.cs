@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using PhotoManager.DAL.Models;
 
-namespace PhotoManager.DAL.Repository
+namespace PhotoManager.DAL.Contracts
 {
-    public interface IRepository
+    public interface IPhotoManagerRepository
     {
         List<Photo> GetPhotos();
     }

@@ -3,7 +3,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using PhotoManager.DAL.Context;
 using PhotoManager.DAL.Models;
+using PhotoManager.Managers;
 using System;
 
 namespace PhotoManager
@@ -33,7 +35,7 @@ namespace PhotoManager
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.

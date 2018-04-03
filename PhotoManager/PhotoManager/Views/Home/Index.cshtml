@@ -3,11 +3,11 @@
 }
 @model IEnumerable<PhotoManager.DAL.Models.Photo>
 
-<div class="row text-left">
+<div class="row">
     @foreach (var photo in Model)
     {
-        <p class="col-lg-4">
-            <img src="data:image;base64,@Convert.ToBase64String(photo.Image)" class="thumbnail" />
-        </p>
+        <div class="col-lg-4">
+            <img src="data:image;base64,@Convert.ToBase64String(photo.Image)" class="photo" />
+        </div>
     }
 </div>

@@ -18,18 +18,4 @@ namespace PhotoManager.DAL.Models
 
         public bool IsPayed { get; set; }
     }
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-
-        public ApplicationDbContext()
-            : base("PhotoManagerContext", throwIfV1Schema: false)
-        {
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-    }
 }

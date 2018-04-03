@@ -1,14 +1,20 @@
-﻿using PhotoManager.DAL.Repository;
+﻿using PhotoManager.DAL.Contracts;
 using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IPhotoManagerRepository _repository;
+
+        public HomeController(IPhotoManagerRepository repository)
+        {
+            _repository = repository;
+        }
+
         public ActionResult Index()
         {
-            var repository = new PhotoManagerRepository();
-            return View(repository.GetPhotos());
+            return View(_repository.GetPhotos());
         }
 
         public ActionResult About()

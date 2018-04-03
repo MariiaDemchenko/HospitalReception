@@ -2,6 +2,8 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PhotoManager.DAL.Models;
+using PhotoManager.Managers;
+using PhotoManager.ViewModels.AccountViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;

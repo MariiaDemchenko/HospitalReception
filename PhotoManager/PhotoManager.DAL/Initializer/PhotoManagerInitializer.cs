@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PhotoManager.DAL.Context;
 using PhotoManager.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-namespace PhotoManager.DAL
+namespace PhotoManager.DAL.Initializer
 {
-    public class PhotoManagerInitializer : DropCreateDatabaseIfModelChanges<PhotoManagerContext>
+    public class PhotoManagerInitializer : DropCreateDatabaseIfModelChanges<PhotoManagerDbContext>
     {
         public byte[] ImageToByteArray(Image imageIn)
         {
@@ -22,7 +23,7 @@ namespace PhotoManager.DAL
             }
         }
 
-        protected override void Seed(PhotoManagerContext context)
+        protected override void Seed(PhotoManagerDbContext context)
         {
             var appDomain = AppDomain.CurrentDomain;
             var path = AppDomain.CurrentDomain.RelativeSearchPath ?? appDomain.BaseDirectory;
@@ -50,7 +51,12 @@ namespace PhotoManager.DAL
             {
                 Image.FromFile(Path.Combine(path, @"..\Content\Images\blue.jpg")),
                 Image.FromFile(Path.Combine(path, @"..\Content\Images\gray.jpg")),
-                Image.FromFile(Path.Combine(path, @"..\Content\Images\green.jpg"))
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\green.jpg")),
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\pink.jpg")),
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\purple.jpg")),
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\sunset.jpg")),
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\white.jpg")),
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\yellow.jpg"))
             };
 
             var photos = new List<Photo>();
@@ -62,16 +68,8 @@ namespace PhotoManager.DAL
                 new Album {Name = "Backgrounds", OwnerId = userId}
             };
 
-            var photo2Albums = new List<Photo2Album>
-            {
-                new Photo2Album {PhotoId = 1, AlbumId = 1},
-                new Photo2Album {PhotoId = 1, AlbumId = 2},
-                new Photo2Album {PhotoId = 2, AlbumId = 1}
-            };
-
             photos.ForEach(c => context.Photos.AddOrUpdate(c));
             albums.ForEach(a => context.Albums.AddOrUpdate(a));
-            photo2Albums.ForEach(pa => context.Photo2Albums.AddOrUpdate(pa));
 
             context.SaveChanges();
         }
