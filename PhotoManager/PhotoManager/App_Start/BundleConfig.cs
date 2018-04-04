@@ -22,6 +22,13 @@ namespace PhotoManager
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/mustache").Include(
+                "~/Scripts/mustache.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/photoManager").Include(
+                "~/Scripts/App/photoManager.js"
+                ));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/PhotoManager.css",

@@ -1,7 +1,7 @@
-﻿using System.Data.Entity;
-using PhotoManager.DAL.Contracts;
+﻿using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.Initializer;
 using PhotoManager.DAL.Models;
+using System.Data.Entity;
 
 namespace PhotoManager.DAL.Context
 {
@@ -14,6 +14,7 @@ namespace PhotoManager.DAL.Context
         public PhotoManagerDbContext()
         {
             Database.SetInitializer(new PhotoManagerInitializer());
+            Configuration.ProxyCreationEnabled = false;
         }
     }
 }

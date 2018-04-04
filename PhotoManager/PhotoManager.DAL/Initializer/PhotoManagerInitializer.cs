@@ -54,19 +54,82 @@ namespace PhotoManager.DAL.Initializer
                 Image.FromFile(Path.Combine(path, @"..\Content\Images\green.jpg")),
                 Image.FromFile(Path.Combine(path, @"..\Content\Images\pink.jpg")),
                 Image.FromFile(Path.Combine(path, @"..\Content\Images\purple.jpg")),
-                Image.FromFile(Path.Combine(path, @"..\Content\Images\sunset.jpg")),
                 Image.FromFile(Path.Combine(path, @"..\Content\Images\white.jpg")),
-                Image.FromFile(Path.Combine(path, @"..\Content\Images\yellow.jpg"))
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\yellow.jpg")),
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\sunset.jpg")),
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\mountains.jpg")),
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\sky.jpg")),
+                Image.FromFile(Path.Combine(path, @"..\Content\Images\forest.jpg"))
             };
 
-            var photos = new List<Photo>();
-            images.ForEach(i => photos.Add(new Photo { Image = ImageToByteArray(i), OwnerId = userId, CameraSettingsId = cameraSettingsId }));
+            var photos = new List<Photo>
+            {
+                new Photo {Image = ImageToByteArray(images[0]), OwnerId = userId, Name = "Blue", CreationDate = DateTime.Now, CameraSettingsId = cameraSettingsId},
+                new Photo {Image = ImageToByteArray(images[1]), OwnerId = userId, Name = "Gray", CreationDate = DateTime.Now, CameraSettingsId = cameraSettingsId},
+                new Photo {Image = ImageToByteArray(images[2]), OwnerId = userId, Name = "Green",CreationDate = DateTime.Now,  CameraSettingsId = cameraSettingsId},
+                new Photo {Image = ImageToByteArray(images[3]), OwnerId = userId, Name = "Pink", CreationDate = DateTime.Now, CameraSettingsId = cameraSettingsId},
+                new Photo {Image = ImageToByteArray(images[4]), OwnerId = userId, Name = "Purple", CreationDate = DateTime.Now, CameraSettingsId = cameraSettingsId},
+                new Photo {Image = ImageToByteArray(images[5]), OwnerId = userId, Name = "White",CreationDate = DateTime.Now, CameraSettingsId = cameraSettingsId},
+                new Photo
+                {
+                    Image = ImageToByteArray(images[6]),
+                    Name = "Yellow",
+                    OwnerId = userId,
+                    CreationDate = DateTime.Now,
+                    CameraSettingsId = cameraSettingsId,
+                },
+                new Photo
+                {
+                    Image = ImageToByteArray(images[7]),
+                    Name = "Sunset",
+                    OwnerId = userId,
+                    CreationDate = DateTime.Now.AddDays(-1),
+                    CameraSettingsId = cameraSettingsId
+                },
+                new Photo
+                {
+                    Image = ImageToByteArray(images[8]),
+                    Name = "Mountains",
+                    OwnerId = userId,
+                    CreationDate = DateTime.Now.AddDays(-1),
+                    CameraSettingsId = cameraSettingsId
+                },
+                new Photo
+                    { Image = ImageToByteArray(images[9]),
+                        Name = "Sky",
+                        OwnerId = userId,
+                        CreationDate = DateTime.Now.AddDays(-1),
+                        CameraSettingsId = cameraSettingsId
+                    },
+                new Photo
+                {
+                    Image = ImageToByteArray(images[10]),
+                    Name = "Forest",
+                    OwnerId = userId,
+                    CreationDate = DateTime.Now.AddDays(-1),
+                    CameraSettingsId = cameraSettingsId
+                }
+            };
 
             var albums = new List<Album>
             {
-                new Album {Name = "TestAlbum", OwnerId = userId},
-                new Album {Name = "Backgrounds", OwnerId = userId}
+                new Album {Name = "Colors", OwnerId = userId, Photos = new List<Photo>()},
+                new Album {Name = "Nature", OwnerId = userId, Photos = new List<Photo>()},
+                new Album {Name = "Common", OwnerId = userId, Photos = new List<Photo>()}
             };
+
+            for (var i = 0; i < 7; i++)
+            {
+                albums[0].Photos.Add(photos[i]);
+            }
+
+
+            for (var i = 7; i < 11; i++)
+            {
+                albums[1].Photos.Add(photos[i]);
+            }
+
+            photos.ForEach(p => albums[2].Photos.Add(p));
 
             photos.ForEach(c => context.Photos.AddOrUpdate(c));
             albums.ForEach(a => context.Albums.AddOrUpdate(a));

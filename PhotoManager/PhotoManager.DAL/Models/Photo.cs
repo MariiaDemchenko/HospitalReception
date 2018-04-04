@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PhotoManager.DAL.Models
 {
@@ -17,6 +18,7 @@ namespace PhotoManager.DAL.Models
 
         public virtual ApplicationUser Owner { get; set; }
         public virtual CameraSettings CameraSettings { get; set; }
-        public virtual ICollection<Album> Albums { get; set; }
+        [JsonIgnore]
+        public ICollection<Album> Albums { get; set; }
     }
 }

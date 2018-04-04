@@ -10,6 +10,6 @@ namespace PhotoManager.DAL.Models
         public string Description { get; set; }
 
         public virtual ApplicationUser Owner { get; set; }
-        public virtual ICollection<Photo> Photos { get; set; }
+        public ICollection<Photo> Photos { get; set; }
     }
 }

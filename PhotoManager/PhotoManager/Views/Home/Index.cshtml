@@ -1,13 +1,11 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@model IEnumerable<PhotoManager.DAL.Models.Photo>
+<form>
+    <div class="row form-group search-bar">
+        <input class="form-control" id="searchField" />
+        <button class="btn btn-search">Search</button>
+    </div>
+</form>
 
-<div class="row">
-    @foreach (var photo in Model)
-    {
-        <div class="col-lg-4">
-            <img src="data:image;base64,@Convert.ToBase64String(photo.Image)" class="photo" />
-        </div>
-    }
-</div>
+<div id="content" class="row"></div>
