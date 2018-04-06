@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Photo";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<form action="/Photo/Edit" method="post">
+    <div id="content"></div>
+</form>
+
+
+<script>
+    $(function() {
+        editPhoto("/api/Photos/"+@ViewBag.Id);
+    })
+</script>

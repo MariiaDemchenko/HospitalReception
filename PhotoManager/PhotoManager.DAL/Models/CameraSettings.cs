@@ -5,6 +5,7 @@ namespace PhotoManager.DAL.Models
     public class CameraSettings
     {
         public int Id { get; set; }
+        public string CameraModel { get; set; }
         public int LensFocalLength { get; set; }
         public double Diaphragm { get; set; }
         public int ShutterSpeed { get; set; }

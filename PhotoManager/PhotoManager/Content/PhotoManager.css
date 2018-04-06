@@ -14,6 +14,10 @@
 }
 
 .photo-footer {
+    height: 60px;
+}
+
+album-footer {
     height: 30px;
 }
 
@@ -21,6 +25,14 @@
     margin: 20px;
 }
 
-.btn-search {
+.btn-search, .btn-menu {
     margin-left: 5px;
+}
+
+.selected i {
+    color: green;
+}
+
+.img-container {
+    margin: 10px 0;
 }

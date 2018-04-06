@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Gallery";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div>
+    <button class="btn btn-success btn-menu btn-add">ADD</button>
+    <button class="btn btn-warning btn-menu btn-edit">EDIT</button>
+</div>
+
+<form action="/Gallery" method="post">
+
+    <div class="row form-group search-bar">
+        <input class="form-control" id="KeyWord" name="KeyWord" />
+        <button class="btn btn-search">Search</button>
+    </div>
+
+    <div id="content" class="row"></div>
+
+</form>
+
+<div id="content" class="row"></div>
+
+<script>
+    $(function() {
+        loadPhotos("@ViewBag.FilterParameter");
+    })
+</script>

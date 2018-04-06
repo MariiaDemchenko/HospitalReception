@@ -1,0 +1,14 @@
+<script id="albumsTemplate" type="text/html">
+    {{#albums}}
+    <div class="col-lg-4 text-center">
+        <div class="album img-thumbnail">
+            <div class="photo-frame d-flex" albumId="{{Id}}">
+                <img src={{MainImageUrl}} class="image" />
+            </div>
+            <div class="album-footer">
+                {{Name}}
+            </div>
+        </div>
+    </div>
+    {{/albums}}
+</script>

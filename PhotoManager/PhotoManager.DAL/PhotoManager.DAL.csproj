@@ -60,20 +60,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IPhotoManagerDbContext.cs" />
-    <Compile Include="Contracts\IPhotoManagerRepository.cs" />
+    <Compile Include="Contracts\IAlbumRepository.cs" />
+    <Compile Include="Contracts\IPhotoRepository.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Context\ApplicationDbContext.cs" />
     <Compile Include="Models\CameraSettings.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Context\PhotoManagerDbContext.cs" />
     <Compile Include="Initializer\PhotoManagerInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\PhotoManagerRepository.cs" />
+    <Compile Include="Repository\PhotoRepository.cs" />
+    <Compile Include="Repository\AlbumRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoManager.Common\PhotoManager.Common.csproj">
+      <Project>{50ec6280-d2b4-4d83-ba02-a688f7df6006}</Project>
+      <Name>PhotoManager.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

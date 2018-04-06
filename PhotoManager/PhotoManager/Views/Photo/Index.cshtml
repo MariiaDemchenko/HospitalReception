@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Photo";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div id="content" class="row"></div>
+
+<script>
+    $(function() {
+        loadPhoto("/api/Photos/"+@ViewBag.Id);
+    })
+</script>

@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Album";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div>
+    <button class="btn btn-success btn-menu btn-add">ADD</button>
+    <button class="btn btn-warning btn-menu btn-edit">EDIT</button>
+</div>
+
+<div id="content" class="row"></div>
+
+<script>
+    $(function() {
+        loadPhotoAlbum("/api/Albums/"+@ViewBag.FilterParameter);
+    })
+</script>

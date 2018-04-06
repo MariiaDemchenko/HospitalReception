@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoManager", "PhotoManage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoManager.DAL", "PhotoManager.DAL\PhotoManager.DAL.csproj", "{92A2F693-DBD5-4403-8751-4813E83BFB16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoManager.Common", "PhotoManager.Common\PhotoManager.Common.csproj", "{50EC6280-D2B4-4D83-BA02-A688F7DF6006}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{92A2F693-DBD5-4403-8751-4813E83BFB16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92A2F693-DBD5-4403-8751-4813E83BFB16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92A2F693-DBD5-4403-8751-4813E83BFB16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50EC6280-D2B4-4D83-BA02-A688F7DF6006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50EC6280-D2B4-4D83-BA02-A688F7DF6006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50EC6280-D2B4-4D83-BA02-A688F7DF6006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50EC6280-D2B4-4D83-BA02-A688F7DF6006}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

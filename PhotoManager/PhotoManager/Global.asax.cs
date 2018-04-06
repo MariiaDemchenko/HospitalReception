@@ -29,6 +29,7 @@ namespace PhotoManager
             formatters.Remove(formatters.XmlFormatter);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutoMapperConfig.Initialize();
         }
     }
 }

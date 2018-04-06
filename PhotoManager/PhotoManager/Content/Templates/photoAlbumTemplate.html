@@ -1,0 +1,15 @@
+<script id="photoAlbumTemplate" type="text/html">
+    {{#photos}}
+    <div class="col-lg-4 text-center">
+        <div class="photo img-thumbnail">
+            <div class="photo-frame d-flex" photoId="{{Id}}">
+                <img src={{ImageUrl}} class="image" />
+            </div>
+            <div class="photo-footer" photoId="{{Id}}">
+                <p>{{Name}}</p>
+                <i class="fa fa-check"></i>
+            </div>
+        </div>
+    </div>
+    {{/photos}}
+</script>

@@ -15,7 +15,8 @@ namespace PhotoManager
             var config = GlobalConfiguration.Configuration;
             var builder = new ContainerBuilder();
             builder.RegisterType<PhotoManagerDbContext>().As<IPhotoManagerDbContext>().InstancePerRequest();
-            builder.RegisterType<PhotoManagerRepository>().As<IPhotoManagerRepository>();
+            builder.RegisterType<AlbumRepository>().As<IAlbumRepository>();
+            builder.RegisterType<PhotoRepository>().As<IPhotoRepository>();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

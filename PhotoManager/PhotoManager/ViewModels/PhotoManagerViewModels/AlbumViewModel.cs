@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace PhotoManager.DAL.Models
+namespace PhotoManager.ViewModels.PhotoManagerViewModels
 {
-    public class Album
+    public class AlbumViewModel
     {
         public int Id { get; set; }
         public string OwnerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string MainImageUrl { get; set; }
 
-        public virtual ApplicationUser Owner { get; set; }
-        public virtual ICollection<Photo> Photos { get; set; }
+        public ICollection<PhotoViewModel> Photos { get; set; }
     }
 }

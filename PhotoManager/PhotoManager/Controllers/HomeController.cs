@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using PhotoManager.ViewModels.PhotoManagerViewModels;
+using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
 {
@@ -6,7 +7,7 @@ namespace PhotoManager.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(new SearchModel());
         }
 
         public ActionResult About()

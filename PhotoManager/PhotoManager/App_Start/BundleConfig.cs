@@ -26,12 +26,15 @@ namespace PhotoManager
                 "~/Scripts/mustache.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/photoManager").Include(
-                "~/Scripts/App/photoManager.js"
+                "~/Scripts/App/index.js",
+                "~/Scripts/App/album.js",
+                "~/Scripts/App/photo.js"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/PhotoManager.css",
+                      "~/Content/font-awesome.min.css",
                       "~/Content/site.css"));
         }
     }
