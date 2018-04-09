@@ -23,5 +23,9 @@ namespace PhotoManager.DAL.Contracts
         int AddCameraSettings(CameraSettings cameraSettings);
 
         int AddPhoto(int albumId, Photo photo);
+
+        void DeletePhotos(IEnumerable<int> photosId);
+
+        IEnumerable<Photo> GetPhotosByAlbumId(int albumId);
     }
 }

@@ -253,6 +253,7 @@
     <Compile Include="ViewModels\ManageViewModels\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\AlbumViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\DeleteModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\ImageViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\SearchModel.cs" />
@@ -289,7 +290,6 @@
     <Content Include="Scripts\App\album.js" />
     <Content Include="Scripts\App\Index.js" />
     <Content Include="Scripts\App\photo.js" />
-    <Content Include="Views\Shared\templates.html" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -345,7 +345,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Views\templates.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -394,6 +393,7 @@
     <Content Include="Views\Photo\Edit.cshtml" />
     <Content Include="Views\Photo\Add.cshtml" />
     <Content Include="Views\Gallery\Index.cshtml" />
+    <Content Include="Views\Shared\Partial\Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -93,5 +93,18 @@ namespace PhotoManager.Controllers
             }
             return Ok(photoViewModels);
         }
+
+        [HttpPost]
+        [Route("api/photos/delete")]
+        public IHttpActionResult Delete(DeleteModel model)
+        {
+            _repository.DeletePhotos(model.PhotosId);
+            IEnumerable<PhotoViewModel> photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(_repository.GetPhotosByAlbumId(model.AlbumId));
+            if (photoViewModels == null)
+            {
+                return NotFound();
+            }
+            return Ok(photoViewModels);
+        }
     }
 }

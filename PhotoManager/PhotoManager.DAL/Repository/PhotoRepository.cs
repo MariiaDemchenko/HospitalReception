@@ -18,7 +18,7 @@ namespace PhotoManager.DAL.Repository
             _context = context;
             _albumRepository = albumRepository;
         }
-        
+
         public Photo GetPhotoById(int id)
         {
             return _context.Photos.Include(p => p.CameraSettings).FirstOrDefault(p => p.Id == id);
@@ -94,6 +94,20 @@ namespace PhotoManager.DAL.Repository
 
             _context.SaveChanges();
             return photo.Id;
+        }
+
+        public void DeletePhotos(IEnumerable<int> photosId)
+        {
+            var photosToDelete = _context.Photos.Where(p => photosId.Contains(p.Id));
+
+            _context.Photos.RemoveRange(photosToDelete);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<Photo> GetPhotosByAlbumId(int albumId)
+        {
+            var photos = albumId != 0 ? _context.Albums.Include(a => a.Photos).FirstOrDefault(a => a.Id == albumId).Photos : _context.Photos.ToList();
+            return photos;
         }
     }
 }
