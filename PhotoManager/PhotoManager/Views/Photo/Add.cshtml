@@ -4,16 +4,17 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<form action="/Photo/Add" method="post" enctype="multipart/form-data">
+@using PhotoManager.Common
+<form id="formAdd" method="post" enctype="multipart/form-data">
     <div id="content"></div>
 
     <label for="file">Upload Image:</label>
-    <input type="file" class="btn" name="file" id="file" /><br><br>
+    <input type="file" class="btn-add-photo" name="file" id="file" /><br><br>
     <br><br>
 </form>
 
 <script>
     $(function () {
-        addPhoto();
+        $.addPhoto("@Constants.PhotoEditTemplate", "/api/photos/album/"+@ViewBag.AlbumId);
     });
 </script>

@@ -25,11 +25,8 @@ namespace PhotoManager
             bundles.Add(new ScriptBundle("~/bundles/mustache").Include(
                 "~/Scripts/mustache.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/photoManager").Include(
-                "~/Scripts/App/index.js",
-                "~/Scripts/App/album.js",
-                "~/Scripts/App/photo.js"
-                ));
+            bundles.Add(new ScriptBundle("~/bundles/photoManager")
+                .IncludeDirectory("~/Scripts/App", "*.js", true));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

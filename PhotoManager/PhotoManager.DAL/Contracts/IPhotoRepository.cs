@@ -1,6 +1,5 @@
-﻿using System;
+﻿using PhotoManager.DAL.Models;
 using System.Collections.Generic;
-using PhotoManager.DAL.Models;
 
 namespace PhotoManager.DAL.Contracts
 {
@@ -22,7 +21,7 @@ namespace PhotoManager.DAL.Contracts
 
         int AddCameraSettings(CameraSettings cameraSettings);
 
-        int AddPhoto(int albumId, Photo photo);
+        int AddPhoto(int? albumId, Photo photo);
 
         void DeletePhotos(IEnumerable<int> photosId);
 

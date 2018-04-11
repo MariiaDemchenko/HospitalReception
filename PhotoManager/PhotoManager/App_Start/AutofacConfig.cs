@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
+using PhotoManager.DAL;
 using PhotoManager.DAL.Context;
 using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.Repository;
@@ -17,6 +18,7 @@ namespace PhotoManager
             builder.RegisterType<PhotoManagerDbContext>().As<IPhotoManagerDbContext>().InstancePerRequest();
             builder.RegisterType<AlbumRepository>().As<IAlbumRepository>();
             builder.RegisterType<PhotoRepository>().As<IPhotoRepository>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

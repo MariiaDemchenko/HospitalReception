@@ -2,15 +2,14 @@
 
 namespace PhotoManager.Controllers
 {
+    [RoutePrefix("albums")]
     public class AlbumController : Controller
     {
-        public ActionResult Index(int id=0)
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult Index(int id = 0)
         {
-            if (id != 0)
-            {
-                TempData["AlbumId"] = id;
-                ViewBag.FilterParameter = id;
-            }
+            ViewBag.Id = id;
             return View();
         }
     }

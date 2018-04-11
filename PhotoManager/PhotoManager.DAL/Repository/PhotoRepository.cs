@@ -1,10 +1,8 @@
-﻿using System;
-using PhotoManager.DAL.Contracts;
+﻿using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net.Http.Headers;
 
 namespace PhotoManager.DAL.Repository
 {
@@ -37,19 +35,16 @@ namespace PhotoManager.DAL.Repository
             photoToModify.Place = photo.Place;
 
             _context.Entry(photoToModify).State = EntityState.Modified;
-            _context.SaveChanges();
         }
 
         public void EditCameraSettings(CameraSettings cameraSettings)
         {
             _context.Entry(cameraSettings).State = EntityState.Modified;
-            _context.SaveChanges();
         }
 
         public int AddCameraSettings(CameraSettings cameraSettings)
         {
             _context.CameraSettings.Add(cameraSettings);
-            _context.SaveChanges();
             return cameraSettings.Id;
         }
 
@@ -68,11 +63,10 @@ namespace PhotoManager.DAL.Repository
         {
             var image = new Image { Bytes = imageBytes };
             _context.Images.Add(image);
-            _context.SaveChanges();
             return image.Id;
         }
 
-        public int AddPhoto(int albumId, Photo photo)
+        public int AddPhoto(int? albumId, Photo photo)
         {
             var photoToAdd = new Photo
             {
@@ -84,15 +78,16 @@ namespace PhotoManager.DAL.Repository
                 Place = photo.Place
             };
 
-            _context.Photos.Add(photoToAdd);
-
             if (albumId != 0)
             {
                 var album = _albumRepository.GetAlbumById(albumId);
                 album.Photos.Add(photo);
             }
+            else
+            {
+                _context.Photos.Add(photoToAdd);
+            }
 
-            _context.SaveChanges();
             return photo.Id;
         }
 
@@ -101,7 +96,6 @@ namespace PhotoManager.DAL.Repository
             var photosToDelete = _context.Photos.Where(p => photosId.Contains(p.Id));
 
             _context.Photos.RemoveRange(photosToDelete);
-            _context.SaveChanges();
         }
 
         public IEnumerable<Photo> GetPhotosByAlbumId(int albumId)

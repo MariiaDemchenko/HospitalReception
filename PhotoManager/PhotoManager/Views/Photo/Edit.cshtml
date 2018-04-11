@@ -1,16 +1,16 @@
-﻿@{
+﻿@using PhotoManager.Common
+@{
     ViewBag.Title = "Photo";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<form action="/Photo/Edit" method="post">
+<form id="formEdit" method="post">
     <div id="content"></div>
 </form>
 
-
 <script>
     $(function() {
-        editPhoto("/api/Photos/"+@ViewBag.Id);
+        $.editPhoto("@Constants.PhotoEditTemplate", "/api/photos/"+@ViewBag.Id+"/album/"+@ViewBag.AlbumId);
     })
 </script>

@@ -212,11 +212,11 @@
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
-    <Compile Include="Controllers\AlbumsController.cs" />
+    <Compile Include="Controllers\Api\AlbumsController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
-    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\Api\ImageController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
-    <Compile Include="Controllers\PhotosController.cs" />
+    <Compile Include="Controllers\Api\PhotosController.cs" />
     <Compile Include="Managers\ApplicationSignInManager.cs" />
     <Compile Include="Managers\ApplicationUserManager.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -287,9 +287,13 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Templates\albumsTemplate.html" />
-    <Content Include="Scripts\App\album.js" />
-    <Content Include="Scripts\App\Index.js" />
-    <Content Include="Scripts\App\photo.js" />
+    <Content Include="Scripts\App\Album\Index.js" />
+    <Content Include="Scripts\App\Home\Index.js" />
+    <Content Include="Scripts\App\Gallery\Index.js" />
+    <Content Include="Scripts\App\Shared\Menu.js" />
+    <Content Include="Scripts\App\Photo\Edit.js" />
+    <Content Include="Scripts\App\Photo\Add.js" />
+    <Content Include="Scripts\App\Photo\Index.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -402,6 +406,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PhotoManager.Common\PhotoManager.Common.csproj">
+      <Project>{50ec6280-d2b4-4d83-ba02-a688f7df6006}</Project>
+      <Name>PhotoManager.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhotoManager.DAL\PhotoManager.DAL.csproj">
       <Project>{92a2f693-dbd5-4403-8751-4813e83bfb16}</Project>
       <Name>PhotoManager.DAL</Name>

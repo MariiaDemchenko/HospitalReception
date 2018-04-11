@@ -1,4 +1,5 @@
-﻿@{
+﻿@using PhotoManager.Common
+@{
     ViewBag.Title = "Album";
 }
 <h2>@ViewBag.Title.</h2>
@@ -9,7 +10,5 @@
 <div id="content" class="row"></div>
 
 <script>
-    $(function() {
-        loadPhotoAlbum("/api/Albums/"+@ViewBag.FilterParameter);
-    })
+    $.loadPhotoAlbum("@Constants.PhotoAlbumTemplate","/api/albums/" + @ViewBag.Id);
 </script>

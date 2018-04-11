@@ -24,7 +24,8 @@ namespace PhotoManager
                     .ForMember(x => x.MainImageUrl, opt => opt.MapFrom(c => $"/api/Image/{c.Photos.FirstOrDefault().ImageId}"))
                     .ForMember(x => x.Photos, opt => opt.MapFrom(c => Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(c.Photos)))
                     .ForMember(x => x.Photos, opt => opt.MapFrom(c => Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(c.Photos)));
-                cfg.CreateMap<PhotoViewModel, CameraSettings>();
+                cfg.CreateMap<PhotoViewModel, CameraSettings>()
+                    .ForMember(x => x.Id, opt => opt.MapFrom(c => c.CameraSettingsId));
             });
         }
     }

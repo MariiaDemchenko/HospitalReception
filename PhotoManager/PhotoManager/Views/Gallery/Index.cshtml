@@ -1,23 +1,19 @@
-﻿@{
+﻿@using PhotoManager.Common
+@{
     ViewBag.Title = "Gallery";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<form action="/Gallery" method="post">
-
-    <div class="row form-group search-bar">
-        <input class="form-control" id="KeyWord" name="KeyWord" />
-        <button class="btn btn-search-gallery">Search</button>
-    </div>
-</form>
+<div class="row form-group search-bar">
+    <input class="form-control" id="KeyWord" name="KeyWord" />
+    <button class="btn btn-search-gallery">Search</button>
+</div>
 
 @Html.Partial("Partial/Menu")
 
 <div id="content" class="row"></div>
 
 <script>
-    $(function() {
-        loadPhotos("@ViewBag.FilterParameter");
-    })
+    $.loadPhotos("@Constants.PhotoAlbumTemplate", "@ViewBag.FilterParameter");
 </script>

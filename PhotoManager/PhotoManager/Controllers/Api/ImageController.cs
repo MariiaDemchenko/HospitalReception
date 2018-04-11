@@ -4,22 +4,24 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace PhotoManager.Controllers
+namespace PhotoManager.Controllers.Api
 {
+    [RoutePrefix("api/image")]
     public class ImageController : ApiController
     {
-        private readonly IPhotoRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ImageController(IPhotoRepository repository)
+        public ImageController(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
+        [Route("{id}")]
         public HttpResponseMessage GetImage(int id)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
 
-            var image = _repository.GetImageById(id)?.Bytes;
+            var image = _unitOfWork.Photos.GetImageById(id)?.Bytes;
 
             if (image == null)
             {
@@ -30,6 +32,12 @@ namespace PhotoManager.Controllers
             response.Content = new StreamContent(ms);
             response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
             return response;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

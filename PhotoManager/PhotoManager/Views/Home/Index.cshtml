@@ -1,19 +1,15 @@
-﻿@{
+﻿@using PhotoManager.Common
+@{
     ViewBag.Title = "Home Page";
 }
 
-<form action="/Gallery" method="post">
+<div class="row form-group search-bar">
+    <input class="form-control" id="KeyWord" name="KeyWord" />
+    <button class="btn btn-search">Search</button>
+</div>
 
-    <div class="row form-group search-bar">
-        <input class="form-control" id="KeyWord" name="KeyWord" />
-        <button class="btn btn-search">Search</button>
-    </div>
-
-    <div id="content" class="row"></div>
-</form>
+<div id="content" class="row"></div>
 
 <script>
-    $(function () {
-        loadAlbums();
-    })
+    $.loadAlbums("@Constants.AlbumsTemplate");
 </script>

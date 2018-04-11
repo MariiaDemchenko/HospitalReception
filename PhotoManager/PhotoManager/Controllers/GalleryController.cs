@@ -1,22 +1,22 @@
-﻿using PhotoManager.ViewModels.PhotoManagerViewModels;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
 {
+    [RoutePrefix("gallery")]
     public class GalleryController : Controller
     {
-        // GET: Gallery
+        [HttpGet]
+        [Route("")]
         public ActionResult Index()
         {
-            TempData["AlbumId"] = 0;
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Index(SearchModel model)
+        [HttpGet]
+        [Route("search/{keyWord}")]
+        public ActionResult Index(string keyword)
         {
-            TempData["AlbumId"] = 0;
-            ViewBag.FilterParameter = model.KeyWord;
+            ViewBag.FilterParameter = keyword;
             return View();
         }
     }

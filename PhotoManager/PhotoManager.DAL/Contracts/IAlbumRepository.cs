@@ -7,6 +7,6 @@ namespace PhotoManager.DAL.Contracts
     {
         List<Album> GetAllAlbums();
 
-        Album GetAlbumById(int id);
+        Album GetAlbumById(int? id);
     }
 }

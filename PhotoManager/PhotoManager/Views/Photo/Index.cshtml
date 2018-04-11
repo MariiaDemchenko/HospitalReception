@@ -1,4 +1,5 @@
-﻿@{
+﻿@using PhotoManager.Common
+@{
     ViewBag.Title = "Photo";
 }
 <h2>@ViewBag.Title.</h2>
@@ -7,7 +8,5 @@
 <div id="content" class="row"></div>
 
 <script>
-    $(function() {
-        loadPhoto("/api/Photos/"+@ViewBag.Id);
-    })
+    $.loadPhoto("@Constants.PhotoTemplate", "/api/photos/"+@ViewBag.Id);
 </script>

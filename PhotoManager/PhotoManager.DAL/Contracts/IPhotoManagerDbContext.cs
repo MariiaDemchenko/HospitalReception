@@ -1,6 +1,6 @@
-﻿using System.Data.Entity;
+﻿using PhotoManager.DAL.Models;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using PhotoManager.DAL.Models;
 
 namespace PhotoManager.DAL.Contracts
 {
@@ -12,6 +12,7 @@ namespace PhotoManager.DAL.Contracts
         DbSet<Album> Albums { get; set; }
 
         int SaveChanges();
+        void Dispose();
         DbEntityEntry Entry(object entity);
     }
 }
