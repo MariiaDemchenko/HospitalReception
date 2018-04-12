@@ -3,7 +3,7 @@ using System;
 
 namespace PhotoManager.DAL
 {
-    public class UnitOfWork : IDisposable, IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly IPhotoManagerDbContext _context;
 

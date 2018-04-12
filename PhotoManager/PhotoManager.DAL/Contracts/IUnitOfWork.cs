@@ -1,6 +1,8 @@
-﻿namespace PhotoManager.DAL.Contracts
+﻿using System;
+
+namespace PhotoManager.DAL.Contracts
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IPhotoRepository Photos { get; set; }
 

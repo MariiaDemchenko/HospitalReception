@@ -43,7 +43,7 @@ namespace PhotoManager.Controllers.Api
 
         [HttpGet]
         [Route("{id}/album/{albumId}")]
-        public IHttpActionResult Edit(int id, int albumId = 0)
+        public IHttpActionResult Edit(int id, int albumId)
         {
             var photo = Mapper.Map<Photo, PhotoViewModel>(_unitOfWork.Photos.GetPhotoById(id));
             photo.AlbumId = albumId;
@@ -139,7 +139,7 @@ namespace PhotoManager.Controllers.Api
 
         [HttpDelete]
         [Route("album/{albumId}")]
-        public IHttpActionResult Delete(int albumId, int[] id)
+        public IHttpActionResult Delete(int? albumId, int[] id)
         {
             _unitOfWork.Photos.DeletePhotos(id);
             _unitOfWork.Save();

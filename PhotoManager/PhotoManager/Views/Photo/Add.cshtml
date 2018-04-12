@@ -1,4 +1,5 @@
-﻿<div class="page-header">
+﻿@model PhotoManager.ViewModels.PhotoManagerViewModels.PhotoAddModel
+<div class="page-header">
     <h2>Add photo</h2>
 </div>
 
@@ -13,6 +14,6 @@
 
 <script>
     $(function () {
-        $.addPhoto("@Constants.PhotoEditTemplate", "/api/photos/album/"+@ViewBag.AlbumId);
+        $.addPhoto("@Constants.PhotoEditTemplate", "@Model.Url");
     });
 </script>

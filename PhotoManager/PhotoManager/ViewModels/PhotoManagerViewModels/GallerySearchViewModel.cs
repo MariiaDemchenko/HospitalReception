@@ -1,7 +1,7 @@
 ﻿namespace PhotoManager.ViewModels.PhotoManagerViewModels
 {
-    public class SearchModel
+    public class GallerySearchViewModel
     {
-        public string KeyWord { get; set; }
+        public string KeyWord;
     }
 }

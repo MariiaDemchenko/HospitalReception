@@ -240,6 +240,7 @@
     <Compile Include="ViewModels\AccountViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\ForgotViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\GallerySearchViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\ConfigureTwoFactorViewModel.cs" />
@@ -253,10 +254,9 @@
     <Compile Include="ViewModels\ManageViewModels\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\AlbumViewModel.cs" />
-    <Compile Include="ViewModels\PhotoManagerViewModels\DeleteModel.cs" />
-    <Compile Include="ViewModels\PhotoManagerViewModels\ImageViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\PhotoAddModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\PhotoEditModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoViewModel.cs" />
-    <Compile Include="ViewModels\PhotoManagerViewModels\SearchModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -289,8 +289,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\Templates\albumsTemplate.html" />
     <Content Include="Scripts\App\Album\Index.js" />
+    <Content Include="Scripts\App\Gallery\Search.js" />
     <Content Include="Scripts\App\Home\Index.js" />
     <Content Include="Scripts\App\Gallery\Index.js" />
+    <Content Include="Scripts\App\Shared\Utils.js" />
     <Content Include="Scripts\App\Shared\Menu.js" />
     <Content Include="Scripts\App\Photo\Edit.js" />
     <Content Include="Scripts\App\Photo\Add.js" />
@@ -363,8 +365,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -401,6 +401,8 @@
     <Content Include="Views\Photo\Add.cshtml" />
     <Content Include="Views\Gallery\Index.cshtml" />
     <Content Include="Views\Shared\Partial\Menu.cshtml" />
+    <Content Include="Views\Gallery\Search.cshtml" />
+    <Content Include="Views\Shared\Partial\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

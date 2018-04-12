@@ -1,14 +1,17 @@
-﻿@using PhotoManager.Common
+﻿@model int
+@using PhotoManager.Common
 @{
     ViewBag.Title = "Album";
 }
 <div id="albumHeader"></div>
-
+@Html.Partial("Partial/Search")
 @Html.Partial("Partial/Menu")
 
 <div id="content" class="row"></div>
 <div id="spinner" class="loader"></div>
 
 <script>
-    $.loadPhotoAlbum("@Constants.PhotoAlbumTemplate","/api/albums/" + @ViewBag.Id);
+    $(function() {
+        $.loadPhotoAlbum("@Constants.PhotoAlbumTemplate", "/api/albums/"+@Model);
+    });
 </script>

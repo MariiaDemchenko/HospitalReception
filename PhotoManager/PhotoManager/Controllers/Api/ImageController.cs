@@ -1,5 +1,4 @@
-﻿using System;
-using PhotoManager.DAL.Contracts;
+﻿using PhotoManager.DAL.Contracts;
 using System.IO;
 using System.Net;
 using System.Net.Http;

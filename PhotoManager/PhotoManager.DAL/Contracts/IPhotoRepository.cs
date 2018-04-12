@@ -25,6 +25,6 @@ namespace PhotoManager.DAL.Contracts
 
         void DeletePhotos(IEnumerable<int> photosId);
 
-        IEnumerable<Photo> GetPhotosByAlbumId(int albumId);
+        IEnumerable<Photo> GetPhotosByAlbumId(int? albumId);
     }
 }

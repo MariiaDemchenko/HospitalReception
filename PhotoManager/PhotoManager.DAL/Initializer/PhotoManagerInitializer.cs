@@ -28,13 +28,13 @@ namespace PhotoManager.DAL.Initializer
             var appDomain = AppDomain.CurrentDomain;
             var path = AppDomain.CurrentDomain.RelativeSearchPath ?? appDomain.BaseDirectory;
 
-            if (!context.Users.Any(u => u.UserName == "test"))
+            if (!context.Users.Any(u => u.UserName == "test@login.com"))
             {
                 var store = new UserStore<ApplicationUser>(context);
                 var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { UserName = "test" };
+                var user = new ApplicationUser { UserName = "test@login.com" };
 
-                manager.Create(user, "123abc*");
+                manager.Create(user, "123456Abc*");
             }
 
             var cameras = new List<CameraSettings>

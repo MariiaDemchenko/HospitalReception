@@ -1,4 +1,5 @@
-﻿@using PhotoManager.Common
+﻿@model int
+@using PhotoManager.Common
 
 <div id="photoHeader"></div>
 
@@ -6,5 +7,7 @@
 <div id="spinner" class="loader"></div>
 
 <script>
-    $.loadPhoto("@Constants.PhotoTemplate", "/api/photos/"+@ViewBag.Id);
+    $(function() {
+        $.loadPhoto("@Constants.PhotoTemplate", "/api/photos/" + @Model);
+    });
 </script>

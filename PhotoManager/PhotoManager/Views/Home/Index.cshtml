@@ -4,14 +4,13 @@
     <h2>Albums</h2>
 </div>
 
-<div class="row form-group form-menu">
-    <input class="form-control" id="KeyWord" name="KeyWord" />
-    <button class="btn btn-search">Search</button>
-</div>
+@Html.Partial("Partial/Search")
 
 <div id="content" class="row"></div>
 <div id="spinner" class="loader"></div>
 
 <script>
-    $.loadAlbums("@Constants.AlbumsTemplate");
+    $(function () {
+        $.loadAlbums("@Constants.AlbumsTemplate");
+    })
 </script>

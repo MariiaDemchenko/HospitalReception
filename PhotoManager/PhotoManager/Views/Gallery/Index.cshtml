@@ -4,16 +4,14 @@
     <h2>Photo gallery</h2>
 </div>
 
-<div class="row form-group form-menu">
-    <input class="form-control" id="KeyWord" name="KeyWord" />
-    <button class="btn btn-search-gallery">Search</button>
-</div>
-
+@Html.Partial("Partial/Search")
 @Html.Partial("Partial/Menu")
 
 <div id="content" class="row"></div>
 <div id="spinner" class="loader"></div>
 
 <script>
-    $.loadPhotos("@Constants.PhotoAlbumTemplate", "@ViewBag.FilterParameter");
+    $(function() {
+        $.loadPhotos("@Constants.PhotoAlbumTemplate", "/api/photos");
+    });
 </script>

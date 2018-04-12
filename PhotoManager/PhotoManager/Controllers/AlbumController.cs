@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using PhotoManager.ViewModels.PhotoManagerViewModels;
 
 namespace PhotoManager.Controllers
 {
@@ -7,10 +8,9 @@ namespace PhotoManager.Controllers
     {
         [HttpGet]
         [Route("{id}")]
-        public ActionResult Index(int id = 0)
+        public ActionResult Index(int id)
         {
-            ViewBag.Id = id;
-            return View();
+            return View(id);
         }
     }
 }

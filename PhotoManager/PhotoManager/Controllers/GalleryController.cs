@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using PhotoManager.ViewModels.PhotoManagerViewModels;
+using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
 {
@@ -13,11 +14,17 @@ namespace PhotoManager.Controllers
         }
 
         [HttpGet]
-        [Route("search/{keyWord}")]
-        public ActionResult Index(string keyword)
+        [Route("search")]
+        public ActionResult Search()
         {
-            ViewBag.FilterParameter = keyword;
-            return View();
+            return View(new GallerySearchViewModel { KeyWord = string.Empty });
+        }
+
+        [HttpGet]
+        [Route("search/{keyWord}")]
+        public ActionResult Search(string keyword)
+        {
+            return View(new GallerySearchViewModel{KeyWord = keyword });
         }
     }
 }

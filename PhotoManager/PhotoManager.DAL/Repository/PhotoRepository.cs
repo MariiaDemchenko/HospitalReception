@@ -98,9 +98,9 @@ namespace PhotoManager.DAL.Repository
             _context.Photos.RemoveRange(photosToDelete);
         }
 
-        public IEnumerable<Photo> GetPhotosByAlbumId(int albumId)
+        public IEnumerable<Photo> GetPhotosByAlbumId(int? albumId)
         {
-            var photos = albumId != 0 ? _context.Albums.Include(a => a.Photos).FirstOrDefault(a => a.Id == albumId).Photos : _context.Photos.ToList();
+            var photos = albumId != null ? _context.Albums.Include(a => a.Photos).FirstOrDefault(a => a.Id == albumId).Photos : _context.Photos.ToList();
             return photos;
         }
     }

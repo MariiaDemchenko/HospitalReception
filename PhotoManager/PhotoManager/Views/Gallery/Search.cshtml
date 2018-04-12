@@ -1,0 +1,20 @@
+﻿@model PhotoManager.ViewModels.PhotoManagerViewModels.GallerySearchViewModel
+@using PhotoManager.Common
+
+<div class="page-header">
+    <h2>Photo gallery</h2>
+</div>
+
+<div class="row form-group form-menu">
+    <input class="form-control" id="KeyWord" name="KeyWord" />
+    <button class="btn btn-search-gallery">Search</button>
+</div>
+
+<div id="content" class="row"></div>
+<div id="spinner" class="loader"></div>
+
+<script>
+    $(function() {
+        $.searchPhotos("@Constants.PhotoAlbumTemplate", "@Model.KeyWord");
+    });
+</script>

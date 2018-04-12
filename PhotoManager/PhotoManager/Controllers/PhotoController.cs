@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using PhotoManager.ViewModels.PhotoManagerViewModels;
 
 namespace PhotoManager.Controllers
 {
@@ -9,25 +10,21 @@ namespace PhotoManager.Controllers
         [Route("{id}")]
         public ActionResult Index(int id)
         {
-            ViewBag.Id = id;
-            return View();
+            return View(id);
         }
 
         [HttpGet]
         [Route("edit/{id}/album/{albumId}")]
-        public ActionResult Edit(int id, int albumId = 0)
+        public ActionResult Edit(int id, int? albumId)
         {
-            ViewBag.Id = id;
-            ViewBag.AlbumId = albumId;
-            return View();
+            return View(new PhotoEditModel { Id = id, AlbumId = albumId });
         }
 
         [HttpGet]
         [Route("add/{id}")]
-        public ActionResult Add(int id)
+        public ActionResult Add(int? id)
         {
-            ViewBag.AlbumId = id;
-            return View();
+            return View(new PhotoAddModel { Id = id });
         }
     }
 }
