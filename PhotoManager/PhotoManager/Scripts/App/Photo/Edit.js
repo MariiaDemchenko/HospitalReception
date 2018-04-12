@@ -5,6 +5,7 @@
                 $.get(templatePath,
                     function (templates) {
                         var template = $(templates).filter('#photoEditTemplate').html();
+                        photo.CreationDate = moment(new Date(photo.CreationDate)).format("YYYY-MM-DD");
                         var output = Mustache.render(template, photo);
                         document.getElementById('content').innerHTML = output;
                         $.stopSpinning();
