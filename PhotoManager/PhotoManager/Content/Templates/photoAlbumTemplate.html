@@ -2,9 +2,9 @@
     {{#photos}}
     <div class="col-lg-4 text-center">
         <div class="photo img-thumbnail">
-            <div class="photo-frame d-flex" photoId="{{Id}}">
+            <a class="photo-frame d-flex" href="/photos/{{Id}}" target="_blank">
                 <img src={{ImageUrl}} class="image" />
-            </div>
+            </a>
             <div class="photo-footer" photoId="{{Id}}">
                 <div class="description">
                     <div>

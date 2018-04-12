@@ -16,11 +16,6 @@
             });
     };
 
-    $(document).on("click", ".album-frame",
-        function () {
-            var albumId = $(this).attr("albumId");
-            window.location.href = "albums/" + albumId;
-        });
 
     $(document).on("click", ".btn-search",
         function () {

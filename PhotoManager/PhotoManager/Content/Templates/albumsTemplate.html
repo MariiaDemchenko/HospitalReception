@@ -2,9 +2,9 @@
     {{#albums}}
     <div class="col-lg-4 text-center">
         <div class="album img-thumbnail">
-            <div class="album-frame d-flex" albumId="{{Id}}">
+            <a class="album-frame d-flex" href="/albums/{{Id}}">
                 <img src={{MainImageUrl}} class="image" />
-            </div>
+            </a>
             <div class="album-footer">
                 <div class="album-name">
                     {{Name}}

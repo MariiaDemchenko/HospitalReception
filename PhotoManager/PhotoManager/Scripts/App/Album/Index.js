@@ -26,12 +26,6 @@
             });
     };
 
-    $(document).on("click", ".photo-frame",
-        function () {
-            var photoId = $(this).attr("photoId");
-            window.open("/photos/" + photoId);
-        });
-
     $(document).on("click", ".photo-footer",
         function () {
             if ($(this).hasClass("selected")) {
