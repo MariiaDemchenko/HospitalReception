@@ -1,5 +1,4 @@
 <script id="photoAlbumTemplate" type="text/html">
-    <input type="hidden" id="photoAlbumId" value="{{AlbumId}}">
     {{#photos}}
     <div class="col-lg-4 text-center">
         <div class="photo img-thumbnail">
@@ -7,10 +6,31 @@
                 <img src={{ImageUrl}} class="image" />
             </div>
             <div class="photo-footer" photoId="{{Id}}">
-                <p>{{Name}}</p>
-                <i class="fa fa-check"></i>
+                <div class="description">
+                    <div>
+                        <div class="photo-name">
+                            {{Name}}
+                        </div>
+                        <div class="photo-date">
+                            {{CreationDate}}
+                        </div>
+                    </div>
+                    <div class="selected-icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     {{/photos}}
+</script>
+
+<script id="photoAlbumHeaderTemplate" type="text/html">
+    <input type="hidden" id="photoAlbumId" value="{{Id}}">
+    <div class="page-header">
+        <h2>{{Name}}</h2>
+    </div>
+    <div class="album-description">
+        <h3>{{Description}}</h3>
+    </div>
 </script>

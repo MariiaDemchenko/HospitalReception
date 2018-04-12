@@ -7,6 +7,7 @@
                         var template = $(templates).filter('#photoEditTemplate').html();
                         var output = Mustache.render(template, photo);
                         document.getElementById('content').innerHTML = output;
+                        $.stopSpinning();
                     });
             });
 

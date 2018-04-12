@@ -19,6 +19,7 @@
                             data.AlbumId = 0;
                             var output = Mustache.render(template, data);
                             document.getElementById('content').innerHTML = output;
+                            $.stopSpinning();
                         });
                 });
         }

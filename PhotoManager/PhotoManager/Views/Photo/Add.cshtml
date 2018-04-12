@@ -1,13 +1,11 @@
-﻿@{
-    ViewBag.Title = "Photo";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿<div class="page-header">
+    <h2>Add photo</h2>
+</div>
 
 @using PhotoManager.Common
 <form id="formAdd" method="post" enctype="multipart/form-data">
     <div id="content"></div>
-
+    <div id="spinner" class="loader"></div>
     <label for="file">Upload Image:</label>
     <input type="file" class="btn-add-photo" name="file" id="file" /><br><br>
     <br><br>

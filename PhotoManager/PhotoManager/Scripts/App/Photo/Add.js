@@ -26,20 +26,30 @@
                         var template = $(templates).filter('#photoEditTemplate').html();
                         var output = Mustache.render(template, photo);
                         document.getElementById('content').innerHTML = output;
+                        $.stopSpinning();
                     });
             });
 
         $('input[type=file]').change(function () {
-            var tmppath = URL.createObjectURL(event.target.files[0]);
-            $("#displayedImage").fadeIn("fast").attr('src', tmppath);
+            var tmppath = "";
+            if (event.target.files.length > 0) {
+                tmppath = URL.createObjectURL(event.target.files[0]);
+                $("#displayedImage").fadeIn("fast").attr('src', tmppath);
+            } else {
+                $("#displayedImage").fadeIn("fast").attr('src', "/api/image/0");
+            }
         });
-
 
         $("#formAdd").submit(function (e) {
             e.preventDefault();
 
             var serializedData = new FormData();
             var fileInput = document.getElementById('file');
+
+            if (fileInput.files.length === 0) {
+                return false;
+            } 
+
             var file = fileInput.files[0];
 
             serializedData.append('Image', file);

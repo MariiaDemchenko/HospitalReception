@@ -25,6 +25,11 @@ namespace PhotoManager
             bundles.Add(new ScriptBundle("~/bundles/mustache").Include(
                 "~/Scripts/mustache.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include(
+                "~/Scripts/moment.js",
+                "~/Scripts/moment-with-locales.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/photoManager")
                 .IncludeDirectory("~/Scripts/App", "*.js", true));
 

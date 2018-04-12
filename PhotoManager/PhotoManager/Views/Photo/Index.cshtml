@@ -1,11 +1,9 @@
 ﻿@using PhotoManager.Common
-@{
-    ViewBag.Title = "Photo";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+
+<div id="photoHeader"></div>
 
 <div id="content" class="row"></div>
+<div id="spinner" class="loader"></div>
 
 <script>
     $.loadPhoto("@Constants.PhotoTemplate", "/api/photos/"+@ViewBag.Id);

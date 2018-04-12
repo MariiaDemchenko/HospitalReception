@@ -267,6 +267,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\blue.jpg" />
+    <Content Include="Content\Images\emptyImage.jpg" />
     <Content Include="Content\Images\forest.jpg" />
     <Content Include="Content\Images\gray.jpg" />
     <Content Include="Content\Images\green.jpg" />
@@ -338,6 +339,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />

@@ -1,7 +1,9 @@
-﻿using PhotoManager.DAL.Contracts;
+﻿using System;
+using PhotoManager.DAL.Contracts;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Web.Hosting;
 using System.Web.Http;
 
 namespace PhotoManager.Controllers.Api
@@ -21,7 +23,20 @@ namespace PhotoManager.Controllers.Api
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
 
-            var image = _unitOfWork.Photos.GetImageById(id)?.Bytes;
+            byte[] image = null;
+            if (id == 0)
+            {
+                var rootPath = HostingEnvironment.MapPath("~/Content/Images/");
+                var filePath = Path.Combine(rootPath, "emptyImage.jpg");
+                if (File.Exists(filePath))
+                {
+                    image = File.ReadAllBytes(filePath);
+                }
+            }
+            else
+            {
+                image = _unitOfWork.Photos.GetImageById(id)?.Bytes;
+            }
 
             if (image == null)
             {

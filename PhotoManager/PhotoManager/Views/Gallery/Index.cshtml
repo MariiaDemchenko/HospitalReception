@@ -1,11 +1,10 @@
 ﻿@using PhotoManager.Common
-@{
-    ViewBag.Title = "Gallery";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<div class="row form-group search-bar">
+<div class="page-header">
+    <h2>Photo gallery</h2>
+</div>
+
+<div class="row form-group form-menu">
     <input class="form-control" id="KeyWord" name="KeyWord" />
     <button class="btn btn-search-gallery">Search</button>
 </div>
@@ -13,6 +12,7 @@
 @Html.Partial("Partial/Menu")
 
 <div id="content" class="row"></div>
+<div id="spinner" class="loader"></div>
 
 <script>
     $.loadPhotos("@Constants.PhotoAlbumTemplate", "@ViewBag.FilterParameter");

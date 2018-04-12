@@ -1,12 +1,12 @@
 ﻿@using PhotoManager.Common
-@{
-    ViewBag.Title = "Photo";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+
+<div class="page-header">
+    <h2>Edit photo</h2>
+</div>
 
 <form id="formEdit" method="post">
     <div id="content"></div>
+    <div id="spinner" class="loader"></div>
 </form>
 
 <script>

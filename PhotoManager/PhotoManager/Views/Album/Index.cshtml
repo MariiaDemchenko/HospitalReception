@@ -2,12 +2,12 @@
 @{
     ViewBag.Title = "Album";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<div id="albumHeader"></div>
 
 @Html.Partial("Partial/Menu")
 
 <div id="content" class="row"></div>
+<div id="spinner" class="loader"></div>
 
 <script>
     $.loadPhotoAlbum("@Constants.PhotoAlbumTemplate","/api/albums/" + @ViewBag.Id);

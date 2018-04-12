@@ -45,4 +45,8 @@
         $(".btn-edit").attr("disabled", true);
         $(".btn-remove-confirm").attr("disabled", true);
     }
+
+    $.stopSpinning = function () {
+        document.getElementById("spinner").style.display = "none";
+    }
 })(jQuery);

@@ -1,6 +1,6 @@
 (function ($) {
     $.loadAlbums = function (templatePath) {
-        $.ajax("/api/Albums")
+        $.ajax("/api/albums")
             .done(function (albums) {
                 $.get(templatePath,
                     function (templates) {
@@ -11,11 +11,12 @@
 
                         var output = Mustache.render(template, data);
                         document.getElementById('content').innerHTML = output;
+                        $.stopSpinning();
                     });
             });
     };
 
-    $(document).on("click", ".album .photo-frame",
+    $(document).on("click", ".album-frame",
         function () {
             var albumId = $(this).attr("albumId");
             window.location.href = "albums/" + albumId;
