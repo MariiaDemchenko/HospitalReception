@@ -24,7 +24,14 @@ namespace PhotoManager.Controllers
         [Route("search/{keyWord}")]
         public ActionResult Search(string keyword)
         {
-            return View(new GallerySearchViewModel{KeyWord = keyword });
+            return View(new GallerySearchViewModel { KeyWord = keyword });
+        }
+
+        [HttpGet]
+        [Route("advancedSearch")]
+        public ActionResult AdvancedSearch()
+        {
+            return View();
         }
     }
 }

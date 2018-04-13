@@ -4,7 +4,7 @@
             $.initialize();
 
             function getUri(keyWord) {
-                return keyWord !== "" ? "/api/photos/search/" + keyWord : "/api/photos";
+                return "/api/photos/search/" + keyWord;
             }
 
             load(getUri(searchKey));
@@ -15,7 +15,7 @@
                         var template;
                         var data = {};
                         if (photos.length > 0) {
-                            $.displayPhotos(templatePath, photos);
+                            $.displayPhotoAlbum(templatePath, photos);
                         } else {
                             $.get(templatePath, function (templates) {
                                 template = $(templates).filter('#photoAlbumEmptyTemplate').html();

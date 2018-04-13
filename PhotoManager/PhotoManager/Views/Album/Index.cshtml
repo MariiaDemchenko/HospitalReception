@@ -12,6 +12,6 @@
 
 <script>
     $(function() {
-        $.loadPhotoAlbum("@Constants.PhotoAlbumTemplate", "/api/albums/"+@Model);
+        $.loadPhotoAlbum("@Constants.PhotoAlbumTemplate", "/api/albums/"+@Model, "@User.Identity.IsAuthenticated");
     });
 </script>

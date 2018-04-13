@@ -1,0 +1,16 @@
+﻿@model int
+@using PhotoManager.Common
+
+
+<div id="photoHeader"></div>
+
+<form>
+    <div id="content" class="row"></div>
+    <div id="spinner" class="loader"></div>
+</form>
+
+<script>
+    $(function() {
+        $.loadPhoto("@Constants.PhotoPropertiesTemplate", "/api/photos/" + @Model);
+    });
+</script>

@@ -7,7 +7,7 @@
 
 <div class="row form-group form-menu">
     <input class="form-control" id="KeyWord" name="KeyWord" />
-    <button class="btn btn-search-gallery">Search</button>
+    <button class="btn btn-menu btn-search-gallery">Search</button>
 </div>
 
 <div id="content" class="row"></div>
@@ -15,6 +15,6 @@
 
 <script>
     $(function() {
-        $.searchPhotos("@Constants.PhotoAlbumTemplate", "@Model.KeyWord");
+        $.searchPhotos("@Constants.PhotoSearchTemplate", "@Model.KeyWord");
     });
 </script>

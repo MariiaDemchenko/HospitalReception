@@ -41,6 +41,7 @@ namespace PhotoManager.Controllers.Api
             return Ok(photo);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("{id}/album/{albumId}")]
         public IHttpActionResult Edit(int id, int albumId)
@@ -50,6 +51,7 @@ namespace PhotoManager.Controllers.Api
             return Ok(photo);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("album/{albumId}")]
         public IHttpActionResult Add(int albumId)
@@ -59,6 +61,7 @@ namespace PhotoManager.Controllers.Api
             return Ok(photoViewModel);
         }
 
+        [Authorize]
         [HttpPut]
         [Route("")]
         public IHttpActionResult Edit(PhotoViewModel photoViewModel)
@@ -80,6 +83,7 @@ namespace PhotoManager.Controllers.Api
             return Ok(photoViewModel);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("")]
         public async Task<IHttpActionResult> Add()
@@ -125,10 +129,17 @@ namespace PhotoManager.Controllers.Api
         }
 
         [HttpGet]
+        [Route("search")]
+        public IHttpActionResult Search()
+        {
+            return Search(string.Empty);
+        }
+
+        [HttpGet]
         [Route("search/{filter}")]
         public IHttpActionResult Search(string filter)
         {
-            var photos = string.IsNullOrEmpty(filter) ? _unitOfWork.Photos.GetAllPhotos() : _unitOfWork.Photos.GetPhotosByKeyWord(filter);
+            var photos = _unitOfWork.Photos.GetPhotosByKeyWord(filter);
             var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos.ToList());
             if (photoViewModels == null)
             {
@@ -137,6 +148,42 @@ namespace PhotoManager.Controllers.Api
             return Ok(photoViewModels);
         }
 
+        [HttpGet]
+        [Route("advancedSearch")]
+        public IHttpActionResult AdvancedSearch()
+        {
+            var photoViewModel = Mapper.Map<Photo, PhotoViewModel>(new Photo());
+            if (photoViewModel == null)
+            {
+                return NotFound();
+            }
+            return Ok(photoViewModel);
+        }
+
+        [HttpPost]
+        [Route("advancedSearch")]
+        public IHttpActionResult AdvancedSearch(PhotoViewModel photoViewModel)
+        {
+            var cameraSettings = Mapper.Map<PhotoViewModel, CameraSettings>(photoViewModel);
+
+            var photo = new Photo
+            {
+                Name = photoViewModel.Name,
+                CreationDate = photoViewModel.CreationDate,
+                Place = photoViewModel.Place,
+                CameraSettings = cameraSettings
+            };
+
+            var photos = _unitOfWork.Photos.GetPhotosBySearchModel(photo);
+            var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos.ToList());
+            if (photoViewModels == null)
+            {
+                return NotFound();
+            }
+            return Ok(photoViewModels);
+        }
+
+        [Authorize]
         [HttpDelete]
         [Route("album/{albumId}")]
         public IHttpActionResult Delete(int? albumId, int[] id)

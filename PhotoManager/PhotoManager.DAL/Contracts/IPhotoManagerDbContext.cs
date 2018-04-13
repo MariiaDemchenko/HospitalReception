@@ -14,5 +14,6 @@ namespace PhotoManager.DAL.Contracts
         int SaveChanges();
         void Dispose();
         DbEntityEntry Entry(object entity);
+        Database Database { get; }
     }
 }

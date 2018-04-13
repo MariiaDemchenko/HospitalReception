@@ -240,6 +240,7 @@
     <Compile Include="ViewModels\AccountViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\ForgotViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\AdvancedSearchViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\GallerySearchViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\ChangePasswordViewModel.cs" />
@@ -279,8 +280,11 @@
     <Content Include="Content\Images\white.jpg" />
     <Content Include="Content\Images\yellow.jpg" />
     <Content Include="Content\PhotoManager.css" />
+    <Content Include="Content\Templates\photoSearchTemplate.html" />
     <Content Include="Content\Templates\photoAlbumTemplate.html" />
+    <Content Include="Content\Templates\advancedSearchTemplate.html" />
     <Content Include="Content\Templates\photoTemplate.html" />
+    <Content Include="Content\Templates\photoPropertiesTemplate.html" />
     <Content Include="Content\Templates\photoEditTemplate.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -289,6 +293,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\Templates\albumsTemplate.html" />
     <Content Include="Scripts\App\Album\Index.js" />
+    <Content Include="Scripts\App\Gallery\AdvancedSearch.js" />
     <Content Include="Scripts\App\Gallery\Search.js" />
     <Content Include="Scripts\App\Home\Index.js" />
     <Content Include="Scripts\App\Gallery\Index.js" />
@@ -403,6 +408,8 @@
     <Content Include="Views\Shared\Partial\Menu.cshtml" />
     <Content Include="Views\Gallery\Search.cshtml" />
     <Content Include="Views\Shared\Partial\Search.cshtml" />
+    <Content Include="Views\Photo\Properties.cshtml" />
+    <Content Include="Views\Gallery\AdvancedSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

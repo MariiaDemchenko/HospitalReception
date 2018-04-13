@@ -3,13 +3,7 @@
         $.addPhoto = function (templatePath, uri) {
             $.ajax(uri)
                 .done(function (photo) {
-                    $.get(templatePath,
-                        function (templates) {
-                            var template = $(templates).filter('#photoEditTemplate').html();
-                            var output = Mustache.render(template, photo);
-                            document.getElementById('content').innerHTML = output;
-                            $.stopSpinning();
-                        });
+                    $.displayPhoto(templatePath, photo);
                 });
 
             $('input[type=file]').change(function () {
@@ -43,8 +37,7 @@
                     processData: false,
                     contentType: false
                 }).done(function (photo) {
-                    var url = photo.AlbumId === 0 ? "/gallery" : "/albums/" + photo.AlbumId;
-                    window.location.href = url;
+                    $.goToAlbum(photo.AlbumId);
                 });
             });
         }

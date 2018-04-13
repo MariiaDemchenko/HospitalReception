@@ -11,6 +11,8 @@ namespace PhotoManager.DAL.Contracts
 
         IEnumerable<Photo> GetPhotosByKeyWord(string keyWord);
 
+        IEnumerable<Photo> GetPhotosBySearchModel(Photo photo);
+
         Image GetImageById(int id);
 
         void EditCameraSettings(CameraSettings cameraSettings);

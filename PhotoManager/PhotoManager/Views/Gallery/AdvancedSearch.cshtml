@@ -1,0 +1,17 @@
+﻿@using PhotoManager.Common
+
+<div class="page-header">
+    <h2>Photo gallery</h2>
+</div>
+
+<form id="formAdvancedSearch">    
+    <div id="searchForm" class="form-menu"></div>
+    <div id="content" class="row"></div>
+    <div id="spinner" class="loader"></div>
+</form>
+
+<script>
+    $(function() {
+        $.advancedSearchPhotos("@Constants.AdvancedSearchTemplate", "/api/photos/");
+    });
+</script>

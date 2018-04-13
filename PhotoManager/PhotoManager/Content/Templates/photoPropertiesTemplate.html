@@ -1,0 +1,52 @@
+<script id="photoHeaderTemplate" type="text/html">
+    <div class="page-header">
+        <h2>{{Name}}</h2>
+    </div>
+</script>
+
+<script id="photoTemplate" type="text/html">
+    <a class="col-md-4 photo-frame d-flex" href="/photos/{{Id}}" target="_blank">
+        <img src={{ImageUrl}} class="image" />
+    </a>
+
+    <div class="table-container col-md">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <td><label>Name</label></td>
+                <td>{{Name}}</td>
+            </tr>
+            <tr>
+                <td><label>Creation date</label></td>
+                <td>{{CreationDate}}</td>
+            </tr>
+            <tr>
+                <td><label>Creation place</label></td>
+                <td>{{Place}}</td>
+            </tr>
+            <tr>
+                <td><label>Camera model</label></td>
+                <td>{{CameraModel}}</td>
+            </tr>
+            <tr>
+                <td><label>Lens focal length</label></td>
+                <td>{{LensFocalLength}}</td>
+            </tr>
+            <tr>
+                <td><label>Diaphragm</label></td>
+                <td>{{Diaphragm}}</td>
+            </tr>
+            <tr>
+                <td><label>Shutter Speed</label></td>
+                <td>{{ShutterSpeed}}</td>
+            </tr>
+            <tr>
+                <td><label>ISO</label></td>
+                <td>{{Iso}}</td>
+            </tr>
+            <tr>
+                <td><label>Flash</label></td>
+                <td>{{Flash}}</td>
+            </tr>
+        </table>
+    </div>
+</script>

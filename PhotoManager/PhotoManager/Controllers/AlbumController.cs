@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using PhotoManager.ViewModels.PhotoManagerViewModels;
 
 namespace PhotoManager.Controllers
 {

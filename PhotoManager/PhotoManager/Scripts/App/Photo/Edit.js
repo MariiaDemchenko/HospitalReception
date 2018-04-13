@@ -3,19 +3,11 @@
         $.editPhoto = function (templatePath, uri) {
             $.ajax(uri)
                 .done(function (photo) {
-                    $.get(templatePath,
-                        function (templates) {
-                            var template = $(templates).filter('#photoEditTemplate').html();
-                            photo.CreationDate = moment(new Date(photo.CreationDate)).format("YYYY-MM-DD");
-                            var output = Mustache.render(template, photo);
-                            document.getElementById('content').innerHTML = output;
-                            $.stopSpinning();
-                        });
+                    $.displayPhoto(templatePath, photo);
                 });
 
             $("#formEdit").submit(function (e) {
                 e.preventDefault();
-
                 var serializedData = $(this).serialize();
 
                 $.ajax({
@@ -23,8 +15,7 @@
                     type: "PUT",
                     data: serializedData
                 }).done(function (photo) {
-                    var url = photo.AlbumId === 0 ? "/gallery" : "/albums/" + photo.AlbumId;
-                    window.location.href = url;
+                    $.goToAlbum(photo.AlbumId);
                 });
             });
         }

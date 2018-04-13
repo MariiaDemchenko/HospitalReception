@@ -1,15 +1,13 @@
 (function ($) {
     $(function () {
-        $(".form-menu").on("click",
-            ".btn-edit",
+        $(".form-menu").on("click", ".btn-edit",
             function () {
                 var photoId = $(".selected").attr("photoId");
                 var albumId = $("#photoAlbumId").val();
                 window.location.href = "/photos/edit/" + photoId + "/album/" + albumId;
             });
 
-        $(".form-menu").on("click",
-            ".btn-add",
+        $(".form-menu").on("click", ".btn-add",
             function () {
                 var albumId = $("#photoAlbumId").val();
                 location.href = "/photos/add/" + albumId;
@@ -33,17 +31,22 @@
                     dataType: "json"
                 })
                     .done(function (photos) {
-                        $.displayPhotos('/Content/Templates/photoAlbumTemplate.html', photos);
+                        $.displayPhotoAlbum('/Content/Templates/photoAlbumTemplate.html', photos);
                     });
 
                 $('#exampleModal').modal('hide');
             });
 
-        $(".form-menu").on("click", ".btn-search",
-            function () {
-                var searchKey = $("#KeyWord").val();
-                window.location.href = "/gallery/search/" + searchKey;
-            });
+        $(".btn-search").on("click", function (event) {
+            event.preventDefault();
+            var searchKey = $("#KeyWord").val();
+            window.location.href = "/gallery/search/" + searchKey;
+        });
+
+        $(".btn-advanced-search").on("click", function (event) {
+            event.preventDefault();
+            window.location.href = "/gallery/advancedSearch/";
+        });
 
         $.initialize = function () {
             $(".btn-edit").attr("disabled", true);

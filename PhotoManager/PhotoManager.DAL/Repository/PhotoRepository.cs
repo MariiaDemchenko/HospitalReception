@@ -2,6 +2,7 @@
 using PhotoManager.DAL.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace PhotoManager.DAL.Repository
@@ -50,8 +51,23 @@ namespace PhotoManager.DAL.Repository
 
         public IEnumerable<Photo> GetPhotosByKeyWord(string keyWord)
         {
-            return string.IsNullOrEmpty(keyWord) ?
-                _context.Photos.ToList() : _context.Photos.Where(p => p.Name.Contains(keyWord)).ToList();
+            var param = new SqlParameter("@keyword", keyWord);
+            var photos = _context.Database.SqlQuery<Photo>("EXEC dbo.Search @keyword", param).ToList();
+            return photos;
+        }
+
+        public IEnumerable<Photo> GetPhotosBySearchModel(Photo photo)
+        {
+            return _context.Photos.Include(p => p.CameraSettings).Where(p =>
+                (string.IsNullOrEmpty(photo.Name) || p.Name.Contains(photo.Name)) &&
+                (photo.CreationDate == null || p.CreationDate == photo.CreationDate) &&
+                (string.IsNullOrEmpty(photo.Place) || p.Place.Contains(photo.Place)) &&
+                (string.IsNullOrEmpty(photo.CameraSettings.CameraModel) || p.CameraSettings.CameraModel.Contains(photo.CameraSettings.CameraModel)) &&
+                (photo.CameraSettings.LensFocalLength == 0 || p.CameraSettings.LensFocalLength == photo.CameraSettings.LensFocalLength) &&
+                (photo.CameraSettings.Diaphragm == 0 || p.CameraSettings.Diaphragm == photo.CameraSettings.Diaphragm) &&
+                (photo.CameraSettings.ShutterSpeed == 0 || p.CameraSettings.ShutterSpeed == photo.CameraSettings.ShutterSpeed) &&
+                (photo.CameraSettings.Iso == 0 || p.CameraSettings.Iso == photo.CameraSettings.Iso) &&
+                (photo.CameraSettings.Flash == 0 || p.CameraSettings.Flash == photo.CameraSettings.Flash));
         }
 
         public Image GetImageById(int id)

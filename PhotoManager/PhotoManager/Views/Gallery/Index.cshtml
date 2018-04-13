@@ -3,7 +3,6 @@
 <div class="page-header">
     <h2>Photo gallery</h2>
 </div>
-
 @Html.Partial("Partial/Search")
 @Html.Partial("Partial/Menu")
 
@@ -12,6 +11,6 @@
 
 <script>
     $(function() {
-        $.loadPhotos("@Constants.PhotoAlbumTemplate", "/api/photos");
+        $.loadPhotos("@Constants.PhotoAlbumTemplate", "/api/photos", "@User.Identity.IsAuthenticated");
     });
 </script>
