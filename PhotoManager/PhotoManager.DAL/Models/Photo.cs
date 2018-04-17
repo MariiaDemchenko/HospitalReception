@@ -8,7 +8,6 @@ namespace PhotoManager.DAL.Models
         public int Id { get; set; }
         public string OwnerId { get; set; }
         public int CameraSettingsId { get; set; }
-        public int ImageId { get; set; }
         public string Name { get; set; }
         public DateTime? CreationDate { get; set; }
         public string Place { get; set; }
@@ -17,7 +16,7 @@ namespace PhotoManager.DAL.Models
 
         public virtual ApplicationUser Owner { get; set; }
         public virtual CameraSettings CameraSettings { get; set; }
-        public virtual Image Image { get; set; }
+        public virtual List<Image> Images { get; set; }
         public virtual ICollection<Album> Albums { get; set; }
     }
 }

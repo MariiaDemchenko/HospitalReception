@@ -11,6 +11,6 @@
 
 <script>
     $(function() {
-        $.loadPhotos("@Constants.PhotoAlbumTemplate", "/api/photos", "@User.Identity.IsAuthenticated");
+        $.loadPhotos("@User.Identity.IsAuthenticated");
     });
 </script>

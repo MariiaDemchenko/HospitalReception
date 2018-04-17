@@ -21,7 +21,7 @@ namespace PhotoManager.Controllers.Api
         [Route("")]
         public IHttpActionResult GetAllAlbums()
         {
-            var albums = Mapper.Map<IEnumerable<Album>, IEnumerable<AlbumViewModel>>(_unitOfWork.Albums.GetAllAlbums());
+            var albums = Mapper.Map<IEnumerable<Album>, IEnumerable<AlbumCoverViewModel>>(_unitOfWork.Albums.GetAllAlbums());
             if (albums == null)
             {
                 return NotFound();
@@ -39,12 +39,6 @@ namespace PhotoManager.Controllers.Api
                 return NotFound();
             }
             return Ok(album);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _unitOfWork.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

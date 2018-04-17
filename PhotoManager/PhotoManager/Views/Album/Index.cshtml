@@ -1,5 +1,4 @@
 ﻿@model int
-@using PhotoManager.Common
 @{
     ViewBag.Title = "Album";
 }
@@ -12,6 +11,6 @@
 
 <script>
     $(function() {
-        $.loadPhotoAlbum("@Constants.PhotoAlbumTemplate", "/api/albums/"+@Model, "@User.Identity.IsAuthenticated");
+        $.loadPhotoAlbum("/api/albums/"+@Model, "@User.Identity.IsAuthenticated");
     });
 </script>

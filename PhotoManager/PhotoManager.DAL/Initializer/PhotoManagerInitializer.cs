@@ -14,19 +14,9 @@ namespace PhotoManager.DAL.Initializer
 {
     public class PhotoManagerInitializer : DropCreateDatabaseIfModelChanges<PhotoManagerDbContext>
     {
-        public byte[] ImageToByteArray(System.Drawing.Image imageIn)
-        {
-            using (var ms = new MemoryStream())
-            {
-                imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                return ms.ToArray();
-            }
-        }
-
         protected override void Seed(PhotoManagerDbContext context)
         {
-            var appDomain = AppDomain.CurrentDomain;
-            var path = AppDomain.CurrentDomain.RelativeSearchPath ?? appDomain.BaseDirectory;
+            var path = AppDomain.CurrentDomain.RelativeSearchPath;
 
             if (!context.Users.Any(u => u.UserName == "test@login.com"))
             {
@@ -56,78 +46,40 @@ namespace PhotoManager.DAL.Initializer
 
             var userId = context.Users.FirstOrDefault()?.Id;
 
-            var images = new List<Models.Image>
+            var guids = new List<string>();
+            for (var i = 0; i < 11; i++)
             {
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\blue.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\gray.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\green.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\pink.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\purple.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\white.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\yellow.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\sunset.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\mountains.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\sky.jpg"))),
-                    Size = Constants.ImageSize.Original
-                },
-                new Image
-                {
-                    Bytes = ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\forest.jpg"))),
-                    Size = Constants.ImageSize.Original
-                }
+                guids.Add(new Guid().ToString("N"));
+            }
+
+            var images = new List<IEnumerable<Image>>
+            {
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\blue.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\gray.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\green.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\pink.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\purple.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\white.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\yellow.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\sunset.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\mountains.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\sky.jpg")))),
+                GetImagesInDifferentShapes(Common.Extensions.ImageToByteArray(System.Drawing.Image.FromFile(Path.Combine(path, @"..\Content\Images\forest.jpg"))))
             };
 
             var photos = new List<Photo>
             {
-                new Photo {ImageId = 1, Place = "Place0", OwnerId = userId, Name = "Blue", CreationDate = new DateTime(2018, 05, 05, 05, 05, 0), CameraSettingsId = 1},
-                new Photo {ImageId = 2, Place = "Place1", OwnerId = userId, Name = "Gray", CreationDate = new DateTime(2018, 05, 05, 05, 05, 0), CameraSettingsId = 2},
-                new Photo {ImageId = 3, Place = "Place2", OwnerId = userId, Name = "Green", CreationDate = new DateTime(2018, 05, 05, 05, 05, 0), CameraSettingsId = 3},
-                new Photo {ImageId = 4, Place = "Place3", OwnerId = userId, Name = "Pink", CreationDate = new DateTime(2018, 05, 05, 05, 05, 0), CameraSettingsId = 4},
-                new Photo {ImageId = 5, Place = "Place4", OwnerId = userId, Name = "Purple", CreationDate = new DateTime(2018, 04, 04, 04, 04, 0), CameraSettingsId = 5},
-                new Photo {ImageId = 6, Place = "Place5", OwnerId = userId, Name = "White", CreationDate = new DateTime(2018, 03, 03, 03, 03, 0), CameraSettingsId = 6},
-                new Photo {ImageId = 7, Place = "Place6", OwnerId = userId, Name = "Yellow", CreationDate = new DateTime(2018, 02, 02, 02, 02, 0), CameraSettingsId = 7},
-                new Photo {ImageId = 8, Place = "Place7", OwnerId = userId, Name = "Sunset", CreationDate = new DateTime(2018, 02, 02, 02, 02, 0), CameraSettingsId = 8},
-                new Photo {ImageId = 9, Place = "Place8", OwnerId = userId, Name = "Mountains", CreationDate = new DateTime(2018, 01, 01, 01, 01, 0), CameraSettingsId = 9},
-                new Photo {ImageId = 10, OwnerId = userId, Name = "Sky", CreationDate = new DateTime(2018, 01, 01, 01, 01, 0), CameraSettingsId = 10},
-                new Photo {ImageId = 11, OwnerId = userId, Name = "Forest", CreationDate = new DateTime(2018, 01, 01, 01, 01, 0), CameraSettingsId = 11}
+                new Photo {Place = "Place0", OwnerId = userId, Name = "Blue", CreationDate = new DateTime(2018, 05, 05, 05, 05, 0), CameraSettingsId = 1},
+                new Photo {Place = "Place1", OwnerId = userId, Name = "Gray", CreationDate = new DateTime(2018, 05, 05, 05, 05, 0), CameraSettingsId = 2},
+                new Photo {Place = "Place2", OwnerId = userId, Name = "Green", CreationDate = new DateTime(2018, 05, 05, 05, 05, 0), CameraSettingsId = 3},
+                new Photo {Place = "Place3", OwnerId = userId, Name = "Pink", CreationDate = new DateTime(2018, 05, 05, 05, 05, 0), CameraSettingsId = 4},
+                new Photo {Place = "Place4", OwnerId = userId, Name = "Purple", CreationDate = new DateTime(2018, 04, 04, 04, 04, 0), CameraSettingsId = 5},
+                new Photo {Place = "Place5", OwnerId = userId, Name = "White", CreationDate = new DateTime(2018, 03, 03, 03, 03, 0), CameraSettingsId = 6},
+                new Photo {Place = "Place6", OwnerId = userId, Name = "Yellow", CreationDate = new DateTime(2018, 02, 02, 02, 02, 0), CameraSettingsId = 7},
+                new Photo {Place = "Place7", OwnerId = userId, Name = "Sunset", CreationDate = new DateTime(2018, 02, 02, 02, 02, 0), CameraSettingsId = 8},
+                new Photo {Place = "Place8", OwnerId = userId, Name = "Mountains", CreationDate = new DateTime(2018, 01, 01, 01, 01, 0), CameraSettingsId = 9},
+                new Photo {OwnerId = userId, Name = "Sky", CreationDate = new DateTime(2018, 01, 01, 01, 01, 0), CameraSettingsId = 10},
+                new Photo { OwnerId = userId, Name = "Forest", CreationDate = new DateTime(2018, 01, 01, 01, 01, 0), CameraSettingsId = 11}
             };
 
             var albums = new List<Album>
@@ -149,11 +101,50 @@ namespace PhotoManager.DAL.Initializer
 
             photos.ForEach(p => albums[2].Photos.Add(p));
 
-            images.ForEach(i => context.Images.AddOrUpdate(i));
+            for (var i = 0; i < 11; i++)
+            {
+                photos[i].Images = new List<Image>();
+                photos[i].Images.AddRange(images[i]);
+            }
+
             photos.ForEach(c => context.Photos.AddOrUpdate(c));
             albums.ForEach(a => context.Albums.AddOrUpdate(a));
 
             context.SaveChanges();
+            var fullPath = Path.Combine(path, @"..\..\PhotoManager.DAL\Context\Procedures.sql");
+
+            context.Database.ExecuteSqlCommand(File.ReadAllText(fullPath));
+        }
+
+        private IEnumerable<Image> GetImagesInDifferentShapes(byte[] imageOriginal)
+        {
+            byte[] imageObjectMedium;
+            byte[] imageObjectThumbnail;
+
+            using (var stream = new MemoryStream(imageOriginal))
+            {
+                imageObjectThumbnail = Common.Extensions.ResizeImage(stream, 250);
+                imageObjectMedium = Common.Extensions.ResizeImage(stream, 300);
+            }
+
+            return new List<Image>
+            {
+                new Image
+                {
+                    Bytes = imageObjectThumbnail,
+                    Size = Constants.ImageSize.Thumbnail
+                },
+                new Image
+                {
+                    Bytes = imageObjectMedium,
+                    Size = Constants.ImageSize.Medium
+                },
+                new Image
+                {
+                    Bytes = imageOriginal,
+                    Size = Constants.ImageSize.Original
+                }
+            };
         }
     }
 }

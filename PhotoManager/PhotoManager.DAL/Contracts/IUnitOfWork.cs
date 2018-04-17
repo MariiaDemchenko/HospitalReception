@@ -9,7 +9,5 @@ namespace PhotoManager.DAL.Contracts
         IAlbumRepository Albums { get; set; }
 
         void Save();
-
-        void Dispose();
     }
 }

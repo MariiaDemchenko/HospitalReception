@@ -1,6 +1,8 @@
 (function ($) {
     $(function () {
-        $.searchPhotos = function (templatePath, searchKey) {
+        var templatePath = "/Content/Templates/Gallery/Index.html";
+
+        $.searchPhotos = function (searchKey) {
             $.initialize();
 
             function getUri(keyWord) {

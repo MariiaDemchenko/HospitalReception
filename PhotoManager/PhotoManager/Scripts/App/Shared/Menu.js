@@ -31,7 +31,7 @@
                     dataType: "json"
                 })
                     .done(function (photos) {
-                        $.displayPhotoAlbum('/Content/Templates/photoAlbumTemplate.html', photos);
+                        $.displayPhotoAlbum('/Content/Templates/Album/Index.html', photos);
                     });
 
                 $('#exampleModal').modal('hide');
@@ -51,6 +51,14 @@
         $.initialize = function () {
             $(".btn-edit").attr("disabled", true);
             $(".btn-remove-confirm").attr("disabled", true);
+        }
+
+        $.hideMenu = function(isAuthenticated) {
+            if (isAuthenticated === "True") {
+                $("#content").addClass("selectable");
+            } else {
+                $("#content").removeClass("selectable");
+            }
         }
 
         $.stopSpinning = function () {

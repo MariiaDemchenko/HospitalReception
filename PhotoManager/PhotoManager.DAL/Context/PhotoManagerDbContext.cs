@@ -15,7 +15,6 @@ namespace PhotoManager.DAL.Context
         public PhotoManagerDbContext()
         {
             Database.SetInitializer(new PhotoManagerInitializer());
-            Configuration.ProxyCreationEnabled = false;
         }
     }
 }

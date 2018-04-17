@@ -22,7 +22,7 @@ namespace PhotoManager.DAL.Repository
 
         public Album GetAlbumById(int? id)
         {
-            return _context.Albums.Include(a => a.Photos).FirstOrDefault(a => a.Id == id);
+            return _context.Albums.FirstOrDefault(a => a.Id == id);
         }
     }
 }

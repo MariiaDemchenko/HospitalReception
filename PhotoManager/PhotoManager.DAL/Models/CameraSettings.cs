@@ -12,6 +12,6 @@ namespace PhotoManager.DAL.Models
         public int Iso { get; set; }
         public double Flash { get; set; }
 
-        public virtual Collection<Photo> Photo { get; set; }
+        public Collection<Photo> Photo { get; set; }
     }
 }

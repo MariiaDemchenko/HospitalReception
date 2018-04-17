@@ -1,19 +1,19 @@
 (function ($) {
     $(function () {
-        $.loadPhotoAlbum = function (templatePath, uri, isAuthenticated) {
-            if (isAuthenticated === "True") {
-                $("#content").addClass("selectable");
-            } else {
-                $("#content").removeClass("selectable");
-            }
+        var templatePath = "/Content/Templates/Album/Index.html";
+        var headerTemplateId = "#photoAlbumHeaderTemplate";
+        var contentId = "albumHeader";
 
+        $.loadPhotoAlbum = function (uri, isAuthenticated) {
+            $.hideMenu(isAuthenticated);
             $.initialize();
+
             $.ajax(uri)
                 .done(function (album) {
                     $.get(templatePath, function (templates) {
-                        var template = $(templates).filter('#photoAlbumHeaderTemplate').html();
+                        var template = $(templates).filter(headerTemplateId).html();
                         var output = Mustache.render(template, album);
-                        document.getElementById('albumHeader').innerHTML = output;
+                        document.getElementById(contentId).innerHTML = output;
                     });
                     $.displayPhotoAlbum(templatePath, album.Photos);
                 });

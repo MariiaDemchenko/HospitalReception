@@ -10,22 +10,20 @@ namespace PhotoManager.DAL.Repository
     public class PhotoRepository : IPhotoRepository
     {
         private readonly IPhotoManagerDbContext _context;
-        private readonly IAlbumRepository _albumRepository;
 
-        public PhotoRepository(IPhotoManagerDbContext context, IAlbumRepository albumRepository)
+        public PhotoRepository(IPhotoManagerDbContext context)
         {
             _context = context;
-            _albumRepository = albumRepository;
         }
 
         public Photo GetPhotoById(int id)
         {
-            return _context.Photos.Include(p => p.CameraSettings).FirstOrDefault(p => p.Id == id);
+            return _context.Photos.FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<Photo> GetAllPhotos()
         {
-            return _context.Photos.Include(p => p.CameraSettings);
+            return _context.Photos.Include(p=>p.Images).ToList();
         }
 
         public void EditPhoto(Photo photo)
@@ -52,13 +50,14 @@ namespace PhotoManager.DAL.Repository
         public IEnumerable<Photo> GetPhotosByKeyWord(string keyWord)
         {
             var param = new SqlParameter("@keyword", keyWord);
-            var photos = _context.Database.SqlQuery<Photo>("EXEC dbo.Search @keyword", param).ToList();
+            var photosId = _context.Database.SqlQuery<int>("EXEC dbo.Search @keyword", param).ToList();
+            var photos = _context.Photos.Include(p => p.Images).Where(p => photosId.Contains(p.Id)).ToList();
             return photos;
         }
 
         public IEnumerable<Photo> GetPhotosBySearchModel(Photo photo)
         {
-            return _context.Photos.Include(p => p.CameraSettings).Where(p =>
+            return _context.Photos.Include(p=>p.Images).Where(p =>
                 (string.IsNullOrEmpty(photo.Name) || p.Name.Contains(photo.Name)) &&
                 (photo.CreationDate == null || p.CreationDate == photo.CreationDate) &&
                 (string.IsNullOrEmpty(photo.Place) || p.Place.Contains(photo.Place)) &&
@@ -75,33 +74,22 @@ namespace PhotoManager.DAL.Repository
             return _context.Images.FirstOrDefault(i => i.Id == id);
         }
 
-        public int AddImage(byte[] imageBytes)
+        public int AddImage(Image image)
         {
-            var image = new Image { Bytes = imageBytes };
             _context.Images.Add(image);
             return image.Id;
         }
 
         public int AddPhoto(int? albumId, Photo photo)
         {
-            var photoToAdd = new Photo
-            {
-                OwnerId = photo.OwnerId,
-                CameraSettingsId = photo.CameraSettingsId,
-                ImageId = photo.ImageId,
-                Name = photo.Name,
-                CreationDate = photo.CreationDate,
-                Place = photo.Place
-            };
-
             if (albumId != 0)
             {
-                var album = _albumRepository.GetAlbumById(albumId);
+                var album = _context.Albums.FirstOrDefault(a=>a.Id == albumId);
                 album.Photos.Add(photo);
             }
             else
             {
-                _context.Photos.Add(photoToAdd);
+                _context.Photos.Add(photo);
             }
 
             return photo.Id;
@@ -109,15 +97,13 @@ namespace PhotoManager.DAL.Repository
 
         public void DeletePhotos(IEnumerable<int> photosId)
         {
-            var photosToDelete = _context.Photos.Where(p => photosId.Contains(p.Id));
-
+            var photosToDelete = _context.Photos.Include(p=>p.Images).Where(p => photosId.Contains(p.Id));
             _context.Photos.RemoveRange(photosToDelete);
         }
 
         public IEnumerable<Photo> GetPhotosByAlbumId(int? albumId)
         {
-            var photos = albumId != null ? _context.Albums.Include(a => a.Photos).FirstOrDefault(a => a.Id == albumId).Photos : _context.Photos.ToList();
-            return photos;
+            return albumId != null? _context.Albums.Include(a=> a.Photos.Select(p=>p.Images)).FirstOrDefault(a => a.Id == albumId)?.Photos : _context.Photos.Include(p => p.Images).ToList();
         }
     }
 }

@@ -10,14 +10,14 @@ namespace PhotoManager.Controllers
         [Route("{id}")]
         public ActionResult Index(int id)
         {
-            return View(id);
+            return View(new PhotoDisplayViewModel{Id = id, Size = (int)Common.Constants.ImageSize.Original});
         }
 
         [HttpGet]
         [Route("properties/{id}")]
         public ActionResult Properties(int id)
         {
-            return View(id);
+            return View(new PhotoDisplayViewModel { Id = id, Size = (int)Common.Constants.ImageSize.Medium });
         }
 
         [Authorize]

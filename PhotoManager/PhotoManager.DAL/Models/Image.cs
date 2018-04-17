@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using PhotoManager.Common;
+﻿using PhotoManager.Common;
 
 namespace PhotoManager.DAL.Models
 {
@@ -10,6 +8,6 @@ namespace PhotoManager.DAL.Models
         public byte[] Bytes { get; set; }
         public Constants.ImageSize Size { get; set; }
 
-        public virtual ICollection<Photo> Photos { get; set; }
+        public Photo Photo { get; set; }
     }
 }

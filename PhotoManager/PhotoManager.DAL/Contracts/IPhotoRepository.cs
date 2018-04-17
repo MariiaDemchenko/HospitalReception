@@ -19,7 +19,7 @@ namespace PhotoManager.DAL.Contracts
 
         void EditPhoto(Photo photo);
 
-        int AddImage(byte[] imageBytes);
+        int AddImage(Image image);
 
         int AddCameraSettings(CameraSettings cameraSettings);
 

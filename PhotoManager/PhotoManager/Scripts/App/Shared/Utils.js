@@ -1,5 +1,9 @@
 (function ($) {
     $(function () {
+        var photoAlbumTemplate = "/Content/Templates/Album/Index.html";
+        var photoAlbumTemplateId = "#photoAlbumTemplate";
+        var contentId = "content";
+        
         $.fn.serializeFormJSON = function () {
             var o = {};
             var a = this.serializeArray();
@@ -18,9 +22,9 @@
         };
 
         $.displayPhotoAlbum = function (templatePath, photos) {
-            $.get(templatePath,
+            $.get(photoAlbumTemplate,
                 function (templates) {
-                    var template = $(templates).filter('#photoAlbumTemplate').html();
+                    var template = $(templates).filter(photoAlbumTemplateId).html();
                     var data = {};
                     data.photos = photos;
                     $.each(data.photos,
@@ -32,7 +36,7 @@
                         });
                     data.AlbumId = 0;
                     var output = Mustache.render(template, data);
-                    document.getElementById('content').innerHTML = output;
+                    document.getElementById(contentId).innerHTML = output;
                     $.stopSpinning();
                 });
         };
@@ -42,7 +46,7 @@
                 function (templates) {
                     var template = $(templates).filter('#photoTemplate').html();
                     var output = Mustache.render(template, photo);
-                    document.getElementById('content').innerHTML = output;
+                    document.getElementById(contentId).innerHTML = output;
                     $.stopSpinning();
                 });
         };

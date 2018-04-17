@@ -18,7 +18,7 @@
 }
 
 .photo-frame {
-    height: 250px;
+    height: 300px;
 }
 
 .album-frame {
@@ -96,7 +96,7 @@ album-footer {
 
 .img-container {
     margin: 10px 0;
-    max-width: 50%;
+    max-width: 40%;
     max-height: 40%;
 }
 

@@ -221,8 +221,6 @@
     <Compile Include="Managers\ApplicationUserManager.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="Profiles\AlbumProfile.cs" />
-    <Compile Include="Profiles\PhotoProfile.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Services\SmsService.cs" />
@@ -240,6 +238,7 @@
     <Compile Include="ViewModels\AccountViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\ForgotViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\AlbumCoverViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\AdvancedSearchViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\GallerySearchViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\AddPhoneNumberViewModel.cs" />
@@ -257,6 +256,9 @@
     <Compile Include="ViewModels\PhotoManagerViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoAddModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoEditModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\PhotoIndexViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\PhotoMediumViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\PhotoOriginalViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -280,18 +282,18 @@
     <Content Include="Content\Images\white.jpg" />
     <Content Include="Content\Images\yellow.jpg" />
     <Content Include="Content\PhotoManager.css" />
-    <Content Include="Content\Templates\photoSearchTemplate.html" />
-    <Content Include="Content\Templates\photoAlbumTemplate.html" />
-    <Content Include="Content\Templates\advancedSearchTemplate.html" />
-    <Content Include="Content\Templates\photoTemplate.html" />
-    <Content Include="Content\Templates\photoPropertiesTemplate.html" />
-    <Content Include="Content\Templates\photoEditTemplate.html" />
+    <Content Include="Content\Templates\Gallery\Index.html" />
+    <Content Include="Content\Templates\Album\Index.html" />
+    <Content Include="Content\Templates\Gallery\AdvancedSearch.html" />
+    <Content Include="Content\Templates\Photo\Index.html" />
+    <Content Include="Content\Templates\Photo\Properties.html" />
+    <Content Include="Content\Templates\Photo\Edit.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\Templates\albumsTemplate.html" />
+    <Content Include="Content\Templates\Home\Index.html" />
     <Content Include="Scripts\App\Album\Index.js" />
     <Content Include="Scripts\App\Gallery\AdvancedSearch.js" />
     <Content Include="Scripts\App\Gallery\Search.js" />

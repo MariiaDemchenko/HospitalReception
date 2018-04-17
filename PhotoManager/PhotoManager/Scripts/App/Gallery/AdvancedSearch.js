@@ -1,27 +1,35 @@
 (function ($) {
     $(function () {
-        $.advancedSearchPhotos = function (templatePath, uri) {
+        var templatePathAdvancedSearch = "/Content/Templates/Gallery/AdvancedSearch.html";
+        var templatePathPhotoAlbum = "/Content/Templates/Album/Index.html";
+        var templatePathLoadPhotos = "/Content/Templates/Gallery/Index.html";
+        var photoTemplateId = "#photoTemplate";
+        var photoAlbumEmptyTemplateId = "#photoAlbumEmptyTemplate";
+        var searchFormContentId = "searchForm";
+        var contentId = "content";
+
+        $.advancedSearchPhotos = function () {
             $.ajax("/api/photos/advancedSearch")
                 .done(function (photo) {
-                    $.get(templatePath,
+                    $.get(templatePathAdvancedSearch,
                         function (templates) {
-                            var template = $(templates).filter('#photoTemplate').html();
+                            var template = $(templates).filter(photoTemplateId).html();
                             var output = Mustache.render(template, photo);
-                            document.getElementById('searchForm').innerHTML = output;
+                            document.getElementById(searchFormContentId).innerHTML = output;
                         });
                 });
 
-            $.ajax(uri)
+            $.ajax("/api/photos")
                 .done(function (photos) {
                     var template;
                     var data = {};
                     if (photos.length > 0) {
-                        $.displayPhotoAlbum("/Content/Templates/photoSearchTemplate.html", photos);
+                        $.displayPhotoAlbum(templatePathLoadPhotos, photos);
                     } else {
-                        $.get("/Content/Templates/photoSearchTemplate.html", function (templates) {
-                            template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                        $.get(templatePathLoadPhotos, function (templates) {
+                            template = $(templates).filter(photoAlbumEmptyTemplateId).html();
                             var output = Mustache.render(template, data);
-                            document.getElementById('content').innerHTML = output;
+                            document.getElementById(contentId).innerHTML = output;
                             $.stopSpinning();
                         });
                     }
@@ -40,12 +48,12 @@
                     var template;
                     var data = {};
                     if (photos.length > 0) {
-                        $.displayPhotoAlbum("/Content/Templates/photoAlbumTemplate.html", photos);
+                        $.displayPhotoAlbum(templatePathPhotoAlbum, photos);
                     } else {
-                        $.get("/Content/Templates/photoAlbumTemplate.html", function (templates) {
-                            template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                        $.get(templatePathPhotoAlbum, function (templates) {
+                            template = $(templates).filter(photoAlbumEmptyTemplateId).html();
                             var output = Mustache.render(template, data);
-                            document.getElementById('content').innerHTML = output;
+                            document.getElementById(contentId).innerHTML = output;
                             $.stopSpinning();
                         });
                     }

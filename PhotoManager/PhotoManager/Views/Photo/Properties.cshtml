@@ -1,4 +1,4 @@
-﻿@model int
+﻿@model PhotoManager.ViewModels.PhotoManagerViewModels.PhotoDisplayViewModel
 @using PhotoManager.Common
 
 
@@ -11,6 +11,6 @@
 
 <script>
     $(function() {
-        $.loadPhoto("@Constants.PhotoPropertiesTemplate", "/api/photos/" + @Model);
+        $.loadPhoto("@Constants.PhotoPropertiesTemplate", "/api/photos/" + "@Model.Id" + "/@Model.Size");
     });
 </script>

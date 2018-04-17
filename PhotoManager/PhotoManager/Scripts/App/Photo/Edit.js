@@ -1,6 +1,8 @@
 (function ($) {
     $(function () {
-        $.editPhoto = function (templatePath, uri) {
+        var templatePath = "/Content/Templates/Photo/Edit.html";
+        
+        $.editPhoto = function (uri) {
             $.ajax(uri)
                 .done(function (photo) {
                     $.displayPhoto(templatePath, photo);
