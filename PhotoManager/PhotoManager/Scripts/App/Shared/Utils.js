@@ -21,6 +21,18 @@
             return JSON.stringify(o);
         };
 
+        $.getScrollTop = function () {
+            if (typeof pageYOffset != 'undefined') {
+                return pageYOffset;
+            }
+            else {
+                var B = document.body;
+                var D = document.documentElement;
+                D = (D.clientHeight) ? D : B;
+                return D.scrollTop;
+            }
+        }
+
         $.displayPhotoAlbum = function (templatePath, photos) {
             $.get(photoAlbumTemplate,
                 function (templates) {
@@ -36,7 +48,7 @@
                         });
                     data.AlbumId = 0;
                     var output = Mustache.render(template, data);
-                    document.getElementById(contentId).innerHTML = output;
+                    $("#content").append(output);
                     $.stopSpinning();
                 });
         };

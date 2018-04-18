@@ -3,20 +3,44 @@
         var templatePath = "/Content/Templates/Album/Index.html";
         var headerTemplateId = "#photoAlbumHeaderTemplate";
         var contentId = "albumHeader";
-
+        
         $.loadPhotoAlbum = function (uri, isAuthenticated) {
+            
+            $(window).scroll(function () {
+                var scrollTop = $.getScrollTop();
+                if (scrollTop == $(document).height() - $(window).height()) {
+                    getData();
+                }
+            });
+            
+            var pageIndex = 0;
+            var pageSize = 9;
+
             $.hideMenu(isAuthenticated);
             $.initialize();
+            getData();
 
-            $.ajax(uri)
-                .done(function (album) {
-                    $.get(templatePath, function (templates) {
-                        var template = $(templates).filter(headerTemplateId).html();
-                        var output = Mustache.render(template, album);
-                        document.getElementById(contentId).innerHTML = output;
+            function getData() {
+                $.ajax({
+                    url: uri,
+                    data: {
+                        pageIndex: pageIndex,
+                        pageSize: pageSize
+                    }
+                })
+                    .done(function (album) {
+                        if (album != null && album.Photos.length !== 0) {
+                            $.displayPhotoAlbum(templatePath, album.Photos);
+                            pageIndex++;
+                        }
+
+                        $.get(templatePath, function (templates) {
+                            var template = $(templates).filter(headerTemplateId).html();
+                            var output = Mustache.render(template, album);
+                            document.getElementById(contentId).innerHTML = output;
+                        });
                     });
-                    $.displayPhotoAlbum(templatePath, album.Photos);
-                });
+            }
         };
 
         $("#content").on("click", ".photo-footer",

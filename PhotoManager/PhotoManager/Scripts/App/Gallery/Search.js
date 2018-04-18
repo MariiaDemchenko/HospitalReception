@@ -3,35 +3,59 @@
         var templatePath = "/Content/Templates/Gallery/Index.html";
 
         $.searchPhotos = function (searchKey) {
+            var currentUrl = getUri(searchKey);
             $.initialize();
+
+            $(window).scroll(function () {
+                var scrollTop = $.getScrollTop();
+                if (scrollTop == $(document).height() - $(window).height()) {
+                    load(currentUrl);
+                }
+            });
 
             function getUri(keyWord) {
                 return "/api/photos/search/" + keyWord;
             }
 
-            load(getUri(searchKey));
+            var pageIndex = 0;
+            var pageSize = 9;
+
+            load(currentUrl);
 
             function load(uri) {
-                $.ajax(uri)
+                $.ajax({
+                    url: uri,
+                    data: {
+                        pageIndex: pageIndex,
+                        pageSize: pageSize
+                    }
+                })
                     .done(function (photos) {
-                        var template;
-                        var data = {};
-                        if (photos.length > 0) {
+                        if (photos != null && photos.length !== 0) {
                             $.displayPhotoAlbum(templatePath, photos);
+                            pageIndex++;
                         } else {
-                            $.get(templatePath, function (templates) {
-                                template = $(templates).filter('#photoAlbumEmptyTemplate').html();
-                                var output = Mustache.render(template, data);
-                                document.getElementById('content').innerHTML = output;
-                                $.stopSpinning();
-                            });
+                            if (pageIndex === 0) {
+                                var template;
+                                var data = {};
+                                $.get(templatePath, function (templates) {
+                                    template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                                    var output = Mustache.render(template, data);
+                                    document.getElementById('content').innerHTML = output;
+                                    $.stopSpinning();
+                                });
+                            }
                         }
                     });
             }
 
             $(".btn-search-gallery").on("click", function () {
                 var keyWord = $("#KeyWord").val();
-                load(getUri(keyWord));
+                pageIndex = 0;
+                pageSize = 9;
+                currentUrl = getUri(keyWord);
+                $("#content").empty();
+                load(currentUrl);
             });
         }
     });

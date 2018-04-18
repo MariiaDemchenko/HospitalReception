@@ -30,10 +30,17 @@ namespace PhotoManager.Controllers.Api
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetAllPhotos()
+        public IHttpActionResult GetAllPhotos([FromUri] ScrollViewModel scrollViewModel)
         {
-            var photos = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(_unitOfWork.Photos.GetAllPhotos());
-            return Ok(photos);
+            var photos = _unitOfWork.Photos.GetAllPhotos()?.Skip(scrollViewModel.PageIndex * scrollViewModel.PageSize)
+                .Take(scrollViewModel.PageSize).ToList();
+            var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos);
+            if (photoViewModels == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(photoViewModels);
         }
 
         [HttpGet]
@@ -144,17 +151,18 @@ namespace PhotoManager.Controllers.Api
 
         [HttpGet]
         [Route("search")]
-        public IHttpActionResult Search()
+        public IHttpActionResult Search([FromUri]ScrollViewModel scrollViewModel = null)
         {
-            return Search(string.Empty);
+            return Search(string.Empty, scrollViewModel);
         }
 
         [HttpGet]
         [Route("search/{filter}")]
-        public IHttpActionResult Search(string filter)
+        public IHttpActionResult Search(string filter, [FromUri]ScrollViewModel scrollViewModel = null)
         {
-            var photos = _unitOfWork.Photos.GetPhotosByKeyWord(filter);
-            var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos.ToList());
+            var photos = _unitOfWork.Photos.GetPhotosByKeyWord(filter)?.Skip(scrollViewModel.PageIndex* scrollViewModel.PageSize).Take(scrollViewModel.PageSize).ToList();
+
+            var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos);
             if (photoViewModels == null)
             {
                 return NotFound();
