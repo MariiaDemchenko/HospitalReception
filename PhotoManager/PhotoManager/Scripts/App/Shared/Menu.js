@@ -53,12 +53,25 @@
             $(".btn-remove-confirm").attr("disabled", true);
         }
 
-        $.hideMenu = function(isAuthenticated) {
-            if (isAuthenticated === "True") {
-                $("#content").addClass("selectable");
-            } else {
+        $.hideMenu = function (userId) {
+            if (userId == undefined) {
                 $("#content").removeClass("selectable");
+                $(".btn-add").attr("visibility", "hidden");
+                return;
             }
+            $.ajax("/api/users/settings/"+userId)
+                .done(function(settings) {
+                    if (settings.IsAuthorized) {
+                        $("#content").addClass("selectable");
+                    } else {
+                        $("#content").removeClass("selectable");
+                    }
+                    if (settings.CanAddPhotos === false) {
+                        $(".btn-add").css("visibility", "hidden");
+                    } else {
+                        $(".btn-add").css("visibility", "visible");
+                    }
+                });
         }
 
         $.stopSpinning = function () {

@@ -2,6 +2,7 @@
 {
     public class AdvancedSearchViewModel
     {
-        public string KeyWord;
+        public PhotoViewModel PhotoViewModel { get; set; }
+        public ScrollViewModel ScrollViewModel { get; set; }
     }
 }

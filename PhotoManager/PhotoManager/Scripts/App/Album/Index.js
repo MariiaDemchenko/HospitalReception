@@ -4,19 +4,13 @@
         var headerTemplateId = "#photoAlbumHeaderTemplate";
         var contentId = "albumHeader";
         
-        $.loadPhotoAlbum = function (uri, isAuthenticated) {
-            
-            $(window).scroll(function () {
-                var scrollTop = $.getScrollTop();
-                if (scrollTop == $(document).height() - $(window).height()) {
-                    getData();
-                }
-            });
+        $.loadPhotoAlbum = function (uri, userId) {
+            $.setScroll(getData);
             
             var pageIndex = 0;
             var pageSize = 9;
 
-            $.hideMenu(isAuthenticated);
+            $.hideMenu(userId);
             $.initialize();
             getData();
 

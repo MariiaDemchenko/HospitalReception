@@ -26,6 +26,11 @@ namespace PhotoManager.DAL.Repository
             return _context.Photos.Include(p=>p.Images).ToList();
         }
 
+        public int GetUserPhotosCount(string userId)
+        {
+            return _context.Photos.Count(p => p.OwnerId == userId);
+        }
+
         public void EditPhoto(Photo photo)
         {
             var photoToModify = GetPhotoById(photo.Id);

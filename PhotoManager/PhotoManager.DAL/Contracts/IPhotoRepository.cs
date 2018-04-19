@@ -7,6 +7,8 @@ namespace PhotoManager.DAL.Contracts
     {
         IEnumerable<Photo> GetAllPhotos();
 
+        int GetUserPhotosCount(string userId);
+
         Photo GetPhotoById(int id);
 
         IEnumerable<Photo> GetPhotosByKeyWord(string keyWord);

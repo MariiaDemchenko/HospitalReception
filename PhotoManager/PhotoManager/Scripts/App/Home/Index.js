@@ -5,13 +5,7 @@
         var contentId = "content";
 
         $.loadAlbums = function () {
-            $(window).scroll(function () {
-                var scrollTop = $.getScrollTop();
-                if (scrollTop == $(document).height() - $(window).height()) {
-                    getData();
-                }
-            });
-
+            $.setScroll(getData);
             var pageIndex = 0;
             var pageSize = 9;
 

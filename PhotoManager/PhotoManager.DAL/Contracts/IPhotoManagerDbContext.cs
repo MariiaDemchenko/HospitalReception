@@ -10,6 +10,7 @@ namespace PhotoManager.DAL.Contracts
         DbSet<Photo> Photos { get; set; }
         DbSet<CameraSettings> CameraSettings { get; set; }
         DbSet<Album> Albums { get; set; }
+        IDbSet<ApplicationUser> Users { get; set; }
 
         int SaveChanges();
         void Dispose();

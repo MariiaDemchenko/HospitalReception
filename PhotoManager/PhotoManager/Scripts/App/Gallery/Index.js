@@ -3,16 +3,11 @@
         var templatePath = "/Content/Templates/Gallery/Index.html";
         var uri = "/api/photos";
 
-        $.loadPhotos = function (isAuthenticated) {
-            $.hideMenu(isAuthenticated);
+        $.loadPhotos = function (userId) {
+            $.hideMenu(userId);
             $.initialize();
 
-            $(window).scroll(function () {
-                var scrollTop = $.getScrollTop();
-                if (scrollTop == $(document).height() - $(window).height()) {
-                    getData();
-                }
-            });
+            $.setScroll(getData);
 
             var pageIndex = 0;
             var pageSize = 9;
@@ -21,12 +16,12 @@
 
             function getData() {
                 $.ajax({
-                        url: "/gallery",
-                        data: {
-                            pageIndex: pageIndex,
-                            pageSize: pageSize
-                        }
-                    })
+                    url: uri,
+                    data: {
+                        pageIndex: pageIndex,
+                        pageSize: pageSize
+                    }
+                })
                     .done(function (photos) {
                         if (photos != null && photos.length !== 0) {
                             $.displayPhotoAlbum(templatePath, photos);
@@ -34,7 +29,6 @@
                         }
                     });
             }
-            
         }
     });
 })(jQuery);

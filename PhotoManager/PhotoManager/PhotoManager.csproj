@@ -213,6 +213,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\Api\AlbumsController.cs" />
+    <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\Api\ImageController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoOriginalViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\ScrollViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\UserSettingsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

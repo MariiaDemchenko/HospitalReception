@@ -3,10 +3,10 @@
         var photoAlbumTemplate = "/Content/Templates/Album/Index.html";
         var photoAlbumTemplateId = "#photoAlbumTemplate";
         var contentId = "content";
-        
-        $.fn.serializeFormJSON = function () {
+
+        function getJSON(form) {
             var o = {};
-            var a = this.serializeArray();
+            var a = form.serializeArray();
             $.each(a,
                 function () {
                     if (o[this.name]) {
@@ -18,8 +18,16 @@
                         o[this.name] = this.value || '';
                     }
                 });
-            return JSON.stringify(o);
-        };
+            return o;
+        }
+
+        $.fn.serializeFormJSON = function() {
+            return getJSON(this);
+        }
+
+        $.fn.stringifyFormJSON = function() {
+            return JSON.stringify(getJSON(this));
+        }
 
         $.getScrollTop = function () {
             if (typeof pageYOffset != 'undefined') {
@@ -31,6 +39,15 @@
                 D = (D.clientHeight) ? D : B;
                 return D.scrollTop;
             }
+        }
+
+        $.setScroll = function(callback, data) {
+            $(window).scroll(function () {
+                var scrollTop = $.getScrollTop();
+                if (scrollTop == $(document).height() - $(window).height()) {
+                    callback.call(this, data);
+                }
+            });
         }
 
         $.displayPhotoAlbum = function (templatePath, photos) {

@@ -19,5 +19,7 @@
         public const string PhotoTemplate = _templatesFolder + "Photo/Index.html";
         public const string PhotoPropertiesTemplate = _templatesFolder + "Photo/Properties.html";
         public const string AdvancedSearchTemplate = _templatesFolder + "Gallery/AdvancedSearch.html";
+
+        public const int FreePhotosCount = 30;
     }
 }

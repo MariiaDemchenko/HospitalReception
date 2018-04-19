@@ -11,11 +11,14 @@ namespace PhotoManager.DAL
 
         public IAlbumRepository Albums { get; set; }
 
-        public UnitOfWork(IPhotoManagerDbContext context, IPhotoRepository photoRepository, IAlbumRepository albumRepository)
+        public IUserRepository Users { get; set; }
+
+        public UnitOfWork(IPhotoManagerDbContext context, IPhotoRepository photoRepository, IAlbumRepository albumRepository, IUserRepository userRepository)
         {
             _context = context;
             Photos = photoRepository;
             Albums = albumRepository;
+            Users = userRepository;
         }
 
         public void Save()

@@ -8,6 +8,8 @@ namespace PhotoManager.DAL.Contracts
 
         IAlbumRepository Albums { get; set; }
 
+        IUserRepository Users { get; set; }
+
         void Save();
     }
 }

@@ -39,7 +39,7 @@ namespace PhotoManager.Controllers.Api
             {
                 return NotFound();
             }
-            
+
             return Ok(photoViewModels);
         }
 
@@ -160,7 +160,7 @@ namespace PhotoManager.Controllers.Api
         [Route("search/{filter}")]
         public IHttpActionResult Search(string filter, [FromUri]ScrollViewModel scrollViewModel = null)
         {
-            var photos = _unitOfWork.Photos.GetPhotosByKeyWord(filter)?.Skip(scrollViewModel.PageIndex* scrollViewModel.PageSize).Take(scrollViewModel.PageSize).ToList();
+            var photos = _unitOfWork.Photos.GetPhotosByKeyWord(filter)?.Skip(scrollViewModel.PageIndex * scrollViewModel.PageSize).Take(scrollViewModel.PageSize).ToList();
 
             var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos);
             if (photoViewModels == null)
@@ -171,7 +171,7 @@ namespace PhotoManager.Controllers.Api
         }
 
         [HttpGet]
-        [Route("advancedSearch")]
+        [Route("advancedSearchModel")]
         public IHttpActionResult AdvancedSearch()
         {
             var photoViewModel = Mapper.Map<Photo, PhotoViewModel>(new Photo());
@@ -182,10 +182,12 @@ namespace PhotoManager.Controllers.Api
             return Ok(photoViewModel);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("advancedSearch")]
-        public IHttpActionResult AdvancedSearch(PhotoViewModel photoViewModel)
+        public IHttpActionResult AdvancedSearch([FromUri]AdvancedSearchViewModel advancedSearchViewModel)
         {
+            var photoViewModel = advancedSearchViewModel.PhotoViewModel;
+
             var cameraSettings = Mapper.Map<PhotoViewModel, CameraSettings>(photoViewModel);
 
             var photo = new Photo
@@ -196,7 +198,11 @@ namespace PhotoManager.Controllers.Api
                 CameraSettings = cameraSettings
             };
 
-            var photos = _unitOfWork.Photos.GetPhotosBySearchModel(photo);
+            var skipCount = advancedSearchViewModel.ScrollViewModel.PageIndex *
+                            advancedSearchViewModel.ScrollViewModel.PageSize;
+
+            var takeCount = advancedSearchViewModel.ScrollViewModel.PageSize;
+            var photos = _unitOfWork.Photos.GetPhotosBySearchModel(photo).Skip(skipCount).Take(takeCount);
             var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos.ToList());
             if (photoViewModels == null)
             {

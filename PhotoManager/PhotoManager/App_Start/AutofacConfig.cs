@@ -18,6 +18,7 @@ namespace PhotoManager
             builder.RegisterType<PhotoManagerDbContext>().As<IPhotoManagerDbContext>().InstancePerRequest();
             builder.RegisterType<AlbumRepository>().As<IAlbumRepository>();
             builder.RegisterType<PhotoRepository>().As<IPhotoRepository>();
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             var container = builder.Build();

@@ -4,6 +4,8 @@
 
         $.searchPhotos = function (searchKey) {
             var currentUrl = getUri(searchKey);
+
+            $("#KeyWord").val(searchKey);
             $.initialize();
 
             $(window).scroll(function () {
@@ -47,6 +49,10 @@
                             }
                         }
                     });
+
+                window.onpopstate = function (event) {
+                    window.location.reload();
+                }
             }
 
             $(".btn-search-gallery").on("click", function () {
@@ -54,7 +60,9 @@
                 pageIndex = 0;
                 pageSize = 9;
                 currentUrl = getUri(keyWord);
+                currentLocation = "/gallery/search/" + keyWord;
                 $("#content").empty();
+                history.pushState(null, null, currentLocation);
                 load(currentUrl);
             });
         }

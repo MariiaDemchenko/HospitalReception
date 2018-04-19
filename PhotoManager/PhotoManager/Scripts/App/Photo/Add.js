@@ -30,7 +30,7 @@
                 var file = fileInput.files[0];
 
                 serializedData.append('Image', file);
-                serializedData.append("ViewModel", $(this).serializeFormJSON());
+                serializedData.append("ViewModel", $(this).stringifyFormJSON());
 
                 $.ajax({
                     url: '/api/photos/',

@@ -19,5 +19,8 @@ namespace PhotoManager.ViewModels.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Payed user")]
+        public bool IsPayed { get; set; }
     }
 }

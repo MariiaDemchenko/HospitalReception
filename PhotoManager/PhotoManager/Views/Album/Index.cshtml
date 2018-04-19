@@ -1,4 +1,5 @@
-﻿@model int
+﻿@using Microsoft.AspNet.Identity
+@model int
 @{
     ViewBag.Title = "Album";
 }
@@ -11,6 +12,6 @@
 
 <script>
     $(function() {
-        $.loadPhotoAlbum("/api/albums/"+@Model, "@User.Identity.IsAuthenticated");
+        $.loadPhotoAlbum("/api/albums/"+@Model, "@User.Identity.GetUserId()");
     });
 </script>

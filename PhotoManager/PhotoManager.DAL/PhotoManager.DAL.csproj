@@ -63,6 +63,7 @@
     <Compile Include="Contracts\IAlbumRepository.cs" />
     <Compile Include="Contracts\IPhotoRepository.cs" />
     <Compile Include="Contracts\IUnitOfWork.cs" />
+    <Compile Include="Contracts\IUserReposirory.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Context\ApplicationDbContext.cs" />
     <Compile Include="Models\CameraSettings.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\PhotoRepository.cs" />
     <Compile Include="Repository\AlbumRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
