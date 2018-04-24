@@ -30,9 +30,11 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.IsPayed, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.CheckBoxFor(m => m.IsPayed, new { @class = "form-control" })
+        <div class="col-md-offset-2 col-md-10">
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.IsPayed)
+                @Html.LabelFor(m => m.IsPayed)
+            </div>
         </div>
     </div>
     <div class="form-group">

@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNet.Identity
+@model int
+
+<form id="formAlbumEdit">
+    <div id="albumEditForm" class="row"></div>
+    <div id="content" class="row"></div>
+    <div id="spinner" class="loader"></div>
+</form>
+
+<script>
+    $(function() {
+        $.editAlbum("@Model", "@User.Identity.GetUserId()");
+    })
+</script>

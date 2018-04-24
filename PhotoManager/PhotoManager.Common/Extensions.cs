@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 
 namespace PhotoManager.Common
 {
@@ -37,6 +38,11 @@ namespace PhotoManager.Common
                 }
             }
             return resizedImage;
+        }
+
+        public static IEnumerable<T> TakePartial<T>(IEnumerable<T> items, int pageIndex, int pageSize)
+        {
+            return items.Skip(pageIndex * pageSize).Take(pageSize);
         }
     }
 }

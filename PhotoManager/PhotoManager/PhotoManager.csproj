@@ -57,9 +57,6 @@
     <Reference Include="Autofac.Integration.WebApi, Version=4.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.WebApi2.4.1.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -209,7 +206,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
-    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\Api\AlbumsController.cs" />
@@ -241,6 +237,9 @@
     <Compile Include="ViewModels\AccountViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\AlbumCoverViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\AdvancedSearchViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\AlbumEditViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\AlbumViewModel.cs" />
+    <Compile Include="ViewModels\PhotoManagerViewModels\ManagePhotoViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\GallerySearchViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\ChangePasswordViewModel.cs" />
@@ -254,7 +253,6 @@
     <Compile Include="ViewModels\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\VerifyPhoneNumberViewModel.cs" />
-    <Compile Include="ViewModels\PhotoManagerViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoAddModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoEditModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\PhotoIndexViewModel.cs" />
@@ -309,6 +307,8 @@
     <Content Include="Content\Images\wooden.jpg" />
     <Content Include="Content\Images\yellow.jpg" />
     <Content Include="Content\PhotoManager.css" />
+    <Content Include="Content\Templates\Album\Edit.html" />
+    <Content Include="Content\Templates\Album\Manage.html" />
     <Content Include="Content\Templates\Gallery\Index.html" />
     <Content Include="Content\Templates\Album\Index.html" />
     <Content Include="Content\Templates\Gallery\AdvancedSearch.html" />
@@ -321,6 +321,9 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Templates\Home\Index.html" />
+    <Content Include="Scripts\App\Album\Add.js" />
+    <Content Include="Scripts\App\Album\Edit.js" />
+    <Content Include="Scripts\App\Album\Manage.js" />
     <Content Include="Scripts\App\Album\Index.js" />
     <Content Include="Scripts\App\Gallery\AdvancedSearch.js" />
     <Content Include="Scripts\App\Gallery\Search.js" />
@@ -439,6 +442,9 @@
     <Content Include="Views\Shared\Partial\Search.cshtml" />
     <Content Include="Views\Photo\Properties.cshtml" />
     <Content Include="Views\Gallery\AdvancedSearch.cshtml" />
+    <Content Include="Views\Album\Manage.cshtml" />
+    <Content Include="Views\Album\Edit.cshtml" />
+    <Content Include="Views\Album\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

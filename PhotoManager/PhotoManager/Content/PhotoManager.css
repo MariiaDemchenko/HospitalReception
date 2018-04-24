@@ -32,7 +32,7 @@
 }
 
 .album-footer {
-    height: 25px;
+    height: 50px;
     background: #eee;
 }
 
@@ -62,9 +62,9 @@
     text-transform: uppercase;
 }
 
-album-footer {
+/*.album-footer {
     height: 30px;
-}
+}*/
 
 .form-menu {
     margin: 20px;

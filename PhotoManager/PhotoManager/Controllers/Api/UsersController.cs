@@ -23,12 +23,13 @@ namespace PhotoManager.Controllers.Api
             {
                 return Ok(new UserSettingsViewModel { IsAuthorized = false });
             }
-            
+
             var user = _unitOfWork.Users.GetUserById(id);
             return Ok(new UserSettingsViewModel
             {
                 IsAuthorized = User.Identity.IsAuthenticated,
-                CanAddPhotos = user.IsPayed || _unitOfWork.Photos.GetUserPhotosCount(id) < Constants.FreePhotosCount
+                CanAddPhotos = user.IsPayed && _unitOfWork.Photos.GetUserPhotosCount(id) < int.MaxValue || _unitOfWork.Photos.GetUserPhotosCount(id) < Constants.FreePhotosCount,
+                CanAddAlbums = user.IsPayed && _unitOfWork.Albums.GetUserAlbumsCount(id) < int.MaxValue || _unitOfWork.Albums.GetUserAlbumsCount(id) < Constants.FreeAlbumsCount
             });
         }
     }

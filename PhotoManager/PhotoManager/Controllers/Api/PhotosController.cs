@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using PhotoManager.Common;
 using PhotoManager.DAL.Contracts;
-using PhotoManager.DAL.Models;
+using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,29 +32,21 @@ namespace PhotoManager.Controllers.Api
         [Route("")]
         public IHttpActionResult GetAllPhotos([FromUri] ScrollViewModel scrollViewModel)
         {
-            var photos = _unitOfWork.Photos.GetAllPhotos()?.Skip(scrollViewModel.PageIndex * scrollViewModel.PageSize)
-                .Take(scrollViewModel.PageSize).ToList();
-            var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos);
-            if (photoViewModels == null)
+            var photos = _unitOfWork.Photos.GetAllPhotos();
+            if (photos == null)
             {
                 return NotFound();
             }
 
-            return Ok(photoViewModels);
+            return Ok(Extensions.TakePartial(photos, scrollViewModel.PageIndex, scrollViewModel.PageSize));
         }
 
         [HttpGet]
         [Route("{id}/{size}")]
         public IHttpActionResult GetByIdAndSize(int id, int size)
         {
-            var imageSize = (Constants.ImageSize)size;
-
-            var sourcePhoto = _unitOfWork.Photos.GetPhotoById(id);
-            if (imageSize == Constants.ImageSize.Medium)
-            {
-                return Ok(Mapper.Map<Photo, PhotoMediumViewModel>(sourcePhoto));
-            }
-            return Ok(Mapper.Map<Photo, PhotoOriginalViewModel>(sourcePhoto));
+            var sourcePhoto = _unitOfWork.Photos.GetPhotoById(id, (Constants.ImageSize)size);
+            return Ok(sourcePhoto);
         }
 
         [Authorize]
@@ -62,8 +54,7 @@ namespace PhotoManager.Controllers.Api
         [Route("{id}/album/{albumId}")]
         public IHttpActionResult Edit(int id, int albumId)
         {
-            var photo = Mapper.Map<Photo, PhotoMediumViewModel>(_unitOfWork.Photos.GetPhotoById(id));
-            photo.AlbumId = albumId;
+            var photo = _unitOfWork.Photos.GetPhotoById(id, Constants.ImageSize.Medium, albumId);
             return Ok(photo);
         }
 
@@ -72,35 +63,22 @@ namespace PhotoManager.Controllers.Api
         [Route("album/{albumId}")]
         public IHttpActionResult Add(int albumId)
         {
-            var photoViewModel = new PhotoMediumViewModel()
+            var photoViewModel = new DAL.ProjectionModels.PhotoAddModel
             {
                 AlbumId = albumId,
-                ImageUrl = "/api/image/0"
+                ImageUrl = "/api/image/"
             };
-            photoViewModel.AlbumId = albumId;
             return Ok(photoViewModel);
         }
 
         [Authorize]
         [HttpPut]
         [Route("")]
-        public IHttpActionResult Edit(PhotoViewModel photoViewModel)
+        public IHttpActionResult Edit(DAL.ProjectionModels.PhotoEditModel photoViewModel)
         {
-            var cameraSettings = Mapper.Map<PhotoViewModel, CameraSettings>(photoViewModel);
-
-            var photo = new Photo
-            {
-                Id = (int)photoViewModel.Id,
-                Name = photoViewModel.Name,
-                CreationDate = photoViewModel.CreationDate,
-                Place = photoViewModel.Place
-            };
-
-            _unitOfWork.Photos.EditCameraSettings(cameraSettings);
-            _unitOfWork.Photos.EditPhoto(photo);
+            _unitOfWork.Photos.EditPhoto(photoViewModel);
             _unitOfWork.Save();
-
-            return Ok(photoViewModel);
+            return Ok(photoViewModel.AlbumId);
         }
 
         [Authorize]
@@ -119,31 +97,19 @@ namespace PhotoManager.Controllers.Api
 
             try
             {
-                var photoViewModel = JsonConvert.DeserializeObject<PhotoViewModel>(provider.FormData.GetValues("ViewModel")?.FirstOrDefault());
+                var photoViewModel = JsonConvert.DeserializeObject<DAL.ProjectionModels.PhotoAddModel>(provider.FormData.GetValues("ViewModel")?.FirstOrDefault());
                 var imageOriginal = File.ReadAllBytes(provider.FileData.FirstOrDefault().LocalFileName);
+                var images = GetImagesInDifferentShapes(imageOriginal).ToList();
 
-                var cameraSettings = Mapper.Map<PhotoViewModel, CameraSettings>(photoViewModel);
-                var cameraSettingsId = _unitOfWork.Photos.AddCameraSettings(cameraSettings);
+                photoViewModel.OwnerId = HttpContext.Current.User.Identity.GetUserId();
+                photoViewModel.Images = new List<Image>();
+                photoViewModel.Images.AddRange(images);
 
-                var ownerId = HttpContext.Current.User.Identity.GetUserId();
-                var images = GetImagesInDifferentShapes(imageOriginal);
-
-                var photo = new Photo
-                {
-                    OwnerId = ownerId,
-                    CameraSettingsId = cameraSettingsId,
-                    Name = photoViewModel.Name,
-                    CreationDate = photoViewModel.CreationDate,
-                    Place = photoViewModel.Place
-                };
-                photo.Images = new List<Image>();
-                photo.Images.AddRange(images);
-                _unitOfWork.Photos.AddPhoto(photoViewModel.AlbumId, photo);
+                _unitOfWork.Photos.AddPhoto(photoViewModel);
                 _unitOfWork.Save();
-
-                return Ok(photoViewModel);
+                return Ok(photoViewModel.AlbumId);
             }
-            catch
+            catch (Exception e)
             {
                 return NotFound();
             }
@@ -162,19 +128,18 @@ namespace PhotoManager.Controllers.Api
         {
             var photos = _unitOfWork.Photos.GetPhotosByKeyWord(filter)?.Skip(scrollViewModel.PageIndex * scrollViewModel.PageSize).Take(scrollViewModel.PageSize).ToList();
 
-            var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos);
-            if (photoViewModels == null)
+            if (photos == null)
             {
                 return NotFound();
             }
-            return Ok(photoViewModels);
+            return Ok(photos);
         }
 
         [HttpGet]
         [Route("advancedSearchModel")]
         public IHttpActionResult AdvancedSearch()
         {
-            var photoViewModel = Mapper.Map<Photo, PhotoViewModel>(new Photo());
+            var photoViewModel = new PhotoThumbnailModel();
             if (photoViewModel == null)
             {
                 return NotFound();
@@ -188,22 +153,12 @@ namespace PhotoManager.Controllers.Api
         {
             var photoViewModel = advancedSearchViewModel.PhotoViewModel;
 
-            var cameraSettings = Mapper.Map<PhotoViewModel, CameraSettings>(photoViewModel);
-
-            var photo = new Photo
-            {
-                Name = photoViewModel.Name,
-                CreationDate = photoViewModel.CreationDate,
-                Place = photoViewModel.Place,
-                CameraSettings = cameraSettings
-            };
-
             var skipCount = advancedSearchViewModel.ScrollViewModel.PageIndex *
                             advancedSearchViewModel.ScrollViewModel.PageSize;
 
             var takeCount = advancedSearchViewModel.ScrollViewModel.PageSize;
-            var photos = _unitOfWork.Photos.GetPhotosBySearchModel(photo).Skip(skipCount).Take(takeCount);
-            var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos.ToList());
+            var photos = _unitOfWork.Photos.GetPhotosBySearchModel(photoViewModel).Skip(skipCount).Take(takeCount);
+            var photoViewModels = photos.ToList();//Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>();
             if (photoViewModels == null)
             {
                 return NotFound();
@@ -218,12 +173,12 @@ namespace PhotoManager.Controllers.Api
         {
             _unitOfWork.Photos.DeletePhotos(id);
             _unitOfWork.Save();
-            var photoViewModels = Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(_unitOfWork.Photos.GetPhotosByAlbumId(albumId));
-            if (photoViewModels == null)
+            var album = _unitOfWork.Albums.GetAlbumById(albumId);
+            if (album.Photos == null)
             {
                 return NotFound();
             }
-            return Ok(photoViewModels);
+            return Ok(album.Photos);
         }
 
         private IEnumerable<Image> GetImagesInDifferentShapes(byte[] imageOriginal)

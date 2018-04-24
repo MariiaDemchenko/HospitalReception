@@ -1,10 +1,12 @@
-﻿@{
+﻿@model string
+@{
     if (User.Identity.IsAuthenticated)
     {
-        <div id ="menu" class="form-menu">
+        <div id="menu" class="form-menu" data-item="@Model">
             <button class="btn btn-success btn-menu btn-add">ADD</button>
             <button class="btn btn-warning btn-menu btn-edit">EDIT</button>
             <button class="btn btn-danger btn-menu btn-remove-confirm" data-toggle="modal" data-target="#exampleModal">REMOVE</button>
+            <button class="btn btn-menu btn-manage-albums">MANAGE ALBUMS</button>
         </div>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

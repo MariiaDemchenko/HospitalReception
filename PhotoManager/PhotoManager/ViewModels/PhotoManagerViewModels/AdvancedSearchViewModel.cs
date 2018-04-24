@@ -2,7 +2,7 @@
 {
     public class AdvancedSearchViewModel
     {
-        public PhotoViewModel PhotoViewModel { get; set; }
+        public DAL.ProjectionModels.PhotoEditModel PhotoViewModel { get; set; }
         public ScrollViewModel ScrollViewModel { get; set; }
     }
 }

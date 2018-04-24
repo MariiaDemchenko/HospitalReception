@@ -1,5 +1,8 @@
-﻿using PhotoManager.DAL.Contracts;
+﻿using AutoMapper;
+using PhotoManager.Common;
+using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.Models;
+using PhotoManager.DAL.ProjectionModels;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
@@ -16,14 +19,47 @@ namespace PhotoManager.DAL.Repository
             _context = context;
         }
 
-        public Photo GetPhotoById(int id)
+        public PhotoEditModel GetPhotoById(int id, Constants.ImageSize size, int albumId = 0)
         {
-            return _context.Photos.FirstOrDefault(p => p.Id == id);
+            var photos = _context.Photos.Select(p =>
+                new
+                {
+                    p.CameraSettingsId,
+                    AlbumId = albumId,
+                    p.Id,
+                    p.Name,
+                    p.CreationDate,
+                    p.Place,
+                    p.CameraSettings.CameraModel,
+                    p.CameraSettings.LensFocalLength,
+                    p.CameraSettings.Diaphragm,
+                    p.CameraSettings.ShutterSpeed,
+                    p.CameraSettings.Iso,
+                    p.CameraSettings.Flash,
+                    ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == size).Id,
+                    Selected = false
+                }).ToList();
+            return photos.Select(Mapper.Map<PhotoEditModel>).FirstOrDefault(p => p.Id == id);
         }
 
-        public IEnumerable<Photo> GetAllPhotos()
+        public PhotoThumbnailModel GetPhotoById(int id, int albumId = 0)
         {
-            return _context.Photos.Include(p=>p.Images).ToList();
+            return GetPhotoById(id, Constants.ImageSize.Thumbnail, albumId);
+        }
+
+        public IEnumerable<PhotoThumbnailModel> GetAllPhotos()
+        {
+            var photos = _context.Photos.Select(p =>
+                new
+                {
+                    p.Id,
+                    p.Name,
+                    p.CreationDate,
+                    ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                    Selected = false
+                }).ToList();
+
+            return photos.Select(Mapper.Map<PhotoThumbnailModel>).ToList();
         }
 
         public int GetUserPhotosCount(string userId)
@@ -31,47 +67,60 @@ namespace PhotoManager.DAL.Repository
             return _context.Photos.Count(p => p.OwnerId == userId);
         }
 
-        public void EditPhoto(Photo photo)
+        public void EditPhoto(PhotoEditModel photo)
         {
-            var photoToModify = GetPhotoById(photo.Id);
-            photoToModify.Name = photo.Name;
-            photoToModify.CreationDate = photo.CreationDate;
-            photoToModify.Place = photo.Place;
-
-            _context.Entry(photoToModify).State = EntityState.Modified;
-        }
-
-        public void EditCameraSettings(CameraSettings cameraSettings)
-        {
+            var cameraSettings = Mapper.Map<CameraSettings>(photo);
             _context.Entry(cameraSettings).State = EntityState.Modified;
+
+            var photoToEdit = _context.Photos.FirstOrDefault(p => p.Id == photo.Id);
+            photoToEdit.Name = photo.Name;
+            photoToEdit.CreationDate = photo.CreationDate;
+            photoToEdit.Place = photo.Place;
+            _context.Entry(photoToEdit).State = EntityState.Modified;
         }
 
-        public int AddCameraSettings(CameraSettings cameraSettings)
-        {
-            _context.CameraSettings.Add(cameraSettings);
-            return cameraSettings.Id;
-        }
-
-        public IEnumerable<Photo> GetPhotosByKeyWord(string keyWord)
+        public IEnumerable<PhotoThumbnailModel> GetPhotosByKeyWord(string keyWord)
         {
             var param = new SqlParameter("@keyword", keyWord);
             var photosId = _context.Database.SqlQuery<int>("EXEC dbo.Search @keyword", param).ToList();
-            var photos = _context.Photos.Include(p => p.Images).Where(p => photosId.Contains(p.Id)).ToList();
-            return photos;
+
+            var photos = _context.Photos.Select(p =>
+                new
+                {
+                    p.Id,
+                    p.Name,
+                    p.CreationDate,
+                    ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                    Selected = false
+                }).ToList();
+
+            return photos.Select(Mapper.Map<PhotoThumbnailModel>).Where(p => photosId.Contains(p.Id)).ToList();
         }
 
-        public IEnumerable<Photo> GetPhotosBySearchModel(Photo photo)
+        public IEnumerable<PhotoThumbnailModel> GetPhotosBySearchModel(PhotoEditModel photo)
         {
-            return _context.Photos.Include(p=>p.Images).Where(p =>
+            var photoModels = _context.Photos.Select(p =>
+                new
+                {
+                    p.Id,
+                    p.Name,
+                    p.Place,
+                    p.CreationDate,
+                    p.CameraSettings,
+                    ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                    Selected = false
+                }).Where(p =>
                 (string.IsNullOrEmpty(photo.Name) || p.Name.Contains(photo.Name)) &&
                 (photo.CreationDate == null || p.CreationDate == photo.CreationDate) &&
                 (string.IsNullOrEmpty(photo.Place) || p.Place.Contains(photo.Place)) &&
-                (string.IsNullOrEmpty(photo.CameraSettings.CameraModel) || p.CameraSettings.CameraModel.Contains(photo.CameraSettings.CameraModel)) &&
-                (photo.CameraSettings.LensFocalLength == 0 || p.CameraSettings.LensFocalLength == photo.CameraSettings.LensFocalLength) &&
-                (photo.CameraSettings.Diaphragm == 0 || p.CameraSettings.Diaphragm == photo.CameraSettings.Diaphragm) &&
-                (photo.CameraSettings.ShutterSpeed == 0 || p.CameraSettings.ShutterSpeed == photo.CameraSettings.ShutterSpeed) &&
-                (photo.CameraSettings.Iso == 0 || p.CameraSettings.Iso == photo.CameraSettings.Iso) &&
-                (photo.CameraSettings.Flash == 0 || p.CameraSettings.Flash == photo.CameraSettings.Flash));
+                (string.IsNullOrEmpty(photo.CameraModel) || p.CameraSettings.CameraModel.Contains(photo.CameraModel)) &&
+                (photo.LensFocalLength == 0 || p.CameraSettings.LensFocalLength == photo.LensFocalLength) &&
+                (photo.Diaphragm == 0 || p.CameraSettings.Diaphragm == photo.Diaphragm) &&
+                (photo.ShutterSpeed == 0 || p.CameraSettings.ShutterSpeed == photo.ShutterSpeed) &&
+                (photo.Iso == 0 || p.CameraSettings.Iso == photo.Iso) &&
+                (photo.Flash == 0 || p.CameraSettings.Flash == photo.Flash)).ToList();
+
+            return photoModels.Select(Mapper.Map<PhotoThumbnailModel>).ToList();
         }
 
         public Image GetImageById(int id)
@@ -79,17 +128,25 @@ namespace PhotoManager.DAL.Repository
             return _context.Images.FirstOrDefault(i => i.Id == id);
         }
 
-        public int AddImage(Image image)
+        public int AddPhoto(PhotoAddModel photoModel)
         {
-            _context.Images.Add(image);
-            return image.Id;
-        }
+            var cameraSettings = Mapper.Map<CameraSettings>(photoModel);
+            _context.CameraSettings.Add(cameraSettings);
 
-        public int AddPhoto(int? albumId, Photo photo)
-        {
-            if (albumId != 0)
+            var photo = new Photo
             {
-                var album = _context.Albums.FirstOrDefault(a=>a.Id == albumId);
+                OwnerId = photoModel.OwnerId,
+                CameraSettingsId = photoModel.CameraSettingsId,
+                Name = photoModel.Name,
+                CreationDate = photoModel.CreationDate,
+                Place = photoModel.Place,
+                Images = photoModel.Images
+            };
+
+            if (photoModel.AlbumId != 0)
+            {
+                var album = _context.Albums.FirstOrDefault(a => a.Id == photoModel.AlbumId);
+
                 album.Photos.Add(photo);
             }
             else
@@ -102,13 +159,14 @@ namespace PhotoManager.DAL.Repository
 
         public void DeletePhotos(IEnumerable<int> photosId)
         {
-            var photosToDelete = _context.Photos.Include(p=>p.Images).Where(p => photosId.Contains(p.Id));
+            var photosToDelete = _context.Photos.Include(p => p.Images).Where(p => photosId.Contains(p.Id));
             _context.Photos.RemoveRange(photosToDelete);
         }
 
         public IEnumerable<Photo> GetPhotosByAlbumId(int? albumId)
         {
-            return albumId != null? _context.Albums.Include(a=> a.Photos.Select(p=>p.Images)).FirstOrDefault(a => a.Id == albumId)?.Photos : _context.Photos.Include(p => p.Images).ToList();
+            return albumId != null ? _context.Albums.Include(a => a.Photos.Select(p => p.Images)).FirstOrDefault(a => a.Id == albumId)?.Photos :
+                _context.Photos.Include(p => p.Images).ToList();
         }
     }
 }

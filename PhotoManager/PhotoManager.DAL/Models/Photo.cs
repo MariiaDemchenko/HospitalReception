@@ -14,9 +14,9 @@ namespace PhotoManager.DAL.Models
         public int Likes { get; set; }
         public int Dislikes { get; set; }
 
-        public virtual ApplicationUser Owner { get; set; }
-        public virtual CameraSettings CameraSettings { get; set; }
-        public virtual List<Image> Images { get; set; }
-        public virtual ICollection<Album> Albums { get; set; }
+        public ApplicationUser Owner { get; set; }
+        public CameraSettings CameraSettings { get; set; }
+        public List<Image> Images { get; set; }
+        public ICollection<Album> Albums { get; set; }
     }
 }

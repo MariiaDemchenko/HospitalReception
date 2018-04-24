@@ -21,11 +21,18 @@
             return o;
         }
 
-        $.fn.serializeFormJSON = function() {
+        $.fn.Page = function () {
+            this.pageIndex = 0;
+            this.getData = 1;
+
+            alert(this.getData);
+        };
+
+        $.fn.serializeFormJSON = function () {
             return getJSON(this);
         }
 
-        $.fn.stringifyFormJSON = function() {
+        $.fn.stringifyFormJSON = function () {
             return JSON.stringify(getJSON(this));
         }
 
@@ -41,7 +48,7 @@
             }
         }
 
-        $.setScroll = function(callback, data) {
+        $.setScroll = function (callback, data) {
             $(window).scroll(function () {
                 var scrollTop = $.getScrollTop();
                 if (scrollTop == $(document).height() - $(window).height()) {
@@ -51,7 +58,7 @@
         }
 
         $.displayPhotoAlbum = function (templatePath, photos) {
-            $.get(photoAlbumTemplate,
+            $.get(templatePath,
                 function (templates) {
                     var template = $(templates).filter(photoAlbumTemplateId).html();
                     var data = {};
@@ -84,5 +91,17 @@
             var url = albumId === 0 ? "/gallery" : "/albums/" + albumId;
             window.location.href = url;
         };
+
+        $("#content").on("click", ".photo-footer",
+            function () {
+                if ($(this).hasClass("selected")) {
+                    $(this).removeClass("selected");
+                } else {
+                    $(this).addClass("selected");
+                }
+                var selectedCount = document.getElementsByClassName("selected").length;
+                $(".btn-edit").attr("disabled", selectedCount !== 1);
+                $(".btn-remove-confirm").attr("disabled", selectedCount < 1);
+            });
     });
 })(jQuery);

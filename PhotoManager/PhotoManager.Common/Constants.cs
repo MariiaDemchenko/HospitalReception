@@ -21,5 +21,6 @@
         public const string AdvancedSearchTemplate = _templatesFolder + "Gallery/AdvancedSearch.html";
 
         public const int FreePhotosCount = 30;
+        public const int FreeAlbumsCount = 5;
     }
 }

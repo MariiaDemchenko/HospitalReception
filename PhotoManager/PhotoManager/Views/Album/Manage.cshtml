@@ -1,17 +1,17 @@
 ﻿@using Microsoft.AspNet.Identity
-@model int
+
 @{
     ViewBag.Title = "Album";
 }
 <div id="albumHeader"></div>
 @Html.Partial("Partial/Search")
-@Html.Partial("Partial/Menu", "photo")
+@Html.Partial("Partial/Menu", "album")
 
 <div id="content" class="row"></div>
 <div id="spinner" class="loader"></div>
 
 <script>
     $(function() {
-        $.loadPhotoAlbum("/api/albums/"+@Model, "@User.Identity.GetUserId()");
+        $.loadAlbumsManage("@User.Identity.GetUserId()");
     });
 </script>

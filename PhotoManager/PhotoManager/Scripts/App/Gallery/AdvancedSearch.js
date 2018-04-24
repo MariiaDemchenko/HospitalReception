@@ -43,14 +43,14 @@
                     var template;
                     var data = {};
                     if (photos.length > 0) {
-                        $.displayPhotoAlbum(templatePathPhotoAlbum, photos);
+                        $.displayPhotoAlbum(templatePathLoadPhotos, photos);
                         pageIndex++;
 
                     } else {
                         if (pageIndex !== 0) {
                             return;
                         }
-                        $.get(templatePathPhotoAlbum, function (templates) {
+                        $.get(templatePathLoadPhotos, function (templates) {
                             template = $(templates).filter(photoAlbumEmptyTemplateId).html();
                             var output = Mustache.render(template, data);
                             document.getElementById(contentId).innerHTML = output;

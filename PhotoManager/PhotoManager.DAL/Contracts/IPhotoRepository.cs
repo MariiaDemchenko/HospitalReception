@@ -1,31 +1,28 @@
 ﻿using PhotoManager.DAL.Models;
+using PhotoManager.DAL.ProjectionModels;
 using System.Collections.Generic;
 
 namespace PhotoManager.DAL.Contracts
 {
     public interface IPhotoRepository
     {
-        IEnumerable<Photo> GetAllPhotos();
+        IEnumerable<PhotoThumbnailModel> GetAllPhotos();
 
         int GetUserPhotosCount(string userId);
 
-        Photo GetPhotoById(int id);
+        PhotoThumbnailModel GetPhotoById(int id, int albumId = 0);
 
-        IEnumerable<Photo> GetPhotosByKeyWord(string keyWord);
+        PhotoEditModel GetPhotoById(int id, Common.Constants.ImageSize size, int albumId = 0);
 
-        IEnumerable<Photo> GetPhotosBySearchModel(Photo photo);
+        IEnumerable<PhotoThumbnailModel> GetPhotosByKeyWord(string keyWord);
+
+        IEnumerable<PhotoThumbnailModel> GetPhotosBySearchModel(PhotoEditModel photo);
 
         Image GetImageById(int id);
 
-        void EditCameraSettings(CameraSettings cameraSettings);
+        void EditPhoto(PhotoEditModel photo);
 
-        void EditPhoto(Photo photo);
-
-        int AddImage(Image image);
-
-        int AddCameraSettings(CameraSettings cameraSettings);
-
-        int AddPhoto(int? albumId, Photo photo);
+        int AddPhoto(PhotoAddModel photoModel);
 
         void DeletePhotos(IEnumerable<int> photosId);
 

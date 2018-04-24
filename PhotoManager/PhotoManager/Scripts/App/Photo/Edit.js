@@ -16,8 +16,8 @@
                     url: '/api/photos/',
                     type: "PUT",
                     data: serializedData
-                }).done(function (photo) {
-                    $.goToAlbum(photo.AlbumId);
+                }).done(function (albumId) {
+                    $.goToAlbum(albumId);
                 });
             });
         }

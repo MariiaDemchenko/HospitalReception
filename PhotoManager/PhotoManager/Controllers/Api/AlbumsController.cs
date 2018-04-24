@@ -1,9 +1,8 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNet.Identity;
+using PhotoManager.Common;
 using PhotoManager.DAL.Contracts;
-using PhotoManager.DAL.Models;
+using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 
 namespace PhotoManager.Controllers.Api
@@ -22,29 +21,72 @@ namespace PhotoManager.Controllers.Api
         [Route("")]
         public IHttpActionResult GetAllAlbums([FromUri]ScrollViewModel scrollViewModel)
         {
-            var albums = _unitOfWork.Albums.GetAllAlbums()?
-                .Skip(scrollViewModel.PageIndex * scrollViewModel.PageSize)
-                .Take(scrollViewModel.PageSize);
+
+            var albums = _unitOfWork.Albums.GetAllAlbums();
             if (albums == null)
             {
                 return NotFound();
             }
-            var albumViewModels = Mapper.Map<IEnumerable<Album>, IEnumerable<AlbumCoverViewModel>>(albums);
-            
-            return Ok(albumViewModels);
+            return Ok(Extensions.TakePartial(albums, scrollViewModel.PageIndex, scrollViewModel.PageSize));
         }
 
         [HttpGet]
         [Route("{id}")]
         public IHttpActionResult GetAlbumById(int id, [FromUri]ScrollViewModel scrollViewModel)
         {
-            var album = Mapper.Map<Album, AlbumViewModel>(_unitOfWork.Albums.GetAlbumById(id));
+            var album = _unitOfWork.Albums.GetAlbumById(id);
             if (album?.Photos == null)
             {
                 return NotFound();
             }
-            album.Photos = album.Photos.Skip(scrollViewModel.PageIndex * scrollViewModel.PageSize).Take(scrollViewModel.PageSize).ToList();
+            album.Photos = Extensions.TakePartial(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize);
             return Ok(album);
         }
+
+        [HttpPut]
+        [Route("")]
+        public IHttpActionResult EditAlbum(AlbumIndexModel album)
+        {
+            _unitOfWork.Albums.EditAlbum(album);
+            _unitOfWork.Save();
+            return Ok(album);
+        }
+
+        [HttpPost]
+        [Route("")]
+        public IHttpActionResult AddAlbum(AlbumIndexModel album)
+        {
+            _unitOfWork.Albums.AddAlbum(album);
+            _unitOfWork.Save();
+
+            return Ok(album);
+        }
+
+        [HttpGet]
+        [Route("add")]
+        public IHttpActionResult AddAlbum()
+        {
+            return Ok(new AlbumIndexModel { OwnerId = User.Identity.GetUserId() });
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("")]
+        public IHttpActionResult DeleteAlbum(int[] id)
+        {
+            _unitOfWork.Albums.DeleteAlbums(id);
+            _unitOfWork.Save();
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("edit/{id}")]
+        public IHttpActionResult EditAlbumPhotos(int id, [FromUri]ScrollViewModel scrollViewModel)
+        {
+            var album = _unitOfWork.Albums.GetAlbumById(id, true);
+            album.Photos = Extensions.TakePartial(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize);
+            return Ok(album);
+        }
+
     }
 }

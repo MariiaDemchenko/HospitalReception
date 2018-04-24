@@ -10,10 +10,13 @@
 
             $('input[type=file]').change(function () {
                 if (event.target.files.length > 0) {
-                    var tmppath = URL.createObjectURL(event.target.files[0]);
-                    $("#displayedImage").fadeIn("fast").attr('src', tmppath);
+                    var file = event.target.files[0];
+                    if (file.size / 1024 < 500) {
+                        var tmppath = URL.createObjectURL(event.target.files[0]);
+                        $("#displayedImage").fadeIn("fast").attr('src', tmppath);
+                    }
                 } else {
-                    $("#displayedImage").fadeIn("fast").attr('src', "/api/image/0");
+                    $("#displayedImage").fadeIn("fast").attr('src', "/api/image");
                 }
             });
 
@@ -38,8 +41,8 @@
                     data: serializedData,
                     processData: false,
                     contentType: false
-                }).done(function (photo) {
-                    $.goToAlbum(photo.AlbumId);
+                }).done(function (albumId) {
+                    $.goToAlbum(albumId);
                 });
             });
         }

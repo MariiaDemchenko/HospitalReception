@@ -11,5 +11,26 @@ namespace PhotoManager.Controllers
         {
             return View(id);
         }
+
+        [HttpGet]
+        [Route("manage")]
+        public ActionResult Manage()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("edit/{id}")]
+        public ActionResult Edit(int id)
+        {
+            return View(id);
+        }
+
+        [HttpGet]
+        [Route("add")]
+        public ActionResult Add()
+        {
+            return View();
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace PhotoManager.ViewModels.PhotoManagerViewModels
         public int? Dislikes { get; set; }
 
         public int? AlbumId { get; set; }
+        public bool Selected { get; set; }
         public byte[] Image { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Web.Mvc;
-using PhotoManager.ViewModels.PhotoManagerViewModels;
+﻿using PhotoManager.ViewModels.PhotoManagerViewModels;
+using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
 {
@@ -10,14 +10,17 @@ namespace PhotoManager.Controllers
         [Route("{id}")]
         public ActionResult Index(int id)
         {
-            return View(new PhotoDisplayViewModel{Id = id, Size = (int)Common.Constants.ImageSize.Original});
+            return View(new PhotoDisplayViewModel { Id = id, Size = (int)Common.Constants.ImageSize.Original });
         }
 
         [HttpGet]
         [Route("properties/{id}")]
         public ActionResult Properties(int id)
         {
-            return View(new PhotoDisplayViewModel { Id = id, Size = (int)Common.Constants.ImageSize.Medium });
+            var x = new PhotoDisplayViewModel { Id = id, Size = (int)Common.Constants.ImageSize.Original };
+
+            return View(x);
+
         }
 
         [Authorize]

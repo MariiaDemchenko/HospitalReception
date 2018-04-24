@@ -1,3 +1,25 @@
+<script id="photoAlbumHeaderTemplate" type="text/html">
+    <table>
+        <tr>
+            <td><input type="hidden" class="form-control" name="Id" value="{{Id}}"></td>
+            <td><input type="hidden" class="form-control" name="OwnerId" value="{{OwnerId}}"></td>
+        </tr>
+        <tr>
+            <td><label>Name</label></td>
+            <td><input class="form-control" name="Name" value="{{Name}}"></td>
+        </tr>
+        <tr>
+            <td><label>Description</label></td>
+            <td><input class="form-control" name="Description" value="{{Description}}"></td>
+        </tr>
+
+        <tr>
+            <td>
+                <button class="btn btn-block btn-menu">SAVE CHANGES</button>
+            </td>
+        </tr>
+    </table>
+</script>
 <script id="photoAlbumTemplate" type="text/html">
     {{#photos}}
     <div class="col-lg-4 text-center">
@@ -5,7 +27,7 @@
             <a class="photo-frame-bg d-flex" href="/photos/properties/{{Id}}">
                 <img src={{ImageUrl}} class="image" />
             </a>
-            <div class="photo-footer" data-photo-id="{{Id}}">
+            <div class="photo-footer {{Selected}}" data-photo-id="{{Id}}">
                 <div class="description">
                     <div>
                         <div class="photo-name">
@@ -23,20 +45,4 @@
         </div>
     </div>
     {{/photos}}
-</script>
-
-<script id="photoAlbumHeaderTemplate" type="text/html">
-    <input type="hidden" id="photoAlbumId" value="{{Id}}">
-    <div class="page-header">
-        <h2>{{Name}}</h2>
-    </div>
-    <div class="album-description">
-        <h3>{{Description}}</h3>
-    </div>
-</script>
-
-<script id="photoAlbumEmptyTemplate" type="text/html">
-    <div class="album-description form-menu form-group">
-        <h4>There are no photos in this album yet</h4>
-    </div>
 </script>
