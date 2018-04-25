@@ -58,8 +58,8 @@
 
                 for (var i = 0; i < selectedPhotos.length; i++) {
                     var photo = { Id: selectedPhotos[i].dataset.photoId }
+                    serializedData.Photos.push(photo);
                 };
-                serializedData.Photos.push(photo);
 
                 $.ajax({
                     url: '/api/albums/',

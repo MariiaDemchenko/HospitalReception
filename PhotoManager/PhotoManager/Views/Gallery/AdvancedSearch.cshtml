@@ -1,17 +1,68 @@
-﻿@using PhotoManager.Common
-
+﻿@using PhotoManager.CustomHelpers
+@model PhotoManager.DAL.ProjectionModels.SearchModel
 <div class="page-header">
     <h2>Photo gallery</h2>
 </div>
 
-<form id="formAdvancedSearch">    
-    <div id="searchForm" class="form-menu"></div>
+<form id="formAdvancedSearch">
+    <div class="row">
+        <table class="col-5">
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.Name)</td>
+                <td>@Html.TextEditorFor(m => m.Name)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.Place)</td>
+                <td>@Html.TextEditorFor(m => m.Place)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.CameraModel)</td>
+                <td>@Html.TextEditorFor(m => m.CameraModel)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.LensFocalLength)</td>
+                <td>@Html.NumberEditorFor(m => m.LensFocalLength)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.ShutterSpeed)</td>
+                <td>@Html.NumberEditorFor(m => m.ShutterSpeed)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.Iso)</td>
+                <td>@Html.NumberEditorFor(m => m.Iso)</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-block btn-menu">SEARCH</button>
+                </td>
+            </tr>
+        </table>
+        <table class="col-6">
+            <tr>
+                
+                <td>@Html.DisplayNameFor(m => m.CreationDateBegin)</td>
+                <td>From: @Html.DateTimeEditorFor(m => m.CreationDateBegin)</td>
+                <td>To: @Html.DateTimeEditorFor(m => m.CreationDateEnd)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.DiaphragmBegin)</td>
+                <td>From: @Html.NumberEditorFor(m => m.DiaphragmBegin, 0.01)</td>
+                <td>To: @Html.NumberEditorFor(m => m.DiaphragmEnd, 0.01)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.FlashBegin)</td>
+                <td>From: @Html.NumberEditorFor(m => m.FlashBegin, 0.01)</td>
+                <td>To: @Html.NumberEditorFor(m => m.FlashEnd, 0.01)</td>
+            </tr>
+        </table>
+    </div>
+
     <div id="content" class="row"></div>
     <div id="spinner" class="loader"></div>
 </form>
 
 <script>
-    $(function() {
+    $(function () {
         $.advancedSearchPhotos();
     });
 </script>

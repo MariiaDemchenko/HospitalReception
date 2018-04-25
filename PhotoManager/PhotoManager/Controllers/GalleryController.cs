@@ -1,37 +1,39 @@
-﻿using PhotoManager.ViewModels.PhotoManagerViewModels;
+﻿using PhotoManager.DAL.ProjectionModels;
+using PhotoManager.ViewModels.PhotoManagerViewModels;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
 {
-    [RoutePrefix("gallery")]
+    [System.Web.Mvc.RoutePrefix("gallery")]
     public class GalleryController : Controller
     {
-        [HttpGet]
-        [Route("")]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [HttpGet]
-        [Route("search")]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("search")]
         public ActionResult Search()
         {
             return View(new GallerySearchViewModel { KeyWord = string.Empty });
         }
 
-        [HttpGet]
-        [Route("search/{keyWord}")]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("search/{keyWord}")]
         public ActionResult Search(string keyword)
         {
             return View(new GallerySearchViewModel { KeyWord = keyword });
         }
 
-        [HttpGet]
-        [Route("advancedSearch")]
-        public ActionResult AdvancedSearch()
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("advancedSearch")]
+        public ActionResult AdvancedSearch([FromUri]SearchModel model)
         {
-            return View();
+            return View(model);
         }
     }
 }

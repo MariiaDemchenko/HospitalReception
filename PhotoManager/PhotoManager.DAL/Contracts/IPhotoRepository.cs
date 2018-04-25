@@ -16,7 +16,7 @@ namespace PhotoManager.DAL.Contracts
 
         IEnumerable<PhotoThumbnailModel> GetPhotosByKeyWord(string keyWord);
 
-        IEnumerable<PhotoThumbnailModel> GetPhotosBySearchModel(PhotoEditModel photo);
+        IEnumerable<PhotoThumbnailModel> GetPhotosBySearchModel(SearchModel photo);
 
         Image GetImageById(int id);
 

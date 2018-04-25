@@ -96,11 +96,49 @@ namespace PhotoManager.DAL.Repository
             albumToEdit.Name = album.Name;
             albumToEdit.Description = album.Description;
 
-            var photosId = album.Photos.Select(p => p.Id).ToList();
+            var newPhotosId = album.Photos?.Select(p => p.Id).ToList();
+            var oldPhotosId = albumToEdit.Photos?.Select(p => p.Id).ToList();
 
-            albumToEdit.Photos = _context.Photos.Where(p => photosId.Contains(p.Id)).ToList();
+            var state = EntityState.Unchanged;
 
-            _context.Entry(albumToEdit).State = EntityState.Modified;
+            if (newPhotosId == null)
+            {
+                if (oldPhotosId.Count != 0)
+                {
+                    state = EntityState.Modified;
+                }
+            }
+            else
+            {
+                if (oldPhotosId.Count == 0)
+                {
+                    albumToEdit.Photos = new List<Photo>();
+                    state = EntityState.Modified;
+                }
+                else
+                {
+                    foreach (var id in newPhotosId)
+                    {
+                        if (!oldPhotosId.Contains(id))
+                        {
+                            state = EntityState.Modified;
+                        }
+                    }
+                }
+            }
+
+            if (state == EntityState.Modified)
+            {
+                if (newPhotosId == null)
+                {
+                    albumToEdit.Photos.Clear();
+                }
+                else
+                {
+                    albumToEdit.Photos = _context.Photos.Where(p => newPhotosId.Contains(p.Id)).ToList();
+                }
+                _context.Entry(albumToEdit).State = EntityState.Modified;
+            }
 
             return _context.Albums.FirstOrDefault(a => a.Id == album.Id);
         }

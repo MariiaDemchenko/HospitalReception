@@ -1,5 +1,4 @@
-﻿@using PhotoManager.Common
-@model PhotoManager.ViewModels.PhotoManagerViewModels.PhotoAddModel
+﻿@model PhotoManager.ViewModels.PhotoManagerViewModels.PhotoAddModel
 <div class="page-header">
     <h2>Add photo</h2>
 </div>
@@ -8,9 +7,51 @@
     <div id="content"></div>
     <div id="spinner" class="loader"></div>
     <label for="file">Upload Image:</label>
-    <input type="file" class="btn-add-photo" name="file" id="file" accept="image/jpeg"/><br><br>
+    <input type="file" class="btn-add-photo" name="file" id="file" accept="image/jpeg" /><br><br>
     <br><br>
 </form>
+
+<div class="modal fade" id="selectPhotoModal" tabindex="-1" role="dialog" aria-labelledby="selectPhotoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Error adding photo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">Select a photo</div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="fileSizeExceedingModal" tabindex="-1" role="dialog" aria-labelledby="fileSizeExceedingLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Error adding photo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">Photo size must not be larger than 500K</div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="invalidMimeTypeModal" tabindex="-1" role="dialog" aria-labelledby="invalidMimeTypeLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Error adding photo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">Only JPEG format is allowed</div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(function () {

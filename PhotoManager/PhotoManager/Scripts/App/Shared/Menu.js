@@ -33,6 +33,18 @@
             window.location.href = "/gallery/search/" + searchKey;
         });
 
+        $(".btn-get-link").on("click", function (event) {
+            event.preventDefault();
+            var parts = location.toString().split("/");
+            var url = "";
+            for (var i = 0; i < parts.length - 1; i++) {
+                url += parts[i] + "/";
+            }
+
+            url = url + document.getElementById("photoAlbumName").innerHTML;
+            document.getElementById("albumLink").innerHTML = url;
+        });
+
         $(".btn-advanced-search").on("click", function (event) {
             event.preventDefault();
             window.location.href = "/gallery/advancedSearch/";
@@ -77,7 +89,6 @@
                             $(".btn-add").css("visibility", "visible");
                         }
                     }
-
                 });
         }
 

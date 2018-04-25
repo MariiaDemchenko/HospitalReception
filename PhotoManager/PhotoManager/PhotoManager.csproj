@@ -214,6 +214,7 @@
     <Compile Include="Controllers\Api\ImageController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\Api\PhotosController.cs" />
+    <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Managers\ApplicationSignInManager.cs" />
     <Compile Include="Managers\ApplicationUserManager.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

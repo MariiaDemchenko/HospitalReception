@@ -97,7 +97,7 @@ namespace PhotoManager.DAL.Repository
             return photos.Select(Mapper.Map<PhotoThumbnailModel>).Where(p => photosId.Contains(p.Id)).ToList();
         }
 
-        public IEnumerable<PhotoThumbnailModel> GetPhotosBySearchModel(PhotoEditModel photo)
+        public IEnumerable<PhotoThumbnailModel> GetPhotosBySearchModel(SearchModel photo)
         {
             var photoModels = _context.Photos.Select(p =>
                 new
@@ -111,15 +111,23 @@ namespace PhotoManager.DAL.Repository
                     Selected = false
                 }).Where(p =>
                 (string.IsNullOrEmpty(photo.Name) || p.Name.Contains(photo.Name)) &&
-                (photo.CreationDate == null || p.CreationDate == photo.CreationDate) &&
+                ((photo.CreationDateBegin == null && photo.CreationDateEnd == null) ||
+                 (photo.CreationDateBegin == null && p.CreationDate <= photo.CreationDateEnd) ||
+                 (photo.CreationDateEnd == null && p.CreationDate >= photo.CreationDateBegin) ||
+                 p.CreationDate >= photo.CreationDateBegin && p.CreationDate <= photo.CreationDateEnd) &&
                 (string.IsNullOrEmpty(photo.Place) || p.Place.Contains(photo.Place)) &&
                 (string.IsNullOrEmpty(photo.CameraModel) || p.CameraSettings.CameraModel.Contains(photo.CameraModel)) &&
                 (photo.LensFocalLength == 0 || p.CameraSettings.LensFocalLength == photo.LensFocalLength) &&
-                (photo.Diaphragm == 0 || p.CameraSettings.Diaphragm == photo.Diaphragm) &&
+                ((photo.DiaphragmBegin == null && photo.DiaphragmEnd == null) ||
+                 (photo.DiaphragmBegin == null && p.CameraSettings.Diaphragm <= photo.DiaphragmEnd) ||
+                 (photo.DiaphragmEnd == null && p.CameraSettings.Diaphragm >= photo.DiaphragmBegin) ||
+                 (p.CameraSettings.Diaphragm >= photo.DiaphragmBegin && p.CameraSettings.Diaphragm <= photo.DiaphragmEnd)) &&
                 (photo.ShutterSpeed == 0 || p.CameraSettings.ShutterSpeed == photo.ShutterSpeed) &&
                 (photo.Iso == 0 || p.CameraSettings.Iso == photo.Iso) &&
-                (photo.Flash == 0 || p.CameraSettings.Flash == photo.Flash)).ToList();
-
+                ((photo.FlashBegin == null && photo.FlashEnd == null) ||
+                 (photo.FlashBegin == null && p.CameraSettings.Flash <= photo.FlashEnd) ||
+                 (photo.FlashEnd == null && p.CameraSettings.Flash >= photo.FlashBegin) ||
+                 (p.CameraSettings.Flash >= photo.FlashBegin && p.CameraSettings.Flash <= photo.FlashEnd))).ToList();
             return photoModels.Select(Mapper.Map<PhotoThumbnailModel>).ToList();
         }
 

@@ -26,9 +26,12 @@
 </script>
 
 <script id="photoAlbumHeaderTemplate" type="text/html">
-    <input type="hidden" id="photoAlbumId" value="{{Id}}">
+    <input type="hidden" id="photoAlbumId" value="{{Id}}">    
     <div class="page-header">
-        <h2>{{Name}}</h2>
+        <h2>
+            <label type="hidden" id="photoAlbumName" value="">{{Name}}</label>
+        </h2>
+        
     </div>
     <div class="album-description">
         <h3>{{Description}}</h3>

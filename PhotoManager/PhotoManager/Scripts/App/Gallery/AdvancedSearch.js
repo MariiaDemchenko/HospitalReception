@@ -15,7 +15,7 @@
 
             $.setScroll(load);
 
-            loadForm();
+            load();
 
             function loadForm() {
                 $.ajax("/api/photos/advancedSearchModel")
@@ -38,7 +38,7 @@
 
                 $.ajax({
                     url: '/api/photos/advancedSearch',
-                    data: { photoViewModel: serializedData , scrollViewModel: pageViewModel }
+                    data: { photoViewModel: serializedData, scrollViewModel: pageViewModel }
                 }).done(function (photos) {
                     var template;
                     var data = {};
@@ -60,11 +60,16 @@
                 });
             }
 
+            window.onpopstate = function () {
+                location.reload();
+            }
+
             $("#formAdvancedSearch").submit(function (e) {
                 e.preventDefault();
                 pageIndex = 0;
                 $("#content").empty();
                 load();
+                history.pushState(null, null, "/gallery/advancedSearch?" + $("#formAdvancedSearch").serialize());
             });
         }
     });
