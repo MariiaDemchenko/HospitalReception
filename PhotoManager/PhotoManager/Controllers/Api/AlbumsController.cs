@@ -4,6 +4,7 @@ using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
 using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace PhotoManager.Controllers.Api
 {
@@ -31,8 +32,21 @@ namespace PhotoManager.Controllers.Api
         }
 
         [HttpGet]
+        [Route("album")]
+        public IHttpActionResult GetAlbumByModel([FromUri]AlbumSearchModel model, [FromUri]ScrollViewModel scrollViewModel)
+        {
+            var album = _unitOfWork.Albums.GetAlbumByModel(model);
+            if (album?.Photos == null)
+            {
+                return NotFound();
+            }
+            album.Photos = Extensions.TakePartial(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize);
+            return Ok(album);
+        }
+
+        [HttpGet]
         [Route("{id}")]
-        public IHttpActionResult GetAlbumById(int id, [FromUri]ScrollViewModel scrollViewModel)
+        public IHttpActionResult GetAlbumById(int? id, [FromUri]ScrollViewModel scrollViewModel)
         {
             var album = _unitOfWork.Albums.GetAlbumById(id);
             if (album?.Photos == null)
@@ -56,10 +70,13 @@ namespace PhotoManager.Controllers.Api
         [Route("")]
         public IHttpActionResult AddAlbum(AlbumIndexModel album)
         {
-            _unitOfWork.Albums.AddAlbum(album);
-            _unitOfWork.Save();
+            var result = _unitOfWork.Albums.AddAlbum(album);
+            if (result)
+            {
+                _unitOfWork.Save();
+            }
 
-            return Ok(album);
+            return Ok(result);
         }
 
         [HttpGet]

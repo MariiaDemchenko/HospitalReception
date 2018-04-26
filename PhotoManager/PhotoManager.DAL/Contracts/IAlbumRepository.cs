@@ -8,11 +8,13 @@ namespace PhotoManager.DAL.Contracts
     {
         IEnumerable<ThumbnailModel> GetAllAlbums();
 
+        AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, bool allPhotosWithSelectedState = false);
+
         AlbumIndexModel GetAlbumById(int? id, bool allPhotosWithSelectedState = false);
 
         Album EditAlbum(AlbumIndexModel album);
 
-        Album AddAlbum(AlbumIndexModel album);
+        bool AddAlbum(AlbumIndexModel album);
 
         IEnumerable<Album> DeleteAlbums(IEnumerable<int> albumsId);
 

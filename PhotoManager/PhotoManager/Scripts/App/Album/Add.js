@@ -56,8 +56,12 @@
                     url: '/api/albums/',
                     type: "POST",
                     data: serializedData
-                }).done(function () {
-                    location.href = "/albums/manage";
+                }).done(function (result) {
+                    if (result) {
+                        location.href = "/albums/manage";
+                    } else {
+                        $('#addAlbumUniqueModal').modal('show');
+                    }
                 });
             });
         };

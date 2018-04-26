@@ -88,7 +88,7 @@
         };
 
         $.goToAlbum = function (albumId) {
-            var url = albumId === 0 ? "/gallery" : "/albums/" + albumId;
+            var url = albumId === 0 ? "/gallery" : "/albums/album?id=" + albumId;
             window.location.href = url;
         };
 

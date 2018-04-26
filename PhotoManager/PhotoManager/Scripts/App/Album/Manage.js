@@ -5,9 +5,11 @@
         var contentId = "content";
         var pageSize = 9;
         var pageIndex = 0;
+        var userId;
 
         $.albumsPage = {
             setPageIndex: function (newPageIndex) {
+                $.hideMenu(userId);
                 pageIndex = newPageIndex;
             },
             getData: function () {
@@ -34,8 +36,8 @@
             }
         }
 
-        $.loadAlbumsManage = function (userId) {
-
+        $.loadAlbumsManage = function (id) {
+            userId = id;
             $.hideMenu(userId);
             $.initialize();
             $.setScroll($.albumsPage.getData);

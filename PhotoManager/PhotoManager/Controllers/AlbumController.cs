@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using PhotoManager.DAL.ProjectionModels;
+using PhotoManager.ViewModels.PhotoManagerViewModels;
 
 namespace PhotoManager.Controllers
 {
@@ -6,10 +8,17 @@ namespace PhotoManager.Controllers
     public class AlbumController : Controller
     {
         [HttpGet]
-        [Route("{id}")]
-        public ActionResult Index(int id)
+        [Route("{name}")]
+        public ActionResult Index(string name)
         {
-            return View(id);
+            return View(new AlbumSearchModel { Name = name });
+        }
+
+        [HttpGet]
+        [Route("album")]
+        public ActionResult Index(AlbumSearchModel model)
+        {
+            return View(model);
         }
 
         [HttpGet]

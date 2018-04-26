@@ -36,6 +36,63 @@ namespace PhotoManager.DAL.Repository
             return _context.Albums.Count(a => a.OwnerId == userId);
         }
 
+        public AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, bool allPhotosWithSelectedState = false)
+        {
+            AlbumIndexModel album;
+
+            if (!allPhotosWithSelectedState)
+            {
+                var albums = _context.Albums.Select(a =>
+                    new
+                    {
+                        a.Id,
+                        a.OwnerId,
+                        a.Name,
+                        a.Description,
+                        ImageUrl = string.Empty,
+                        Photos = a.Photos.Select(p =>
+                            new PhotoThumbnailModel
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                CreationDate = p.CreationDate,
+                                ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
+                            })
+                    }).ToList();
+
+                album = model.Id != null ?
+                    albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Id == model.Id) :
+                    albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Name == model.Name);
+            }
+            else
+            {
+                var albums = _context.Albums.Select(a =>
+                    new
+                    {
+                        a.Id,
+                        a.Name,
+                        a.Description,
+                        ImageUrl = string.Empty,
+                        OwnerId = string.Empty,
+                        Photos = _context.Photos.Select(p =>
+                            new PhotoThumbnailModel
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                CreationDate = p.CreationDate,
+                                Selected = a.Photos.Select(photo => photo.Id).Contains(p.Id),
+                                ImageUrl = "/api/Image/" +
+                                           p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
+                            })
+                    }).ToList();
+                album = model.Id != null ?
+                    albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Id == model.Id) :
+                    albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Name == model.Name);
+            }
+
+            return album;
+        }
+
         public AlbumIndexModel GetAlbumById(int? id, bool allPhotosWithSelectedState)
         {
             AlbumIndexModel album;
@@ -143,8 +200,10 @@ namespace PhotoManager.DAL.Repository
             return _context.Albums.FirstOrDefault(a => a.Id == album.Id);
         }
 
-        public Album AddAlbum(AlbumIndexModel album)
+        public bool AddAlbum(AlbumIndexModel album)
         {
+            var result = !_context.Albums.Any(a => a.Name == album.Name);
+
             var photosId = album.Photos?.Select(p => p.Id).ToList();
             var albumToAdd = new Album
             {
@@ -154,7 +213,7 @@ namespace PhotoManager.DAL.Repository
                 Photos = photosId != null ? _context.Photos.Where(p => photosId.Contains(p.Id)).ToList() : null
             };
             _context.Albums.Add(albumToAdd);
-            return _context.Albums.FirstOrDefault(a => a.Id == album.Id);
+            return result;
         }
 
         public IEnumerable<Album> DeleteAlbums(IEnumerable<int> albumsId)

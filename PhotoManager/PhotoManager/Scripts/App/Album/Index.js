@@ -6,9 +6,11 @@
         var pageSize = 9;
         var pageIndex = 0;
         var url;
+        var userId;
 
         $.photosPage = {
             setPageIndex: function (newPageIndex) {
+                $.hideMenu(userId);
                 pageIndex = newPageIndex;
             },
             getData: function () {
@@ -47,8 +49,9 @@
             }
         }
 
-        $.loadPhotoAlbum = function (uri, userId) {
+        $.loadPhotoAlbum = function (uri, id) {
             url = uri;
+            userId = id;
 
             $.hideMenu(userId);
             $.initialize();

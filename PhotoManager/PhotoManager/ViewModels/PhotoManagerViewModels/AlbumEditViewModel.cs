@@ -1,7 +1,9 @@
-﻿namespace PhotoManager.ViewModels.PhotoManagerViewModels
+﻿using PhotoManager.DAL.ProjectionModels;
+
+namespace PhotoManager.ViewModels.PhotoManagerViewModels
 {
     public class AlbumEditViewModel
     {
-        public AlbumViewModel AlbumViewModel { get; set; }
+        public AlbumSearchModel AlbumViewModel { get; set; }
     }
 }

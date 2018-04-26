@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model int
+@model PhotoManager.DAL.ProjectionModels.AlbumSearchModel
 @{
     ViewBag.Title = "Album";
 }
@@ -17,6 +17,6 @@
 
 <script>
     $(function() {
-        $.loadPhotoAlbum("/api/albums/"+@Model, "@User.Identity.GetUserId()");
+        $.loadPhotoAlbum("@Model.AlbumUrl", "@User.Identity.GetUserId()");
     });
 </script>

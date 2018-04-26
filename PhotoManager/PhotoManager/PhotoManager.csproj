@@ -239,7 +239,6 @@
     <Compile Include="ViewModels\PhotoManagerViewModels\AlbumCoverViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\AdvancedSearchViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\AlbumEditViewModel.cs" />
-    <Compile Include="ViewModels\PhotoManagerViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\ManagePhotoViewModel.cs" />
     <Compile Include="ViewModels\PhotoManagerViewModels\GallerySearchViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels\AddPhoneNumberViewModel.cs" />
