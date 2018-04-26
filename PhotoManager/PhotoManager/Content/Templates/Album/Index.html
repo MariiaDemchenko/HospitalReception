@@ -15,8 +15,16 @@
                             {{CreationDate}}
                         </div>
                     </div>
-                    <div class="selected-icon">
+                    <div class="selected-icon select" data-photo-id="{{Id}}">
                         <i class="fa fa-check"></i>
+                    </div>
+                    <div class="selected-icon like {{Liked}}" data-photo-id="{{Id}}">
+                        <i class="fa fa-thumbs-o-up"></i>
+                        <label id="likesCount">{{Likes}}</label>
+                    </div>
+                    <div class="selected-icon dislike {{Disliked}}" data-photo-id="{{Id}}">
+                        <i class="fa fa-thumbs-o-down"></i>
+                        <label id="dislikesCount">{{Dislikes}}</label>
                     </div>
                 </div>
             </div>
@@ -26,12 +34,12 @@
 </script>
 
 <script id="photoAlbumHeaderTemplate" type="text/html">
-    <input type="hidden" id="photoAlbumId" value="{{Id}}">    
+    <input type="hidden" id="photoAlbumId" value="{{Id}}">
     <div class="page-header">
         <h2>
             <label type="hidden" id="photoAlbumName" value="">{{Name}}</label>
         </h2>
-        
+
     </div>
     <div class="album-description">
         <h3>{{Description}}</h3>

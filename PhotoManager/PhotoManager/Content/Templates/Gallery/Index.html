@@ -14,7 +14,18 @@
                         <div class="photo-date">
                             {{CreationDate}}
                         </div>
-                    </div>                   
+                    </div>
+                    <div class="selected-icon select" data-photo-id="{{Id}}">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <div class="selected-icon like disabled">
+                        <i class="fa fa-thumbs-o-up"></i>
+                        <label id="likesCount">{{Likes}}</label>
+                    </div>
+                    <div class="selected-icon dislike disabled">
+                        <i class="fa fa-thumbs-o-down"></i>
+                        <label id="dislikesCount">{{Dislikes}}</label>
+                    </div>
                 </div>
             </div>
         </div>

@@ -36,7 +36,7 @@ namespace PhotoManager.DAL.Repository
             return _context.Albums.Count(a => a.OwnerId == userId);
         }
 
-        public AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, bool allPhotosWithSelectedState = false)
+        public AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, string userId, bool allPhotosWithSelectedState = false)
         {
             AlbumIndexModel album;
 
@@ -56,7 +56,11 @@ namespace PhotoManager.DAL.Repository
                                 Id = p.Id,
                                 Name = p.Name,
                                 CreationDate = p.CreationDate,
-                                ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
+                                ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                                Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
+                                Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
+                                Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
+                                Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id)
                             })
                     }).ToList();
 
@@ -81,6 +85,10 @@ namespace PhotoManager.DAL.Repository
                                 Name = p.Name,
                                 CreationDate = p.CreationDate,
                                 Selected = a.Photos.Select(photo => photo.Id).Contains(p.Id),
+                                Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
+                                Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
+                                Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
+                                Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
                                 ImageUrl = "/api/Image/" +
                                            p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
                             })
@@ -93,7 +101,7 @@ namespace PhotoManager.DAL.Repository
             return album;
         }
 
-        public AlbumIndexModel GetAlbumById(int? id, bool allPhotosWithSelectedState)
+        public AlbumIndexModel GetAlbumById(int? id, string userId, bool allPhotosWithSelectedState)
         {
             AlbumIndexModel album;
 
@@ -113,7 +121,11 @@ namespace PhotoManager.DAL.Repository
                                 Id = p.Id,
                                 Name = p.Name,
                                 CreationDate = p.CreationDate,
-                                ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
+                                ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                                Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
+                                Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
+                                Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
+                                Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id)
                             })
                     }).ToList();
 
@@ -137,7 +149,11 @@ namespace PhotoManager.DAL.Repository
                                 CreationDate = p.CreationDate,
                                 Selected = a.Photos.Select(photo => photo.Id).Contains(p.Id),
                                 ImageUrl = "/api/Image/" +
-                                           p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
+                                           p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                                Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
+                                Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
+                                Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
+                                Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id)
                             })
                     }).ToList();
                 album = albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Id == id);

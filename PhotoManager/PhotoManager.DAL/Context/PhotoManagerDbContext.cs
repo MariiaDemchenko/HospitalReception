@@ -11,6 +11,7 @@ namespace PhotoManager.DAL.Context
         public DbSet<Photo> Photos { get; set; }
         public DbSet<CameraSettings> CameraSettings { get; set; }
         public DbSet<Album> Albums { get; set; }
+        public DbSet<Like> Likes { get; set; }
 
         public PhotoManagerDbContext()
         {

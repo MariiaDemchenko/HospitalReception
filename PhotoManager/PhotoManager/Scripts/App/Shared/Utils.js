@@ -92,7 +92,7 @@
             window.location.href = url;
         };
 
-        $("#content").on("click", ".photo-footer",
+        $("#content").on("click", ".selected-icon.select",
             function () {
                 if ($(this).hasClass("selected")) {
                     $(this).removeClass("selected");
@@ -102,6 +102,62 @@
                 var selectedCount = document.getElementsByClassName("selected").length;
                 $(".btn-edit").attr("disabled", selectedCount !== 1);
                 $(".btn-remove-confirm").attr("disabled", selectedCount < 1);
+            });
+        $("#content").on("click", ".selected-icon.like",
+            function () {
+                var photo = $(this);
+                $.ajax("/api/users").done(function (userId) {
+                    if (userId == null || photo.hasClass("disabled")) {
+                        return;
+                    }
+                    if (photo.hasClass("liked")) {
+                        photo.removeClass("liked");
+                    } else {
+                        if (photo.parent().find(".selected-icon.dislike").hasClass("disliked")) {
+                            photo.parent().find(".selected-icon.dislike").removeClass("disliked");
+                        }
+                        photo.addClass("liked");
+                    }
+                    var photoId = photo.data("photoId");
+                    var likesCounter = photo.find("#likesCount");
+                    var dislikesCounter = photo.parent().find(".selected-icon.dislike").find("#dislikesCount");
+                    $.ajax({
+                        url: "/api/photos/like?Id=" + photoId + "&AlbumId=" + $("#photoAlbumId").val() + "&IsPositive=true",
+                        type: "post"
+                    })
+                        .done(function (likesModel) {
+                            likesCounter.text(likesModel.LikesCount);
+                            dislikesCounter.text(likesModel.DislikesCount);
+                        });
+                });
+            });
+        $("#content").on("click", ".selected-icon.dislike",
+            function () {
+                var photo = $(this);
+                $.ajax("/api/users").done(function (userId) {
+                    if (userId == null || photo.hasClass("disabled")) {
+                        return;
+                    }
+                    if (photo.hasClass("disliked")) {
+                        photo.removeClass("disliked");
+                    } else {
+                        if (photo.parent().find(".selected-icon.like").hasClass("liked")) {
+                            photo.parent().find(".selected-icon.like").removeClass("liked");
+                        }
+                        photo.addClass("disliked");
+                    }
+                    var photoId = photo.data("photoId");
+                    var likesCounter = photo.parent().find(".selected-icon.like").find("#likesCount");
+                    var dislikesCounter = photo.find("#dislikesCount");
+                    $.ajax({
+                        url: "/api/photos/like?Id=" + photoId + "&AlbumId=" + $("#photoAlbumId").val() + "&IsPositive=false",
+                        type: "post"
+                    })
+                        .done(function (likesModel) {
+                            likesCounter.text(likesModel.LikesCount);
+                            dislikesCounter.text(likesModel.DislikesCount);
+                        });
+                });
             });
     });
 })(jQuery);

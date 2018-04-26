@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PhotoManager.Common;
 using PhotoManager.DAL.Contracts;
+using PhotoManager.DAL.Models;
 using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
 using System;
@@ -126,7 +127,9 @@ namespace PhotoManager.Controllers.Api
         [Route("search/{filter}")]
         public IHttpActionResult Search(string filter, [FromUri]ScrollViewModel scrollViewModel = null)
         {
-            var photos = _unitOfWork.Photos.GetPhotosByKeyWord(filter)?.Skip(scrollViewModel.PageIndex * scrollViewModel.PageSize).Take(scrollViewModel.PageSize).ToList();
+            var keyWord = !string.IsNullOrEmpty(filter) ? filter.Trim(' ') : string.Empty;
+            var photos = Extensions.TakePartial(_unitOfWork.Photos.GetPhotosByKeyWord(keyWord).ToList(),
+                scrollViewModel.PageIndex, scrollViewModel.PageSize);
 
             if (photos == null)
             {
@@ -173,12 +176,22 @@ namespace PhotoManager.Controllers.Api
         {
             _unitOfWork.Photos.DeletePhotos(id);
             _unitOfWork.Save();
-            var album = _unitOfWork.Albums.GetAlbumById(albumId);
+            var album = _unitOfWork.Albums.GetAlbumById(albumId, User.Identity.GetUserId());
             if (album.Photos == null)
             {
                 return NotFound();
             }
             return Ok(album.Photos);
+        }
+
+        [HttpPost]
+        [Route("like")]
+        public IHttpActionResult AddLike([FromUri]Like like)
+        {
+            var userId = User.Identity.GetUserId();
+            var likesModel = _unitOfWork.Photos.AddLike(userId, like.Id, like.AlbumId, like.IsPositive);
+            _unitOfWork.Save();
+            return Ok(likesModel);
         }
 
         private IEnumerable<Image> GetImagesInDifferentShapes(byte[] imageOriginal)

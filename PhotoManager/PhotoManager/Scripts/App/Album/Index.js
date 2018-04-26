@@ -23,6 +23,23 @@
                 })
                     .done(function (album) {
                         if (album != null && album.Photos.length !== 0) {
+
+                            if (album.OwnerId === userId) {
+                                $.each(album.Photos,
+                                    function(index, value) {
+                                        value.Liked = "disabled";
+                                        value.Disliked = "disabled";
+                                    });
+                            } else {
+                                $.each(album.Photos,
+                                    function (index, value) {
+                                        var className = value.Liked === true ? "liked" : "";
+                                        value.Liked = className;
+                                        className = value.Disliked === true ? "disliked" : "";
+                                        value.Disliked = className;
+                                    });
+                            }
+                            
                             $.displayPhotoAlbum(templatePath, album.Photos);
                             pageIndex++;
                         } else {

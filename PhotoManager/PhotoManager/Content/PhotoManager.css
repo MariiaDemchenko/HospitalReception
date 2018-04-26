@@ -5,6 +5,8 @@
 
 .image-original {
     margin: auto;
+    max-height: 700px;
+    max-width: 100%;
 }
 
 .album, .photo {
@@ -62,10 +64,6 @@
     text-transform: uppercase;
 }
 
-/*.album-footer {
-    height: 30px;
-}*/
-
 .form-menu {
     margin: 20px;
 }
@@ -78,6 +76,22 @@
     color: blue;
 }
 
+i {
+    color: black;
+}
+
+.liked i {
+    color: green;
+}
+
+.disliked i {
+    color: red;
+}
+
+.disabled i {
+    color: gray;
+}
+
 .photo-date {
     font-size: 12px;
     text-align: right;
@@ -85,13 +99,35 @@
 }
 
 .selected-icon {
-    visibility: hidden;
+    cursor: pointer;
 }
 
-.selectable .selected-icon {
+    .selected-icon.select {
+        cursor: pointer;
+        float: right;
+        padding: 0 5px;
+        visibility: hidden;
+    }
+
+.selectable .selected-icon.select {
+    cursor: pointer;
     float: right;
     padding: 0 5px;
     visibility: visible;
+}
+
+.selected-icon.like, .selected-icon.dislike {
+    cursor: pointer;
+    color: gray;
+    float: left;
+    padding: 0 5px;
+}
+
+.selectable .selected-icon.like, .selectable .selected-icon.dislike {
+    cursor: pointer;
+    color: black;
+    float: left;
+    padding: 0 5px;
 }
 
 .img-container {

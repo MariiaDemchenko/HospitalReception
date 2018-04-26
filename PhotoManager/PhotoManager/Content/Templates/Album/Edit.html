@@ -27,7 +27,7 @@
             <a class="photo-frame-bg d-flex" href="/photos/properties/{{Id}}">
                 <img src={{ImageUrl}} class="image" />
             </a>
-            <div class="photo-footer {{Selected}}" data-photo-id="{{Id}}">
+            <div class="photo-footer" data-photo-id="{{Id}}">
                 <div class="description">
                     <div>
                         <div class="photo-name">
@@ -37,8 +37,16 @@
                             {{CreationDate}}
                         </div>
                     </div>
-                    <div class="selected-icon">
+                    <div class="selected-icon select {{Selected}}" data-photo-id="{{Id}}">
                         <i class="fa fa-check"></i>
+                    </div>
+                    <div class="selected-icon like disabled">
+                        <i class="fa fa-thumbs-o-up"></i>
+                        <label id="likesCount">{{Likes}}</label>
+                    </div>
+                    <div class="selected-icon dislike disabled">
+                        <i class="fa fa-thumbs-o-down"></i>
+                        <label id="dislikesCount">{{Dislikes}}</label>
                     </div>
                 </div>
             </div>

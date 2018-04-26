@@ -16,7 +16,7 @@
             });
 
             function getUri(keyWord) {
-                return "/api/photos/search/" + keyWord;
+                return "/api/photos/search/" + $.trim(keyWord);
             }
 
             var pageIndex = 0;
@@ -64,6 +64,15 @@
                 $("#content").empty();
                 history.pushState(null, null, currentLocation);
                 load(currentUrl);
+            });
+            
+            $(this).keypress(function (e) {
+                var keycode = e.keyCode || e.charCode || e.which; //for cross browser
+                if (keycode === 13)    //keyCode for enter key
+                {
+                    $(".btn-search-gallery").click();
+                    return false;
+                }
             });
         }
     });

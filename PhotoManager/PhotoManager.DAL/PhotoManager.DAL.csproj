@@ -72,12 +72,14 @@
     <Compile Include="Context\ApplicationDbContext.cs" />
     <Compile Include="Models\CameraSettings.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\Like.cs" />
     <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Context\PhotoManagerDbContext.cs" />
     <Compile Include="Initializer\PhotoManagerInitializer.cs" />
     <Compile Include="ProjectionModels\AlbumIndexModel.cs" />
     <Compile Include="ProjectionModels\AlbumSearchModel.cs" />
+    <Compile Include="ProjectionModels\LikesModel.cs" />
     <Compile Include="ProjectionModels\PhotoAddModel.cs" />
     <Compile Include="ProjectionModels\PhotoEditModel.cs" />
     <Compile Include="ProjectionModels\PhotoThumbnailModel.cs" />

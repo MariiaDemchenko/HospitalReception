@@ -37,7 +37,11 @@ namespace PhotoManager.DAL.Repository
                     p.CameraSettings.Iso,
                     p.CameraSettings.Flash,
                     ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == size).Id,
-                    Selected = false
+                    Selected = false,
+                    Likes = p.Likes.Count(l => l.IsPositive),
+                    Liked = false,
+                    Dislikes = p.Likes.Count(l => !l.IsPositive),
+                    Disliked = false
                 }).ToList();
             return photos.Select(Mapper.Map<PhotoEditModel>).FirstOrDefault(p => p.Id == id);
         }
@@ -56,7 +60,11 @@ namespace PhotoManager.DAL.Repository
                     p.Name,
                     p.CreationDate,
                     ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
-                    Selected = false
+                    Selected = false,
+                    Likes = p.Likes.Count(l=>l.IsPositive),
+                    Liked = false,
+                    Dislikes = p.Likes.Count(l => !l.IsPositive),
+                    Disliked = false
                 }).ToList();
 
             return photos.Select(Mapper.Map<PhotoThumbnailModel>).ToList();
@@ -91,7 +99,11 @@ namespace PhotoManager.DAL.Repository
                     p.Name,
                     p.CreationDate,
                     ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
-                    Selected = false
+                    Selected = false,
+                    Likes = p.Likes.Count(l => l.IsPositive),
+                    Liked = false,
+                    Dislikes = p.Likes.Count(l => !l.IsPositive),
+                    Disliked = false,
                 }).ToList();
 
             return photos.Select(Mapper.Map<PhotoThumbnailModel>).Where(p => photosId.Contains(p.Id)).ToList();
@@ -108,7 +120,11 @@ namespace PhotoManager.DAL.Repository
                     p.CreationDate,
                     p.CameraSettings,
                     ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
-                    Selected = false
+                    Selected = false,
+                    Likes = p.Likes.Count(l => l.IsPositive),
+                    Liked = false,
+                    Dislikes = p.Likes.Count(l => !l.IsPositive),
+                    Disliked = false
                 }).Where(p =>
                 (string.IsNullOrEmpty(photo.Name) || p.Name.Contains(photo.Name)) &&
                 ((photo.CreationDateBegin == null && photo.CreationDateEnd == null) ||
@@ -175,6 +191,53 @@ namespace PhotoManager.DAL.Repository
         {
             return albumId != null ? _context.Albums.Include(a => a.Photos.Select(p => p.Images)).FirstOrDefault(a => a.Id == albumId)?.Photos :
                 _context.Photos.Include(p => p.Images).ToList();
+        }
+
+        public LikesModel AddLike(string userId, int photoId, int albumId, bool isPositive)
+        {
+            var likesCount = _context.Likes.Count(l => l.PhotoId == photoId && l.AlbumId == albumId && l.IsPositive == isPositive);
+            var dislikesCount = _context.Likes.Count(l => l.PhotoId == photoId && l.AlbumId == albumId && l.IsPositive == !isPositive);
+            
+            if (_context.Albums.FirstOrDefault(a => a.Id == albumId)?.OwnerId == userId)
+            {
+                return GetLikesModel(likesCount, dislikesCount, isPositive);
+            }
+
+            var existingLike = _context.Likes.FirstOrDefault(l => l.PhotoId == photoId && l.UserId == userId && l.AlbumId == albumId && l.IsPositive == isPositive);
+            if (existingLike != null)
+            {
+                _context.Likes.Remove(existingLike);
+                likesCount--;
+            }
+            else
+            {
+                var existingDislike = _context.Likes.FirstOrDefault(l => l.PhotoId == photoId && l.UserId == userId && l.AlbumId == albumId && l.IsPositive == !isPositive);
+                if (existingDislike != null)
+                {
+                    _context.Likes.Remove(existingDislike);
+                    dislikesCount--;
+                }
+                _context.Likes.Add(new Like { PhotoId = photoId, UserId = userId, AlbumId = albumId, IsPositive = isPositive });
+                likesCount++;
+            }
+            return GetLikesModel(likesCount, dislikesCount, isPositive);
+        }
+
+        private LikesModel GetLikesModel(int likes, int dislikes, bool isPositive)
+        {
+            var likesModel = new LikesModel();
+            if (isPositive)
+            {
+                likesModel.LikesCount = likes;
+                likesModel.DislikesCount = dislikes;
+            }
+            else
+            {
+                likesModel.DislikesCount = likes;
+                likesModel.LikesCount = dislikes;
+            }
+
+            return likesModel;
         }
     }
 }

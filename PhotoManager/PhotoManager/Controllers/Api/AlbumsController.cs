@@ -35,7 +35,7 @@ namespace PhotoManager.Controllers.Api
         [Route("album")]
         public IHttpActionResult GetAlbumByModel([FromUri]AlbumSearchModel model, [FromUri]ScrollViewModel scrollViewModel)
         {
-            var album = _unitOfWork.Albums.GetAlbumByModel(model);
+            var album = _unitOfWork.Albums.GetAlbumByModel(model, User.Identity.GetUserId());
             if (album?.Photos == null)
             {
                 return NotFound();
@@ -48,7 +48,7 @@ namespace PhotoManager.Controllers.Api
         [Route("{id}")]
         public IHttpActionResult GetAlbumById(int? id, [FromUri]ScrollViewModel scrollViewModel)
         {
-            var album = _unitOfWork.Albums.GetAlbumById(id);
+            var album = _unitOfWork.Albums.GetAlbumById(id, User.Identity.GetUserId());
             if (album?.Photos == null)
             {
                 return NotFound();
@@ -100,7 +100,7 @@ namespace PhotoManager.Controllers.Api
         [Route("edit/{id}")]
         public IHttpActionResult EditAlbumPhotos(int id, [FromUri]ScrollViewModel scrollViewModel)
         {
-            var album = _unitOfWork.Albums.GetAlbumById(id, true);
+            var album = _unitOfWork.Albums.GetAlbumById(id, User.Identity.GetUserId(), true);
             album.Photos = Extensions.TakePartial(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize);
             return Ok(album);
         }

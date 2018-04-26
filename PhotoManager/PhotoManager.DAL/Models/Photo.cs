@@ -11,12 +11,11 @@ namespace PhotoManager.DAL.Models
         public string Name { get; set; }
         public DateTime? CreationDate { get; set; }
         public string Place { get; set; }
-        public int Likes { get; set; }
-        public int Dislikes { get; set; }
 
         public ApplicationUser Owner { get; set; }
         public CameraSettings CameraSettings { get; set; }
         public List<Image> Images { get; set; }
         public ICollection<Album> Albums { get; set; }
+        public ICollection<Like> Likes { get; set; }
     }
 }

@@ -27,5 +27,7 @@ namespace PhotoManager.DAL.Contracts
         void DeletePhotos(IEnumerable<int> photosId);
 
         IEnumerable<Photo> GetPhotosByAlbumId(int? albumId);
+
+        LikesModel AddLike(string userId, int photoId, int albumId, bool isPositive);
     }
 }

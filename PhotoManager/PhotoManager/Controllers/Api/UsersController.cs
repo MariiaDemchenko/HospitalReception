@@ -1,7 +1,8 @@
-﻿using PhotoManager.Common;
+﻿using Microsoft.AspNet.Identity;
 using PhotoManager.DAL.Contracts;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
 using System.Web.Http;
+using Constants = PhotoManager.Common.Constants;
 
 namespace PhotoManager.Controllers.Api
 {
@@ -13,6 +14,13 @@ namespace PhotoManager.Controllers.Api
         public UsersController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        [HttpGet]
+        [Route("")]
+        public IHttpActionResult GetUserId()
+        {
+            return Ok(User.Identity.GetUserId());
         }
 
         [HttpGet]
