@@ -4,16 +4,26 @@
             function () {
                 var attr = $("#menu").data("item");
                 var albumId = $("#photoAlbumId").val();
-                var url = attr === "album" ? "/albums/edit/" + $(".selected").data("albumId") :
-                    "/photos/edit/" + $(".selected").data("photoId") + "/album/" + albumId;
-                window.location.href = url;
+
+                if (attr === "album") {
+                    $.ajax("/api/albums/" + $(".selected").data("albumId"))
+                        .done(function (album) {
+                            location.href = "/albums/edit/album?" + $.serialize(album);
+                        });
+                }
+                else if (attr === "photo") {
+                    $.ajax("/api/photos/" + $(".selected").data("photoId") + "/album/" + albumId)
+                        .done(function (photo) {
+                            location.href = "/photos/edit/photo?" + $.serialize(photo);
+                        });
+                }
             });
 
         $(".form-menu").on("click", ".btn-add",
             function () {
                 var albumId = $("#photoAlbumId").val();
                 var attr = $("#menu").data("item");
-                var url = attr === "album" ? "/albums/add" : "/photos/add/" + albumId;
+                var url = attr === "album" ? "/albums/add" : "/photos/add/" + albumId || 0;
                 location.href = url;
             });
 
@@ -55,19 +65,19 @@
             window.location.href = "/albums/manage/";
         });
 
-        $.initialize = function () {
+        $.initialize = function() {
             $(".btn-edit").attr("disabled", true);
             $(".btn-remove-confirm").attr("disabled", true);
-        }
+        };
 
-        $.hideMenu = function (userId) {
-            if (userId == undefined) {
+        $.hideMenu = function(userId) {
+            if (userId === undefined) {
                 $("#content").removeClass("selectable");
                 $(".btn-add").attr("visibility", "hidden");
                 return;
             }
             $.ajax("/api/users/settings/" + userId)
-                .done(function (settings) {
+                .done(function(settings) {
                     if (settings.IsAuthorized) {
                         $("#content").addClass("selectable");
                     } else {
@@ -81,8 +91,7 @@
                         } else {
                             $(".btn-add").css("visibility", "visible");
                         }
-                    }
-                    else if (item === "album") {
+                    } else if (item === "album") {
                         if (settings.CanAddAlbums === false) {
                             $(".btn-add").css("visibility", "hidden");
                         } else {
@@ -90,11 +99,11 @@
                         }
                     }
                 });
-        }
+        };
 
-        $.stopSpinning = function () {
+        $.stopSpinning = function() {
             document.getElementById("spinner").style.display = "none";
-        }
+        };
 
         function deletePhotos(albumId) {
             var selectedPhotos = document.getElementsByClassName("selected");

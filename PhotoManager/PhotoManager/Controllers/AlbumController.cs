@@ -1,45 +1,47 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
 
 namespace PhotoManager.Controllers
 {
-    [RoutePrefix("albums")]
+    [System.Web.Mvc.RoutePrefix("albums")]
     public class AlbumController : Controller
     {
-        [HttpGet]
-        [Route("{name}")]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("{name}")]
         public ActionResult Index(string name)
         {
             return View(new AlbumSearchModel { Name = name });
         }
 
-        [HttpGet]
-        [Route("album")]
-        public ActionResult Index(AlbumSearchModel model)
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("album")]
+        public ActionResult Index(AlbumSearchModel album)
         {
-            return View(model);
+            return View(album);
         }
 
-        [HttpGet]
-        [Route("manage")]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("manage")]
         public ActionResult Manage()
         {
             return View();
         }
 
-        [HttpGet]
-        [Route("edit/{id}")]
-        public ActionResult Edit(int id)
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("edit/album")]
+        public ActionResult Edit([FromUri] AlbumIndexModel album)
         {
-            return View(id);
+            return View(album);
         }
 
-        [HttpGet]
-        [Route("add")]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("add")]
         public ActionResult Add()
         {
-            return View();
+            return View(new AlbumIndexModel { OwnerId = User.Identity.GetUserId() });
         }
     }
 }

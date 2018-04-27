@@ -1,17 +1,71 @@
-﻿@model PhotoManager.ViewModels.PhotoManagerViewModels.PhotoEditModel
+﻿@model PhotoManager.DAL.ProjectionModels.PhotoEditModel
 @using PhotoManager.Common
+@using PhotoManager.CustomHelpers
 
 <div class="page-header">
     <h2>Edit photo</h2>
 </div>
 
-<form id="formEdit" method="post">
-    <div id="content"></div>
-    <div id="spinner" class="loader"></div>
+<form id="formEdit" method="post" role="form">
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <table>
+        <tr>
+            <td>@Html.HiddenFor(m => m.CameraSettingsId)</td>
+            <td>@Html.HiddenFor(m => m.Id)</td>
+            <td>@Html.HiddenFor(m => m.AlbumId)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.Name)</td>
+            <td>@Html.TextEditorFor(m => m.Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.CreationDate)</td>
+            <td>@Html.DateTimeEditorFor(m => m.CreationDate)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.Place)</td>
+            <td>@Html.TextEditorFor(m => m.Place)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.CameraModel)</td>
+            <td>@Html.TextEditorFor(m => m.CameraModel)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.LensFocalLength)</td>
+            <td>@Html.NumberEditorFor(m => m.LensFocalLength)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.Diaphragm)</td>
+            <td>@Html.NumberEditorFor(m => m.Diaphragm, 0.01)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.ShutterSpeed)</td>
+            <td>@Html.NumberEditorFor(m => m.ShutterSpeed)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.Iso)</td>
+            <td>@Html.NumberEditorFor(m => m.Iso)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.Flash)</td>
+            <td>@Html.NumberEditorFor(m => m.Flash, 0.01)</td>
+        </tr>
+        <tr>
+            <td>
+                <button class="btn btn-block btn-menu">SAVE CHANGES</button>
+            </td>
+        </tr>
+    </table>
+    <div class="img-container photo-frame">
+        <img id="displayedImage" src="@Model.ImageUrl" class="image" />
+    </div>
 </form>
 
 <script>
     $(function () {
-        $.editPhoto("@Model.Url");
+        $.editPhoto();
     })
 </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

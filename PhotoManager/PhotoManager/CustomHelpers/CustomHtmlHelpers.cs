@@ -26,14 +26,13 @@ namespace PhotoManager.CustomHelpers
                 });
         }
 
-        public static MvcHtmlString FileEditorFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, string acceptType = "image/jpeg", string className = "btn-add-photo")
+        public static MvcHtmlString DateEditorFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, string className = "form-control")
         {
             return System.Web.Mvc.Html.InputExtensions.TextBoxFor(htmlHelper,
                 expression, new
                 {
                     @class = className,
-                    type = "file",
-                    accept = acceptType
+                    type = "date"
                 });
         }
 
@@ -43,7 +42,16 @@ namespace PhotoManager.CustomHelpers
                 expression, new
                 {
                     @class = className,
-                    type = "date"
+                    type = "datetime-local"
+                });
+        }
+
+        public static MvcHtmlString HiddenFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, string className = "form-control")
+        {
+            return System.Web.Mvc.Html.InputExtensions.HiddenFor(htmlHelper,
+                expression, new
+                {
+                    @class = className
                 });
         }
     }

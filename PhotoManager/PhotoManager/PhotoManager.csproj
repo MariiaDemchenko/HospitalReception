@@ -311,10 +311,8 @@
     <Content Include="Content\Templates\Album\Manage.html" />
     <Content Include="Content\Templates\Gallery\Index.html" />
     <Content Include="Content\Templates\Album\Index.html" />
-    <Content Include="Content\Templates\Gallery\AdvancedSearch.html" />
     <Content Include="Content\Templates\Photo\Index.html" />
     <Content Include="Content\Templates\Photo\Properties.html" />
-    <Content Include="Content\Templates\Photo\Edit.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

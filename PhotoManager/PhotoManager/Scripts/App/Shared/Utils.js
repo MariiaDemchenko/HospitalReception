@@ -30,32 +30,43 @@
 
         $.fn.serializeFormJSON = function () {
             return getJSON(this);
-        }
+        };
+
+        $.serialize = function (model) {
+            var str = "";
+
+            for (var p in model) {
+                if (model.hasOwnProperty(p)) {
+                    var value = model[p] !== null ? model[p] : "";
+                    str += p + '=' + value + '&';
+                }
+            }
+            return str.substring(0, str.length - 1);
+        };
 
         $.fn.stringifyFormJSON = function () {
             return JSON.stringify(getJSON(this));
-        }
+        };
 
         $.getScrollTop = function () {
-            if (typeof pageYOffset != 'undefined') {
+            if (typeof pageYOffset !== 'undefined') {
                 return pageYOffset;
+            } else {
+                var b = document.body;
+                var d = document.documentElement;
+                d = d.clientHeight ? d : b;
+                return d.scrollTop;
             }
-            else {
-                var B = document.body;
-                var D = document.documentElement;
-                D = (D.clientHeight) ? D : B;
-                return D.scrollTop;
-            }
-        }
+        };
 
         $.setScroll = function (callback, data) {
             $(window).scroll(function () {
                 var scrollTop = $.getScrollTop();
-                if (scrollTop == $(document).height() - $(window).height()) {
+                if (scrollTop === $(document).height() - $(window).height()) {
                     callback.call(this, data);
                 }
             });
-        }
+        };
 
         $.displayPhotoAlbum = function (templatePath, photos) {
             $.get(templatePath,
@@ -107,7 +118,7 @@
             function () {
                 var photo = $(this);
                 $.ajax("/api/users").done(function (userId) {
-                    if (userId == null || photo.hasClass("disabled")) {
+                    if (userId === null || photo.hasClass("disabled")) {
                         return;
                     }
                     if (photo.hasClass("liked")) {
@@ -135,7 +146,7 @@
             function () {
                 var photo = $(this);
                 $.ajax("/api/users").done(function (userId) {
-                    if (userId == null || photo.hasClass("disabled")) {
+                    if (userId === null || photo.hasClass("disabled")) {
                         return;
                     }
                     if (photo.hasClass("disliked")) {

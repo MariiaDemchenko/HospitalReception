@@ -52,7 +52,7 @@
 .album-description {
     padding-bottom: 9px;
     margin: 40px 0 2px;
-    text-align: left;
+    text-align: center;
 }
 
 .photo-name {
@@ -152,6 +152,7 @@ i {
     width: 80px;
     height: 80px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
+    -moz-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
     margin: 0 auto;
 }
@@ -160,10 +161,12 @@ i {
 @-webkit-keyframes spin {
     0% {
         -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
     }
 
     100% {
         -webkit-transform: rotate(360deg);
+        transform: rotate(0deg);
     }
 }
 

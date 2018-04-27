@@ -60,23 +60,14 @@ namespace PhotoManager.Controllers.Api
         }
 
         [Authorize]
-        [HttpGet]
-        [Route("album/{albumId}")]
-        public IHttpActionResult Add(int albumId)
-        {
-            var photoViewModel = new DAL.ProjectionModels.PhotoAddModel
-            {
-                AlbumId = albumId,
-                ImageUrl = "/api/image/"
-            };
-            return Ok(photoViewModel);
-        }
-
-        [Authorize]
         [HttpPut]
         [Route("")]
         public IHttpActionResult Edit(DAL.ProjectionModels.PhotoEditModel photoViewModel)
         {
+            if (!PhotoIsValid(photoViewModel))
+            {
+                return BadRequest();
+            }
             _unitOfWork.Photos.EditPhoto(photoViewModel);
             _unitOfWork.Save();
             return Ok(photoViewModel.AlbumId);
@@ -161,7 +152,7 @@ namespace PhotoManager.Controllers.Api
 
             var takeCount = advancedSearchViewModel.ScrollViewModel.PageSize;
             var photos = _unitOfWork.Photos.GetPhotosBySearchModel(photoViewModel).Skip(skipCount).Take(takeCount);
-            var photoViewModels = photos.ToList();//Mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>();
+            var photoViewModels = photos.ToList();
             if (photoViewModels == null)
             {
                 return NotFound();
@@ -222,6 +213,16 @@ namespace PhotoManager.Controllers.Api
                     Size = Constants.ImageSize.Original
                 }
             };
+        }
+
+        private bool PhotoIsValid(DAL.ProjectionModels.PhotoEditModel photo)
+        {
+            return !string.IsNullOrEmpty(photo.Name) &&
+                    photo.Diaphragm >= 0 && photo.Diaphragm <= Constants.MaxDiaphragm &&
+                    photo.Flash >= 0 && photo.Flash <= Constants.MaxFlash &&
+                    photo.Iso >= 0 && photo.Iso <= Constants.MaxIso &&
+                    photo.ShutterSpeed >= 0 && photo.ShutterSpeed <= Constants.MaxShutterSpeed &&
+                    photo.LensFocalLength >= 0 && photo.LensFocalLength <= Constants.MaxLensFocalLength;
         }
     }
 }

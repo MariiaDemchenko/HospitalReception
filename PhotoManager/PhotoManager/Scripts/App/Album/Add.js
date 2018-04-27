@@ -1,9 +1,6 @@
 (function ($) {
     $(function () {
         var templatePath = "/Content/Templates/Album/Edit.html";
-        var headerTemplateId = "#photoAlbumHeaderTemplate";
-        var contentId = "albumHeader";
-        var uri = "/Content/Templates/Album/Manage";
 
         $.addAlbum = function (userId) {
             $.setScroll(getData);
@@ -13,19 +10,7 @@
 
             $.hideMenu(userId);
             $.initialize();
-            getHeader();
             getData();
-
-            function getHeader() {
-                $.ajax("/api/albums/add")
-                    .done(function (album) {
-                        $.get(templatePath, function (templates) {
-                            var template = $(templates).filter(headerTemplateId).html();
-                            var output = Mustache.render(template, album);
-                            document.getElementById("albumEditForm").innerHTML = output;
-                        });
-                    });
-            }
 
             function getData() {
                 $.ajax({
@@ -45,6 +30,9 @@
 
             $("#formAlbumAdd").submit(function (e) {
                 e.preventDefault();
+                if (!$(this).valid()) {
+                    return false;
+                }
                 var serializedData = $(this).serializeFormJSON();
                 var selectedPhotos = document.getElementsByClassName("selected");
                 serializedData.Photos = [];

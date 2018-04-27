@@ -1,14 +1,7 @@
 (function ($) {
     $(function () {
-        var templatePath = "/Content/Templates/Photo/Edit.html";
-
-        $.addPhoto = function (uri) {
-            $.ajax(uri)
-                .done(function (photo) {
-                    $.displayPhoto(templatePath, photo);
-                });
-
-            $('input[type=file]').change(function () {
+        $.addPhoto = function() {
+            $('input[type=file]').change(function() {
                 if (event.target.files.length > 0) {
                     var file = event.target.files[0];
                     {
@@ -20,9 +13,11 @@
                 }
             });
 
-            $("#formAdd").submit(function (e) {
+            $("#formAdd").submit(function(e) {
                 e.preventDefault();
-
+                if (!$(this).valid()) {
+                    return false;
+                }
                 var serializedData = new FormData();
                 var fileInput = document.getElementById('file');
 
@@ -53,10 +48,10 @@
                     data: serializedData,
                     processData: false,
                     contentType: false
-                }).done(function (albumId) {
+                }).done(function(albumId) {
                     $.goToAlbum(albumId);
                 });
             });
-        }
+        };
     });
 })(jQuery);

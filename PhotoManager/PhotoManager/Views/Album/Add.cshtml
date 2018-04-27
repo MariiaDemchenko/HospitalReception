@@ -1,7 +1,29 @@
 ﻿@using Microsoft.AspNet.Identity
+@using PhotoManager.CustomHelpers
+@model PhotoManager.DAL.ProjectionModels.AlbumIndexModel
 
 <form id="formAlbumAdd">
-    <div id="albumEditForm" class="row form-menu"></div>
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div id="albumAddForm" class="row form-menu">
+        <table>
+            <tr>
+                <td>@Html.HiddenFor(m => m.Id)</td>
+                <td>@Html.HiddenFor(m => m.OwnerId)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.Name)</td>
+                <td>@Html.TextEditorFor(m=>m.Name)</td>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.Description)</td>
+                <td>@Html.TextEditorFor(m => m.Description)</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-block btn-menu">SAVE CHANGES</button>
+                </td>
+            </tr>
+        </table>
+    </div>
     <div id="content" class="row"></div>
     <div id="spinner" class="loader"></div>
 </form>
@@ -21,7 +43,10 @@
 
 
 <script>
-    $(function() {
+    $(function () {
         $.addAlbum("@User.Identity.GetUserId()");
     })
 </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -22,5 +22,11 @@
 
         public const int FreePhotosCount = 30;
         public const int FreeAlbumsCount = 5;
+
+        public const int MaxLensFocalLength = 10;
+        public const int MaxDiaphragm = 1;
+        public const int MaxShutterSpeed = 15;
+        public const int MaxIso = 10;
+        public const int MaxFlash = 5;
     }
 }

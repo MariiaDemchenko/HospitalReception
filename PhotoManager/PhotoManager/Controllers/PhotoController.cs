@@ -1,20 +1,21 @@
-﻿using PhotoManager.ViewModels.PhotoManagerViewModels;
+﻿using System.Web.Http;
+using PhotoManager.ViewModels.PhotoManagerViewModels;
 using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
 {
-    [RoutePrefix("photos")]
+    [System.Web.Mvc.RoutePrefix("photos")]
     public class PhotoController : Controller
     {
-        [HttpGet]
-        [Route("{id}")]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("{id}")]
         public ActionResult Index(int id)
         {
             return View(new PhotoDisplayViewModel { Id = id, Size = (int)Common.Constants.ImageSize.Original });
         }
 
-        [HttpGet]
-        [Route("properties/{id}")]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("properties/{id}")]
         public ActionResult Properties(int id)
         {
             var x = new PhotoDisplayViewModel { Id = id, Size = (int)Common.Constants.ImageSize.Original };
@@ -23,20 +24,25 @@ namespace PhotoManager.Controllers
 
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("edit/{id}/album/{albumId}")]
-        public ActionResult Edit(int id, int? albumId)
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("edit/photo")]
+        public ActionResult Edit([FromUri]PhotoManager.DAL.ProjectionModels.PhotoEditModel photo)
         {
-            return View(new PhotoEditModel { Id = id, AlbumId = albumId });
+            return View(photo);
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("add/{id}")]
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("add/{id}")]
         public ActionResult Add(int? id)
         {
-            return View(new PhotoAddModel { Id = id });
+            int.TryParse(id?.ToString(), out var albumId);
+            return View(new DAL.ProjectionModels.PhotoAddModel
+            {
+                AlbumId = albumId,
+                ImageUrl = "/api/image/"
+            });
         }
     }
 }

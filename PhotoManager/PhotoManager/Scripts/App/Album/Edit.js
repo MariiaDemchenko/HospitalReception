@@ -13,14 +13,13 @@
 
             $.hideMenu(userId);
             $.initialize();
-            getHeader();
             getData();
 
             function getHeader() {
                 $.ajax("/api/albums/" + id)
-                    .done(function (album) {
+                    .done(function(album) {
                         $.get(templatePath,
-                            function (templates) {
+                            function(templates) {
                                 var template = $(templates).filter(headerTemplateId).html();
                                 var output = Mustache.render(template, album);
                                 document.getElementById("albumEditForm").innerHTML = output;
@@ -30,17 +29,17 @@
 
             function getData() {
                 $.ajax({
-                    url: "/api/albums/edit/" + id,
-                    data: {
-                        pageIndex: pageIndex,
-                        pageSize: pageSize
-                    }
-                })
-                    .done(function (album) {
+                        url: "/api/albums/edit/" + id,
+                        data: {
+                            pageIndex: pageIndex,
+                            pageSize: pageSize
+                        }
+                    })
+                    .done(function(album) {
 
-                        if (album != null && album.Photos.length !== 0) {
+                        if (album !== null && album.Photos.length !== 0) {
                             $.each(album.Photos,
-                                function (index, value) {
+                                function(index, value) {
                                     var className = value.Selected === true ? "selected" : "";
                                     value.Selected = className;
                                 });
@@ -50,25 +49,28 @@
                     });
             }
 
-            $("#formAlbumEdit").submit(function (e) {
+            $("#formAlbumEdit").submit(function(e) {
                 e.preventDefault();
+                if (!$(this).valid()) {
+                    return false;
+                }
                 var serializedData = $(this).serializeFormJSON();
                 serializedData.Photos = [];
                 var selectedPhotos = document.getElementsByClassName("selected");
 
                 for (var i = 0; i < selectedPhotos.length; i++) {
-                    var photo = { Id: selectedPhotos[i].dataset.photoId }
+                    var photo = { Id: selectedPhotos[i].dataset.photoId };
                     serializedData.Photos.push(photo);
-                };
+                }
 
                 $.ajax({
                     url: '/api/albums/',
                     type: "PUT",
                     data: serializedData
-                }).done(function () {
+                }).done(function() {
                     location.href = "/albums/manage";
                 });
             });
-        }
+        };
     });
 })(jQuery);

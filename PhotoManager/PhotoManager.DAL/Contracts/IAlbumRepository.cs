@@ -8,7 +8,7 @@ namespace PhotoManager.DAL.Contracts
     {
         IEnumerable<ThumbnailModel> GetAllAlbums();
 
-        AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, string userId, bool allPhotosWithSelectedState = false);
+        AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, string userId = "", bool allPhotosWithSelectedState = false);
 
         AlbumIndexModel GetAlbumById(int? id, string userId, bool allPhotosWithSelectedState = false);
 

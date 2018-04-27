@@ -1,14 +1,37 @@
 ﻿@using Microsoft.AspNet.Identity
-@model int
+@using PhotoManager.CustomHelpers
+@model PhotoManager.DAL.ProjectionModels.AlbumIndexModel
 
-<form id="formAlbumEdit">
-    <div id="albumEditForm" class="row form-menu"></div>
+<form id="formAlbumEdit" role="form">
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div id="albumEditForm" class="row form-menu">
+        <table>
+            <tr>
+                <td>@Html.HiddenFor(m => m.Id)</td>
+                <td>@Html.HiddenFor(m => m.OwnerId)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.Name)</td>
+                <td>@Html.TextEditorFor(m => m.Name)</td>
+            <tr>
+                <td>@Html.DisplayNameFor(m => m.Description)</td>
+                <td>@Html.TextEditorFor(m => m.Description)</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" class="btn btn-block btn-menu" value="SAVE CHANGES" />
+                </td>
+            </tr>
+        </table>
+    </div>
     <div id="content" class="row"></div>
     <div id="spinner" class="loader"></div>
 </form>
-
 <script>
     $(function() {
-        $.editAlbum("@Model", "@User.Identity.GetUserId()");
+        $.editAlbum("@Model.Id", "@User.Identity.GetUserId()");
     })
 </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

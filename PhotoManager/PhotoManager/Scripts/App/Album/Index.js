@@ -9,20 +9,20 @@
         var userId;
 
         $.photosPage = {
-            setPageIndex: function (newPageIndex) {
+            setPageIndex: function(newPageIndex) {
                 $.hideMenu(userId);
                 pageIndex = newPageIndex;
             },
-            getData: function () {
+            getData: function() {
                 $.ajax({
-                    url: url,
-                    data: {
-                        pageIndex: pageIndex,
-                        pageSize: pageSize
-                    }
-                })
-                    .done(function (album) {
-                        if (album != null && album.Photos.length !== 0) {
+                        url: url,
+                        data: {
+                            pageIndex: pageIndex,
+                            pageSize: pageSize
+                        }
+                    })
+                    .done(function(album) {
+                        if (album !== null && album.Photos.length !== 0) {
 
                             if (album.OwnerId === userId) {
                                 $.each(album.Photos,
@@ -32,14 +32,14 @@
                                     });
                             } else {
                                 $.each(album.Photos,
-                                    function (index, value) {
+                                    function(index, value) {
                                         var className = value.Liked === true ? "liked" : "";
                                         value.Liked = className;
                                         className = value.Disliked === true ? "disliked" : "";
                                         value.Disliked = className;
                                     });
                             }
-                            
+
                             $.displayPhotoAlbum(templatePath, album.Photos);
                             pageIndex++;
                         } else {
@@ -47,7 +47,7 @@
                                 var template;
                                 var data = {};
                                 $.get(templatePath,
-                                    function (templates) {
+                                    function(templates) {
                                         template = $(templates).filter('#photoAlbumEmptyTemplate').html();
                                         var output = Mustache.render(template, data);
                                         document.getElementById('content').innerHTML = output;
@@ -57,14 +57,14 @@
                         }
 
                         $.get(templatePath,
-                            function (templates) {
+                            function(templates) {
                                 var template = $(templates).filter(headerTemplateId).html();
                                 var output = Mustache.render(template, album);
                                 document.getElementById(contentId).innerHTML = output;
                             });
                     });
             }
-        }
+        };
 
         $.loadPhotoAlbum = function (uri, id) {
             url = uri;
