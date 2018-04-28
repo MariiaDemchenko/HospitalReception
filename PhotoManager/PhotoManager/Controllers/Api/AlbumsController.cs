@@ -21,7 +21,6 @@ namespace PhotoManager.Controllers.Api
         [Route("")]
         public IHttpActionResult GetAllAlbums([FromUri]ScrollViewModel scrollViewModel)
         {
-
             var albums = _unitOfWork.Albums.GetAllAlbums();
             if (albums == null)
             {

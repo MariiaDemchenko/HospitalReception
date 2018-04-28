@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using PhotoManager.DAL.ProjectionModels;
-using PhotoManager.ViewModels.PhotoManagerViewModels;
 
 namespace PhotoManager.Controllers
 {

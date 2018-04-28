@@ -1,5 +1,6 @@
-﻿using System.Web.Http;
+﻿using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
@@ -27,22 +28,34 @@ namespace PhotoManager.Controllers
         [System.Web.Mvc.Authorize]
         [System.Web.Mvc.HttpGet]
         [System.Web.Mvc.Route("edit/photo")]
-        public ActionResult Edit([FromUri]PhotoManager.DAL.ProjectionModels.PhotoEditModel photo)
+        public ActionResult Edit([FromUri]PhotoEditModel photo)
         {
             return View(photo);
         }
 
         [System.Web.Mvc.Authorize]
         [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("add/{id}")]
-        public ActionResult Add(int? id)
+        [System.Web.Mvc.Route("add")]
+        public ActionResult Add()
         {
-            int.TryParse(id?.ToString(), out var albumId);
-            return View(new DAL.ProjectionModels.PhotoAddModel
+            var model = new PhotoAddModel
             {
-                AlbumId = albumId,
                 ImageUrl = "/api/image/"
-            });
+            };
+            return View(model);
+        }
+
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("add/{id}")]
+        public ActionResult Add(int id)
+        {
+            var model = new PhotoAddModel
+            {
+                AlbumId = id,
+                ImageUrl = "/api/image/"
+            };
+            return View(model);
         }
     }
 }

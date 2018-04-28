@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace PhotoManager.DAL.ProjectionModels
@@ -7,7 +6,7 @@ namespace PhotoManager.DAL.ProjectionModels
     public class PhotoEditModel : PhotoThumbnailModel
     {
         public int CameraSettingsId { get; set; }
-        public int? AlbumId { get; set; }
+        public int AlbumId { get; set; }
         public string Place { get; set; }
         public string CameraModel { get; set; }
 

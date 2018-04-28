@@ -42,6 +42,10 @@ namespace PhotoManager.Common
 
         public static IEnumerable<T> TakePartial<T>(IEnumerable<T> items, int pageIndex, int pageSize)
         {
+            if (items == null)
+            {
+                return new List<T>();
+            }
             return items.Skip(pageIndex * pageSize).Take(pageSize);
         }
     }

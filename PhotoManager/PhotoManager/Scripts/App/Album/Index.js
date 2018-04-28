@@ -21,9 +21,8 @@
                             pageSize: pageSize
                         }
                     })
-                    .done(function(album) {
+                    .done(function (album) {
                         if (album !== null && album.Photos.length !== 0) {
-
                             if (album.OwnerId === userId) {
                                 $.each(album.Photos,
                                     function(index, value) {

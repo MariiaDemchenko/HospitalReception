@@ -4,7 +4,7 @@
             function () {
                 var attr = $("#menu").data("item");
                 var albumId = $("#photoAlbumId").val();
-
+                albumId = albumId !== undefined ? albumId : "";
                 if (attr === "album") {
                     $.ajax("/api/albums/" + $(".selected").data("albumId"))
                         .done(function (album) {
@@ -22,8 +22,9 @@
         $(".form-menu").on("click", ".btn-add",
             function () {
                 var albumId = $("#photoAlbumId").val();
+                albumId = albumId !== undefined ? albumId : "";
                 var attr = $("#menu").data("item");
-                var url = attr === "album" ? "/albums/add" : "/photos/add/" + albumId || 0;
+                var url = attr === "album" ? "/albums/add" : "/photos/add/" + albumId;
                 location.href = url;
             });
 
@@ -65,19 +66,19 @@
             window.location.href = "/albums/manage/";
         });
 
-        $.initialize = function() {
+        $.initialize = function () {
             $(".btn-edit").attr("disabled", true);
             $(".btn-remove-confirm").attr("disabled", true);
         };
 
-        $.hideMenu = function(userId) {
+        $.hideMenu = function (userId) {
             if (userId === undefined) {
                 $("#content").removeClass("selectable");
                 $(".btn-add").attr("visibility", "hidden");
                 return;
             }
             $.ajax("/api/users/settings/" + userId)
-                .done(function(settings) {
+                .done(function (settings) {
                     if (settings.IsAuthorized) {
                         $("#content").addClass("selectable");
                     } else {
@@ -101,11 +102,12 @@
                 });
         };
 
-        $.stopSpinning = function() {
+        $.stopSpinning = function () {
             document.getElementById("spinner").style.display = "none";
         };
 
         function deletePhotos(albumId) {
+            albumId = albumId !== undefined ? albumId : "";
             var selectedPhotos = document.getElementsByClassName("selected");
             var photosId = [];
 

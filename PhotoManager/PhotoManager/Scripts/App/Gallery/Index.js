@@ -2,19 +2,16 @@
     $(function () {
         var templatePath = "/Content/Templates/Gallery/Index.html";
         var uri = "/api/photos";
+        var pageSize = 9;
+        var pageIndex = 0;
+        var userId;
 
-        $.loadPhotos = function (userId) {
-            $.hideMenu(userId);
-            $.initialize();
-
-            $.setScroll(getData);
-
-            var pageIndex = 0;
-            var pageSize = 9;
-
-            getData();
-
-            function getData() {
+        $.photosPage = {
+            setPageIndex: function (newPageIndex) {
+                $.hideMenu(userId);
+                pageIndex = newPageIndex;
+            },
+            getData: function () {
                 $.ajax({
                     url: uri,
                     data: {
@@ -29,6 +26,14 @@
                         }
                     });
             }
+        };
+
+        $.loadPhotos = function (id) {
+            userId = id;
+            $.hideMenu(userId);
+            $.initialize();
+            $.setScroll($.photosPage.getData);
+            $.photosPage.getData();
         }
     });
 })(jQuery);

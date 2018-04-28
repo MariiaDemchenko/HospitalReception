@@ -34,11 +34,6 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult GetAllPhotos([FromUri] ScrollViewModel scrollViewModel)
         {
             var photos = _unitOfWork.Photos.GetAllPhotos();
-            if (photos == null)
-            {
-                return NotFound();
-            }
-
             return Ok(Extensions.TakePartial(photos, scrollViewModel.PageIndex, scrollViewModel.PageSize));
         }
 
@@ -47,7 +42,24 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult GetByIdAndSize(int id, int size)
         {
             var sourcePhoto = _unitOfWork.Photos.GetPhotoById(id, (Constants.ImageSize)size);
+            if (sourcePhoto == null)
+            {
+                return NotFound();
+            }
             return Ok(sourcePhoto);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("{id}/album")]
+        public IHttpActionResult Edit(int id)
+        {
+            var photo = _unitOfWork.Photos.GetPhotoById(id, Constants.ImageSize.Medium);
+            if (photo == null)
+            {
+                return NotFound();
+            }
+            return Ok(photo);
         }
 
         [Authorize]
@@ -56,13 +68,17 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult Edit(int id, int albumId)
         {
             var photo = _unitOfWork.Photos.GetPhotoById(id, Constants.ImageSize.Medium, albumId);
+            if (photo == null)
+            {
+                return NotFound();
+            }
             return Ok(photo);
         }
 
         [Authorize]
         [HttpPut]
         [Route("")]
-        public IHttpActionResult Edit(DAL.ProjectionModels.PhotoEditModel photoViewModel)
+        public IHttpActionResult Edit(PhotoEditModel photoViewModel)
         {
             if (!PhotoIsValid(photoViewModel))
             {
@@ -89,7 +105,7 @@ namespace PhotoManager.Controllers.Api
 
             try
             {
-                var photoViewModel = JsonConvert.DeserializeObject<DAL.ProjectionModels.PhotoAddModel>(provider.FormData.GetValues("ViewModel")?.FirstOrDefault());
+                var photoViewModel = JsonConvert.DeserializeObject<PhotoAddModel>(provider.FormData.GetValues("ViewModel")?.FirstOrDefault());
                 var imageOriginal = File.ReadAllBytes(provider.FileData.FirstOrDefault().LocalFileName);
                 var images = GetImagesInDifferentShapes(imageOriginal).ToList();
 
@@ -101,7 +117,7 @@ namespace PhotoManager.Controllers.Api
                 _unitOfWork.Save();
                 return Ok(photoViewModel.AlbumId);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return NotFound();
             }
@@ -121,11 +137,6 @@ namespace PhotoManager.Controllers.Api
             var keyWord = !string.IsNullOrEmpty(filter) ? filter.Trim(' ') : string.Empty;
             var photos = Extensions.TakePartial(_unitOfWork.Photos.GetPhotosByKeyWord(keyWord).ToList(),
                 scrollViewModel.PageIndex, scrollViewModel.PageSize);
-
-            if (photos == null)
-            {
-                return NotFound();
-            }
             return Ok(photos);
         }
 
@@ -134,10 +145,6 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult AdvancedSearch()
         {
             var photoViewModel = new PhotoThumbnailModel();
-            if (photoViewModel == null)
-            {
-                return NotFound();
-            }
             return Ok(photoViewModel);
         }
 
@@ -145,19 +152,23 @@ namespace PhotoManager.Controllers.Api
         [Route("advancedSearch")]
         public IHttpActionResult AdvancedSearch([FromUri]AdvancedSearchViewModel advancedSearchViewModel)
         {
-            var photoViewModel = advancedSearchViewModel.PhotoViewModel;
+            var photoViewModel = advancedSearchViewModel?.PhotoViewModel;
 
-            var skipCount = advancedSearchViewModel.ScrollViewModel.PageIndex *
-                            advancedSearchViewModel.ScrollViewModel.PageSize;
-
-            var takeCount = advancedSearchViewModel.ScrollViewModel.PageSize;
-            var photos = _unitOfWork.Photos.GetPhotosBySearchModel(photoViewModel).Skip(skipCount).Take(takeCount);
+            var photos = Extensions.TakePartial(_unitOfWork.Photos.GetPhotosBySearchModel(photoViewModel),
+                advancedSearchViewModel.ScrollViewModel.PageIndex, advancedSearchViewModel.ScrollViewModel.PageSize);
             var photoViewModels = photos.ToList();
-            if (photoViewModels == null)
-            {
-                return NotFound();
-            }
             return Ok(photoViewModels);
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("album")]
+        public IHttpActionResult Delete(int[] id)
+        {
+            _unitOfWork.Photos.DeletePhotos(id);
+            _unitOfWork.Save();
+
+            return Ok(_unitOfWork.Photos.GetAllPhotos());
         }
 
         [Authorize]
@@ -215,7 +226,7 @@ namespace PhotoManager.Controllers.Api
             };
         }
 
-        private bool PhotoIsValid(DAL.ProjectionModels.PhotoEditModel photo)
+        private bool PhotoIsValid(PhotoEditModel photo)
         {
             return !string.IsNullOrEmpty(photo.Name) &&
                     photo.Diaphragm >= 0 && photo.Diaphragm <= Constants.MaxDiaphragm &&
