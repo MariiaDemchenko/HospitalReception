@@ -6,73 +6,91 @@
         var pageSize = 9;
         var pageIndex = 0;
         var url;
-        var userId;
 
         $.photosPage = {
-            setPageIndex: function(newPageIndex) {
-                $.hideMenu(userId);
+            setPageIndex: function (newPageIndex) {
+                $.hideMenu();
                 pageIndex = newPageIndex;
             },
-            getData: function() {
+            getData: function () {
+
                 $.ajax({
-                        url: url,
-                        data: {
-                            pageIndex: pageIndex,
-                            pageSize: pageSize
-                        }
-                    })
+                    url: url,
+                    data: {
+                        pageIndex: pageIndex,
+                        pageSize: pageSize
+                    },
+                    error: function () {
+                        location.href = "/albums/error";
+                    }
+                })
                     .done(function (album) {
-                        if (album !== null && album.Photos.length !== 0) {
-                            if (album.OwnerId === userId) {
-                                $.each(album.Photos,
-                                    function(index, value) {
-                                        value.Liked = "disabled";
-                                        value.Disliked = "disabled";
-                                    });
+                        $.ajax({
+                            url: "/api/users",
+                            error: function() {
+                                location.href = "/users/error";
+                            }
+                        }).done(function(userId) {
+                            if (album !== null && album.Photos.length !== 0) {
+                                if (album.OwnerId === userId) {
+                                    $.each(album.Photos,
+                                        function(index, value) {
+                                            value.Liked = "disabled";
+                                            value.Disliked = "disabled";
+                                        });
+                                } else {
+                                    $.each(album.Photos,
+                                        function(index, value) {
+                                            var className = value.Liked === true ? "liked" : "";
+                                            value.Liked = className;
+                                            className = value.Disliked === true ? "disliked" : "";
+                                            value.Disliked = className;
+                                        });
+                                }
+
+                                $.displayPhotoAlbum(templatePath, album.Photos);
+                                pageIndex++;
                             } else {
-                                $.each(album.Photos,
-                                    function(index, value) {
-                                        var className = value.Liked === true ? "liked" : "";
-                                        value.Liked = className;
-                                        className = value.Disliked === true ? "disliked" : "";
-                                        value.Disliked = className;
-                                    });
+                                if (pageIndex === 0) {
+                                    var template;
+                                    var data = {};
+                                    data.CurrentUserId = userId;
+                                    $.get(templatePath,
+                                        function(templates) {
+                                            template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                                            var output = Mustache.render(template, data);
+                                            document.getElementById('content').innerHTML = output;
+                                            $.stopSpinning();
+                                        });
+                                }
                             }
-
-                            $.displayPhotoAlbum(templatePath, album.Photos);
-                            pageIndex++;
-                        } else {
-                            if (pageIndex === 0) {
-                                var template;
-                                var data = {};
-                                $.get(templatePath,
-                                    function(templates) {
-                                        template = $(templates).filter('#photoAlbumEmptyTemplate').html();
-                                        var output = Mustache.render(template, data);
-                                        document.getElementById('content').innerHTML = output;
-                                        $.stopSpinning();
-                                    });
-                            }
-                        }
-
-                        $.get(templatePath,
-                            function(templates) {
-                                var template = $(templates).filter(headerTemplateId).html();
-                                var output = Mustache.render(template, album);
-                                document.getElementById(contentId).innerHTML = output;
-                            });
+                            album.CurrentUserId = userId;
+                            $.get(templatePath,
+                                function(templates) {
+                                    var template = $(templates).filter(headerTemplateId).html();
+                                    var output = Mustache.render(template, album);
+                                    document.getElementById(contentId).innerHTML = output;
+                                });
+                        });
                     });
             }
         };
 
-        $.loadPhotoAlbum = function (uri, id) {
+        $.loadPhotoAlbum = function (uri) {
             url = uri;
-            userId = id;
-
-            $.hideMenu(userId);
+            $.hideMenu();
             $.initialize();
             $.setScroll($.photosPage.getData);
             $.photosPage.getData();
         };
+
+        $(this).keypress(function (e) {
+            var keycode = e.keyCode || e.charCode || e.which; //for cross browser
+            if (keycode === 13)    //keyCode for enter key
+            {
+                $(".btn-search").click();
+                return false;
+            }
+        });
     });
 })(jQuery);

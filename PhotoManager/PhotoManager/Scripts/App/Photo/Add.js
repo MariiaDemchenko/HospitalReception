@@ -1,7 +1,9 @@
 (function ($) {
     $(function () {
-        $.addPhoto = function() {
-            $('input[type=file]').change(function() {
+        addPhoto();
+
+        function addPhoto() {
+            $('input[type=file]').change(function () {
                 if (event.target.files.length > 0) {
                     var file = event.target.files[0];
                     {
@@ -13,7 +15,7 @@
                 }
             });
 
-            $("#formAdd").submit(function(e) {
+            $("#formAdd").submit(function (e) {
                 e.preventDefault();
                 if (!$(this).valid()) {
                     return false;
@@ -47,8 +49,11 @@
                     type: "POST",
                     data: serializedData,
                     processData: false,
-                    contentType: false
-                }).done(function(albumId) {
+                    contentType: false,
+                    error: function () {
+                        location.href = "/photos/error/add";
+                    }
+                }).done(function (albumId) {
                     $.goToAlbum(albumId);
                 });
             });

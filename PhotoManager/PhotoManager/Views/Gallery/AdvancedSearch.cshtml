@@ -39,7 +39,6 @@
         </table>
         <table class="col-6">
             <tr>
-                
                 <td>@Html.DisplayNameFor(m => m.CreationDateBegin)</td>
                 <td>From: @Html.DateEditorFor(m => m.CreationDateBegin)</td>
                 <td>To: @Html.DateEditorFor(m => m.CreationDateEnd)</td>
@@ -61,8 +60,6 @@
     <div id="spinner" class="loader"></div>
 </form>
 
-<script>
-    $(function () {
-        $.advancedSearchPhotos();
-    });
-</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/Gallery/AdvancedSearch")
+}

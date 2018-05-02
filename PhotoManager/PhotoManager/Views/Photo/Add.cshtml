@@ -105,11 +105,7 @@
     </div>
 </div>
 
-<script>
-    $(function () {
-        $.addPhoto();
-    });
-</script>
 @section Scripts {
+    @Scripts.Render("~/bundles/Photo/Add")
     @Scripts.Render("~/bundles/jqueryval")
 }

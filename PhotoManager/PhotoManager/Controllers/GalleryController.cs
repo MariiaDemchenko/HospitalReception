@@ -35,5 +35,27 @@ namespace PhotoManager.Controllers
         {
             return View(model);
         }
+
+        [System.Web.Mvc.HttpGet]
+        public ActionResult Error()
+        {
+            return View();
+        }
+
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("error/index")]
+        public ActionResult ErrorIndex()
+        {
+            TempData["ErrorMessage"] = "Error getting photos";
+            return RedirectToAction("Error");
+        }
+
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.Route("error/search")]
+        public ActionResult ErrorSearch()
+        {
+            TempData["ErrorMessage"] = "Error searching photos";
+            return RedirectToAction("Error");
+        }
     }
 }

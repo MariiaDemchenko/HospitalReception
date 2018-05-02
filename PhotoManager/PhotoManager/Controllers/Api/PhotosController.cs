@@ -4,6 +4,7 @@ using PhotoManager.Common;
 using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.Models;
 using PhotoManager.DAL.ProjectionModels;
+using PhotoManager.Filters;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ using Image = PhotoManager.DAL.Models.Image;
 namespace PhotoManager.Controllers.Api
 {
     [RoutePrefix("api/photos")]
+    [ExceptionHandlingAttributeWebApi(Message = "Error processing photos")]
     public class PhotosController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;

@@ -1,4 +1,5 @@
 ﻿using PhotoManager.DAL.Contracts;
+using PhotoManager.Filters;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +9,7 @@ using System.Web.Http;
 namespace PhotoManager.Controllers.Api
 {
     [RoutePrefix("api/image")]
+    [ExceptionHandlingAttributeWebApi(Message = "Error processing images")]
     public class ImageController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;

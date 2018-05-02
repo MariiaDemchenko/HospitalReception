@@ -6,16 +6,24 @@
                 var albumId = $("#photoAlbumId").val();
                 albumId = albumId !== undefined ? albumId : "";
                 if (attr === "album") {
-                    $.ajax("/api/albums/" + $(".selected").data("albumId"))
-                        .done(function (album) {
-                            location.href = "/albums/edit/album?" + $.serialize(album);
-                        });
+                    $.ajax({
+                        url: "/api/albums/" + $(".selected").data("albumId"),
+                        error: function () {
+                            location.href = "/albums/error";
+                        }
+                    }).done(function (album) {
+                        location.href = "/albums/edit/album?" + $.serialize(album);
+                    });
                 }
                 else if (attr === "photo") {
-                    $.ajax("/api/photos/" + $(".selected").data("photoId") + "/album/" + albumId)
-                        .done(function (photo) {
-                            location.href = "/photos/edit/photo?" + $.serialize(photo);
-                        });
+                    $.ajax({
+                        url: "/api/photos/" + $(".selected").data("photoId") + "/album/" + albumId,
+                        error: function () {
+                            location.href = "/photos/error";
+                        }
+                    }).done(function (photo) {
+                        location.href = "/photos/edit/photo?" + $.serialize(photo);
+                    });
                 }
             });
 
@@ -71,18 +79,20 @@
             $(".btn-remove-confirm").attr("disabled", true);
         };
 
-        $.hideMenu = function (userId) {
-            if (userId === undefined) {
-                $("#content").removeClass("selectable");
-                $(".btn-add").attr("visibility", "hidden");
-                return;
-            }
-            $.ajax("/api/users/settings/" + userId)
+        $.hideMenu = function () {
+            $.ajax({
+                url: "/api/users/settings",
+                error: function () {
+                    location.href = "/users/error";
+                }
+            })
                 .done(function (settings) {
                     if (settings.IsAuthorized) {
                         $("#content").addClass("selectable");
                     } else {
                         $("#content").removeClass("selectable");
+                        $(".btn-add").attr("visibility", "hidden");
+                        return;
                     }
 
                     var item = $("#menu").data("item");
@@ -120,7 +130,10 @@
                 contentType: "application/json",
                 data: JSON.stringify(photosId),
                 type: "DELETE",
-                dataType: "json"
+                dataType: "json",
+                error: function () {
+                    location.href = "/albums/error/delete";
+                }
             })
                 .done(function () {
                     $("#content").empty();
@@ -143,7 +156,10 @@
                 url: '/api/albums',
                 contentType: "application/json",
                 data: JSON.stringify(albumsId),
-                type: "DELETE"
+                type: "DELETE",
+                error: function () {
+                    location.href = "/photos/error/delete";
+                }
             })
                 .done(function () {
                     $("#content").empty();

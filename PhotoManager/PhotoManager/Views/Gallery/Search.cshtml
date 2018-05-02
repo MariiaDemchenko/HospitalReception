@@ -13,8 +13,11 @@
 <div id="content" class="row"></div>
 <div id="spinner" class="loader"></div>
 
-<script>
-    $(function() {
-        $.searchPhotos("@Model.KeyWord");
-    });
-</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/Gallery/Search")
+    <script>
+        $(function() {
+            $.searchPhotos("@Model.KeyWord");
+        });
+    </script>
+}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PhotoManager.Filters;
 using PhotoManager.Managers;
 using PhotoManager.ViewModels.ManageViewModels;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 namespace PhotoManager.Controllers
 {
     [Authorize]
+    [ExceptionHandlingAttributeMvc(Message = "Error managing accounts")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -32,9 +34,9 @@ namespace PhotoManager.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -98,7 +100,7 @@ namespace PhotoManager.Controllers
             }
             return RedirectToAction("ManageLogins", new { Message = message });
         }
-       
+
         //
         // POST: /Manage/EnableTwoFactorAuthentication
         [HttpPost]
@@ -128,7 +130,7 @@ namespace PhotoManager.Controllers
             }
             return RedirectToAction("Index", "Manage");
         }
-        
+
         //
         // POST: /Manage/RemovePhoneNumber
         [HttpPost]
@@ -268,7 +270,7 @@ namespace PhotoManager.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -319,6 +321,6 @@ namespace PhotoManager.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

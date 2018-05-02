@@ -4,11 +4,10 @@
         var uri = "/api/photos";
         var pageSize = 9;
         var pageIndex = 0;
-        var userId;
 
         $.photosPage = {
             setPageIndex: function (newPageIndex) {
-                $.hideMenu(userId);
+                $.hideMenu();
                 pageIndex = newPageIndex;
             },
             getData: function () {
@@ -17,10 +16,13 @@
                     data: {
                         pageIndex: pageIndex,
                         pageSize: pageSize
+                    },
+                    error: function () {
+                        location.href = "/gallery/error/index";
                     }
                 })
                     .done(function (photos) {
-                        if (photos != null && photos.length !== 0) {
+                        if (photos !== null && photos.length !== 0) {
                             $.displayPhotoAlbum(templatePath, photos);
                             pageIndex++;
                         }
@@ -28,9 +30,19 @@
             }
         };
 
-        $.loadPhotos = function (id) {
-            userId = id;
-            $.hideMenu(userId);
+        $(this).keypress(function (e) {
+            var keycode = e.keyCode || e.charCode || e.which; //for cross browser
+            if (keycode === 13) //keyCode for enter key
+            {
+                $(".btn-search").click();
+                return false;
+            }
+        });
+
+        loadPhotos();
+
+        function loadPhotos() {
+            $.hideMenu();
             $.initialize();
             $.setScroll($.photosPage.getData);
             $.photosPage.getData();

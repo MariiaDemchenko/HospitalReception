@@ -3,8 +3,9 @@
         var templatePathLoadPhotos = "/Content/Templates/Gallery/Index.html";
         var photoAlbumEmptyTemplateId = "#photoAlbumEmptyTemplate";
         var contentId = "content";
+        advancedSearchPhotos();
 
-        $.advancedSearchPhotos = function() {
+        function advancedSearchPhotos() {
 
             var pageSize = 9;
             var pageIndex = 0;
@@ -19,7 +20,10 @@
 
                 $.ajax({
                     url: '/api/photos/advancedSearch',
-                    data: { photoViewModel: serializedData, scrollViewModel: pageViewModel }
+                    data: { photoViewModel: serializedData, scrollViewModel: pageViewModel },
+                    error: function () {
+                        location.href = "/gallery/error/index";
+                    }
                 }).done(function(photos) {
                     var template;
                     var data = {};

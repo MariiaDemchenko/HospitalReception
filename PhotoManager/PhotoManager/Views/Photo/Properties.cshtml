@@ -1,7 +1,6 @@
 ﻿@model PhotoManager.ViewModels.PhotoManagerViewModels.PhotoDisplayViewModel
 @using PhotoManager.Common
 
-
 <div id="photoHeader"></div>
 
 <form>
@@ -9,8 +8,11 @@
     <div id="spinner" class="loader"></div>
 </form>
 
-<script>
-    $(function() {
-        $.loadPhoto("@Constants.PhotoPropertiesTemplate", "/api/photos/" + "@Model.Id" + "/@Model.Size");
-    });
-</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/Photo/Index")
+    <script>
+        $(function() {
+            $.loadPhoto("@Constants.PhotoPropertiesTemplate", "/api/photos/" + "@Model.Id" + "/@Model.Size");
+        });
+    </script>
+}

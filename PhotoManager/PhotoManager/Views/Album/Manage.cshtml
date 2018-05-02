@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-
-@{
+﻿@{
     ViewBag.Title = "Album";
 }
 <div id="albumHeader"></div>
@@ -32,8 +30,6 @@
     </div>
 </div>
 
-<script>
-    $(function() {
-        $.loadAlbumsManage("@User.Identity.GetUserId()");
-    });
-</script>
+@section Scripts{
+    @Scripts.Render("~/bundles/Album/Manage")
+}

@@ -2,11 +2,13 @@
 using PhotoManager.Common;
 using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.ProjectionModels;
+using PhotoManager.Filters;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
 using System.Web.Http;
 
 namespace PhotoManager.Controllers.Api
 {
+    [ExceptionHandlingAttributeWebApi(Message = "Error processing albums")]
     [RoutePrefix("api/albums")]
     public class AlbumsController : ApiController
     {
@@ -28,7 +30,7 @@ namespace PhotoManager.Controllers.Api
             }
             return Ok(Extensions.TakePartial(albums, scrollViewModel.PageIndex, scrollViewModel.PageSize));
         }
-
+        
         [HttpGet]
         [Route("album")]
         public IHttpActionResult GetAlbumByModel([FromUri]AlbumSearchModel model, [FromUri]ScrollViewModel scrollViewModel)
@@ -41,7 +43,7 @@ namespace PhotoManager.Controllers.Api
             album.Photos = Extensions.TakePartial(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize);
             return Ok(album);
         }
-
+        
         [HttpGet]
         [Route("{id}")]
         public IHttpActionResult GetAlbumById(int? id, [FromUri]ScrollViewModel scrollViewModel)
@@ -55,6 +57,7 @@ namespace PhotoManager.Controllers.Api
             return Ok(album);
         }
 
+        [Authorize]
         [HttpPut]
         [Route("")]
         public IHttpActionResult EditAlbum(AlbumIndexModel album)
@@ -64,6 +67,7 @@ namespace PhotoManager.Controllers.Api
             return Ok(album);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("")]
         public IHttpActionResult AddAlbum(AlbumIndexModel album)
@@ -98,6 +102,7 @@ namespace PhotoManager.Controllers.Api
             return Ok();
         }
 
+        [Authorize]
         [HttpGet]
         [Route("edit/{id}")]
         public IHttpActionResult EditAlbumPhotos(int id, [FromUri]ScrollViewModel scrollViewModel)

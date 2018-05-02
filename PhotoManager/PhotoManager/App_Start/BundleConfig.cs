@@ -4,7 +4,6 @@ namespace PhotoManager
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -13,8 +12,6 @@ namespace PhotoManager
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
@@ -31,7 +28,51 @@ namespace PhotoManager
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/photoManager")
-                .IncludeDirectory("~/Scripts/App", "*.js", true));
+                .IncludeDirectory("~/Scripts/App/Shared", "*.js", true));
+
+            bundles.Add(new ScriptBundle("~/bundles/Home/Index").Include(
+                "~/Scripts/App/Home/Index.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Album/Add").Include(
+                "~/Scripts/App/Album/Add.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Album/Edit").Include(
+                "~/Scripts/App/Album/Edit.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Album/Index").Include(
+                "~/Scripts/App/Album/Index.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Album/Manage").Include(
+                "~/Scripts/App/Album/Manage.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Gallery/AdvancedSearch").Include(
+                "~/Scripts/App/Gallery/AdvancedSearch.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Gallery/Index").Include(
+                "~/Scripts/App/Gallery/Index.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Gallery/Search").Include(
+                "~/Scripts/App/Gallery/Search.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Photo/Add").Include(
+                "~/Scripts/App/Photo/Add.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Photo/Edit").Include(
+                "~/Scripts/App/Photo/Edit.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Photo/Index").Include(
+                "~/Scripts/App/Photo/Index.js"
+            ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

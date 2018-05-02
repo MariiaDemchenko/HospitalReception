@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-@model PhotoManager.DAL.ProjectionModels.AlbumSearchModel
+﻿@model PhotoManager.DAL.ProjectionModels.AlbumSearchModel
 @{
     ViewBag.Title = "Album";
 }
@@ -15,8 +14,11 @@
 <div id="content" class="row"></div>
 <div id="spinner" class="loader"></div>
 
-<script>
-    $(function() {
-        $.loadPhotoAlbum("@Model.AlbumUrl", "@User.Identity.GetUserId()");
-    });
-</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/Album/Index")
+    <script>
+        $(function() {
+            $.loadPhotoAlbum("@Model.AlbumUrl");
+        });
+    </script>
+}

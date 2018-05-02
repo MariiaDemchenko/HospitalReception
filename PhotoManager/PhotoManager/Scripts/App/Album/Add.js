@@ -2,13 +2,15 @@
     $(function () {
         var templatePath = "/Content/Templates/Album/Edit.html";
 
-        $.addAlbum = function (userId) {
+        addAlbum();
+
+        function addAlbum() {
             $.setScroll(getData);
 
             var pageIndex = 0;
             var pageSize = 9;
 
-            $.hideMenu(userId);
+            $.hideMenu();
             $.initialize();
             getData();
 
@@ -18,6 +20,9 @@
                     data: {
                         pageIndex: pageIndex,
                         pageSize: pageSize
+                    },
+                    error: function () {
+                        location.href = "/photos/error";
                     }
                 })
                     .done(function (photos) {
@@ -43,7 +48,10 @@
                 $.ajax({
                     url: '/api/albums/',
                     type: "POST",
-                    data: serializedData
+                    data: serializedData,
+                    error: function () {
+                        location.href = "/albums/error/add";
+                    }
                 }).done(function (result) {
                     if (result) {
                         location.href = "/albums/manage";
@@ -52,6 +60,6 @@
                     }
                 });
             });
-        };
+        }
     });
 })(jQuery);

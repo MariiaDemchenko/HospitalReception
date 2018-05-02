@@ -2,20 +2,21 @@
     $(function () {
         var templatePath = "/Content/Templates/Album/Manage.html";
         var templateId = "#albumsTemplate";
-        var contentId = "content";
         var pageSize = 9;
         var pageIndex = 0;
-        var userId;
 
         $.albumsPage = {
             setPageIndex: function (newPageIndex) {
-                $.hideMenu(userId);
+                $.hideMenu();
                 pageIndex = newPageIndex;
             },
             getData: function () {
                 $.ajax({
                     url: "/api/albums",
-                    data: { pageIndex: pageIndex, pageSize: pageSize }
+                    data: { pageIndex: pageIndex, pageSize: pageSize },
+                    error: function () {
+                        location.href = "/albums/error";
+                    }
                 })
                     .done(function (albums) {
                         if (albums == null || albums.length === 0) {
@@ -46,13 +47,23 @@
             }
         }
 
-        $.loadAlbumsManage = function (id) {
-            userId = id;
-            $.hideMenu(userId);
+        loadAlbumsManage();
+
+        function loadAlbumsManage() {
+            $.hideMenu();
             $.initialize();
             $.setScroll($.albumsPage.getData);
             $.albumsPage.getData();
         }
+
+        $(this).keypress(function (e) {
+            var keycode = e.keyCode || e.charCode || e.which; //for cross browser
+            if (keycode === 13) //keyCode for enter key
+            {
+                $(".btn-search").click();
+                return false;
+            }
+        });
 
         $("#content").on("click", ".album-footer", function () {
             if ($(this).hasClass("selected")) {

@@ -6,8 +6,11 @@
 <div id="content" class="row"></div>
 <div id="spinner" class="loader"></div>
 
-<script>
-    $(function () {
-        $.loadPhoto("@Constants.PhotoTemplate", "/api/photos/" + "@Model.Id" + "/@Model.Size");
-    });
-</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/Photo/Index")
+    <script>
+        $(function () {
+            $.loadPhoto("@Constants.PhotoTemplate", "/api/photos/" + "@Model.Id" + "/@Model.Size");
+        });
+    </script>
+}

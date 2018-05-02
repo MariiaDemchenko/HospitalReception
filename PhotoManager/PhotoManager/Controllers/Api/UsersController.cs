@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using PhotoManager.DAL.Contracts;
+using PhotoManager.Filters;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
 using System.Web.Http;
 using Constants = PhotoManager.Common.Constants;
@@ -7,6 +8,7 @@ using Constants = PhotoManager.Common.Constants;
 namespace PhotoManager.Controllers.Api
 {
     [RoutePrefix("api/users")]
+    [ExceptionHandlingAttributeWebApi(Message = "Error processing users")]
     public class UsersController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -24,13 +26,15 @@ namespace PhotoManager.Controllers.Api
         }
 
         [HttpGet]
-        [Route("settings/{id}")]
-        public IHttpActionResult GetUserSettings(string id)
+        [Route("settings")]
+        public IHttpActionResult GetUserSettings()
         {
-            if (id == null)
+            if (!User.Identity.IsAuthenticated)
             {
                 return Ok(new UserSettingsViewModel { IsAuthorized = false });
             }
+
+            var id = User.Identity.GetUserId();
 
             var user = _unitOfWork.Users.GetUserById(id);
             return Ok(new UserSettingsViewModel
