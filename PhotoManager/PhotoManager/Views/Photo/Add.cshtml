@@ -5,6 +5,7 @@
 </div>
 
 <form id="formAdd" method="post" enctype="multipart/form-data">
+
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div id="content">
         <table>
@@ -35,11 +36,11 @@
             </tr>
             <tr>
                 <td>@Html.DisplayNameFor(m => m.Diaphragm)</td>
-                <td>@Html.NumberEditorFor(m => m.Diaphragm, 0.01)</td>
+                <td>@Html.CustomEnumDropDownListFor(model => model.Diaphragm)</td>
             </tr>
             <tr>
                 <td>@Html.DisplayNameFor(m => m.ShutterSpeed)</td>
-                <td>@Html.NumberEditorFor(m => m.ShutterSpeed)</td>
+                <td>@Html.CustomEnumDropDownListFor(model => model.ShutterSpeed)</td>
             </tr>
             <tr>
                 <td>@Html.DisplayNameFor(m => m.Iso)</td>
@@ -47,7 +48,7 @@
             </tr>
             <tr>
                 <td>@Html.DisplayNameFor(m => m.Flash)</td>
-                <td>@Html.NumberEditorFor(m => m.Flash, 0.01)</td>
+                <td>@Html.CustomEnumDropDownListFor(model => model.Flash)</td>
             </tr>
             <tr>
                 <td>
@@ -101,6 +102,20 @@
                 </button>
             </div>
             <div class="modal-body">Only JPEG format is allowed</div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="freePaymentPhotos" tabindex="-1" role="dialog" aria-labelledby="freePaymentPhotosLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="freePaymentPhotosLabel">Free payment restriction</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">Your access to adding photos is restricted as you have already reached the allowed limit of 30 free photos</div>
         </div>
     </div>
 </div>

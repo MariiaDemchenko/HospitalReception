@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Contracts\IPhotoManagerDbContext.cs" />
     <Compile Include="Contracts\IAlbumRepository.cs" />
     <Compile Include="Contracts\IPhotoRepository.cs" />
@@ -85,6 +84,7 @@
     <Compile Include="ProjectionModels\PhotoThumbnailModel.cs" />
     <Compile Include="ProjectionModels\SearchModel.cs" />
     <Compile Include="ProjectionModels\ThumbnailModel.cs" />
+    <Compile Include="Profiles\ProjectionsProfiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\PhotoRepository.cs" />
     <Compile Include="Repository\AlbumRepository.cs" />

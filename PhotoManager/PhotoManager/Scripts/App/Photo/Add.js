@@ -3,6 +3,8 @@
         addPhoto();
 
         function addPhoto() {
+            var currentAlbumId;
+
             $('input[type=file]').change(function () {
                 if (event.target.files.length > 0) {
                     var file = event.target.files[0];
@@ -14,6 +16,11 @@
                     $("#displayedImage").fadeIn("fast").attr('src', "/api/image");
                 }
             });
+
+            $('#freePaymentPhotos').on('hidden.bs.modal',
+                function () {
+                    $.goToAlbum(currentAlbumId);
+                });
 
             $("#formAdd").submit(function (e) {
                 e.preventDefault();
@@ -54,9 +61,22 @@
                         location.href = "/photos/error/add";
                     }
                 }).done(function (albumId) {
-                    $.goToAlbum(albumId);
+                    currentAlbumId = albumId;
+                    $.ajax({
+                        url: "/api/users/settings",
+                        error: function () {
+                            location.href = "/users/error";
+                        }
+                    })
+                        .done(function (settings) {
+                            if (!settings.CanAddPhotos) {
+                                $('#freePaymentPhotos').modal('show');
+                            } else {
+                                $.goToAlbum(albumId);
+                            }
+                        });
                 });
             });
-        };
+        }
     });
 })(jQuery);

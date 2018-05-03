@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using PhotoManager.Common;
 using PhotoManager.DAL.Contracts;
@@ -36,7 +37,7 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult GetAllPhotos([FromUri] ScrollViewModel scrollViewModel)
         {
             var photos = _unitOfWork.Photos.GetAllPhotos();
-            return Ok(Extensions.TakePartial(photos, scrollViewModel.PageIndex, scrollViewModel.PageSize));
+            return Ok(Extensions.GetCollection(photos, scrollViewModel.PageIndex, scrollViewModel.PageSize));
         }
 
         [HttpGet]
@@ -44,11 +45,8 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult GetByIdAndSize(int id, int size)
         {
             var sourcePhoto = _unitOfWork.Photos.GetPhotoById(id, (Constants.ImageSize)size);
-            if (sourcePhoto == null)
-            {
-                return NotFound();
-            }
-            return Ok(sourcePhoto);
+
+            return Ok(Mapper.Map<PhotoPropertiesModel>(sourcePhoto));
         }
 
         [Authorize]
@@ -137,7 +135,7 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult Search(string filter, [FromUri]ScrollViewModel scrollViewModel = null)
         {
             var keyWord = !string.IsNullOrEmpty(filter) ? filter.Trim(' ') : string.Empty;
-            var photos = Extensions.TakePartial(_unitOfWork.Photos.GetPhotosByKeyWord(keyWord).ToList(),
+            var photos = Extensions.GetCollection(_unitOfWork.Photos.GetPhotosByKeyWord(keyWord).ToList(),
                 scrollViewModel.PageIndex, scrollViewModel.PageSize);
             return Ok(photos);
         }
@@ -156,10 +154,9 @@ namespace PhotoManager.Controllers.Api
         {
             var photoViewModel = advancedSearchViewModel?.PhotoViewModel;
 
-            var photos = Extensions.TakePartial(_unitOfWork.Photos.GetPhotosBySearchModel(photoViewModel),
+            var photos = Extensions.GetCollection(_unitOfWork.Photos.GetPhotosBySearchModel(photoViewModel).ToList(),
                 advancedSearchViewModel.ScrollViewModel.PageIndex, advancedSearchViewModel.ScrollViewModel.PageSize);
-            var photoViewModels = photos.ToList();
-            return Ok(photoViewModels);
+            return Ok(photos);
         }
 
         [Authorize]
@@ -231,11 +228,8 @@ namespace PhotoManager.Controllers.Api
         private bool PhotoIsValid(PhotoEditModel photo)
         {
             return !string.IsNullOrEmpty(photo.Name) &&
-                    photo.Diaphragm >= 0 && photo.Diaphragm <= Constants.MaxDiaphragm &&
-                    photo.Flash >= 0 && photo.Flash <= Constants.MaxFlash &&
-                    photo.Iso >= 0 && photo.Iso <= Constants.MaxIso &&
-                    photo.ShutterSpeed >= 0 && photo.ShutterSpeed <= Constants.MaxShutterSpeed &&
-                    photo.LensFocalLength >= 0 && photo.LensFocalLength <= Constants.MaxLensFocalLength;
+                    photo.Iso >= 1 && photo.Iso <= Constants.MaxIso &&
+                    photo.LensFocalLength >= 1 && photo.LensFocalLength <= Constants.MaxLensFocalLength;
         }
     }
 }

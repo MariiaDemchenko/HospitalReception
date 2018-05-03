@@ -55,6 +55,13 @@
     text-align: center;
 }
 
+.counter {
+    padding-bottom: 9px;
+    margin: 40px 0 2px;
+    color: #aaa;
+    text-align: left;
+}
+
 .photo-name {
     text-transform: uppercase;
     margin: 0 0 5px 0;
@@ -88,7 +95,7 @@ i {
     color: red;
 }
 
-.disabled i {
+.disabled i, .disabled label {
     color: gray;
 }
 

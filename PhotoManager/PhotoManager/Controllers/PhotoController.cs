@@ -24,7 +24,6 @@ namespace PhotoManager.Controllers
             var x = new PhotoDisplayViewModel { Id = id, Size = (int)Common.Constants.ImageSize.Original };
 
             return View(x);
-
         }
 
         [System.Web.Mvc.Authorize]

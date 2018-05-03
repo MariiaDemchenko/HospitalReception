@@ -2,6 +2,9 @@
     $(function () {
         $("#formEdit").submit(function (e) {
             e.preventDefault();
+            if (!$(this).valid()) {
+                return false;
+            }
             var serializedData = $(this).serialize();
 
             $.ajax({

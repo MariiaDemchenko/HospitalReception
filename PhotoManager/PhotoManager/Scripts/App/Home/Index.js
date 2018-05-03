@@ -27,25 +27,22 @@
                 }
             })
                 .done(function (albums) {
-                    if (albums === null || albums.length === 0) {
-                        if (pageIndex === 0) {
-                            var template;
-                            var data = {};
-                            $.get(templatePath,
-                                function (templates) {
-                                    template = $(templates).filter('#photoAlbumEmptyTemplate').html();
-                                    var output = Mustache.render(template, data);
-                                    document.getElementById('content').innerHTML = output;
-                                    $.stopSpinning();
-                                });
-                        }
-                    }
+                    var template;
+                    var data = {};
+                    data.Counter = albums.TotalCount === 0? "There are no albums yet": "Total albums count: "+albums.TotalCount;
+                    $.get(templatePath,
+                        function (templates) {
+                            template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                            var output = Mustache.render(template, data);
+                            document.getElementById('counter').innerHTML = output;
+                            $.stopSpinning();
+                        });
                     $.get(templatePath,
                         function (templates) {
                             var template = $(templates).filter(templateId).html();
 
                             var data = {};
-                            data.albums = albums;
+                            data.albums = albums.Items;
 
                             var output = Mustache.render(template, data);
                             $("#content").append(output);

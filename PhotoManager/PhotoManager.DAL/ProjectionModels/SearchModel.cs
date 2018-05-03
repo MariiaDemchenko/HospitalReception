@@ -13,15 +13,16 @@ namespace PhotoManager.DAL.ProjectionModels
         [DisplayName("Camera model")]
         public string CameraModel { get; set; }
         [DisplayName("Lens focal length")]
-        public int LensFocalLength { get; set; }
+        public int? LensFocalLengthBegin { get; set; }
+        public int? LensFocalLengthEnd { get; set; }
         [DisplayName("Diaphragm")]
-        public double? DiaphragmBegin { get; set; }
-        public double? DiaphragmEnd { get; set; }
+        public Common.Constants.Diaphragm Diaphragm { get; set; }
         [DisplayName("Shutter speed")]
-        public int ShutterSpeed { get; set; }
-        public int Iso { get; set; }
+        public Common.Constants.ShutterSpeed ShutterSpeed { get; set; }
+        [DisplayName("ISO")]
+        public int? IsoBegin { get; set; }
+        public int? IsoEnd { get; set; }
         [DisplayName("Flash")]
-        public double? FlashBegin { get; set; }
-        public double? FlashEnd { get; set; }
+        public Common.Constants.Flash Flash { get; set; }
     }
 }

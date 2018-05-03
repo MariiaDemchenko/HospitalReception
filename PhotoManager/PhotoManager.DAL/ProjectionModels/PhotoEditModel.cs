@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using PhotoManager.Common;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace PhotoManager.DAL.ProjectionModels
@@ -11,23 +12,20 @@ namespace PhotoManager.DAL.ProjectionModels
         public string CameraModel { get; set; }
 
         [DisplayName("Lens focal length")]
-        [Range(0, Common.Constants.MaxLensFocalLength)]
+        [Range(1, Constants.MaxLensFocalLength)]
         public int LensFocalLength { get; set; }
 
         [DisplayName("Diaphragm")]
-        [Range(0, Common.Constants.MaxDiaphragm)]
-        public double Diaphragm { get; set; }
+        public Constants.Diaphragm Diaphragm { get; set; }
 
         [DisplayName("Shutter speed")]
-        [Range(0, Common.Constants.MaxShutterSpeed)]
-        public int ShutterSpeed { get; set; }
+        public Constants.ShutterSpeed ShutterSpeed { get; set; }
 
         [DisplayName("ISO")]
-        [Range(0, Common.Constants.MaxIso)]
+        [Range(1, Constants.MaxIso)]
         public int Iso { get; set; }
 
         [DisplayName("Flash")]
-        [Range(0, Common.Constants.MaxFlash)]
-        public double Flash { get; set; }
+        public Constants.Flash Flash { get; set; }
     }
 }

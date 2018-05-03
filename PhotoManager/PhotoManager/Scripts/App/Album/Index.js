@@ -27,46 +27,43 @@
                     .done(function (album) {
                         $.ajax({
                             url: "/api/users",
-                            error: function() {
+                            error: function () {
                                 location.href = "/users/error";
                             }
-                        }).done(function(userId) {
-                            if (album !== null && album.Photos.length !== 0) {
-                                if (album.OwnerId === userId) {
-                                    $.each(album.Photos,
-                                        function(index, value) {
+                        }).done(function (userId) {
+                            if (album.Photos.Items.length !== 0) {
+                                if (!userId || album.OwnerId === userId) {
+                                    $.each(album.Photos.Items,
+                                        function (index, value) {
                                             value.Liked = "disabled";
                                             value.Disliked = "disabled";
                                         });
                                 } else {
-                                    $.each(album.Photos,
-                                        function(index, value) {
+                                    $.each(album.Photos.Items,
+                                        function (index, value) {
                                             var className = value.Liked === true ? "liked" : "";
                                             value.Liked = className;
                                             className = value.Disliked === true ? "disliked" : "";
                                             value.Disliked = className;
                                         });
                                 }
-
-                                $.displayPhotoAlbum(templatePath, album.Photos);
-                                pageIndex++;
-                            } else {
-                                if (pageIndex === 0) {
-                                    var template;
-                                    var data = {};
-                                    data.CurrentUserId = userId;
-                                    $.get(templatePath,
-                                        function(templates) {
-                                            template = $(templates).filter('#photoAlbumEmptyTemplate').html();
-                                            var output = Mustache.render(template, data);
-                                            document.getElementById('content').innerHTML = output;
-                                            $.stopSpinning();
-                                        });
-                                }
                             }
+                            $.displayPhotoAlbum(templatePath, album.Photos.Items);
+                            var template;
+                            var data = {};
+                            data.Counter = album.Photos.TotalCount === 0 ? "There are no photos yet" : "Total photos count: " + album.Photos.TotalCount;
+                            $.get(templatePath,
+                                function (templates) {
+                                    template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                                    var output = Mustache.render(template, data);
+                                    document.getElementById('counter').innerHTML = output;
+                                    $.stopSpinning();
+                                });
+
+                            pageIndex++;
                             album.CurrentUserId = userId;
                             $.get(templatePath,
-                                function(templates) {
+                                function (templates) {
                                     var template = $(templates).filter(headerTemplateId).html();
                                     var output = Mustache.render(template, album);
                                     document.getElementById(contentId).innerHTML = output;

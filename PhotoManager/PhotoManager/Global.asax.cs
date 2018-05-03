@@ -16,7 +16,7 @@ namespace PhotoManager
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             AreaRegistration.RegisterAllAreas();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            DAL.AutoMapperConfig.Initialize();
+            AutoMapperConfig.Initialize();
         }
 
         protected void Application_Error(object sender, EventArgs e)

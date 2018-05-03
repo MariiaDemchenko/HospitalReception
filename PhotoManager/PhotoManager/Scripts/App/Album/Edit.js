@@ -24,14 +24,23 @@
                     }
                 })
                     .done(function (album) {
-
-                        if (album !== null && album.Photos.length !== 0) {
-                            $.each(album.Photos,
+                        var template;
+                        var data = {};
+                        data.Counter = album.Photos.TotalCount === 0 ? "There are no photos available to add" : "Photos available: " + album.Photos.TotalCount;
+                        $.get(templatePath,
+                            function (templates) {
+                                template = $(templates).filter("#photoAlbumEmptyTemplate").html();
+                                var output = Mustache.render(template, data);
+                                document.getElementById("counter").innerHTML = output;
+                                $.stopSpinning();
+                            });
+                        if (album.Photos.Items !== null && album.Photos.Items.length !== 0) {
+                            $.each(album.Photos.Items,
                                 function (index, value) {
                                     var className = value.Selected === true ? "selected" : "";
                                     value.Selected = className;
                                 });
-                            $.displayPhotoAlbum(templatePath, album.Photos);
+                            $.displayPhotoAlbum(templatePath, album.Photos.Items);
                             pageIndex++;
                         }
                     });

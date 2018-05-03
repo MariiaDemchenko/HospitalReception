@@ -1,6 +1,9 @@
 ﻿@{
     ViewBag.Title = "Album";
 }
+<div class="page-header">
+    <h2>Manage albums</h2>
+</div>
 <div id="albumHeader"></div>
 @Html.Partial("Partial/Search")
 <div id="menu" class="form-menu" data-item="album">
@@ -9,6 +12,7 @@
     <button class="btn btn-danger btn-menu btn-remove-confirm" data-toggle="modal" data-target="#exampleModal">REMOVE</button>
 </div>
 
+<div id="counter"></div>
 <div id="content" class="row"></div>
 <div id="spinner" class="loader"></div>
 

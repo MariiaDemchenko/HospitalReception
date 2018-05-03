@@ -26,12 +26,27 @@
                     }
                 })
                     .done(function (photos) {
-                        if (photos.length !== 0) {
-                            $.displayPhotoAlbum(templatePath, photos);
+                        var template;
+                        var data = {};
+                        data.Counter = photos.TotalCount === 0 ? "There are no photos available to add" : "Photos available: " + photos.TotalCount;
+                        $.get(templatePath,
+                            function (templates) {
+                                template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                                var output = Mustache.render(template, data);
+                                document.getElementById('counter').innerHTML = output;
+                                $.stopSpinning();
+                            });
+                        if (photos.Items.length !== 0) {
+                            $.displayPhotoAlbum(templatePath, photos.Items);
                             pageIndex++;
                         }
                     });
             }
+
+            $('#freePaymentAlbums').on('hidden.bs.modal',
+                function () {
+                    location.href = "/albums/manage";
+                });
 
             $("#formAlbumAdd").submit(function (e) {
                 e.preventDefault();
@@ -54,8 +69,20 @@
                     }
                 }).done(function (result) {
                     if (result) {
-                        location.href = "/albums/manage";
-                    } else {
+                        $.ajax({
+                            url: "/api/users/settings",
+                            error: function () {
+                                location.href = "/users/error";
+                            }
+                        }).done(function (settings) {
+                            if (!settings.CanAddAlbums) {
+                                $('#freePaymentAlbums').modal('show');
+                            } else {
+                                location.href = "/albums/manage";
+                            }
+                        });
+                    }
+                    else {
                         $('#addAlbumUniqueModal').modal('show');
                     }
                 });

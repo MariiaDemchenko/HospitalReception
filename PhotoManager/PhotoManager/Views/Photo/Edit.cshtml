@@ -35,11 +35,11 @@
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(m => m.Diaphragm)</td>
-            <td>@Html.NumberEditorFor(m => m.Diaphragm, 0.01)</td>
+            <td>@Html.CustomEnumDropDownListFor(model => model.Diaphragm)</td>
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(m => m.ShutterSpeed)</td>
-            <td>@Html.NumberEditorFor(m => m.ShutterSpeed)</td>
+            <td>@Html.CustomEnumDropDownListFor(model => model.ShutterSpeed)</td>
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(m => m.Iso)</td>
@@ -47,7 +47,7 @@
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(m => m.Flash)</td>
-            <td>@Html.NumberEditorFor(m => m.Flash, 0.01)</td>
+            <td>@Html.CustomEnumDropDownListFor(model => model.Flash)</td>
         </tr>
         <tr>
             <td>

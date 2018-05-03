@@ -24,37 +24,41 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult GetAllAlbums([FromUri]ScrollViewModel scrollViewModel)
         {
             var albums = _unitOfWork.Albums.GetAllAlbums();
-            if (albums == null)
-            {
-                return NotFound();
-            }
-            return Ok(Extensions.TakePartial(albums, scrollViewModel.PageIndex, scrollViewModel.PageSize));
+
+            return Ok(Extensions.GetCollection(albums, scrollViewModel.PageIndex, scrollViewModel.PageSize));
         }
-        
+
         [HttpGet]
         [Route("album")]
-        public IHttpActionResult GetAlbumByModel([FromUri]AlbumSearchModel model, [FromUri]ScrollViewModel scrollViewModel)
+        public IHttpActionResult GetAlbumByModel([FromUri] AlbumSearchModel model,
+            [FromUri] ScrollViewModel scrollViewModel)
         {
             var album = _unitOfWork.Albums.GetAlbumByModel(model, User.Identity.GetUserId());
-            if (album?.Photos == null)
+
+            return Ok(new PhotoAlbumViewModel
             {
-                return NotFound();
-            }
-            album.Photos = Extensions.TakePartial(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize);
-            return Ok(album);
+                Id = album.Id,
+                Name = album.Name,
+                Description = album.Description,
+                OwnerId = album.OwnerId,
+                Photos = Extensions.GetCollection(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize)
+            });
         }
-        
+
         [HttpGet]
         [Route("{id}")]
         public IHttpActionResult GetAlbumById(int? id, [FromUri]ScrollViewModel scrollViewModel)
         {
             var album = _unitOfWork.Albums.GetAlbumById(id, User.Identity.GetUserId());
-            if (album?.Photos == null)
+
+            return Ok(new PhotoAlbumViewModel
             {
-                return NotFound();
-            }
-            album.Photos = Extensions.TakePartial(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize);
-            return Ok(album);
+                Id = album.Id,
+                Name = album.Name,
+                Description = album.Description,
+                OwnerId = album.OwnerId,
+                Photos = Extensions.GetCollection(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize)
+            });
         }
 
         [Authorize]
@@ -108,8 +112,14 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult EditAlbumPhotos(int id, [FromUri]ScrollViewModel scrollViewModel)
         {
             var album = _unitOfWork.Albums.GetAlbumById(id, User.Identity.GetUserId(), true);
-            album.Photos = Extensions.TakePartial(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize);
-            return Ok(album);
+            return Ok(new PhotoAlbumViewModel
+            {
+                Id = album.Id,
+                Name = album.Name,
+                Description = album.Description,
+                OwnerId = album.OwnerId,
+                Photos = Extensions.GetCollection(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize)
+            });
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PhotoManager.Common;
 
 namespace PhotoManager.DAL.ProjectionModels
 {

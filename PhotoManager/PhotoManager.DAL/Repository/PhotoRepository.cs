@@ -61,7 +61,7 @@ namespace PhotoManager.DAL.Repository
                     p.CreationDate,
                     ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
                     Selected = false,
-                    Likes = p.Likes.Count(l=>l.IsPositive),
+                    Likes = p.Likes.Count(l => l.IsPositive),
                     Liked = false,
                     Dislikes = p.Likes.Count(l => !l.IsPositive),
                     Disliked = false
@@ -133,17 +133,18 @@ namespace PhotoManager.DAL.Repository
                  p.CreationDate >= photo.CreationDateBegin && p.CreationDate <= photo.CreationDateEnd) &&
                 (string.IsNullOrEmpty(photo.Place) || p.Place.Contains(photo.Place)) &&
                 (string.IsNullOrEmpty(photo.CameraModel) || p.CameraSettings.CameraModel.Contains(photo.CameraModel)) &&
-                (photo.LensFocalLength == 0 || p.CameraSettings.LensFocalLength == photo.LensFocalLength) &&
-                ((photo.DiaphragmBegin == null && photo.DiaphragmEnd == null) ||
-                 (photo.DiaphragmBegin == null && p.CameraSettings.Diaphragm <= photo.DiaphragmEnd) ||
-                 (photo.DiaphragmEnd == null && p.CameraSettings.Diaphragm >= photo.DiaphragmBegin) ||
-                 (p.CameraSettings.Diaphragm >= photo.DiaphragmBegin && p.CameraSettings.Diaphragm <= photo.DiaphragmEnd)) &&
                 (photo.ShutterSpeed == 0 || p.CameraSettings.ShutterSpeed == photo.ShutterSpeed) &&
-                (photo.Iso == 0 || p.CameraSettings.Iso == photo.Iso) &&
-                ((photo.FlashBegin == null && photo.FlashEnd == null) ||
-                 (photo.FlashBegin == null && p.CameraSettings.Flash <= photo.FlashEnd) ||
-                 (photo.FlashEnd == null && p.CameraSettings.Flash >= photo.FlashBegin) ||
-                 (p.CameraSettings.Flash >= photo.FlashBegin && p.CameraSettings.Flash <= photo.FlashEnd))).ToList();
+                ((photo.LensFocalLengthBegin == null && photo.LensFocalLengthBegin == null) ||
+                 (photo.LensFocalLengthBegin == null && p.CameraSettings.LensFocalLength <= photo.LensFocalLengthEnd) ||
+                 (photo.LensFocalLengthEnd == null && p.CameraSettings.LensFocalLength >= photo.LensFocalLengthBegin) ||
+                 (p.CameraSettings.LensFocalLength >= photo.LensFocalLengthBegin && p.CameraSettings.LensFocalLength <= photo.LensFocalLengthEnd)) &&
+                (photo.Diaphragm == 0 || p.CameraSettings.Diaphragm == photo.Diaphragm) &&
+                (photo.Flash == 0 || p.CameraSettings.Flash == photo.Flash) &&
+                ((photo.IsoBegin == null && photo.IsoEnd == null) ||
+                 (photo.IsoBegin == null && p.CameraSettings.Iso <= photo.IsoEnd) ||
+                 (photo.IsoEnd == null && p.CameraSettings.Iso >= photo.IsoBegin) ||
+                 (p.CameraSettings.Iso >= photo.IsoBegin && p.CameraSettings.Iso <= photo.IsoEnd)))
+                .ToList();
             return photoModels.Select(Mapper.Map<PhotoThumbnailModel>).ToList();
         }
 
@@ -197,7 +198,7 @@ namespace PhotoManager.DAL.Repository
         {
             var likesCount = _context.Likes.Count(l => l.PhotoId == photoId && l.AlbumId == albumId && l.IsPositive == isPositive);
             var dislikesCount = _context.Likes.Count(l => l.PhotoId == photoId && l.AlbumId == albumId && l.IsPositive == !isPositive);
-            
+
             if (_context.Albums.FirstOrDefault(a => a.Id == albumId)?.OwnerId == userId)
             {
                 return GetLikesModel(likesCount, dislikesCount, isPositive);

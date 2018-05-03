@@ -6,46 +6,46 @@
         var pageIndex = 0;
 
         $.albumsPage = {
-            setPageIndex: function (newPageIndex) {
+            setPageIndex: function(newPageIndex) {
                 $.hideMenu();
                 pageIndex = newPageIndex;
             },
-            getData: function () {
+            getData: function() {
                 $.ajax({
-                    url: "/api/albums",
-                    data: { pageIndex: pageIndex, pageSize: pageSize },
-                    error: function () {
-                        location.href = "/albums/error";
-                    }
-                })
-                    .done(function (albums) {
-                        if (albums == null || albums.length === 0) {
-                            if (pageIndex === 0) {
-                                var template;
-                                var data = {};
-                                $.get(templatePath,
-                                    function (templates) {
-                                        template = $(templates).filter('#photoAlbumEmptyTemplate').html();
-                                        var output = Mustache.render(template, data);
-                                        document.getElementById('content').innerHTML = output;
-                                        $.stopSpinning();
-                                    });
-                            }
+                        url: "/api/albums",
+                        data: { pageIndex: pageIndex, pageSize: pageSize },
+                        error: function() {
+                            location.href = "/albums/error";
                         }
-                        $.get(templatePath, function (templates) {
-                            var template = $(templates).filter(templateId).html();
+                    })
+                    .done(function(albums) {
+                        var counterTemplate;
+                        var counterData = {};
+                        counterData.Counter = albums.TotalCount === 0
+                            ? "There are no albums yet"
+                            : "Total albums count: " + albums.TotalCount;
+                        $.get(templatePath,
+                            function(templates) {
+                                counterTemplate = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                                var output = Mustache.render(counterTemplate, counterData);
+                                document.getElementById('counter').innerHTML = output;
+                            });
 
-                            var data = {};
-                            data.albums = albums;
+                        $.get(templatePath,
+                            function(templates) {
+                                var template = $(templates).filter(templateId).html();
 
-                            var output = Mustache.render(template, data);
-                            $("#content").append(output);
-                            $.stopSpinning();
-                        });
+                                var data = {};
+                                data.albums = albums.Items;
+
+                                var output = Mustache.render(template, data);
+                                $("#content").append(output);
+                                $.stopSpinning();
+                            });
                         pageIndex++;
                     });
             }
-        }
+        };
 
         loadAlbumsManage();
 

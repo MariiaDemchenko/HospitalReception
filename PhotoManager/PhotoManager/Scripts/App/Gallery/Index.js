@@ -22,10 +22,20 @@
                     }
                 })
                     .done(function (photos) {
-                        if (photos !== null && photos.length !== 0) {
-                            $.displayPhotoAlbum(templatePath, photos);
+                        if (photos.Items !== null && photos.Items.length !== 0) {
+                            $.displayPhotoAlbum(templatePath, photos.Items);
                             pageIndex++;
                         }
+                        var template;
+                        var data = {};
+                        data.Counter = photos.TotalCount === 0 ? "There are no photos in the gallery" : "Total photos count: " + photos.TotalCount;
+                        $.get(templatePath,
+                            function (templates) {
+                                template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                                var output = Mustache.render(template, data);
+                                document.getElementById('counter').innerHTML = output;
+                                $.stopSpinning();
+                            });
                     });
             }
         };
