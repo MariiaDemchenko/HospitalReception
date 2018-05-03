@@ -59,8 +59,9 @@
                     var photo = { Id: selectedPhotos[i].dataset.photoId };
                     serializedData.Photos.push(photo);
                 }
-
+                var token = $('input[name="__RequestVerificationToken"]').val();
                 $.ajax({
+                    headers: { __RequestVerificationToken: token },
                     url: '/api/albums/',
                     type: "PUT",
                     data: serializedData,

@@ -2,6 +2,7 @@
 @model PhotoManager.DAL.ProjectionModels.AlbumIndexModel
 
 <form id="formAlbumAdd">
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div id="albumAddForm" class="row form-menu">
         <table>

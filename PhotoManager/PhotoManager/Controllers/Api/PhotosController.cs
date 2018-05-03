@@ -77,6 +77,7 @@ namespace PhotoManager.Controllers.Api
 
         [Authorize]
         [HttpPut]
+        [ValidateAntiForgeryToken]
         [Route("")]
         public IHttpActionResult Edit(PhotoEditModel photoViewModel)
         {
@@ -91,6 +92,7 @@ namespace PhotoManager.Controllers.Api
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("")]
         public async Task<IHttpActionResult> Add()
         {

@@ -227,6 +227,7 @@
     <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Filters\ExceptionHandlingAttributeWebApi.cs" />
     <Compile Include="Filters\ExceptionHandlingAttributeMVC.cs" />
+    <Compile Include="Filters\ValidateAntiForgeryTokenAttributecs.cs" />
     <Compile Include="Managers\ApplicationSignInManager.cs" />
     <Compile Include="Managers\ApplicationUserManager.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

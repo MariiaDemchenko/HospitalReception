@@ -6,8 +6,9 @@
                 return false;
             }
             var serializedData = $(this).serialize();
-
+            var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
+                headers: { __RequestVerificationToken: token },
                 url: '/api/photos/',
                 type: "PUT",
                 data: serializedData,

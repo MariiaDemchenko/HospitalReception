@@ -50,8 +50,9 @@
 
                 serializedData.append('Image', file);
                 serializedData.append("ViewModel", $(this).stringifyFormJSON());
-
+                var token = $('input[name="__RequestVerificationToken"]').val();
                 $.ajax({
+                    headers: { __RequestVerificationToken: token },
                     url: '/api/photos/',
                     type: "POST",
                     data: serializedData,

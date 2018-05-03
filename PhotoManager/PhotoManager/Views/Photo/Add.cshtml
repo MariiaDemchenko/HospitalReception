@@ -5,7 +5,7 @@
 </div>
 
 <form id="formAdd" method="post" enctype="multipart/form-data">
-
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div id="content">
         <table>

@@ -63,6 +63,7 @@ namespace PhotoManager.Controllers.Api
 
         [Authorize]
         [HttpPut]
+        [ValidateAntiForgeryToken]
         [Route("")]
         public IHttpActionResult EditAlbum(AlbumIndexModel album)
         {
@@ -73,6 +74,7 @@ namespace PhotoManager.Controllers.Api
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("")]
         public IHttpActionResult AddAlbum(AlbumIndexModel album)
         {
