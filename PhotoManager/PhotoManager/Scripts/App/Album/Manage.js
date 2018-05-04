@@ -4,35 +4,37 @@
         var templateId = "#albumsTemplate";
         var pageSize = 9;
         var pageIndex = 0;
+        var counterTemplate = "/Content/Templates/Shared/Counter.html";
+        var counterId = "#counterTemplate";
 
         $.albumsPage = {
-            setPageIndex: function(newPageIndex) {
+            setPageIndex: function (newPageIndex) {
                 $.hideMenu();
                 pageIndex = newPageIndex;
             },
-            getData: function() {
+            getData: function () {
                 $.ajax({
-                        url: "/api/albums",
-                        data: { pageIndex: pageIndex, pageSize: pageSize },
-                        error: function() {
-                            location.href = "/albums/error";
-                        }
-                    })
-                    .done(function(albums) {
-                        var counterTemplate;
+                    url: "/api/albums",
+                    data: { pageIndex: pageIndex, pageSize: pageSize },
+                    error: function () {
+                        location.href = "/albums/error";
+                    }
+                })
+                    .done(function (albums) {
+                        var template;
                         var counterData = {};
                         counterData.Counter = albums.TotalCount === 0
                             ? "There are no albums yet"
                             : "Total albums count: " + albums.TotalCount;
-                        $.get(templatePath,
-                            function(templates) {
-                                counterTemplate = $(templates).filter('#photoAlbumEmptyTemplate').html();
-                                var output = Mustache.render(counterTemplate, counterData);
-                                document.getElementById('counter').innerHTML = output;
+                        $.get(counterTemplate,
+                            function (templates) {
+                                template = $(templates).filter(counterId).html();
+                                var output = Mustache.render(template, counterData);
+                                document.getElementById("counter").innerHTML = output;
                             });
 
                         $.get(templatePath,
-                            function(templates) {
+                            function (templates) {
                                 var template = $(templates).filter(templateId).html();
 
                                 var data = {};
@@ -57,9 +59,8 @@
         }
 
         $(this).keypress(function (e) {
-            var keycode = e.keyCode || e.charCode || e.which; //for cross browser
-            if (keycode === 13) //keyCode for enter key
-            {
+            var keycode = e.keyCode || e.charCode || e.which;
+            if (keycode === 13) {
                 $(".btn-search").click();
                 return false;
             }

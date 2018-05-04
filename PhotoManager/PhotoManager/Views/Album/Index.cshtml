@@ -8,6 +8,7 @@
     <label id="albumLink"></label>
 </div>
 
+@Html.AntiForgeryToken()
 @Html.Partial("Partial/Search")
 @Html.Partial("Partial/Menu", "photo")
 

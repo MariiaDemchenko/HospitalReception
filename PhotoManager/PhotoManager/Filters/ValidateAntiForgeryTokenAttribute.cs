@@ -13,7 +13,7 @@ namespace PhotoManager.Filters
                 .Request
                 .Headers
                 .GetValues("__RequestVerificationToken")
-                .FirstOrDefault(); ;
+                .FirstOrDefault();
 
             var cookieToken = actionContext
                 .Request

@@ -2,6 +2,8 @@
     $(function () {
         var templatePath = "/Content/Templates/Home/Index.html";
         var templateId = "#albumsTemplate";
+        var counterTemplate = "/Content/Templates/Shared/Counter.html";
+        var counterId = "#counterTemplate";
 
         $.setScroll(getData);
         var pageIndex = 0;
@@ -10,9 +12,8 @@
         getData();
 
         $(this).keypress(function (e) {
-            var keycode = e.keyCode || e.charCode || e.which; //for cross browser
-            if (keycode === 13)    //keyCode for enter key
-            {
+            var keycode = e.keyCode || e.charCode || e.which;
+            if (keycode === 13) {
                 $(".btn-search").click();
                 return false;
             }
@@ -29,12 +30,12 @@
                 .done(function (albums) {
                     var template;
                     var data = {};
-                    data.Counter = albums.TotalCount === 0? "There are no albums yet": "Total albums count: "+albums.TotalCount;
-                    $.get(templatePath,
+                    data.Counter = albums.TotalCount === 0 ? "There are no albums yet" : "Total albums count: " + albums.TotalCount;
+                    $.get(counterTemplate,
                         function (templates) {
-                            template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                            template = $(templates).filter(counterId).html();
                             var output = Mustache.render(template, data);
-                            document.getElementById('counter').innerHTML = output;
+                            document.getElementById("counter").innerHTML = output;
                             $.stopSpinning();
                         });
                     $.get(templatePath,

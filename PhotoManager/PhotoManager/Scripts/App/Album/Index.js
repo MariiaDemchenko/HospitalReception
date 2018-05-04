@@ -6,6 +6,9 @@
         var pageSize = 9;
         var pageIndex = 0;
         var url;
+        var counterTemplate = "/Content/Templates/Shared/Counter.html";
+        var counterId = "#counterTemplate";
+
 
         $.photosPage = {
             setPageIndex: function (newPageIndex) {
@@ -52,11 +55,11 @@
                             var template;
                             var data = {};
                             data.Counter = album.Photos.TotalCount === 0 ? "There are no photos yet" : "Total photos count: " + album.Photos.TotalCount;
-                            $.get(templatePath,
+                            $.get(counterTemplate,
                                 function (templates) {
-                                    template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                                    template = $(templates).filter(counterId).html();
                                     var output = Mustache.render(template, data);
-                                    document.getElementById('counter').innerHTML = output;
+                                    document.getElementById("counter").innerHTML = output;
                                     $.stopSpinning();
                                 });
 
@@ -82,9 +85,8 @@
         };
 
         $(this).keypress(function (e) {
-            var keycode = e.keyCode || e.charCode || e.which; //for cross browser
-            if (keycode === 13)    //keyCode for enter key
-            {
+            var keycode = e.keyCode || e.charCode || e.which;
+            if (keycode === 13) {
                 $(".btn-search").click();
                 return false;
             }

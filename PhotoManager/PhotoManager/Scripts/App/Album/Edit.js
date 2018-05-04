@@ -1,6 +1,8 @@
 (function ($) {
     $(function () {
         var templatePath = "/Content/Templates/Album/Edit.html";
+        var counterTemplate = "/Content/Templates/Shared/Counter.html";
+        var counterId = "#counterTemplate";
 
         $.editAlbum = function (id) {
             $.setScroll(getData);
@@ -27,9 +29,9 @@
                         var template;
                         var data = {};
                         data.Counter = album.Photos.TotalCount === 0 ? "There are no photos available to add" : "Photos available: " + album.Photos.TotalCount;
-                        $.get(templatePath,
+                        $.get(counterTemplate,
                             function (templates) {
-                                template = $(templates).filter("#photoAlbumEmptyTemplate").html();
+                                template = $(templates).filter(counterId).html();
                                 var output = Mustache.render(template, data);
                                 document.getElementById("counter").innerHTML = output;
                                 $.stopSpinning();
@@ -62,7 +64,7 @@
                 var token = $('input[name="__RequestVerificationToken"]').val();
                 $.ajax({
                     headers: { __RequestVerificationToken: token },
-                    url: '/api/albums/',
+                    url: "/api/albums/",
                     type: "PUT",
                     data: serializedData,
                     error: function () {

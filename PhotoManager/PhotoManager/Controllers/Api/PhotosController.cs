@@ -163,6 +163,7 @@ namespace PhotoManager.Controllers.Api
 
         [Authorize]
         [HttpDelete]
+        [ValidateAntiForgeryToken]
         [Route("album")]
         public IHttpActionResult Delete(int[] id)
         {
@@ -174,6 +175,7 @@ namespace PhotoManager.Controllers.Api
 
         [Authorize]
         [HttpDelete]
+        [ValidateAntiForgeryToken]
         [Route("album/{albumId}")]
         public IHttpActionResult Delete(int? albumId, int[] id)
         {

@@ -9,7 +9,7 @@
             var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
                 headers: { __RequestVerificationToken: token },
-                url: '/api/photos/',
+                url: "/api/photos/",
                 type: "PUT",
                 data: serializedData,
                 error: function () {

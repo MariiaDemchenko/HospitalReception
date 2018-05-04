@@ -5,15 +5,15 @@
         <div id="menu" class="form-menu" data-item="@Model">
             <button class="btn btn-success btn-menu btn-add">ADD</button>
             <button class="btn btn-warning btn-menu btn-edit">EDIT</button>
-            <button class="btn btn-danger btn-menu btn-remove-confirm" data-toggle="modal" data-target="#exampleModal">REMOVE</button>
+            <button class="btn btn-danger btn-menu btn-remove-confirm" data-toggle="modal" data-target="#photosDeleteModal">REMOVE</button>
             <button class="btn btn-menu btn-manage-albums">MANAGE ALBUMS</button>
         </div>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="photosDeleteModal" tabindex="-1" role="dialog" aria-labelledby="photosDeleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Remove photos</h5>
+                        <h5 class="modal-title" id="photosDeleteModalLabel">Remove photos</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -21,7 +21,7 @@
                     <div class="modal-body">Are you sure to remove selected photos?</div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-remove">Save changes</button>
+                        <button type="button" class="btn btn-remove">Remove selected</button>
                     </div>
                 </div>
             </div>

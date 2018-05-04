@@ -1,6 +1,8 @@
 (function ($) {
     $(function () {
         var templatePath = "/Content/Templates/Album/Edit.html";
+        var counterTemplate = "/Content/Templates/Shared/Counter.html";
+        var counterId = "#counterTemplate";
 
         addAlbum();
 
@@ -29,11 +31,10 @@
                         var template;
                         var data = {};
                         data.Counter = photos.TotalCount === 0 ? "There are no photos available to add" : "Photos available: " + photos.TotalCount;
-                        $.get(templatePath,
-                            function (templates) {
-                                template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                        $.get(counterTemplate, function (templates) {
+                            template = $(templates).filter(counterId).html();
                                 var output = Mustache.render(template, data);
-                                document.getElementById('counter').innerHTML = output;
+                                document.getElementById("counter").innerHTML = output;
                                 $.stopSpinning();
                             });
                         if (photos.Items.length !== 0) {
@@ -43,7 +44,7 @@
                     });
             }
 
-            $('#freePaymentAlbums').on('hidden.bs.modal',
+            $("#freePaymentAlbums").on("hidden.bs.modal",
                 function () {
                     location.href = "/albums/manage";
                 });
@@ -63,7 +64,7 @@
                 var token = $('input[name="__RequestVerificationToken"]').val();
                 $.ajax({
                     headers: { __RequestVerificationToken: token },
-                    url: '/api/albums/',
+                    url: "/api/albums/",
                     type: "POST",
                     data: serializedData,
                     error: function () {
@@ -78,14 +79,14 @@
                             }
                         }).done(function (settings) {
                             if (!settings.CanAddAlbums) {
-                                $('#freePaymentAlbums').modal('show');
+                                $("#freePaymentAlbums").modal("show");
                             } else {
                                 location.href = "/albums/manage";
                             }
                         });
                     }
                     else {
-                        $('#addAlbumUniqueModal').modal('show');
+                        $("#addAlbumUniqueModal").modal("show");
                     }
                 });
             });

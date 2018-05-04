@@ -1,8 +1,9 @@
 (function ($) {
     $(function () {
         var templatePathLoadPhotos = "/Content/Templates/Gallery/Index.html";
-        var photoAlbumEmptyTemplateId = "#photoAlbumEmptyTemplate";
         advancedSearchPhotos();
+        var counterTemplate = "/Content/Templates/Shared/Counter.html";
+        var counterId = "#counterTemplate";
 
         function advancedSearchPhotos() {
 
@@ -18,7 +19,7 @@
                 var pageViewModel = { pageIndex: pageIndex, pageSize: pageSize };
 
                 $.ajax({
-                    url: '/api/photos/advancedSearch',
+                    url: "/api/photos/advancedSearch",
                     data: { photoViewModel: serializedData, scrollViewModel: pageViewModel },
                     error: function () {
                         location.href = "/gallery/error/index";
@@ -31,9 +32,9 @@
                         pageIndex++;
                     }
                     data.Counter = photos.TotalCount === 0 ? "There are no photos matching the given parameters" : "Advanced search result: " + photos.TotalCount + " photos were found";
-                    $.get(templatePathLoadPhotos,
+                    $.get(counterTemplate,
                         function (templates) {
-                            template = $(templates).filter(photoAlbumEmptyTemplateId).html();
+                            template = $(templates).filter(counterId).html();
                             var output = Mustache.render(template, data);
                             document.getElementById("counter").innerHTML = output;
                             $.stopSpinning();

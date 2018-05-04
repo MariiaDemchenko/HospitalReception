@@ -1,6 +1,8 @@
 (function ($) {
     $(function () {
         var templatePath = "/Content/Templates/Gallery/Index.html";
+        var counterTemplate = "/Content/Templates/Shared/Counter.html";
+        var counterId = "#counterTemplate";
 
         $.searchPhotos = function (searchKey) {
             var currentUrl = getUri(searchKey);
@@ -43,11 +45,11 @@
                         var template;
                         var data = {};
                         data.Counter = photos.TotalCount === 0 ? "There are no photos matching the given keyword" : "Search result: " + photos.TotalCount + " photos were found";
-                        $.get(templatePath,
+                        $.get(counterTemplate,
                             function (templates) {
-                                template = $(templates).filter('#photoAlbumEmptyTemplate').html();
+                                template = $(templates).filter(counterId).html();
                                 var output = Mustache.render(template, data);
-                                document.getElementById('counter').innerHTML = output;
+                                document.getElementById("counter").innerHTML = output;
                                 $.stopSpinning();
                             });
                     });
@@ -70,9 +72,8 @@
                 });
 
             $(this).keypress(function (e) {
-                var keycode = e.keyCode || e.charCode || e.which; //for cross browser
-                if (keycode === 13) //keyCode for enter key
-                {
+                var keycode = e.keyCode || e.charCode || e.which;
+                if (keycode === 13) {
                     $(".btn-search-gallery").click();
                     return false;
                 }

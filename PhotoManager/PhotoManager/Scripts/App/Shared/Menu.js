@@ -125,7 +125,9 @@
                 photosId.push(selectedPhotos[i].dataset.photoId);
             }
 
+            var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
+                headers: { __RequestVerificationToken: token },
                 url: '/api/photos/album/' + albumId,
                 contentType: "application/json",
                 data: JSON.stringify(photosId),
@@ -139,9 +141,12 @@
                     $("#content").empty();
                     $.photosPage.setPageIndex(0);
                     $.photosPage.getData();
+                    var selectedCount = document.getElementsByClassName("selected").length;
+                    $(".btn-edit").attr("disabled", selectedCount !== 1);
+                    $(".btn-remove-confirm").attr("disabled", selectedCount < 1);
                 });
 
-            $('#exampleModal').modal('hide');
+            $('#photosDeleteModal').modal('hide');
         }
 
         function deleteAlbums() {
@@ -151,8 +156,9 @@
             for (var i = 0; i < selectedAlbums.length; i++) {
                 albumsId.push(selectedAlbums[i].dataset.albumId);
             }
-
+            var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
+                headers: { __RequestVerificationToken: token },
                 url: '/api/albums',
                 contentType: "application/json",
                 data: JSON.stringify(albumsId),
@@ -165,9 +171,12 @@
                     $("#content").empty();
                     $.albumsPage.setPageIndex(0);
                     $.albumsPage.getData();
+                    var selectedCount = document.getElementsByClassName("selected").length;
+                    $(".btn-edit").attr("disabled", selectedCount !== 1);
+                    $(".btn-remove-confirm").attr("disabled", selectedCount < 1);
                 });
 
-            $('#exampleModal').modal('hide');
+            $('#albumsDeleteModal').modal('hide');
         }
     });
 })(jQuery);
