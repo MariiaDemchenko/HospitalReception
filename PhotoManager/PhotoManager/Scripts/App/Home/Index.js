@@ -24,7 +24,8 @@
                 url: "/api/albums",
                 data: { pageIndex: pageIndex, pageSize: pageSize },
                 error: function () {
-                    location.href = "/home/index/error";
+                    bootbox.alert("Error getting albums");
+                    $.stopSpinning();
                 }
             })
                 .done(function (albums) {

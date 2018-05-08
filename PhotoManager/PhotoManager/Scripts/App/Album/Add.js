@@ -24,7 +24,7 @@
                         pageSize: pageSize
                     },
                     error: function () {
-                        location.href = "/photos/error";
+                        bootbox.alert("Error getting photos");
                     }
                 })
                     .done(function (photos) {
@@ -33,10 +33,10 @@
                         data.Counter = photos.TotalCount === 0 ? "There are no photos available to add" : "Photos available: " + photos.TotalCount;
                         $.get(counterTemplate, function (templates) {
                             template = $(templates).filter(counterId).html();
-                                var output = Mustache.render(template, data);
-                                document.getElementById("counter").innerHTML = output;
-                                $.stopSpinning();
-                            });
+                            var output = Mustache.render(template, data);
+                            document.getElementById("counter").innerHTML = output;
+                            $.stopSpinning();
+                        });
                         if (photos.Items.length !== 0) {
                             $.displayPhotoAlbum(templatePath, photos.Items);
                             pageIndex++;
@@ -49,17 +49,18 @@
                     location.href = "/albums/manage";
                 });
 
-            $("#formAlbumAdd").submit(function (e) {
+            $("#formAlbumEdit").submit(function (e) {
                 e.preventDefault();
                 if (!$(this).valid()) {
                     return false;
                 }
                 var serializedData = $(this).serializeFormJSON();
                 var selectedPhotos = document.getElementsByClassName("selected");
-                serializedData.Photos = [];
+                serializedData.Photos = {};
+                serializedData.Photos.Items = [];
                 for (var i = 0; i < selectedPhotos.length; i++) {
                     var photo = { Id: selectedPhotos[i].dataset.photoId };
-                    serializedData.Photos.push(photo);
+                    serializedData.Photos.Items.push(photo);
                 }
                 var token = $('input[name="__RequestVerificationToken"]').val();
                 $.ajax({
@@ -68,14 +69,14 @@
                     type: "POST",
                     data: serializedData,
                     error: function () {
-                        location.href = "/albums/error/add";
+                        bootbox.alert("Error adding album");
                     }
                 }).done(function (result) {
                     if (result) {
                         $.ajax({
                             url: "/api/users/settings",
                             error: function () {
-                                location.href = "/users/error";
+                                bootbox.alert("Error getting user access parameters");
                             }
                         }).done(function (settings) {
                             if (!settings.CanAddAlbums) {

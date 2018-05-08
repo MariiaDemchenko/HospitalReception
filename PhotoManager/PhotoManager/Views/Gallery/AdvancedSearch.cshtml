@@ -5,55 +5,86 @@
 </div>
 
 <form id="formAdvancedSearch">
-    <div class="row form-menu">
-        <table class="col-5">
-            <tr>
-                <td>@Html.DisplayNameFor(m => m.Name)</td>
-                <td>@Html.TextEditorFor(m => m.Name)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(m => m.Place)</td>
-                <td>@Html.TextEditorFor(m => m.Place)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(m => m.CameraModel)</td>
-                <td>@Html.TextEditorFor(m => m.CameraModel)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(m => m.Diaphragm)</td>
-                <td>@Html.CustomEnumDropDownListFor(model => model.Diaphragm, true)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(m => m.ShutterSpeed)</td>
-                <td>@Html.CustomEnumDropDownListFor(model => model.ShutterSpeed, true)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(m => m.Flash)</td>
-                <td>@Html.CustomEnumDropDownListFor(model => model.Flash, true)</td>
-            </tr>
-            <tr>
-                <td>
-                    <button class="btn btn-block btn-menu">SEARCH</button>
-                </td>
-            </tr>
-        </table>
-        <table class="col-6">
-            <tr>
-                <td>@Html.DisplayNameFor(m => m.CreationDateBegin)</td>
-                <td>From: @Html.DateEditorFor(m => m.CreationDateBegin)</td>
-                <td>To: @Html.DateEditorFor(m => m.CreationDateEnd)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(m => m.LensFocalLengthBegin)</td>
-                <td>From: @Html.NumberEditorFor(m => m.LensFocalLengthBegin)</td>
-                <td>To: @Html.NumberEditorFor(m => m.LensFocalLengthEnd)</td>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(m => m.IsoBegin)</td>
-                <td>From: @Html.NumberEditorFor(m => m.IsoBegin)</td>
-                <td>To: @Html.NumberEditorFor(m => m.IsoEnd)</td>
-            </tr>
-        </table>
+    <div class="row">
+        <div class="col-5">
+            <div class="row input-item">
+                <div class="col-4">@Html.DisplayNameFor(m => m.Name)</div>
+                <div class="col-5">@Html.TextEditorFor(m => m.Name)</div>
+            </div>
+            <div class="row input-item">
+                <div class="col-4">@Html.DisplayNameFor(m => m.Place)</div>
+                <div class="col-5">@Html.TextEditorFor(m => m.Place)</div>
+            </div>
+            <div class="row input-item">
+                <div class="col-4">@Html.DisplayNameFor(m => m.CameraModel)</div>
+                <div class="col-5">@Html.TextEditorFor(m => m.CameraModel)</div>
+            </div>
+            <div class="row input-item">
+                <div class="col-4">@Html.DisplayNameFor(m => m.Diaphragm)</div>
+                <div class="col-5">@Html.CustomEnumDropDownListFor(model => model.Diaphragm, true)</div>
+            </div>
+            <div class="row input-item">
+                <div class="col-4">@Html.DisplayNameFor(m => m.ShutterSpeed)</div>
+                <div class="col-5">@Html.CustomEnumDropDownListFor(model => model.ShutterSpeed, true)</div>
+            </div>
+            <div class="row input-item">
+                <div class="col-4">@Html.DisplayNameFor(m => m.Flash)</div>
+                <div class="col-5">@Html.CustomEnumDropDownListFor(model => model.Flash, true)</div>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="row input-item">
+                <div class="col-3">@Html.DisplayNameFor(m => m.CreationDateBegin)</div>
+                <div class="col-7">
+                    <div class="input-daterange input-group" id="datepicker">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">from</span>
+                        </div>
+                        <input type="text" class="form-control" id="startDate" name="CreationDateBegin" />
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">to</span>
+                        </div>
+                        <input type="text" class="form-control" id="endDate" name="CreationDateEnd" />
+                    </div>
+                </div>
+            </div>
+            <div class="row input-item">
+                <div class="col-3">@Html.DisplayNameFor(m => m.LensFocalLengthBegin)</div>
+                <div class="col-7">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">from</span>
+                        </div>
+                        @Html.NumberEditorFor(m => m.LensFocalLengthBegin)
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">to</span>
+                        </div>
+                        @Html.NumberEditorFor(m => m.LensFocalLengthEnd)
+                    </div>
+                </div>
+            </div>
+            <div class="row input-item">
+                <div class="col-3">@Html.DisplayNameFor(m => m.IsoBegin)</div>
+                <div class="col-7">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">from</span>
+                        </div>
+                        @Html.NumberEditorFor(m => m.IsoBegin)
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">to</span>
+                        </div>
+                        @Html.NumberEditorFor(m => m.IsoEnd)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-item">
+        <div>
+            <button class="btn btn-advanced-search-gallery">SEARCH</button>
+        </div>
     </div>
     <div id="counter"></div>
     <div id="content" class="row"></div>
@@ -62,4 +93,20 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/Gallery/AdvancedSearch")
+    @Scripts.Render("~/bundles/bootstrap-datepicker-scripts")
+    @Styles.Render("~/bundles/bootstrap-datepicker")
+    <script>
+
+        $(function () {
+            $('.input-daterange').each(function () {
+                $(this).datepicker({
+                    format: "dd/mm/yyyy",
+                    clearBtn: true
+                });
+            });
+            $('.input-daterange').datepicker({
+            });
+        })
+    </script>
 }
+

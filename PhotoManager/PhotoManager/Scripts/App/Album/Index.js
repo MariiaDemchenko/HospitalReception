@@ -8,7 +8,7 @@
         var url;
         var counterTemplate = "/Content/Templates/Shared/Counter.html";
         var counterId = "#counterTemplate";
-
+        var dataLoading;
 
         $.photosPage = {
             setPageIndex: function (newPageIndex) {
@@ -16,6 +16,10 @@
                 pageIndex = newPageIndex;
             },
             getData: function () {
+                if (dataLoading) {
+                    return;
+                }
+                dataLoading = true;
 
                 $.ajax({
                     url: url,
@@ -24,26 +28,32 @@
                         pageSize: pageSize
                     },
                     error: function () {
-                        location.href = "/albums/error";
+                        bootbox.alert("error getting album");
+                        $.stopSpinning();
                     }
                 })
                     .done(function (album) {
                         $.ajax({
                             url: "/api/users",
                             error: function () {
-                                location.href = "/users/error";
+                                bootbox.alert("Error getting user access parameters");
+                                $.stopSpinning();
                             }
                         }).done(function (userId) {
                             if (album.Photos.Items.length !== 0) {
                                 if (!userId || album.OwnerId === userId) {
                                     $.each(album.Photos.Items,
                                         function (index, value) {
+                                            value.ShootDate = value.CreationDate === null ? "" :
+                                                moment(value.CreationDate).format("DD/MM/YYYY");
                                             value.Liked = "disabled";
                                             value.Disliked = "disabled";
                                         });
                                 } else {
                                     $.each(album.Photos.Items,
                                         function (index, value) {
+                                            value.ShootDate = value.CreationDate === null ? "" :
+                                                moment(value.CreationDate).format("DD/MM/YYYY");
                                             var className = value.Liked === true ? "liked" : "";
                                             value.Liked = className;
                                             className = value.Disliked === true ? "disliked" : "";
@@ -72,6 +82,7 @@
                                     document.getElementById(contentId).innerHTML = output;
                                 });
                         });
+                        dataLoading = false;
                     });
             }
         };

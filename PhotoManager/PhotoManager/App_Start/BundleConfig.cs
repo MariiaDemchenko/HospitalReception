@@ -74,11 +74,20 @@ namespace PhotoManager
                 "~/Scripts/App/Photo/Index.js"
             ));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-datepicker-scripts").Include(
+                "~/Scripts/bootstrap-datepicker.min.js"
+            ));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/PhotoManager.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/bootstrap-datepicker")
+                .IncludeDirectory("~/Content/bootstrap-datepicker", "*.css", true));
+            bundles.Add(new StyleBundle("~/bundles/bootbox").Include(
+                "~/Scripts/bootbox.min.js"));
         }
     }
 }

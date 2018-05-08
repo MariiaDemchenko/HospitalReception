@@ -7,6 +7,6 @@ namespace PhotoManager.DAL.ProjectionModels
     {
         public string Description { get; set; }
         public string OwnerId { get; set; }
-        public IEnumerable<PhotoThumbnailModel> Photos { get; set; }
+        public CollectionModel<PhotoThumbnailModel> Photos { get; set; }
     }
 }

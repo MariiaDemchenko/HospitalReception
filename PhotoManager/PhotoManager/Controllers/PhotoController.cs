@@ -1,93 +1,108 @@
-﻿using PhotoManager.DAL.ProjectionModels;
+﻿using PhotoManager.Common;
+using PhotoManager.DAL.Contracts;
+using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.Filters;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
-using System.Web.Http;
 using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
 {
-    [System.Web.Mvc.RoutePrefix("photos")]
+    [RoutePrefix("photos")]
     [ExceptionHandlingAttributeMvc(Message = "Error processing photos")]
     public class PhotoController : Controller
     {
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("{id}")]
-        public ActionResult Index(int id)
+        private readonly IUnitOfWork _unitOfWork;
+        public PhotoController(IUnitOfWork unitOfWork)
         {
-            return View(new PhotoDisplayViewModel { Id = id, Size = (int)Common.Constants.ImageSize.Original });
+            _unitOfWork = unitOfWork;
         }
 
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("properties/{id}")]
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult Index(int id)
+        {
+            return View(new PhotoDisplayViewModel { Id = id, Size = (int)Constants.ImageSize.Original });
+        }
+
+        [HttpGet]
+        [Route("properties/{id}")]
         public ActionResult Properties(int id)
         {
-            var x = new PhotoDisplayViewModel { Id = id, Size = (int)Common.Constants.ImageSize.Original };
+            var x = new PhotoDisplayViewModel { Id = id, Size = (int)Constants.ImageSize.Original };
 
             return View(x);
         }
 
-        [System.Web.Mvc.Authorize]
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("edit/photo")]
-        public ActionResult Edit([FromUri]PhotoEditModel photo)
+        [Authorize]
+        [HttpGet]
+        [Route("{id}/album/{albumId?}")]
+        public ActionResult Edit(int? albumId, int id = 0)
         {
+            PhotoAddModel photo;
+            if (albumId == null)
+            {
+                photo = id == 0
+                   ? new PhotoAddModel()
+                   : _unitOfWork.Photos.GetPhotoById(id, Constants.ImageSize.Medium);
+            }
+            else
+            {
+                photo = id == 0
+                    ? new PhotoAddModel
+                    {
+                        AlbumId = (int)albumId
+                    }
+                    : _unitOfWork.Photos.GetPhotoById(id, Constants.ImageSize.Medium, (int)albumId);
+            }
+
             return View(photo);
         }
 
-        [System.Web.Mvc.Authorize]
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("add")]
+        [Authorize]
+        [HttpGet]
+        [Route("add")]
         public ActionResult Add()
         {
-            var model = new PhotoAddModel
-            {
-                ImageUrl = "/api/image/"
-            };
-            return View(model);
+            return RedirectToAction("Edit", new {id = 0});
         }
 
-        [System.Web.Mvc.Authorize]
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("add/{id}")]
-        public ActionResult Add(int id)
+        [Authorize]
+        [HttpGet]
+        [Route("add/{id?}")]
+        public ActionResult Add(int? id)
         {
-            var model = new PhotoAddModel
-            {
-                AlbumId = id,
-                ImageUrl = "/api/image/"
-            };
-            return View(model);
+            return RedirectToAction("Edit", new { albumId = id, id = 0 });
         }
 
-        [System.Web.Mvc.HttpGet]
+        [HttpGet]
         public ActionResult Error()
         {
             return View();
         }
 
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("error")]
+        [HttpGet]
+        [Route("error")]
         public ActionResult ErrorIndex()
         {
             TempData["ErrorMessage"] = "Error getting photo";
             return RedirectToAction("Error");
         }
 
-        [System.Web.Mvc.Route("error/edit")]
+        [Route("error/edit")]
         public ActionResult ErrorEdit()
         {
             TempData["ErrorMessage"] = "Error editing photo";
             return RedirectToAction("Error");
         }
 
-        [System.Web.Mvc.Route("error/add")]
+        [Route("error/add")]
         public ActionResult ErrorAdd()
         {
             TempData["ErrorMessage"] = "Error adding photo";
             return RedirectToAction("Error");
         }
 
-        [System.Web.Mvc.Route("error/delete")]
+        [Route("error/delete")]
         public ActionResult ErrorDelete()
         {
             TempData["ErrorMessage"] = "Error deleting photo";

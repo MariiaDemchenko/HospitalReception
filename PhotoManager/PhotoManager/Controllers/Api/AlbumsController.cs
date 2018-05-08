@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNet.Identity;
-using PhotoManager.Common;
 using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.Filters;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
 using System.Web.Http;
+using Constants = PhotoManager.Common.Constants;
 
 namespace PhotoManager.Controllers.Api
 {
@@ -23,9 +23,8 @@ namespace PhotoManager.Controllers.Api
         [Route("")]
         public IHttpActionResult GetAllAlbums([FromUri]ScrollViewModel scrollViewModel)
         {
-            var albums = _unitOfWork.Albums.GetAllAlbums();
-
-            return Ok(Extensions.GetCollection(albums, scrollViewModel.PageIndex, scrollViewModel.PageSize));
+            var albums = _unitOfWork.Albums.GetAllAlbums(scrollViewModel.PageIndex, scrollViewModel.PageSize);
+            return Ok(albums);
         }
 
         [HttpGet]
@@ -33,32 +32,18 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult GetAlbumByModel([FromUri] AlbumSearchModel model,
             [FromUri] ScrollViewModel scrollViewModel)
         {
-            var album = _unitOfWork.Albums.GetAlbumByModel(model, User.Identity.GetUserId());
+            var album = _unitOfWork.Albums.GetAlbumByModel(model, scrollViewModel.PageIndex, scrollViewModel.PageSize, User.Identity.GetUserId());
 
-            return Ok(new PhotoAlbumViewModel
-            {
-                Id = album.Id,
-                Name = album.Name,
-                Description = album.Description,
-                OwnerId = album.OwnerId,
-                Photos = Extensions.GetCollection(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize)
-            });
+            return Ok(album);
         }
 
         [HttpGet]
         [Route("{id}")]
         public IHttpActionResult GetAlbumById(int? id, [FromUri]ScrollViewModel scrollViewModel)
         {
-            var album = _unitOfWork.Albums.GetAlbumById(id, User.Identity.GetUserId());
+            var album = _unitOfWork.Albums.GetAlbumById(id, scrollViewModel.PageIndex, scrollViewModel.PageSize, User.Identity.GetUserId());
 
-            return Ok(new PhotoAlbumViewModel
-            {
-                Id = album.Id,
-                Name = album.Name,
-                Description = album.Description,
-                OwnerId = album.OwnerId,
-                Photos = Extensions.GetCollection(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize)
-            });
+            return Ok(album);
         }
 
         [Authorize]
@@ -78,6 +63,21 @@ namespace PhotoManager.Controllers.Api
         [Route("")]
         public IHttpActionResult AddAlbum(AlbumIndexModel album)
         {
+            var id = User.Identity.GetUserId();
+
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest("User was not authorized");
+            }
+
+            var user = _unitOfWork.Users.GetUserById(User.Identity.GetUserId());
+            var canAddAlbums = user.IsPayed && _unitOfWork.Albums.GetUserAlbumsCount(id) < int.MaxValue ||
+                               _unitOfWork.Albums.GetUserAlbumsCount(id) < Constants.FreeAlbumsCount;
+
+            if (!canAddAlbums)
+            {
+                return BadRequest("User can not add photos due to payment restriction");
+            }
             if (string.IsNullOrEmpty(album.Name))
             {
                 return BadRequest();
@@ -114,15 +114,8 @@ namespace PhotoManager.Controllers.Api
         [Route("edit/{id}")]
         public IHttpActionResult EditAlbumPhotos(int id, [FromUri]ScrollViewModel scrollViewModel)
         {
-            var album = _unitOfWork.Albums.GetAlbumById(id, User.Identity.GetUserId(), true);
-            return Ok(new PhotoAlbumViewModel
-            {
-                Id = album.Id,
-                Name = album.Name,
-                Description = album.Description,
-                OwnerId = album.OwnerId,
-                Photos = Extensions.GetCollection(album.Photos, scrollViewModel.PageIndex, scrollViewModel.PageSize)
-            });
+            var album = _unitOfWork.Albums.GetAlbumById(id, scrollViewModel.PageIndex, scrollViewModel.PageSize, User.Identity.GetUserId(), true);
+            return Ok(album);
         }
     }
 }

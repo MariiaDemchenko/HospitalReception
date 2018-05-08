@@ -19,31 +19,31 @@ namespace PhotoManager.DAL.Repository
             _context = context;
         }
 
-        public PhotoEditModel GetPhotoById(int id, Constants.ImageSize size, int albumId = 0)
+        public PhotoAddModel GetPhotoById(int id, Constants.ImageSize size, int albumId = 0)
         {
-            var photos = _context.Photos.Select(p =>
-                new
+            var photo = _context.Photos.Select(p =>
+                new PhotoAddModel
                 {
-                    p.CameraSettingsId,
+                    CameraSettingsId = p.CameraSettingsId,
                     AlbumId = albumId,
-                    p.Id,
-                    p.Name,
-                    p.CreationDate,
-                    p.Place,
-                    p.CameraSettings.CameraModel,
-                    p.CameraSettings.LensFocalLength,
-                    p.CameraSettings.Diaphragm,
-                    p.CameraSettings.ShutterSpeed,
-                    p.CameraSettings.Iso,
-                    p.CameraSettings.Flash,
-                    ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == size).Id,
+                    Id = p.Id,
+                    Name = p.Name,
+                    CreationDate = p.CreationDate,
+                    Place = p.Place,
+                    CameraModel = p.CameraSettings.CameraModel,
+                    LensFocalLength = p.CameraSettings.LensFocalLength,
+                    Diaphragm = p.CameraSettings.Diaphragm,
+                    ShutterSpeed = p.CameraSettings.ShutterSpeed,
+                    Iso = p.CameraSettings.Iso,
+                    Flash = p.CameraSettings.Flash,
+                    ImageId = p.Images.FirstOrDefault(i => i.Size == size).Id,
                     Selected = false,
                     Likes = p.Likes.Count(l => l.IsPositive),
                     Liked = false,
                     Dislikes = p.Likes.Count(l => !l.IsPositive),
                     Disliked = false
-                }).ToList();
-            return photos.Select(Mapper.Map<PhotoEditModel>).FirstOrDefault(p => p.Id == id);
+                }).FirstOrDefault(p => p.Id == id);
+            return photo;
         }
 
         public PhotoThumbnailModel GetPhotoById(int id, int albumId = 0)
@@ -51,23 +51,28 @@ namespace PhotoManager.DAL.Repository
             return GetPhotoById(id, Constants.ImageSize.Thumbnail, albumId);
         }
 
-        public IEnumerable<PhotoThumbnailModel> GetAllPhotos()
+        public CollectionModel<PhotoThumbnailModel> GetAllPhotos(int pageIndex, int pageSize)
         {
-            var photos = _context.Photos.Select(p =>
-                new
-                {
-                    p.Id,
-                    p.Name,
-                    p.CreationDate,
-                    ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
-                    Selected = false,
-                    Likes = p.Likes.Count(l => l.IsPositive),
-                    Liked = false,
-                    Dislikes = p.Likes.Count(l => !l.IsPositive),
-                    Disliked = false
-                }).ToList();
+            var skipCount = pageIndex * pageSize;
+            var photos = new CollectionModel<PhotoThumbnailModel>
+            {
+                Items = _context.Photos.OrderBy(p => p.Id).Skip(skipCount).Take(pageSize).Select(p =>
+                    new PhotoThumbnailModel
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        CreationDate = p.CreationDate,
+                        ImageId = p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                        Selected = false,
+                        Likes = p.Likes.Count(l => l.IsPositive),
+                        Liked = false,
+                        Dislikes = p.Likes.Count(l => !l.IsPositive),
+                        Disliked = false
+                    }).ToList(),
+                TotalCount = _context.Photos.Count()
+            };
 
-            return photos.Select(Mapper.Map<PhotoThumbnailModel>).ToList();
+            return photos;
         }
 
         public int GetUserPhotosCount(string userId)
@@ -87,65 +92,130 @@ namespace PhotoManager.DAL.Repository
             _context.Entry(photoToEdit).State = EntityState.Modified;
         }
 
-        public IEnumerable<PhotoThumbnailModel> GetPhotosByKeyWord(string keyWord)
+        public CollectionModel<PhotoThumbnailModel> GetPhotosByKeyWord(string keyWord, int pageIndex, int pageSize)
         {
             var param = new SqlParameter("@keyword", keyWord);
             var photosId = _context.Database.SqlQuery<int>("EXEC dbo.Search @keyword", param).ToList();
-
-            var photos = _context.Photos.Select(p =>
-                new
-                {
-                    p.Id,
-                    p.Name,
-                    p.CreationDate,
-                    ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
-                    Selected = false,
-                    Likes = p.Likes.Count(l => l.IsPositive),
-                    Liked = false,
-                    Dislikes = p.Likes.Count(l => !l.IsPositive),
-                    Disliked = false,
-                }).ToList();
-
-            return photos.Select(Mapper.Map<PhotoThumbnailModel>).Where(p => photosId.Contains(p.Id)).ToList();
+            return new CollectionModel<PhotoThumbnailModel>
+            {
+                Items = _context.Photos.Where(p => photosId.Contains(p.Id)).OrderBy(p => p.Id)
+                    .Skip(pageIndex * pageSize).Take(pageSize).Select(p =>
+                        new PhotoThumbnailModel
+                        {
+                            Id = p.Id,
+                            Name = p.Name,
+                            CreationDate = p.CreationDate,
+                            ImageId = p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                            Selected = false,
+                            Likes = p.Likes.Count(l => l.IsPositive),
+                            Liked = false,
+                            Dislikes = p.Likes.Count(l => !l.IsPositive),
+                            Disliked = false,
+                        }).ToList(),
+                TotalCount = photosId.Count
+            };
         }
 
-        public IEnumerable<PhotoThumbnailModel> GetPhotosBySearchModel(SearchModel photo)
+        public CollectionModel<PhotoThumbnailModel> GetPhotosBySearchModel(SearchModel photo, int pageIndex, int pageSize)
         {
-            var photoModels = _context.Photos.Select(p =>
-                new
+            IQueryable<Photo> query = _context.Photos;
+            if (!string.IsNullOrEmpty(photo.Name))
+            {
+                query = query.Where(p => p.Name.Contains(photo.Name));
+            }
+
+            if (!string.IsNullOrEmpty(photo.Place))
+            {
+                query = query.Where(p => p.Name.Contains(photo.Place));
+            }
+
+            if (!string.IsNullOrEmpty(photo.CameraModel))
+            {
+                query = query.Where(p => p.Name.Contains(photo.CameraModel));
+            }
+
+            if (photo.ShutterSpeed != 0)
+            {
+                query = query.Where(p => p.CameraSettings.ShutterSpeed == photo.ShutterSpeed);
+            }
+
+            if (photo.Diaphragm != 0)
+            {
+                query = query.Where(p => p.CameraSettings.Diaphragm == photo.Diaphragm);
+            }
+
+            if (photo.Flash != 0)
+            {
+                query = query.Where(p => p.CameraSettings.Flash == photo.Flash);
+            }
+
+            if (!(photo.CreationDateBegin == null && photo.CreationDateEnd == null))
+            {
+                if (photo.CreationDateBegin == null)
                 {
-                    p.Id,
-                    p.Name,
-                    p.Place,
-                    p.CreationDate,
-                    p.CameraSettings,
-                    ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
-                    Selected = false,
-                    Likes = p.Likes.Count(l => l.IsPositive),
-                    Liked = false,
-                    Dislikes = p.Likes.Count(l => !l.IsPositive),
-                    Disliked = false
-                }).Where(p =>
-                (string.IsNullOrEmpty(photo.Name) || p.Name.Contains(photo.Name)) &&
-                ((photo.CreationDateBegin == null && photo.CreationDateEnd == null) ||
-                 (photo.CreationDateBegin == null && p.CreationDate <= photo.CreationDateEnd) ||
-                 (photo.CreationDateEnd == null && p.CreationDate >= photo.CreationDateBegin) ||
-                 p.CreationDate >= photo.CreationDateBegin && p.CreationDate <= photo.CreationDateEnd) &&
-                (string.IsNullOrEmpty(photo.Place) || p.Place.Contains(photo.Place)) &&
-                (string.IsNullOrEmpty(photo.CameraModel) || p.CameraSettings.CameraModel.Contains(photo.CameraModel)) &&
-                (photo.ShutterSpeed == 0 || p.CameraSettings.ShutterSpeed == photo.ShutterSpeed) &&
-                ((photo.LensFocalLengthBegin == null && photo.LensFocalLengthBegin == null) ||
-                 (photo.LensFocalLengthBegin == null && p.CameraSettings.LensFocalLength <= photo.LensFocalLengthEnd) ||
-                 (photo.LensFocalLengthEnd == null && p.CameraSettings.LensFocalLength >= photo.LensFocalLengthBegin) ||
-                 (p.CameraSettings.LensFocalLength >= photo.LensFocalLengthBegin && p.CameraSettings.LensFocalLength <= photo.LensFocalLengthEnd)) &&
-                (photo.Diaphragm == 0 || p.CameraSettings.Diaphragm == photo.Diaphragm) &&
-                (photo.Flash == 0 || p.CameraSettings.Flash == photo.Flash) &&
-                ((photo.IsoBegin == null && photo.IsoEnd == null) ||
-                 (photo.IsoBegin == null && p.CameraSettings.Iso <= photo.IsoEnd) ||
-                 (photo.IsoEnd == null && p.CameraSettings.Iso >= photo.IsoBegin) ||
-                 (p.CameraSettings.Iso >= photo.IsoBegin && p.CameraSettings.Iso <= photo.IsoEnd)))
-                .ToList();
-            return photoModels.Select(Mapper.Map<PhotoThumbnailModel>).ToList();
+                    query = query.Where(p => p.CreationDate.Value <= photo.CreationDateEnd.Value);
+                }
+                else if (photo.CreationDateEnd == null)
+                {
+                    query = query.Where(p => p.CreationDate.Value >= photo.CreationDateBegin.Value);
+                }
+                else
+                {
+                    query = query.Where(p => p.CreationDate.Value <= photo.CreationDateEnd.Value &&
+                                             p.CreationDate.Value >= photo.CreationDateBegin.Value);
+                }
+            }
+
+            if (!(photo.LensFocalLengthBegin == null && photo.LensFocalLengthEnd == null))
+            {
+                if (photo.LensFocalLengthBegin == null)
+                {
+                    query = query.Where(p => p.CameraSettings.LensFocalLength <= photo.LensFocalLengthEnd);
+                }
+                else if (photo.LensFocalLengthEnd == null)
+                {
+                    query = query.Where(p => p.CameraSettings.LensFocalLength >= photo.LensFocalLengthBegin);
+                }
+                else
+                {
+                    query = query.Where(p => p.CameraSettings.LensFocalLength >= photo.LensFocalLengthBegin && p.CameraSettings.LensFocalLength <= photo.LensFocalLengthEnd);
+                }
+            }
+
+            if (!(photo.IsoBegin == null && photo.IsoEnd == null))
+            {
+                if (photo.IsoBegin == null)
+                {
+                    query = query.Where(p => p.CameraSettings.Iso <= photo.IsoEnd);
+                }
+                else if (photo.IsoEnd == null)
+                {
+                    query = query.Where(p => p.CameraSettings.Iso >= photo.IsoBegin);
+                }
+                else
+                {
+                    query = query.Where(p => p.CameraSettings.Iso >= photo.IsoBegin && p.CameraSettings.Iso <= photo.IsoEnd);
+                }
+            }
+
+            var photoModels = new CollectionModel<PhotoThumbnailModel>()
+            {
+                Items = query.OrderBy(p => p.Id).Skip(pageIndex * pageSize).Take(pageSize).Select(p =>
+                    new PhotoThumbnailModel
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        CreationDate = p.CreationDate,
+                        ImageId = p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                        Selected = false,
+                        Likes = p.Likes.Count(l => l.IsPositive),
+                        Liked = false,
+                        Dislikes = p.Likes.Count(l => !l.IsPositive),
+                        Disliked = false
+                    }).ToList(),
+                TotalCount = query.Count()
+            };
+            return photoModels;
         }
 
         public Image GetImageById(int id)
@@ -190,7 +260,8 @@ namespace PhotoManager.DAL.Repository
 
         public IEnumerable<Photo> GetPhotosByAlbumId(int? albumId)
         {
-            return albumId != null ? _context.Albums.Include(a => a.Photos.Select(p => p.Images)).FirstOrDefault(a => a.Id == albumId)?.Photos :
+            return albumId != null ?
+                _context.Albums.Include(a => a.Photos.Select(p => p.Images)).FirstOrDefault(a => a.Id == albumId)?.Photos :
                 _context.Photos.Include(p => p.Images).ToList();
         }
 

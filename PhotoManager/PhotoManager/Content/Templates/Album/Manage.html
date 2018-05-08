@@ -3,14 +3,22 @@
     <div class="col-lg-4 text-center">
         <div class="album img-thumbnail">
             <a class="album-frame d-flex" href="/albums/album?id={{Id}}">
-                <img src={{ImageUrl}} class="image" />
+                <img src="/api/image/{{ImageId}}" class="image" />
             </a>
-            <div class="album-footer" data-album-id="{{Id}}">
+            <div class="album-footer manage" data-album-id="{{Id}}">
                 <div class="album-name">
-                    {{Name}}
+                    <a class="album-name" href="/albums/album?id={{Id}}">
+                        {{Name}}
+                    </a>
                 </div>
-                <div class="selected-icon">
+                <div class="selected-icon select" data-album-id="{{Id}}">
                     <i class="fa fa-check"></i>
+                </div>
+                <div class="selected-icon edit" data-album-id="{{Id}}">
+                    <i class="fa fa-edit"></i>
+                </div>
+                <div class="selected-icon remove" data-album-id="{{Id}}">
+                    <i class="fa fa-remove"></i>
                 </div>
             </div>
         </div>

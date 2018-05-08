@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using PhotoManager.Common;
 using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.Models;
 using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.Filters;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,8 +36,8 @@ namespace PhotoManager.Controllers.Api
         [Route("")]
         public IHttpActionResult GetAllPhotos([FromUri] ScrollViewModel scrollViewModel)
         {
-            var photos = _unitOfWork.Photos.GetAllPhotos();
-            return Ok(Extensions.GetCollection(photos, scrollViewModel.PageIndex, scrollViewModel.PageSize));
+            var photos = _unitOfWork.Photos.GetAllPhotos(scrollViewModel.PageIndex, scrollViewModel.PageSize);
+            return Ok(photos);
         }
 
         [HttpGet]
@@ -79,7 +79,7 @@ namespace PhotoManager.Controllers.Api
         [HttpPut]
         [ValidateAntiForgeryToken]
         [Route("")]
-        public IHttpActionResult Edit(PhotoEditModel photoViewModel)
+        public IHttpActionResult Edit(PhotoAddModel photoViewModel)
         {
             if (!PhotoIsValid(photoViewModel))
             {
@@ -96,6 +96,22 @@ namespace PhotoManager.Controllers.Api
         [Route("")]
         public async Task<IHttpActionResult> Add()
         {
+            var id = User.Identity.GetUserId();
+
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest("User was not authorized");
+            }
+
+            var user = _unitOfWork.Users.GetUserById(id);
+            var canAddPhotos = user.IsPayed && _unitOfWork.Photos.GetUserPhotosCount(id) < int.MaxValue ||
+                               _unitOfWork.Photos.GetUserPhotosCount(id) < Constants.FreePhotosCount;
+
+            if (!canAddPhotos)
+            {
+                return BadRequest("User can not add photos due to payment restriction");
+            }
+
             if (!Request.Content.IsMimeMultipartContent())
             {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
@@ -105,24 +121,19 @@ namespace PhotoManager.Controllers.Api
             var provider = new MultipartFormDataStreamProvider(root);
             await Request.Content.ReadAsMultipartAsync(provider);
 
-            try
-            {
-                var photoViewModel = JsonConvert.DeserializeObject<PhotoAddModel>(provider.FormData.GetValues("ViewModel")?.FirstOrDefault());
-                var imageOriginal = File.ReadAllBytes(provider.FileData.FirstOrDefault().LocalFileName);
-                var images = GetImagesInDifferentShapes(imageOriginal).ToList();
+            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy" };
 
-                photoViewModel.OwnerId = HttpContext.Current.User.Identity.GetUserId();
-                photoViewModel.Images = new List<Image>();
-                photoViewModel.Images.AddRange(images);
+            var photoViewModel = JsonConvert.DeserializeObject<PhotoAddModel>(provider.FormData.GetValues("ViewModel")?.FirstOrDefault(), dateTimeConverter);
+            var imageOriginal = File.ReadAllBytes(provider.FileData.FirstOrDefault().LocalFileName);
+            var images = GetImagesInDifferentShapes(imageOriginal).ToList();
 
-                _unitOfWork.Photos.AddPhoto(photoViewModel);
-                _unitOfWork.Save();
-                return Ok(photoViewModel.AlbumId);
-            }
-            catch (Exception)
-            {
-                return NotFound();
-            }
+            photoViewModel.OwnerId = HttpContext.Current.User.Identity.GetUserId();
+            photoViewModel.Images = new List<Image>();
+            photoViewModel.Images.AddRange(images);
+
+            _unitOfWork.Photos.AddPhoto(photoViewModel);
+            _unitOfWork.Save();
+            return Ok(photoViewModel.AlbumId);
         }
 
         [HttpGet]
@@ -137,8 +148,7 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult Search(string filter, [FromUri]ScrollViewModel scrollViewModel = null)
         {
             var keyWord = !string.IsNullOrEmpty(filter) ? filter.Trim(' ') : string.Empty;
-            var photos = Extensions.GetCollection(_unitOfWork.Photos.GetPhotosByKeyWord(keyWord).ToList(),
-                scrollViewModel.PageIndex, scrollViewModel.PageSize);
+            var photos = _unitOfWork.Photos.GetPhotosByKeyWord(keyWord, scrollViewModel.PageIndex, scrollViewModel.PageSize);
             return Ok(photos);
         }
 
@@ -156,7 +166,7 @@ namespace PhotoManager.Controllers.Api
         {
             var photoViewModel = advancedSearchViewModel?.PhotoViewModel;
 
-            var photos = Extensions.GetCollection(_unitOfWork.Photos.GetPhotosBySearchModel(photoViewModel).ToList(),
+            var photos = _unitOfWork.Photos.GetPhotosBySearchModel(photoViewModel,
                 advancedSearchViewModel.ScrollViewModel.PageIndex, advancedSearchViewModel.ScrollViewModel.PageSize);
             return Ok(photos);
         }
@@ -170,7 +180,7 @@ namespace PhotoManager.Controllers.Api
             _unitOfWork.Photos.DeletePhotos(id);
             _unitOfWork.Save();
 
-            return Ok(_unitOfWork.Photos.GetAllPhotos());
+            return Ok(true);
         }
 
         [Authorize]
@@ -181,12 +191,7 @@ namespace PhotoManager.Controllers.Api
         {
             _unitOfWork.Photos.DeletePhotos(id);
             _unitOfWork.Save();
-            var album = _unitOfWork.Albums.GetAlbumById(albumId, User.Identity.GetUserId());
-            if (album.Photos == null)
-            {
-                return NotFound();
-            }
-            return Ok(album.Photos);
+            return Ok(true);
         }
 
         [HttpPost]
@@ -229,7 +234,7 @@ namespace PhotoManager.Controllers.Api
             };
         }
 
-        private bool PhotoIsValid(PhotoEditModel photo)
+        private bool PhotoIsValid(PhotoAddModel photo)
         {
             return !string.IsNullOrEmpty(photo.Name) &&
                     photo.Iso >= 1 && photo.Iso <= Constants.MaxIso &&

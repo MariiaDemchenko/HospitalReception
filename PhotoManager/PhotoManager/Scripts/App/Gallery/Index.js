@@ -6,6 +6,7 @@
         var pageIndex = 0;
         var counterTemplate = "/Content/Templates/Shared/Counter.html";
         var counterId = "#counterTemplate";
+        var dataLoading;
 
         $.photosPage = {
             setPageIndex: function (newPageIndex) {
@@ -13,6 +14,10 @@
                 pageIndex = newPageIndex;
             },
             getData: function () {
+                if (dataLoading) {
+                    return;
+                }
+                dataLoading = true;
                 $.ajax({
                     url: uri,
                     data: {
@@ -20,10 +25,16 @@
                         pageSize: pageSize
                     },
                     error: function () {
-                        location.href = "/gallery/error/index";
+                        bootbox.alert("Error getting photos");
+                        $.stopSpinning();
                     }
                 })
                     .done(function (photos) {
+                        $.each(photos.Items,
+                            function(index, value) {
+                                value.ShootDate =
+                                    value.CreationDate === null ? "" : moment(value.CreationDate).format("DD/MM/YYYY");
+                            });
                         if (photos.Items !== null && photos.Items.length !== 0) {
                             $.displayPhotoAlbum(templatePath, photos.Items);
                             pageIndex++;
@@ -38,6 +49,7 @@
                                 document.getElementById("counter").innerHTML = output;
                                 $.stopSpinning();
                             });
+                        dataLoading = false;
                     });
             }
         };
@@ -50,13 +62,9 @@
             }
         });
 
-        loadPhotos();
-
-        function loadPhotos() {
-            $.hideMenu();
-            $.initialize();
-            $.setScroll($.photosPage.getData);
-            $.photosPage.getData();
-        }
+        $.hideMenu();
+        $.initialize();
+        $.setScroll($.photosPage.getData);
+        $.photosPage.getData();
     });
 })(jQuery);

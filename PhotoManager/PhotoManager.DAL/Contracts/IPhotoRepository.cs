@@ -1,4 +1,5 @@
-﻿using PhotoManager.DAL.Models;
+﻿using PhotoManager.Common;
+using PhotoManager.DAL.Models;
 using PhotoManager.DAL.ProjectionModels;
 using System.Collections.Generic;
 
@@ -6,17 +7,17 @@ namespace PhotoManager.DAL.Contracts
 {
     public interface IPhotoRepository
     {
-        IEnumerable<PhotoThumbnailModel> GetAllPhotos();
+        CollectionModel<PhotoThumbnailModel> GetAllPhotos(int pageIndex, int pageSize);
 
         int GetUserPhotosCount(string userId);
 
         PhotoThumbnailModel GetPhotoById(int id, int albumId = 0);
 
-        PhotoEditModel GetPhotoById(int id, Common.Constants.ImageSize size, int albumId = 0);
+        PhotoAddModel GetPhotoById(int id, Common.Constants.ImageSize size, int albumId = 0);
 
-        IEnumerable<PhotoThumbnailModel> GetPhotosByKeyWord(string keyWord);
+        CollectionModel<PhotoThumbnailModel> GetPhotosByKeyWord(string keyWord, int pageIndex, int pageSize);
 
-        IEnumerable<PhotoThumbnailModel> GetPhotosBySearchModel(SearchModel photo);
+        CollectionModel<PhotoThumbnailModel> GetPhotosBySearchModel(SearchModel photo, int pageIndex, int pageSize);
 
         Image GetImageById(int id);
 
@@ -25,8 +26,6 @@ namespace PhotoManager.DAL.Contracts
         int AddPhoto(PhotoAddModel photoModel);
 
         void DeletePhotos(IEnumerable<int> photosId);
-
-        IEnumerable<Photo> GetPhotosByAlbumId(int? albumId);
 
         LikesModel AddLike(string userId, int photoId, int albumId, bool isPositive);
     }

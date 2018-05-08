@@ -1,34 +1,58 @@
 (function ($) {
     $(function () {
-        $(".form-menu").on("click", ".btn-edit",
+        var selectedPhotoId;
+        var selectedAlbumId;
+
+        $("#content").on("click", ".edit",
             function () {
-                var attr = $("#menu").data("item");
-                var albumId = $("#photoAlbumId").val();
-                albumId = albumId !== undefined ? albumId : "";
-                if (attr === "album") {
-                    $.ajax({
-                        url: "/api/albums/" + $(".selected").data("albumId"),
-                        error: function () {
-                            location.href = "/albums/error";
-                        }
-                    }).done(function (album) {
-                        location.href = "/albums/edit/album?" + $.serialize(album);
-                    });
+                var attrPhoto = $(this).data("photoId");
+                var attrAlbum = $(this).data("albumId");
+
+                if (attrAlbum != undefined) {
+                    location.href = "/albums/edit/" + attrAlbum;
                 }
-                else if (attr === "photo") {
-                    $.ajax({
-                        url: "/api/photos/" + $(".selected").data("photoId") + "/album/" + albumId,
-                        error: function () {
-                            location.href = "/photos/error";
-                        }
-                    }).done(function (photo) {
-                        location.href = "/photos/edit/photo?" + $.serialize(photo);
-                    });
+                else if (attrPhoto != undefined) {
+                    location.href = "/photos/" + attrPhoto + "/album/" + $("#photoAlbumId").val();
                 }
             });
 
-        $(".form-menu").on("click", ".btn-add",
+        $(".modal-footer").on("click", ".btn-remove-single",
             function () {
+                if (selectedAlbumId != undefined) {
+                    deleteAlbums(selectedAlbumId);
+                    $('#albumsDeleteSingleModal').modal('hide');
+                    $(".markedToDelete").removeClass("markedToDelete");
+                } else if (selectedPhotoId != undefined) {
+                    deletePhotos($("#photoAlbumId").val(), selectedPhotoId);
+                    $('#photosDeleteSingleModal').modal('hide');
+                }
+            });
+
+        $("#content").on("click", ".remove",
+            function () {
+                selectedPhotoId = $(this).data("photoId");
+                selectedAlbumId = $(this).data("albumId");
+                $(this).addClass("markedToDelete");
+                if (selectedPhotoId != undefined) {
+                    $("#photosDeleteSingleModal").modal("show");
+                }
+                else if (selectedAlbumId != undefined) {
+                    $("#albumsDeleteSingleModal").modal("show");
+                }
+            });
+
+        $("#content").on("click", ".like.gallery-like .disabled, .dislike.gallery-dislike .disabled",
+            function () {
+                bootbox.alert("It's a photo gallery. To vote go to the albums page.");
+            });
+
+        $(".menu").on("click", ".btn-add",
+            function () {
+                if (!$(this).hasClass("add-enabled")) {
+                    bootbox.alert(
+                        "Your access to adding photos is restricted as you have already reached the allowed limit of 30 free photos");
+                    return;
+                }
                 var albumId = $("#photoAlbumId").val();
                 albumId = albumId !== undefined ? albumId : "";
                 var attr = $("#menu").data("item");
@@ -41,8 +65,10 @@
                 var attr = $("#menu").data("item");
                 if (attr === "album") {
                     deleteAlbums();
+                    $('#albumsDeleteModal').modal('hide');
                 } else {
                     deletePhotos($("#photoAlbumId").val());
+                    $('#photosDeleteModal').modal('hide');
                 }
             });
 
@@ -50,6 +76,11 @@
             event.preventDefault();
             var searchKey = $("#KeyWord").val();
             window.location.href = "/gallery/search/" + searchKey;
+        });
+
+        $(".btn-back").on("click", function (event) {
+            event.preventDefault();
+            history.back();
         });
 
         $(".btn-get-link").on("click", function (event) {
@@ -60,8 +91,7 @@
                 url += parts[i] + "/";
             }
 
-            url = url + document.getElementById("photoAlbumName").innerHTML;
-            document.getElementById("albumLink").innerHTML = url;
+            bootbox.alert(url);
         });
 
         $(".btn-advanced-search").on("click", function (event) {
@@ -83,7 +113,7 @@
             $.ajax({
                 url: "/api/users/settings",
                 error: function () {
-                    location.href = "/users/error";
+                    bootbox.alert("Error getting user access parameters");
                 }
             })
                 .done(function (settings) {
@@ -91,22 +121,17 @@
                         $("#content").addClass("selectable");
                     } else {
                         $("#content").removeClass("selectable");
-                        $(".btn-add").attr("visibility", "hidden");
                         return;
                     }
 
                     var item = $("#menu").data("item");
                     if (item === "photo") {
-                        if (settings.CanAddPhotos === false) {
-                            $(".btn-add").css("visibility", "hidden");
-                        } else {
-                            $(".btn-add").css("visibility", "visible");
+                        if (settings.CanAddPhotos) {
+                            $(".btn-add").addClass("add-enabled");
                         }
                     } else if (item === "album") {
-                        if (settings.CanAddAlbums === false) {
-                            $(".btn-add").css("visibility", "hidden");
-                        } else {
-                            $(".btn-add").css("visibility", "visible");
+                        if (settings.CanAddAlbums) {
+                            $(".btn-add").addClass("add-enabled");
                         }
                     }
                 });
@@ -116,14 +141,17 @@
             document.getElementById("spinner").style.display = "none";
         };
 
-        function deletePhotos(albumId) {
+        function deletePhotos(albumId, photoId) {
             albumId = albumId !== undefined ? albumId : "";
-            var selectedPhotos = document.getElementsByClassName("selected");
+
             var photosId = [];
 
-            for (var i = 0; i < selectedPhotos.length; i++) {
-                photosId.push(selectedPhotos[i].dataset.photoId);
-            }
+            if (photoId == undefined) {
+                var selectedPhotos = document.getElementsByClassName("selected");
+                for (var i = 0; i < selectedPhotos.length; i++) {
+                    photosId.push(selectedPhotos[i].dataset.photoId);
+                }
+            } else photosId.push(photoId);
 
             var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
@@ -132,9 +160,8 @@
                 contentType: "application/json",
                 data: JSON.stringify(photosId),
                 type: "DELETE",
-                dataType: "json",
                 error: function () {
-                    location.href = "/albums/error/delete";
+                    bootbox.alert("Error deleting photos");
                 }
             })
                 .done(function () {
@@ -149,13 +176,19 @@
             $('#photosDeleteModal').modal('hide');
         }
 
-        function deleteAlbums() {
-            var selectedAlbums = document.getElementsByClassName("selected");
+        function deleteAlbums(albumId) {
+
             var albumsId = [];
 
-            for (var i = 0; i < selectedAlbums.length; i++) {
-                albumsId.push(selectedAlbums[i].dataset.albumId);
+            if (albumId == undefined) {
+                var selectedAlbums = document.getElementsByClassName("selected");
+                for (var i = 0; i < selectedAlbums.length; i++) {
+                    albumsId.push(selectedAlbums[i].dataset.albumId);
+                }
+            } else {
+                albumsId.push(albumId);
             }
+
             var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
                 headers: { __RequestVerificationToken: token },
@@ -164,7 +197,7 @@
                 data: JSON.stringify(albumsId),
                 type: "DELETE",
                 error: function () {
-                    location.href = "/photos/error/delete";
+                    bootbox.alert("Error deleting albums");
                 }
             })
                 .done(function () {
@@ -175,8 +208,6 @@
                     $(".btn-edit").attr("disabled", selectedCount !== 1);
                     $(".btn-remove-confirm").attr("disabled", selectedCount < 1);
                 });
-
-            $('#albumsDeleteModal').modal('hide');
         }
     });
 })(jQuery);

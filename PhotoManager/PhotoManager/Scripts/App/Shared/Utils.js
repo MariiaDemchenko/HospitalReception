@@ -25,7 +25,7 @@
             this.pageIndex = 0;
             this.getData = 1;
 
-            alert(this.getData);
+            bootbox.alert(this.getData);
         };
 
         $.fn.serializeFormJSON = function () {
@@ -118,7 +118,17 @@
             function () {
                 var photo = $(this);
                 var userId = $("#currentUserId").val();
-                if (userId === "" || photo.hasClass("disabled")) {
+                if ($(this).hasClass("gallery")) {
+                    bootbox.alert("It's a photo gallery. Go to the album's page to vote.");
+                    return;
+                }
+                if (userId === "") {
+                    bootbox.alert("You are not authorized user. Sign in to vote");
+                    return;
+                }
+
+                if (photo.hasClass("disabled")) {
+                    bootbox.alert("You are the owner of this album. Go to another user's album to vote.");
                     return;
                 }
                 if (photo.hasClass("liked")) {
@@ -136,7 +146,7 @@
                     url: "/api/photos/like?Id=" + photoId + "&AlbumId=" + $("#photoAlbumId").val() + "&IsPositive=true",
                     type: "post",
                     error: function () {
-                        location.href = "/photos/error";
+                        bootbox.alert("Error setting like");
                     }
                 })
                     .done(function (likesModel) {
@@ -148,9 +158,20 @@
             function () {
                 var photo = $(this);
                 var userId = $("#currentUserId").val();
-                if (userId === "" || photo.hasClass("disabled")) {
+                if ($(this).hasClass("gallery")) {
+                    bootbox.alert("It's a photo gallery. Go to the album's page to vote.");
                     return;
                 }
+                if (userId === "") {
+                    bootbox.alert("You are not authorized user. Sign in to vote");
+                    return;
+                }
+
+                if (photo.hasClass("disabled")) {
+                    bootbox.alert("You are the owner of this album. Go to another user's album to vote.");
+                    return;
+                }
+
                 if (photo.hasClass("disliked")) {
                     photo.removeClass("disliked");
                 } else {
@@ -166,7 +187,7 @@
                     url: "/api/photos/like?Id=" + photoId + "&AlbumId=" + $("#photoAlbumId").val() + "&IsPositive=false",
                     type: "post",
                     error: function () {
-                        location.href = "/photos/error";
+                        bootbox.alert("Error setting dislike");
                     }
                 })
                     .done(function (likesModel) {

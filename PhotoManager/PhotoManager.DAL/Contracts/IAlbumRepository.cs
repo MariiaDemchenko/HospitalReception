@@ -1,16 +1,17 @@
 ﻿using PhotoManager.DAL.Models;
 using PhotoManager.DAL.ProjectionModels;
 using System.Collections.Generic;
+using PhotoManager.Common;
 
 namespace PhotoManager.DAL.Contracts
 {
     public interface IAlbumRepository
     {
-        IEnumerable<ThumbnailModel> GetAllAlbums();
+        CollectionModel<ThumbnailModel> GetAllAlbums(int pageIndex, int pageSize);
 
-        AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, string userId = "", bool allPhotosWithSelectedState = false);
+        AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, int pageIndex = 0, int pageSize = 0, string userId = "", bool allPhotosWithSelectedState = false);
 
-        AlbumIndexModel GetAlbumById(int? id, string userId, bool allPhotosWithSelectedState = false);
+        AlbumIndexModel GetAlbumById(int? id, int pageIndex, int pageSize, string userId, bool allPhotosWithSelectedState = false);
 
         Album EditAlbum(AlbumIndexModel album);
 

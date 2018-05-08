@@ -1,67 +1,190 @@
-﻿@model PhotoManager.DAL.ProjectionModels.PhotoEditModel
+﻿@model PhotoManager.DAL.ProjectionModels.PhotoAddModel
 @using PhotoManager.CustomHelpers
 
-<div class="page-header">
-    <h2>Edit photo</h2>
-</div>
+@{
+    if (Model.Id == 0)
+    {
+        <div class="page-header">
+            <h2>Add photo</h2>
+        </div>
+    }
+    else
+    {
+        <div class="page-header">
+            <h2>Edit photo</h2>
+        </div>
+    }
+}
 
-<form id="formEdit" method="post" role="form">
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+<form id="formEdit" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
-    <table>
-        <tr>
-            <td>@Html.HiddenFor(m => m.CameraSettingsId)</td>
-            <td>@Html.HiddenFor(m => m.Id)</td>
-            <td>@Html.HiddenFor(m => m.AlbumId)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.Name)</td>
-            <td>@Html.TextEditorFor(m => m.Name)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.CreationDate)</td>
-            <td>@Html.DateTimeEditorFor(m => m.CreationDate)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.Place)</td>
-            <td>@Html.TextEditorFor(m => m.Place)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.CameraModel)</td>
-            <td>@Html.TextEditorFor(m => m.CameraModel)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.LensFocalLength)</td>
-            <td>@Html.NumberEditorFor(m => m.LensFocalLength)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.Diaphragm)</td>
-            <td>@Html.CustomEnumDropDownListFor(model => model.Diaphragm)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.ShutterSpeed)</td>
-            <td>@Html.CustomEnumDropDownListFor(model => model.ShutterSpeed)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.Iso)</td>
-            <td>@Html.NumberEditorFor(m => m.Iso)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.Flash)</td>
-            <td>@Html.CustomEnumDropDownListFor(model => model.Flash)</td>
-        </tr>
-        <tr>
-            <td>
-                <button class="btn btn-block btn-menu">SAVE CHANGES</button>
-            </td>
-        </tr>
-    </table>
-    <div class="img-container photo-frame">
-        <img id="displayedImage" src="@Model.ImageUrl" class="image" />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div id="content" class="row">
+        <div class="col-5">
+            @Html.HiddenFor(m => m.CameraSettingsId)
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.AlbumId)
+            <div class="row input-item">
+                <div class="col-5">@Html.DisplayNameFor(m => m.Name)</div>
+                <div class="col-7">
+                    @Html.TextEditorFor(m => m.Name)
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row input-item">
+                <div class="col-5"> @Html.DisplayNameFor(m => m.CreationDate)</div>
+                <div class="col-7">
+                    <div class="input-group date">
+                        <input type="text" class="form-control" id="datepicker" value=@Html.DisplayFor(m=>m.CreationDate)>
+                        <div class="input-group-prepend">
+                            <button class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row input-item">
+                <div class="col-5">@Html.DisplayNameFor(m => m.Place)</div>
+                <div class="col-7">@Html.TextEditorFor(m => m.Place)</div>
+            </div>
+            <div class="row input-item">
+                <div class="col-5">@Html.DisplayNameFor(m => m.CameraModel)</div>
+                <div class="col-7">@Html.TextEditorFor(m => m.CameraModel)</div>
+            </div>
+            <div class="row input-item">
+                <div class="col-5">@Html.DisplayNameFor(m => m.LensFocalLength)</div>
+                <div class="col-7">
+                    @Html.NumberEditorFor(m => m.LensFocalLength)
+                    @Html.ValidationMessageFor(m => m.LensFocalLength, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row input-item">
+                <div class="col-5">@Html.DisplayNameFor(m => m.Diaphragm)</div>
+                <div class="col-7">@Html.CustomEnumDropDownListFor(model => model.Diaphragm)</div>
+            </div>
+            <div class="row input-item">
+                <div class="col-5">@Html.DisplayNameFor(m => m.ShutterSpeed)</div>
+                <div class="col-7">@Html.CustomEnumDropDownListFor(model => model.ShutterSpeed)</div>
+            </div>
+            <div class="row input-item">
+                <div class="col-5">@Html.DisplayNameFor(m => m.Iso)</div>
+                <div class="col-7">
+                    @Html.NumberEditorFor(m => m.Iso)
+                    @Html.ValidationMessageFor(m => m.Iso, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row input-item">
+                <div class="col-5">@Html.DisplayNameFor(m => m.Flash)</div>
+                <div class="col-7">@Html.CustomEnumDropDownListFor(model => model.Flash)</div>
+            </div>
+        </div>
+        <div class="img-container photo-frame col-7">
+            <img id="displayedImage" class="image" src="/api/image/@Model.ImageId" />
+        </div>
+    </div>
+    @{
+        if (Model.Id == 0)
+        {
+            <div class="form-menu">
+                <label for="file">Upload Image:</label>
+                <input type="file" name="file" id="file" accept="image/jpeg" />
+            </div>
+        }
+    }
+    <div class=" row input-item">
+        <button class="btn btn btn-outline-primary btn-save-changes">SAVE CHANGES</button>
+        <button class="btn btn btn-outline-secondary btn-back">BACK</button>
     </div>
 </form>
 
+@{
+    if (Model.Id == 0)
+    {
+        <div class="modal fade" id="selectPhotoModal" tabindex="-1" role="dialog" aria-labelledby="selectPhotoModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="selectPhotoModalLabel">Error adding photo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select a photo</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="fileSizeExceedingModal" tabindex="-1" role="dialog" aria-labelledby="fileSizeExceedingModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="fileSizeExceedingModalLabel">Error adding photo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Photo size must not be larger than 500K</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="invalidMimeTypeModal" tabindex="-1" role="dialog" aria-labelledby="invalidMimeTypeModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="invalidMimeTypeModalLabel">Error adding photo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Only JPEG format is allowed</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="freePaymentPhotosModal" tabindex="-1" role="dialog" aria-labelledby="freePaymentPhotosModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="freePaymentPhotosModalLabel">Free payment restriction</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Your access to adding photos is restricted as you have already reached the allowed limit of 30 free photos</div>
+                </div>
+            </div>
+        </div>
+    }}
+
 @section Scripts {
-    @Scripts.Render("~/bundles/Photo/Edit")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap-datepicker-scripts")
+    @Styles.Render("~/bundles/bootstrap-datepicker")
+    @{
+        if (Model.Id == 0)
+        {
+            @Scripts.Render("~/bundles/Photo/Add")
+        }
+        else
+        {
+            @Scripts.Render("~/bundles/Photo/Edit")
+        }
+    }
+    <script>
+        $(function () {
+            $('#datepicker').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                clearBtn: true
+            });
+            $('.input-group-prepend').on("click",
+                function (event) {
+                    event.preventDefault();
+                    $('#datepicker').datepicker("show");
+                    $('#datepicker').focus();
+                });
+        })
+    </script>
 }

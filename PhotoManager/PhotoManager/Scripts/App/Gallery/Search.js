@@ -34,11 +34,17 @@
                         pageSize: pageSize
                     },
                     error: function () {
-                        location.href = "/gallery/error/search";
+                        bootbox.alert("Error getting photos");
+                        $.stopSpinning();
                     }
                 })
                     .done(function (photos) {
                         if (photos.Items.length !== 0) {
+                            $.each(photos.Items,
+                                function (index, value) {
+                                    value.ShootDate =
+                                        value.CreationDate === null ? "" : moment(value.CreationDate).format("DD/MM/YYYY");
+                                });
                             $.displayPhotoAlbum(templatePath, photos.Items);
                             pageIndex++;
                         }

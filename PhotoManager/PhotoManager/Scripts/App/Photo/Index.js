@@ -4,7 +4,7 @@
             $.ajax({
                 url: uri,
                 error: function () {
-                    location.href = "/photos/error";
+                    bootbox.alert("Error getting photo");
                 }
             })
                 .done(function (photo) {

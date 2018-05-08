@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using AutoMapper;
+﻿using AutoMapper;
 using PhotoManager.Common;
 using PhotoManager.DAL.ProjectionModels;
 using PhotoManager.ViewModels.PhotoManagerViewModels;
@@ -18,6 +14,5 @@ namespace PhotoManager.Profiles
                 .ForMember(x => x.Diaphragm, opt => opt.MapFrom(x => x.Diaphragm.GetDisplayName().Name))
                 .ForMember(x => x.Flash, opt => opt.MapFrom(x => x.Flash.GetDisplayName().Name));
         }
-
     }
 }

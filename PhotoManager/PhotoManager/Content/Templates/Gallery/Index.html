@@ -3,26 +3,32 @@
     <div class="col-lg-4 text-center">
         <div class="photo img-thumbnail">
             <a class="photo-frame-bg d-flex" href="/photos/properties/{{Id}}">
-                <img src={{ImageUrl}} class="image" />
+                <img src="/api/image/{{ImageId}}" class="image" />
             </a>
             <div class="photo-footer" data-photo-id="{{Id}}">
                 <div class="description">
                     <div>
-                        <div class="photo-name">
+                        <a class="photo-name" href="/photos/properties/{{Id}}">
                             {{Name}}
-                        </div>
+                        </a>
                         <div class="photo-date">
-                            {{CreationDate}}
+                            {{ShootDate}}
                         </div>
                     </div>
                     <div class="selected-icon select" data-photo-id="{{Id}}">
                         <i class="fa fa-check"></i>
                     </div>
-                    <div class="selected-icon like disabled">
+                    <div class="selected-icon edit" data-photo-id="{{Id}}">
+                        <i class="fa fa-edit"></i>
+                    </div>
+                    <div class="selected-icon remove" data-photo-id="{{Id}}">
+                        <i class="fa fa-remove"></i>
+                    </div>
+                    <div class="selected-icon like gallery disabled">
                         <i class="fa fa-thumbs-o-up"></i>
                         <label id="likesCount">{{Likes}}</label>
                     </div>
-                    <div class="selected-icon dislike disabled">
+                    <div class="selected-icon dislike gallery disabled">
                         <i class="fa fa-thumbs-o-down"></i>
                         <label id="dislikesCount">{{Dislikes}}</label>
                     </div>

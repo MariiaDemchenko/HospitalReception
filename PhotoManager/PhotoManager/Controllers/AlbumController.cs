@@ -1,83 +1,93 @@
 ﻿using Microsoft.AspNet.Identity;
+using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.ProjectionModels;
-using System.Web.Http;
 using System.Web.Mvc;
 
 namespace PhotoManager.Controllers
 {
-    [System.Web.Mvc.RoutePrefix("albums")]
+    [RoutePrefix("albums")]
     public class AlbumController : Controller
     {
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("{name}")]
+        private readonly IUnitOfWork _unitOfWork;
+
+        public AlbumController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        [HttpGet]
+        [Route("{name}")]
         public ActionResult Index(string name)
         {
             return View(new AlbumSearchModel { Name = name });
         }
 
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("album")]
+        [HttpGet]
+        [Route("album")]
         public ActionResult Index(AlbumSearchModel album)
         {
             return View(album);
         }
 
-        [System.Web.Http.Authorize]
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("manage")]
+        [Authorize]
+        [HttpGet]
+        [Route("manage")]
         public ActionResult Manage()
         {
             return View();
         }
 
-        [System.Web.Http.Authorize]
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("edit/album")]
-        public ActionResult Edit([FromUri] AlbumIndexModel album)
+        [Authorize]
+        [HttpGet]
+        [Route("edit/{id?}")]
+        public ActionResult Edit(int? id)
         {
+            var album = id == null ?
+                new AlbumIndexModel { OwnerId = User.Identity.GetUserId() } :
+                _unitOfWork.Albums.GetAlbumById(id, 0, 0, User.Identity.GetUserId(), true);
             return View(album);
         }
 
-        [System.Web.Http.Authorize]
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("add")]
+        [Authorize]
+        [HttpGet]
+        [Route("add")]
         public ActionResult Add()
         {
-            return View(new AlbumIndexModel { OwnerId = User.Identity.GetUserId() });
+            return RedirectToAction("Edit");
         }
 
-        [System.Web.Mvc.HttpGet]
+        [HttpGet]
         public ActionResult Error()
         {
             return View();
         }
 
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("error")]
+        [HttpGet]
+        [Route("error")]
         public ActionResult ErrorIndex()
         {
             TempData["ErrorMessage"] = "Error getting album";
             return RedirectToAction("Error");
         }
 
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("error/edit")]
+        [HttpGet]
+        [Route("error/edit")]
         public ActionResult ErroEditing()
         {
             TempData["ErrorMessage"] = "Error editing album";
             return RedirectToAction("Error");
         }
 
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("error/add")]
+        [HttpGet]
+        [Route("error/add")]
         public ActionResult ErroAdding()
         {
             TempData["ErrorMessage"] = "Error adding album";
             return RedirectToAction("Error");
         }
 
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("error/delete")]
+        [HttpGet]
+        [Route("error/delete")]
         public ActionResult ErroDeleting()
         {
             TempData["ErrorMessage"] = "Error deleting album";

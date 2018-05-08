@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using PhotoManager.Common;
+﻿using PhotoManager.Common;
 using PhotoManager.DAL.Contracts;
 using PhotoManager.DAL.Models;
 using PhotoManager.DAL.ProjectionModels;
@@ -18,17 +17,27 @@ namespace PhotoManager.DAL.Repository
             _context = context;
         }
 
-        public IEnumerable<ThumbnailModel> GetAllAlbums()
+        public CollectionModel<ThumbnailModel> GetAllAlbums(int pageIndex, int pageSize)
         {
-            var albums = _context.Albums.Select(a =>
-                new
-                {
-                    a.Id,
-                    a.Name,
-                    ImageUrl = "/api/Image/" + a.Photos.FirstOrDefault().Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
-                }).ToList();
+            var skipCount = pageIndex * pageSize;
 
-            return albums.Select(Mapper.Map<ThumbnailModel>).ToList();
+            var collectionModel = new CollectionModel<ThumbnailModel>
+            {
+                TotalCount = _context.Albums.Count()
+            };
+
+            if (collectionModel.TotalCount != 0)
+            {
+                collectionModel.Items = _context.Albums.OrderBy(a => a.Id).Skip(skipCount).Take(pageSize).Select(a =>
+                    new ThumbnailModel
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        ImageId = a.Photos.FirstOrDefault().Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
+                    }).ToList();
+            }
+            
+            return collectionModel;
         }
 
         public int GetUserAlbumsCount(string userId)
@@ -36,49 +45,136 @@ namespace PhotoManager.DAL.Repository
             return _context.Albums.Count(a => a.OwnerId == userId);
         }
 
-        public AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, string userId, bool allPhotosWithSelectedState = false)
+        public AlbumIndexModel GetAlbumByModel(AlbumSearchModel model, int pageIndex, int pageSize, string userId, bool allPhotosWithSelectedState = false)
         {
-            AlbumIndexModel album;
+            if (model.Id != null)
+            {
+                return GetAlbumById(model.Id, pageIndex, pageSize, userId, allPhotosWithSelectedState);
+            }
+            return GetAlbumByName(model.Name, userId, pageIndex, pageSize, allPhotosWithSelectedState);
+        }
 
+        private AlbumIndexModel GetAlbumByName(string name, string userId, int pageIndex, int pageSize, bool allPhotosWithSelectedState)
+        {
+            if (pageSize == 0)
+            {
+                return _context.Albums.Select(
+                    a => new AlbumIndexModel
+                    {
+                        Id = a.Id,
+                        OwnerId = a.OwnerId,
+                        Name = a.Name,
+                        Description = a.Description
+                    }).FirstOrDefault(a => a.Name == name);
+            }
+            var skipCount = pageIndex * pageSize;
             if (!allPhotosWithSelectedState)
             {
-                var albums = _context.Albums.Select(a =>
-                    new
+                return _context.Albums.Select(
+                    a => new AlbumIndexModel
                     {
-                        a.Id,
-                        a.OwnerId,
-                        a.Name,
-                        a.Description,
-                        ImageUrl = string.Empty,
-                        Photos = a.Photos.Select(p =>
-                            new PhotoThumbnailModel
-                            {
-                                Id = p.Id,
-                                Name = p.Name,
-                                CreationDate = p.CreationDate,
-                                ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
-                                Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
-                                Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
-                                Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
-                                Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id)
-                            })
-                    }).ToList();
-
-                album = model.Id != null ?
-                    albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Id == model.Id) :
-                    albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Name == model.Name);
+                        Id = a.Id,
+                        OwnerId = a.OwnerId,
+                        Name = a.Name,
+                        Description = a.Description,
+                        Photos = new CollectionModel<PhotoThumbnailModel>
+                        {
+                            Items = a.Photos.OrderBy(p => p.Id).Skip(skipCount).Take(pageSize).
+                                Select(p =>
+                                    new PhotoThumbnailModel
+                                    {
+                                        Id = p.Id,
+                                        Name = p.Name,
+                                        CreationDate = p.CreationDate,
+                                        ImageId = p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                                        Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
+                                        Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
+                                        Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
+                                        Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id)
+                                    }),
+                            TotalCount = a.Photos.Count()
+                        }
+                    }).FirstOrDefault(a => a.Name == name);
             }
-            else
-            {
-                var albums = _context.Albums.Select(a =>
-                    new
+            return _context.Albums.Select(a =>
+                new AlbumIndexModel
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    OwnerId = string.Empty,
+                    Photos = new CollectionModel<PhotoThumbnailModel>
                     {
-                        a.Id,
-                        a.Name,
-                        a.Description,
-                        ImageUrl = string.Empty,
-                        OwnerId = string.Empty,
-                        Photos = _context.Photos.Select(p =>
+                        Items = _context.Photos.OrderBy(p => p.Id).Skip(skipCount).Take(pageSize).Select(p =>
+                          new PhotoThumbnailModel
+                          {
+                              Id = p.Id,
+                              Name = p.Name,
+                              CreationDate = p.CreationDate,
+                              Selected = a.Photos.Select(photo => photo.Id).Contains(p.Id),
+                              Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
+                              Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
+                              Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
+                              Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
+                              ImageId = p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
+                          }).ToList(),
+                        TotalCount = _context.Photos.Count()
+                    }
+                }).FirstOrDefault(a => a.Name == name);
+        }
+
+        public AlbumIndexModel GetAlbumById(int? id, int pageIndex, int pageSize, string userId, bool allPhotosWithSelectedState)
+        {
+            var skipCount = pageSize * pageIndex;
+            if (pageSize == 0)
+            {
+                return _context.Albums.Select(
+                    a => new AlbumIndexModel
+                    {
+                        Id = a.Id,
+                        OwnerId = a.OwnerId,
+                        Name = a.Name,
+                        Description = a.Description
+                    }).FirstOrDefault(a => a.Id == id);
+            }
+            if (!allPhotosWithSelectedState)
+            {
+                return _context.Albums.Select(
+                    a => new AlbumIndexModel
+                    {
+                        Id = a.Id,
+                        OwnerId = a.OwnerId,
+                        Name = a.Name,
+                        Description = a.Description,
+                        Photos = new CollectionModel<PhotoThumbnailModel>()
+                        {
+                            Items = a.Photos.OrderBy(p => p.Id).Skip(skipCount).Take(pageSize).Select(p =>
+                                    new PhotoThumbnailModel
+                                    {
+                                        Id = p.Id,
+                                        Name = p.Name,
+                                        CreationDate = p.CreationDate,
+                                        ImageId = p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
+                                        Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
+                                        Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
+                                        Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
+                                        Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id)
+                                    }),
+                            TotalCount = a.Photos.Count
+                        }
+                    }).FirstOrDefault(a => a.Id == id);
+            }
+            return _context.Albums.Select(a =>
+                new AlbumIndexModel
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    OwnerId = string.Empty,
+                    Photos = new CollectionModel<PhotoThumbnailModel>
+                    {
+                        Items = _context.Photos.OrderBy(p => p.Id).Skip(skipCount).Take(pageSize)
+                            .Select(p =>
                             new PhotoThumbnailModel
                             {
                                 Id = p.Id,
@@ -89,77 +185,11 @@ namespace PhotoManager.DAL.Repository
                                 Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
                                 Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
                                 Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
-                                ImageUrl = "/api/Image/" +
-                                           p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
-                            })
-                    }).ToList();
-                album = model.Id != null ?
-                    albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Id == model.Id) :
-                    albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Name == model.Name);
-            }
-
-            return album;
-        }
-
-        public AlbumIndexModel GetAlbumById(int? id, string userId, bool allPhotosWithSelectedState)
-        {
-            AlbumIndexModel album;
-
-            if (!allPhotosWithSelectedState)
-            {
-                var albums = _context.Albums.Select(a =>
-                    new
-                    {
-                        a.Id,
-                        a.OwnerId,
-                        a.Name,
-                        a.Description,
-                        ImageUrl = string.Empty,
-                        Photos = a.Photos.Select(p =>
-                            new PhotoThumbnailModel
-                            {
-                                Id = p.Id,
-                                Name = p.Name,
-                                CreationDate = p.CreationDate,
-                                ImageUrl = "/api/Image/" + p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
-                                Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
-                                Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
-                                Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
-                                Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id)
-                            })
-                    }).ToList();
-
-                album = albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Id == id);
-            }
-            else
-            {
-                var albums = _context.Albums.Select(a =>
-                    new
-                    {
-                        a.Id,
-                        a.Name,
-                        a.Description,
-                        ImageUrl = string.Empty,
-                        OwnerId = string.Empty,
-                        Photos = _context.Photos.Select(p =>
-                            new PhotoThumbnailModel
-                            {
-                                Id = p.Id,
-                                Name = p.Name,
-                                CreationDate = p.CreationDate,
-                                Selected = a.Photos.Select(photo => photo.Id).Contains(p.Id),
-                                ImageUrl = "/api/Image/" +
-                                           p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id,
-                                Likes = p.Likes.Count(l => l.IsPositive && l.AlbumId == a.Id),
-                                Liked = p.Likes.Any(l => l.IsPositive && l.UserId == userId && l.AlbumId == a.Id),
-                                Dislikes = p.Likes.Count(l => !l.IsPositive && l.AlbumId == a.Id),
-                                Disliked = p.Likes.Any(l => !l.IsPositive && l.UserId == userId && l.AlbumId == a.Id)
-                            })
-                    }).ToList();
-                album = albums.Select(Mapper.Map<AlbumIndexModel>).FirstOrDefault(a => a.Id == id);
-            }
-
-            return album;
+                                ImageId = p.Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
+                            }).ToList(),
+                        TotalCount = _context.Photos.Count()
+                    }
+                }).FirstOrDefault(a => a.Id == id);
         }
 
         public Album EditAlbum(AlbumIndexModel album)
@@ -169,21 +199,21 @@ namespace PhotoManager.DAL.Repository
             albumToEdit.Name = album.Name;
             albumToEdit.Description = album.Description;
 
-            var newPhotosId = album.Photos?.Select(p => p.Id).ToList();
+            var newPhotosId = album.Photos.Items.Select(p => p.Id).ToList();
             var oldPhotosId = albumToEdit.Photos?.Select(p => p.Id).ToList();
 
             var state = EntityState.Unchanged;
 
-            if (newPhotosId == null)
+            if (newPhotosId.Count != 0)
             {
-                if (oldPhotosId.Count != 0)
+                if (oldPhotosId?.Count != 0)
                 {
                     state = EntityState.Modified;
                 }
             }
             else
             {
-                if (oldPhotosId.Count == 0)
+                if (oldPhotosId?.Count == 0)
                 {
                     albumToEdit.Photos = new List<Photo>();
                     state = EntityState.Modified;
@@ -202,9 +232,9 @@ namespace PhotoManager.DAL.Repository
 
             if (state == EntityState.Modified)
             {
-                if (newPhotosId == null)
+                if (newPhotosId.Count == 0)
                 {
-                    albumToEdit.Photos.Clear();
+                    albumToEdit.Photos?.Clear();
                 }
                 else
                 {
@@ -220,13 +250,15 @@ namespace PhotoManager.DAL.Repository
         {
             var result = !_context.Albums.Any(a => a.Name == album.Name);
 
-            var photosId = album.Photos?.Select(p => p.Id).ToList();
+            var photoIds = album.Photos.Items.Select(x => x.Id);
+            var photos = _context.Photos.Where(x => photoIds.Contains(x.Id)).ToList();
+
             var albumToAdd = new Album
             {
                 Name = album.Name,
                 OwnerId = album.OwnerId,
                 Description = album.Description,
-                Photos = photosId != null ? _context.Photos.Where(p => photosId.Contains(p.Id)).ToList() : null
+                Photos = photos
             };
             _context.Albums.Add(albumToAdd);
             return result;

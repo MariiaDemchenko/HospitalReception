@@ -50,15 +50,6 @@ namespace PhotoManager.Common
             return items.Skip(pageIndex * pageSize).Take(pageSize);
         }
 
-        public static CollectionModel<T> GetCollection<T>(IEnumerable<T> items, int pageIndex, int pageSize)
-        {
-            return new CollectionModel<T>
-            {
-                Items = items.ToList().Skip(pageIndex * pageSize).Take(pageSize) ?? new List<T>(),
-                TotalCount = items.Count()
-            };
-        }
-
         public static DisplayAttribute GetDisplayName(this Enum value)
         {
             var type = value.GetType();

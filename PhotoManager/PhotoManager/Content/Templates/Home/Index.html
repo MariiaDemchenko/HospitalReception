@@ -3,12 +3,12 @@
     <div class="col-lg-4 text-center">
         <div class="album img-thumbnail">
             <a class="album-frame d-flex" href="/albums/album?id={{Id}}">
-                <img src={{ImageUrl}} class="image" />
+                <img src="/api/image/{{ImageId}}" class="image" />
             </a>
             <div class="album-footer">
-                <div class="album-name">
+                <a class="album-name" href="/albums/album?id={{Id}}">
                     {{Name}}
-                </div>
+                </a>
             </div>
         </div>
     </div>

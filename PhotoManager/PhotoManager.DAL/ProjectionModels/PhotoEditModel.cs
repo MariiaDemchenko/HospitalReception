@@ -9,6 +9,7 @@ namespace PhotoManager.DAL.ProjectionModels
         public int CameraSettingsId { get; set; }
         public int AlbumId { get; set; }
         public string Place { get; set; }
+        [DisplayName("Camera Model")]
         public string CameraModel { get; set; }
 
         [DisplayName("Lens focal length")]

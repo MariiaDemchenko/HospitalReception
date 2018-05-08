@@ -22,12 +22,18 @@
                     url: "/api/photos/advancedSearch",
                     data: { photoViewModel: serializedData, scrollViewModel: pageViewModel },
                     error: function () {
-                        location.href = "/gallery/error/index";
+                        bootbox.alert("Error getting photos");
+                        $.stopSpinning();
                     }
                 }).done(function (photos) {
                     var template;
                     var data = {};
                     if (photos.Items.length > 0) {
+                        $.each(photos.Items,
+                            function (index, value) {
+                                value.ShootDate =
+                                    value.CreationDate === null ? "" : moment(value.CreationDate).format("DD/MM/YYYY");
+                            });
                         $.displayPhotoAlbum(templatePathLoadPhotos, photos.Items);
                         pageIndex++;
                     }

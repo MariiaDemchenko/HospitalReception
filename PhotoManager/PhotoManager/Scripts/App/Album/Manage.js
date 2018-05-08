@@ -6,18 +6,27 @@
         var pageIndex = 0;
         var counterTemplate = "/Content/Templates/Shared/Counter.html";
         var counterId = "#counterTemplate";
+        var dataLoading;
 
         $.albumsPage = {
+
             setPageIndex: function (newPageIndex) {
                 $.hideMenu();
                 pageIndex = newPageIndex;
             },
             getData: function () {
+                if (dataLoading) {
+                    return;
+                }
+
+                dataLoading = true;
+
                 $.ajax({
                     url: "/api/albums",
                     data: { pageIndex: pageIndex, pageSize: pageSize },
                     error: function () {
-                        location.href = "/albums/error";
+                        bootbox.alert("error getting albums");
+                        $.stopSpinning();
                     }
                 })
                     .done(function (albums) {
@@ -45,6 +54,7 @@
                                 $.stopSpinning();
                             });
                         pageIndex++;
+                        dataLoading = false;
                     });
             }
         };

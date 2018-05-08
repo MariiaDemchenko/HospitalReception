@@ -6,7 +6,6 @@
 
         $.editAlbum = function (id) {
             $.setScroll(getData);
-
             var pageIndex = 0;
             var pageSize = 9;
 
@@ -22,7 +21,8 @@
                         pageSize: pageSize
                     },
                     error: function () {
-                        location.href = "/albums/error";
+                        bootbox.alert("Error getting album");
+                        $.stopSpinning();
                     }
                 })
                     .done(function (album) {
@@ -54,12 +54,13 @@
                     return false;
                 }
                 var serializedData = $(this).serializeFormJSON();
-                serializedData.Photos = [];
+                serializedData.Photos = {};
+                serializedData.Photos.Items = [];
                 var selectedPhotos = document.getElementsByClassName("selected");
 
                 for (var i = 0; i < selectedPhotos.length; i++) {
                     var photo = { Id: selectedPhotos[i].dataset.photoId };
-                    serializedData.Photos.push(photo);
+                    serializedData.Photos.Items.push(photo);
                 }
                 var token = $('input[name="__RequestVerificationToken"]').val();
                 $.ajax({
@@ -68,7 +69,7 @@
                     type: "PUT",
                     data: serializedData,
                     error: function () {
-                        location.href = "/albums/error/edit";
+                        bootbox.alert("Error editing album");
                     }
                 }).done(function () {
                     location.href = "/albums/manage";

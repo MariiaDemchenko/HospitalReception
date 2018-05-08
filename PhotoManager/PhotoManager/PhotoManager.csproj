@@ -220,6 +220,7 @@
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\Api\AlbumsController.cs" />
     <Compile Include="Controllers\Api\UsersController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\Api\ImageController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
@@ -275,6 +276,14 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker.css" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker.min.css" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker.standalone.css" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker.standalone.min.css" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker3.css" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker3.min.css" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker3.standalone.css" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker3.standalone.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\black.jpg" />
     <Content Include="Content\Images\blue.jpg" />
@@ -339,6 +348,8 @@
     <Content Include="Scripts\App\Photo\Edit.js" />
     <Content Include="Scripts\App\Photo\Add.js" />
     <Content Include="Scripts\App\Photo\Index.js" />
+    <Content Include="Scripts\bootbox.min.js" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -369,6 +380,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker.css.map" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker.min.css.map" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker.standalone.css.map" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker.standalone.min.css.map" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker3.css.map" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker3.min.css.map" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker3.standalone.min.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -430,7 +449,6 @@
     <Content Include="Views\Album\Index.cshtml" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Photo\Edit.cshtml" />
-    <Content Include="Views\Photo\Add.cshtml" />
     <Content Include="Views\Gallery\Index.cshtml" />
     <Content Include="Views\Shared\Partial\Menu.cshtml" />
     <Content Include="Views\Gallery\Search.cshtml" />
@@ -439,7 +457,9 @@
     <Content Include="Views\Gallery\AdvancedSearch.cshtml" />
     <Content Include="Views\Album\Manage.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
-    <Content Include="Views\Album\Add.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\ServerError.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
