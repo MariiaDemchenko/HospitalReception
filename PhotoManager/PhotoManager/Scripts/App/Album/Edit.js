@@ -62,18 +62,37 @@
                     var photo = { Id: selectedPhotos[i].dataset.photoId };
                     serializedData.Photos.Items.push(photo);
                 }
-                var token = $('input[name="__RequestVerificationToken"]').val();
+
                 $.ajax({
-                    headers: { __RequestVerificationToken: token },
-                    url: "/api/albums/",
-                    type: "PUT",
-                    data: serializedData,
+                    url: "/api/albums/edit/fromPage/" + id,
+                    data: {
+                        pageIndex: pageIndex,
+                        pageSize: pageSize
+                    },
                     error: function () {
-                        bootbox.alert("Error editing album");
+                        bootbox.alert("Error getting album");
+                        $.stopSpinning();
                     }
-                }).done(function () {
-                    location.href = "/albums/manage";
-                });
+                })
+                    .done(function (album) {
+                        $.each(album.Photos.Items,
+                            function (index, value) {
+                                var photo = { Id: value.Id };
+                                serializedData.Photos.Items.push(photo);
+                            });
+                        var token = $('input[name="__RequestVerificationToken"]').val();
+                        $.ajax({
+                            headers: { __RequestVerificationToken: token },
+                            url: "/api/albums/",
+                            type: "PUT",
+                            data: serializedData,
+                            error: function () {
+                                bootbox.alert("Error editing album");
+                            }
+                        }).done(function () {
+                            location.href = "/albums/manage";
+                        });
+                    });
             });
         };
     });

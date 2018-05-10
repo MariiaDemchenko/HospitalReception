@@ -123,6 +123,30 @@ namespace PhotoManager.DAL.Repository
                 }).FirstOrDefault(a => a.Name == name);
         }
 
+        public AlbumIndexModel GetSelectedAlbumPhotosFromPageIndex(int? id, int pageIndex, int pageSize, string userId)
+        {
+            var skipCount = pageIndex * pageSize;
+            return _context.Albums.Select(a =>
+                new AlbumIndexModel
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    OwnerId = string.Empty,
+                    Photos = new CollectionModel<PhotoThumbnailModel>
+                    {
+                        Items = _context.Photos.OrderBy(p => p.Id).Skip(skipCount)
+                            .Select(p =>
+                            new PhotoThumbnailModel
+                            {
+                                Id = p.Id,
+                                Selected = a.Photos.Select(photo => photo.Id).Contains(p.Id)
+                            }).Where(p => p.Selected).ToList(),
+                        TotalCount = _context.Photos.Count()
+                    }
+                }).FirstOrDefault(a => a.Id == id);
+        }
+
         public AlbumIndexModel GetAlbumById(int? id, int pageIndex, int pageSize, string userId, bool allPhotosWithSelectedState)
         {
             var skipCount = pageSize * pageIndex;
@@ -199,21 +223,21 @@ namespace PhotoManager.DAL.Repository
             albumToEdit.Name = album.Name;
             albumToEdit.Description = album.Description;
 
-            var newPhotosId = album.Photos.Items.Select(p => p.Id).ToList();
+            var newPhotosId = album.Photos?.Items.Select(p => p.Id).ToList();
             var oldPhotosId = albumToEdit.Photos?.Select(p => p.Id).ToList();
 
             var state = EntityState.Unchanged;
 
-            if (newPhotosId.Count != 0)
+            if (newPhotosId == null)
             {
-                if (oldPhotosId?.Count != 0)
+                if (oldPhotosId != null)
                 {
                     state = EntityState.Modified;
                 }
             }
             else
             {
-                if (oldPhotosId?.Count == 0)
+                if (oldPhotosId == null)
                 {
                     albumToEdit.Photos = new List<Photo>();
                     state = EntityState.Modified;
@@ -232,7 +256,7 @@ namespace PhotoManager.DAL.Repository
 
             if (state == EntityState.Modified)
             {
-                if (newPhotosId.Count == 0)
+                if (newPhotosId == null)
                 {
                     albumToEdit.Photos?.Clear();
                 }

@@ -117,5 +117,14 @@ namespace PhotoManager.Controllers.Api
             var album = _unitOfWork.Albums.GetAlbumById(id, scrollViewModel.PageIndex, scrollViewModel.PageSize, User.Identity.GetUserId(), true);
             return Ok(album);
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("edit/fromPage/{id}")]
+        public IHttpActionResult GetAlbumPhotosFromPage(int id, [FromUri]ScrollViewModel scrollViewModel)
+        {
+            var album = _unitOfWork.Albums.GetSelectedAlbumPhotosFromPageIndex(id, scrollViewModel.PageIndex, scrollViewModel.PageSize, User.Identity.GetUserId());
+            return Ok(album);
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace PhotoManager.DAL.Contracts
 
         AlbumIndexModel GetAlbumById(int? id, int pageIndex, int pageSize, string userId, bool allPhotosWithSelectedState = false);
 
+        AlbumIndexModel GetSelectedAlbumPhotosFromPageIndex(int? id, int pageIndex, int pageSize, string userId);
+
         Album EditAlbum(AlbumIndexModel album);
 
         bool AddAlbum(AlbumIndexModel album);
