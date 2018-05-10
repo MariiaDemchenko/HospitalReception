@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace PhotoManager.DAL.ProjectionModels
 {
@@ -7,7 +8,9 @@ namespace PhotoManager.DAL.ProjectionModels
     {
         public string Name { get; set; }
         [DisplayName("Creation date")]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}")]
         public DateTime? CreationDateBegin { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}")]
         public DateTime? CreationDateEnd { get; set; }
         public string Place { get; set; }
         [DisplayName("Camera model")]

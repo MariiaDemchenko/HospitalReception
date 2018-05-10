@@ -2,7 +2,7 @@
     $(function () {
         var templatePath = "/Content/Templates/Album/Index.html";
         var headerTemplateId = "#photoAlbumHeaderTemplate";
-        var contentId = "albumHeader";
+        var contentId = "#albumHeader";
         var pageSize = 9;
         var pageIndex = 0;
         var url;
@@ -69,7 +69,7 @@
                                 function (templates) {
                                     template = $(templates).filter(counterId).html();
                                     var output = Mustache.render(template, data);
-                                    document.getElementById("counter").innerHTML = output;
+                                    $("#counter").html(output);
                                     $.stopSpinning();
                                 });
 
@@ -79,7 +79,7 @@
                                 function (templates) {
                                     var template = $(templates).filter(headerTemplateId).html();
                                     var output = Mustache.render(template, album);
-                                    document.getElementById(contentId).innerHTML = output;
+                                    $(contentId).html(output);
                                 });
                         });
                         dataLoading = false;

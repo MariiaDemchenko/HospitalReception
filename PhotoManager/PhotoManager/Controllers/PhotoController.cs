@@ -35,8 +35,8 @@ namespace PhotoManager.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("{id}/album/{albumId?}")]
-        public ActionResult Edit(int? albumId, int id = 0)
+        [Route("{id:int=0}/album/{albumId?}")]
+        public ActionResult Edit(int id, int? albumId)
         {
             PhotoAddModel photo;
             if (albumId == null)
@@ -60,53 +60,10 @@ namespace PhotoManager.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("add")]
-        public ActionResult Add()
-        {
-            return RedirectToAction("Edit", new {id = 0});
-        }
-
-        [Authorize]
-        [HttpGet]
         [Route("add/{id?}")]
         public ActionResult Add(int? id)
         {
-            return RedirectToAction("Edit", new { albumId = id, id = 0 });
-        }
-
-        [HttpGet]
-        public ActionResult Error()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        [Route("error")]
-        public ActionResult ErrorIndex()
-        {
-            TempData["ErrorMessage"] = "Error getting photo";
-            return RedirectToAction("Error");
-        }
-
-        [Route("error/edit")]
-        public ActionResult ErrorEdit()
-        {
-            TempData["ErrorMessage"] = "Error editing photo";
-            return RedirectToAction("Error");
-        }
-
-        [Route("error/add")]
-        public ActionResult ErrorAdd()
-        {
-            TempData["ErrorMessage"] = "Error adding photo";
-            return RedirectToAction("Error");
-        }
-
-        [Route("error/delete")]
-        public ActionResult ErrorDelete()
-        {
-            TempData["ErrorMessage"] = "Error deleting photo";
-            return RedirectToAction("Error");
+            return RedirectToAction("Edit", new { id = 0, albumId = id });
         }
     }
 }

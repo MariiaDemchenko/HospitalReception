@@ -19,13 +19,7 @@ namespace PhotoManager.Controllers.Api
             _unitOfWork = unitOfWork;
         }
 
-        [Route("")]
-        public HttpResponseMessage GetImage()
-        {
-            return GetImage(0);
-        }
-
-        [Route("{id}")]
+        [Route("{id:int=0}")]
         public HttpResponseMessage GetImage(int id)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);

@@ -1,6 +1,10 @@
 ﻿@using PhotoManager.CustomHelpers
 @model PhotoManager.DAL.ProjectionModels.AlbumIndexModel
 
+@{
+    ViewBag.Title = "Edit album";
+}
+
 <form id="formAlbumEdit" role="form">
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })

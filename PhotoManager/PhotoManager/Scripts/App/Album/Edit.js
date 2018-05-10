@@ -33,7 +33,7 @@
                             function (templates) {
                                 template = $(templates).filter(counterId).html();
                                 var output = Mustache.render(template, data);
-                                document.getElementById("counter").innerHTML = output;
+                                $("#counter").html(output);
                                 $.stopSpinning();
                             });
                         if (album.Photos.Items !== null && album.Photos.Items.length !== 0) {
@@ -48,7 +48,7 @@
                     });
             }
 
-            $("#formAlbumEdit").submit(function (e) {
+            $("#formAlbumEdit").on("submit", function (e) {
                 e.preventDefault();
                 if (!$(this).valid()) {
                     return false;

@@ -8,21 +8,21 @@
                 var attrPhoto = $(this).data("photoId");
                 var attrAlbum = $(this).data("albumId");
 
-                if (attrAlbum != undefined) {
+                if (attrAlbum !== undefined) {
                     location.href = "/albums/edit/" + attrAlbum;
                 }
-                else if (attrPhoto != undefined) {
+                else if (attrPhoto !== undefined) {
                     location.href = "/photos/" + attrPhoto + "/album/" + $("#photoAlbumId").val();
                 }
             });
 
         $(".modal-footer").on("click", ".btn-remove-single",
             function () {
-                if (selectedAlbumId != undefined) {
+                if (selectedAlbumId !== undefined) {
                     deleteAlbums(selectedAlbumId);
                     $('#albumsDeleteSingleModal').modal('hide');
                     $(".markedToDelete").removeClass("markedToDelete");
-                } else if (selectedPhotoId != undefined) {
+                } else if (selectedPhotoId !== undefined) {
                     deletePhotos($("#photoAlbumId").val(), selectedPhotoId);
                     $('#photosDeleteSingleModal').modal('hide');
                 }
@@ -33,10 +33,10 @@
                 selectedPhotoId = $(this).data("photoId");
                 selectedAlbumId = $(this).data("albumId");
                 $(this).addClass("markedToDelete");
-                if (selectedPhotoId != undefined) {
+                if (selectedPhotoId !== undefined) {
                     $("#photosDeleteSingleModal").modal("show");
                 }
-                else if (selectedAlbumId != undefined) {
+                else if (selectedAlbumId !== undefined) {
                     $("#albumsDeleteSingleModal").modal("show");
                 }
             });
@@ -146,7 +146,7 @@
 
             var photosId = [];
 
-            if (photoId == undefined) {
+            if (photoId === undefined) {
                 var selectedPhotos = document.getElementsByClassName("selected");
                 for (var i = 0; i < selectedPhotos.length; i++) {
                     photosId.push(selectedPhotos[i].dataset.photoId);
@@ -156,7 +156,7 @@
             var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
                 headers: { __RequestVerificationToken: token },
-                url: '/api/photos/album/' + albumId,
+                url: '/api/photos',
                 contentType: "application/json",
                 data: JSON.stringify(photosId),
                 type: "DELETE",
@@ -180,7 +180,7 @@
 
             var albumsId = [];
 
-            if (albumId == undefined) {
+            if (albumId === undefined) {
                 var selectedAlbums = document.getElementsByClassName("selected");
                 for (var i = 0; i < selectedAlbums.length; i++) {
                     albumsId.push(selectedAlbums[i].dataset.albumId);

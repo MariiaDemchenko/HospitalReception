@@ -1,7 +1,7 @@
 <script id="photoAlbumTemplate" type="text/html">
     {{#photos}}
     <div class="col-lg-4 text-center">
-        <div class="photo img-thumbnail">
+        <div class="photo img-thumbnail" data-photo-id="{{Id}}">
             <a class="photo-frame-bg d-flex" href="/photos/properties/{{Id}}">
                 <img src="/api/image/{{ImageId}}" class="image" />
             </a>

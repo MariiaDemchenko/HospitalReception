@@ -42,7 +42,7 @@
                         function (templates) {
                             template = $(templates).filter(counterId).html();
                             var output = Mustache.render(template, data);
-                            document.getElementById("counter").innerHTML = output;
+                            $("#counter").html(output);
                             $.stopSpinning();
                         });
                 });
@@ -57,7 +57,13 @@
                 pageIndex = 0;
                 $("#content").empty();
                 load();
-                history.pushState(null, null, "/gallery/advancedSearch?" + $("#formAdvancedSearch").serialize());
+                var startDate = moment(new Date(moment($("#startDate").val(), "DD-MM-YYYY"))).format("MM/DD/YYYY");
+                var endDate = moment(new Date(moment($("#endDate").val(), "DD-MM-YYYY"))).format("MM/DD/YYYY");
+                alert("startDate: " + startDate);
+                alert("endDate: " + endDate);
+                var serializedData = $("#formAdvancedSearch").serialize();
+                serializedData = serializedData + "&CreationDateBegin=" + startDate + "&CreationDateEnd=" + endDate;
+                history.pushState(null, null, "/gallery/advancedSearch?" + serializedData);
             });
         }
     });

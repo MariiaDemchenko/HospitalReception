@@ -2,7 +2,7 @@
     $(function () {
         var photoAlbumTemplate = "/Content/Templates/Album/Index.html";
         var photoAlbumTemplateId = "#photoAlbumTemplate";
-        var contentId = "content";
+        var contentId = "#content";
 
         function getJSON(form) {
             var o = {};
@@ -93,7 +93,7 @@
                 function (templates) {
                     var template = $(templates).filter('#photoTemplate').html();
                     var output = Mustache.render(template, photo);
-                    document.getElementById(contentId).innerHTML = output;
+                    $(contentId).html(output);
                     $.stopSpinning();
                 });
         };

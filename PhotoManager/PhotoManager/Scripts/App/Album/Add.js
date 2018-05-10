@@ -34,7 +34,7 @@
                         $.get(counterTemplate, function (templates) {
                             template = $(templates).filter(counterId).html();
                             var output = Mustache.render(template, data);
-                            document.getElementById("counter").innerHTML = output;
+                            $("counter").html(output);
                             $.stopSpinning();
                         });
                         if (photos.Items.length !== 0) {
@@ -49,7 +49,7 @@
                     location.href = "/albums/manage";
                 });
 
-            $("#formAlbumEdit").submit(function (e) {
+            $("#formAlbumEdit").on("submit", function (e) {
                 e.preventDefault();
                 if (!$(this).valid()) {
                     return false;

@@ -36,7 +36,7 @@ namespace PhotoManager.DAL.Repository
                         ImageId = a.Photos.FirstOrDefault().Images.FirstOrDefault(i => i.Size == Constants.ImageSize.Thumbnail).Id
                     }).ToList();
             }
-            
+
             return collectionModel;
         }
 
@@ -249,17 +249,20 @@ namespace PhotoManager.DAL.Repository
         public bool AddAlbum(AlbumIndexModel album)
         {
             var result = !_context.Albums.Any(a => a.Name == album.Name);
-
-            var photoIds = album.Photos.Items.Select(x => x.Id);
-            var photos = _context.Photos.Where(x => photoIds.Contains(x.Id)).ToList();
+            var photoIds = album.Photos?.Items.Select(x => x.Id);
 
             var albumToAdd = new Album
             {
                 Name = album.Name,
                 OwnerId = album.OwnerId,
                 Description = album.Description,
-                Photos = photos
             };
+
+            if (photoIds != null)
+            {
+                albumToAdd.Photos = _context.Photos.Where(x => photoIds.Contains(x.Id)).ToList();
+            }
+
             _context.Albums.Add(albumToAdd);
             return result;
         }

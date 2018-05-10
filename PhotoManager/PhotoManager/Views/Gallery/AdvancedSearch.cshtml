@@ -1,5 +1,10 @@
-﻿@using PhotoManager.CustomHelpers
+﻿@using System.ComponentModel.DataAnnotations
+@using PhotoManager.CustomHelpers
 @model PhotoManager.DAL.ProjectionModels.SearchModel
+@{
+    ViewBag.Title = "Advanced search";
+}
+
 <div class="page-header">
     <h2>Photo gallery</h2>
 </div>
@@ -40,11 +45,11 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">from</span>
                         </div>
-                        <input type="text" class="form-control" id="startDate" name="CreationDateBegin" />
+                        <input type="text" class="form-control" id="startDate" value=@Html.DisplayFor(m=>m.CreationDateBegin)>
                         <div class="input-group-prepend">
                             <span class="input-group-text">to</span>
                         </div>
-                        <input type="text" class="form-control" id="endDate" name="CreationDateEnd" />
+                        <input type="text" class="form-control" id="endDate" value=@Html.DisplayFor(m=>m.CreationDateEnd)>
                     </div>
                 </div>
             </div>

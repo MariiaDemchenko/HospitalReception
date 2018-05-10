@@ -31,7 +31,7 @@
                 })
                     .done(function (photos) {
                         $.each(photos.Items,
-                            function(index, value) {
+                            function (index, value) {
                                 value.ShootDate =
                                     value.CreationDate === null ? "" : moment(value.CreationDate).format("DD/MM/YYYY");
                             });
@@ -46,7 +46,7 @@
                             function (templates) {
                                 template = $(templates).filter(counterId).html();
                                 var output = Mustache.render(template, data);
-                                document.getElementById("counter").innerHTML = output;
+                                $("#counter").html(output);
                                 $.stopSpinning();
                             });
                         dataLoading = false;

@@ -12,8 +12,8 @@
                         function (templates) {
                             var template = $(templates).filter("#photoHeaderTemplate").html();
                             var output = Mustache.render(template, photo);
-                            photo.CreationDate = moment(new Date(photo.CreationDate)).format("LLLL");
-                            document.getElementById("photoHeader").innerHTML = output;
+                            photo.CreationDate = photo.CreationDate == null ? "" : moment(new Date(photo.CreationDate)).format("LLLL");
+                            $("#photoHeader").html(output);
                         });
                     $.displayPhoto(templatePath, photo);
                 });

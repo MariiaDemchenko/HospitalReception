@@ -55,7 +55,7 @@
                             function (templates) {
                                 template = $(templates).filter(counterId).html();
                                 var output = Mustache.render(template, data);
-                                document.getElementById("counter").innerHTML = output;
+                                $("#counter").html(output);
                                 $.stopSpinning();
                             });
                     });

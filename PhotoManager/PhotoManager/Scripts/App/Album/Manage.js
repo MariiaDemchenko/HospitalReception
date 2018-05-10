@@ -39,7 +39,7 @@
                             function (templates) {
                                 template = $(templates).filter(counterId).html();
                                 var output = Mustache.render(template, counterData);
-                                document.getElementById("counter").innerHTML = output;
+                                $("#counter").html(output);
                             });
 
                         $.get(templatePath,

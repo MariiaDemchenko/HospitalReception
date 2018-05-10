@@ -45,34 +45,7 @@ namespace PhotoManager.Controllers.Api
         public IHttpActionResult GetByIdAndSize(int id, int size)
         {
             var sourcePhoto = _unitOfWork.Photos.GetPhotoById(id, (Constants.ImageSize)size);
-
             return Ok(Mapper.Map<PhotoPropertiesModel>(sourcePhoto));
-        }
-
-        [Authorize]
-        [HttpGet]
-        [Route("{id}/album")]
-        public IHttpActionResult Edit(int id)
-        {
-            var photo = _unitOfWork.Photos.GetPhotoById(id, Constants.ImageSize.Medium);
-            if (photo == null)
-            {
-                return NotFound();
-            }
-            return Ok(photo);
-        }
-
-        [Authorize]
-        [HttpGet]
-        [Route("{id}/album/{albumId}")]
-        public IHttpActionResult Edit(int id, int albumId)
-        {
-            var photo = _unitOfWork.Photos.GetPhotoById(id, Constants.ImageSize.Medium, albumId);
-            if (photo == null)
-            {
-                return NotFound();
-            }
-            return Ok(photo);
         }
 
         [Authorize]
@@ -137,27 +110,12 @@ namespace PhotoManager.Controllers.Api
         }
 
         [HttpGet]
-        [Route("search")]
-        public IHttpActionResult Search([FromUri]ScrollViewModel scrollViewModel = null)
-        {
-            return Search(string.Empty, scrollViewModel);
-        }
-
-        [HttpGet]
-        [Route("search/{filter}")]
-        public IHttpActionResult Search(string filter, [FromUri]ScrollViewModel scrollViewModel = null)
+        [Route("search/{filter?}")]
+        public IHttpActionResult Search(string filter = null, [FromUri]ScrollViewModel scrollViewModel = null)
         {
             var keyWord = !string.IsNullOrEmpty(filter) ? filter.Trim(' ') : string.Empty;
             var photos = _unitOfWork.Photos.GetPhotosByKeyWord(keyWord, scrollViewModel.PageIndex, scrollViewModel.PageSize);
             return Ok(photos);
-        }
-
-        [HttpGet]
-        [Route("advancedSearchModel")]
-        public IHttpActionResult AdvancedSearch()
-        {
-            var photoViewModel = new PhotoThumbnailModel();
-            return Ok(photoViewModel);
         }
 
         [HttpGet]
@@ -174,23 +132,12 @@ namespace PhotoManager.Controllers.Api
         [Authorize]
         [HttpDelete]
         [ValidateAntiForgeryToken]
-        [Route("album")]
+        [Route("")]
         public IHttpActionResult Delete(int[] id)
         {
             _unitOfWork.Photos.DeletePhotos(id);
             _unitOfWork.Save();
 
-            return Ok(true);
-        }
-
-        [Authorize]
-        [HttpDelete]
-        [ValidateAntiForgeryToken]
-        [Route("album/{albumId}")]
-        public IHttpActionResult Delete(int? albumId, int[] id)
-        {
-            _unitOfWork.Photos.DeletePhotos(id);
-            _unitOfWork.Save();
             return Ok(true);
         }
 

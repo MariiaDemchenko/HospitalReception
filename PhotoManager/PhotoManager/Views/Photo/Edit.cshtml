@@ -1,18 +1,21 @@
 ﻿@model PhotoManager.DAL.ProjectionModels.PhotoAddModel
 @using PhotoManager.CustomHelpers
 
+
 @{
     if (Model.Id == 0)
     {
         <div class="page-header">
             <h2>Add photo</h2>
         </div>
+        ViewBag.Title = "Add photo";
     }
     else
     {
         <div class="page-header">
             <h2>Edit photo</h2>
         </div>
+        ViewBag.Title = "Edit photo";
     }
 }
 
