@@ -90,7 +90,7 @@
             for (var i = 0; i < parts.length - 1; i++) {
                 url += parts[i] + "/";
             }
-
+            url += $("#photoAlbumName").text();
             bootbox.alert(url);
         });
 

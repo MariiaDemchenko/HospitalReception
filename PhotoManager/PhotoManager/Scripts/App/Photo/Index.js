@@ -12,7 +12,7 @@
                         function (templates) {
                             var template = $(templates).filter("#photoHeaderTemplate").html();
                             var output = Mustache.render(template, photo);
-                            photo.CreationDate = photo.CreationDate == null ? "" : moment(new Date(photo.CreationDate)).format("LLLL");
+                            photo.CreationDate = photo.CreationDate == null ? "" : moment(new Date(photo.CreationDate)).format("DD/MM/YYYY");
                             $("#photoHeader").html(output);
                         });
                     $.displayPhoto(templatePath, photo);

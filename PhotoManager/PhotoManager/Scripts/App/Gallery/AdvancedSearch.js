@@ -59,8 +59,6 @@
                 load();
                 var startDate = moment(new Date(moment($("#startDate").val(), "DD-MM-YYYY"))).format("MM/DD/YYYY");
                 var endDate = moment(new Date(moment($("#endDate").val(), "DD-MM-YYYY"))).format("MM/DD/YYYY");
-                alert("startDate: " + startDate);
-                alert("endDate: " + endDate);
                 var serializedData = $("#formAdvancedSearch").serialize();
                 serializedData = serializedData + "&CreationDateBegin=" + startDate + "&CreationDateEnd=" + endDate;
                 history.pushState(null, null, "/gallery/advancedSearch?" + serializedData);
