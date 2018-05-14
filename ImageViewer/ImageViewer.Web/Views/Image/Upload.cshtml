@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model ImageClient.ImageServiceReference.ImageInfo
+
+<div class="page-header">
+    <h2>Upload image</h2>
+</div>
+
+<form id="imageForm" action="Upload" method="post" enctype="multipart/form-data">
+
+    <div class="row form-menu">
+        @Html.DisplayNameFor(m => m.Name)
+        @Html.EditorFor(m => m.Name, new { @htmlAttributes = new { @class = "form-control btn-menu" } })
+    </div>
+
+    <div class="form-menu">
+        <label for="file">Upload Image:</label>
+        <input type="file" name="upload" id="file" accept="image/jpeg" />
+    </div>
+
+    <div class="img-container photo-frame col-7">
+        <img id="displayedImage" class="image" src="/Content/Images/emptyImage.jpg" />
+    </div>
+
+    <input type="submit" value="UPLOAD" class="btn btn-outline-primary btn-menu form-menu" />
+</form>
+
+
+
+<script>
+    $(function () {
+        $("input[type=file]").change(function () {
+            if (event.target.files.length > 0) {
+                var tmppath = URL.createObjectURL(event.target.files[0]);
+                $("#displayedImage").fadeIn("fast").attr("src", tmppath);
+            } else {
+                $("#displayedImage").fadeIn("fast").attr("src", "/Content/Images/emptyImage.jpg");
+            }
+        });
+    });
+</script>

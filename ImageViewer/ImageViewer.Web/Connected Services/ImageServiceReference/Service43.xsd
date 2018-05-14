@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://Microsoft.ServiceModel.ImageViewer.Contracts" elementFormDefault="qualified" targetNamespace="http://Microsoft.ServiceModel.ImageViewer.Contracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8000/ImageViewer/Service?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Microsoft.ServiceModel.ImageViewer.Contracts.DataContracts" />
+  <xs:import schemaLocation="http://localhost:8000/ImageViewer/Service?xsd=xsd4" namespace="http://schemas.microsoft.com/Message" />
+  <xs:element name="FilesData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Microsoft.ServiceModel.ImageViewer.Contracts.DataContracts" minOccurs="0" name="ImageFiles" nillable="true" type="q1:ArrayOfImageInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadImage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Microsoft.ServiceModel.ImageViewer.Contracts.DataContracts" minOccurs="0" name="data" nillable="true" type="q2:ImageInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadImageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.microsoft.com/Message" name="DownloadImageResult" type="q3:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImageData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.microsoft.com/Message" name="ImageStream" type="q4:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Microsoft.ServiceModel.ImageViewer.Contracts.DataContracts" name="ImageInfo" nillable="true" type="q5:ImageInfo" />
+</xs:schema>

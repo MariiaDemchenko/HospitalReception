@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Image";
+}
+@model ImageClient.ImageServiceReference.ImageInfo
+<div class="page-header">
+    <h2>Image</h2>
+</div>
+
+<div class="row">
+    <div class="col-5">
+        <div class="row input-item">
+            <div class="col-4">@Html.DisplayNameFor(m => m.Name)</div>
+            <div class="col-5">@Html.DisplayFor(m => m.Name)</div>
+        </div>
+        <div class="row input-item">
+            <div class="col-4">@Html.DisplayNameFor(m => m.Date)</div>
+            <div class="col-5">@Html.DisplayFor(m => m.Date)</div>
+        </div>
+    </div>
+</div>
+@{
+    if (@Model.ImageSizeBytes > Constants.MaxReceivedMessageSize)
+    {
+        <div class="col-5">
+            <h4>Image size exceeded</h4>
+        </div>
+    }
+    else
+    {
+        <img src="/Image/Download/file?Name=@Model.Name&Size=1" class="image-original" />
+    }
+}

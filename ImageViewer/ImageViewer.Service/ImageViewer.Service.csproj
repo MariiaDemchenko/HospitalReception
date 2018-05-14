@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5753B372-200E-463D-B1C4-84EE099F9D58}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Microsoft.ServiceModel.ImageViewer</RootNamespace>
+    <AssemblyName>Service</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Contracts\DataContracts\ImageProcessingFault.cs" />
+    <Compile Include="Contracts\MessageContracts\ImageData.cs" />
+    <Compile Include="Contracts\ServiceContracts\IIMageViewer.cs" />
+    <Compile Include="Services\ImageViewer.cs" />
+    <Compile Include="Contracts\MessageContracts\FilesData.cs" />
+    <Compile Include="Contracts\DataContracts\ImageInfo.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\black.jpg" />
+    <Content Include="Images\blue.jpg" />
+    <Content Include="Images\brown.jpg" />
+    <Content Include="Images\building.jpg" />
+    <Content Include="Images\clearLake.jpg" />
+    <Content Include="Images\coffee.jpg" />
+    <Content Include="Images\colors.jpg" />
+    <Content Include="Images\darkblue.jpg" />
+    <Content Include="Images\desert.jpg" />
+    <Content Include="Images\dessert.jpg" />
+    <Content Include="Images\emptyImage.jpg" />
+    <Content Include="Images\forest.jpg" />
+    <Content Include="Images\gray.jpg" />
+    <Content Include="Images\green.jpg" />
+    <Content Include="Images\lake.jpg" />
+    <Content Include="Images\lavender.jpg" />
+    <Content Include="Images\limegreen.jpg" />
+    <Content Include="Images\logodev.png" />
+    <Content Include="Images\meadow.jpg" />
+    <Content Include="Images\mountains.jpg" />
+    <Content Include="Images\orange.jpg" />
+    <Content Include="Images\pears.jpg" />
+    <Content Include="Images\pink.jpg" />
+    <Content Include="Images\purple.jpg" />
+    <Content Include="Images\raspberries.jpg" />
+    <Content Include="Images\red.jpg" />
+    <Content Include="Images\sky.jpg" />
+    <Content Include="Images\skyblue.jpg" />
+    <Content Include="Images\smoky.jpg" />
+    <Content Include="Images\sunrize.jpg" />
+    <Content Include="Images\sunset.jpg" />
+    <Content Include="Images\sunset.png" />
+    <Content Include="Images\turqoise.jpg" />
+    <Content Include="Images\volcano.jpg" />
+    <Content Include="Images\waterfall.jpg" />
+    <Content Include="Images\white.jpg" />
+    <Content Include="Images\whitewash.jpg" />
+    <Content Include="Images\wooden.jpg" />
+    <Content Include="Images\yellow.jpg" />
+    <Content Include="Images\yellow.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

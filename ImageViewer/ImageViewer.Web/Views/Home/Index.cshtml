@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model ImageClient.ImageServiceReference.ImageInfo[]
+
+<div class="page-header">
+    <h2>Albums</h2>
+</div>
+
+@Html.ActionLink("UPLOAD IMAGE", "Upload", "Image", null, new { @class = "btn form-menu btn-outline-primary" })
+
+<div class="row">
+    @{
+        foreach (var image in Model)
+        {
+            var action = Url.Action("Index", "Image", new { name = image.Name, date = image.Date, imageSizeBytes = image.ImageSizeBytes });
+            <div class="col-lg-4 text-center">
+                <div class="photo img-thumbnail">
+                    <a class="photo-frame-bg d-flex" href=@action target="_blank">
+                        <img src="/Image/Download/file?Name=@image.Name&Size=0" class="image" />
+                    </a>
+                    <div class="photo-footer">
+                        <div class="description">
+                            <div>
+                                <a class="photo-name" href=@action target="_blank">
+                                    @image.Name
+                                </a>
+                                <div class="photo-date">
+                                    <label>@image.Date</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<script>
+    $(function () {
+        $("btnImage").on("click",
+            function () {
+                alert($(this).data("imageName"));
+            });
+
+
+    });
+</script>

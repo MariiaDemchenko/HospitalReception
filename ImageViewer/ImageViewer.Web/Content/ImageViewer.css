@@ -1,0 +1,289 @@
+﻿.image {
+    width: 100%;
+    height: 100%;
+}
+
+.image-original {
+    margin: auto;
+    max-height: 700px;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none !important;
+}
+
+.album, .photo {
+    max-width: 90%;
+    margin: 10px auto;
+}
+
+    .photo:hover .photo-name {
+        color: #3498db
+    }
+
+    .photo:hover {
+        background: #3498db
+    }
+
+    .album:hover .album-name {
+        color: #3498db
+    }
+
+    .album:hover {
+        background: #3498db
+    }
+
+.photo-frame-bg {
+    height: 250px;
+    background: #eee;
+}
+
+.photo-frame {
+    height: 300px;
+}
+
+.album-frame {
+    height: 250px;
+    background: #eee;
+}
+
+.photo-footer {
+    padding: 0 0 25px 0;
+    background: #eee;
+}
+
+.album-footer {
+    padding: 10px;
+    background: #eee;
+}
+
+    .album-footer.manage {
+        padding: 0 0 25px 0;
+        background: #eee;
+    }
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 20px 0 2px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+#photoHeader, #albumHeader {
+    margin: 15px;
+}
+
+.album-description {
+    padding-bottom: 9px;
+    margin: 40px 0 2px;
+    text-align: center;
+}
+
+.counter {
+    padding-bottom: 9px;
+    margin: 40px 0 2px;
+    color: #aaa;
+    text-align: left;
+}
+
+.photo-name {
+    text-transform: uppercase;
+    margin: 0 0 5px 0;
+}
+
+.album-name {
+    text-transform: uppercase;
+}
+
+.form-menu {
+    margin: 20px;
+}
+
+.menu {
+    margin: 15px;
+}
+
+.btn-advanced-search-gallery, .btn-save-changes {
+    margin: 15px;
+}
+
+.input-item {
+    margin: 5px;
+    align-items: center;
+    text-align: left;
+}
+
+.btn-menu {
+    margin-left: 5px;
+}
+
+.select.selected i {
+    color: #007bff;
+}
+
+i {
+    color: black;
+}
+
+.liked i {
+    color: green;
+}
+
+.disliked i {
+    color: red;
+}
+
+.disabled i, .disabled label {
+    color: gray;
+}
+
+.photo-date {
+    font-size: 12px;
+    text-align: right;
+    padding: 0 5px;
+    min-height: 26px;
+}
+
+.selected-icon {
+    cursor: pointer;
+}
+
+    .selected-icon.select {
+        cursor: pointer;
+        float: right;
+        padding: 0 5px;
+        visibility: hidden;
+    }
+
+    .selected-icon.edit {
+        cursor: pointer;
+        float: right;
+        padding: 0 10px;
+        visibility: hidden;
+    }
+
+    .selected-icon.remove {
+        cursor: pointer;
+        float: right;
+        padding: 0 5px;
+        visibility: hidden;
+    }
+
+.selectable .selected-icon.select {
+    cursor: pointer;
+    float: right;
+    padding: 0 10px;
+    visibility: visible;
+}
+
+.selectable .selected-icon.edit {
+    cursor: pointer;
+    float: right;
+    padding: 0 10px;
+    visibility: visible;
+}
+
+.selectable .selected-icon.remove {
+    cursor: pointer;
+    float: right;
+    padding: 0 10px;
+    visibility: visible;
+}
+
+.selected-icon.like, .selected-icon.dislike {
+    cursor: pointer;
+    color: gray;
+    float: left;
+    padding: 0 5px;
+}
+
+.selectable .selected-icon.like, .selectable .selected-icon.dislike {
+    cursor: pointer;
+    color: black;
+    float: left;
+    padding: 0 5px;
+}
+
+
+
+.selectable .selected-icon.like, .selectable .selected-icon.dislike {
+    cursor: pointer;
+    color: black;
+    float: left;
+    padding: 0 5px;
+}
+
+.remove {
+    cursor: pointer;
+    color: black;
+    float: right;
+    padding: 0 5px;
+}
+
+.selected-icon:hover.select i {
+    color: #007bff
+}
+
+.selected-icon:hover.remove i {
+    color: #dc3545
+}
+
+.selected-icon:hover.edit i {
+    color: #ffc107
+}
+
+.markedToDelete.selected-icon.remove i {
+    color: red;
+}
+
+.img-container {
+    margin: 10px 0;
+    max-width: 40%;
+    max-height: 40%;
+}
+
+.table-container {
+    max-width: 50%;
+    max-height: 40%;
+}
+
+.description {
+    margin: 0;
+}
+
+.loader {
+    border: 10px solid #ccc;
+    border-radius: 50%;
+    border-top: 10px solid #3498db;
+    width: 80px;
+    height: 80px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    -moz-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
