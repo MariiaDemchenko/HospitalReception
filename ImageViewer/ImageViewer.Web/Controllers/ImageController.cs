@@ -1,8 +1,9 @@
 ﻿using ImageClient.Filters;
 using ImageClient.ImageServiceReference;
-using System.Linq;
+using System.ServiceModel;
 using System.Web;
 using System.Web.Mvc;
+using ImageInfo = ImageClient.ImageServiceReference.ImageInfo;
 
 namespace ImageClient.Controllers
 {
@@ -20,7 +21,7 @@ namespace ImageClient.Controllers
             return View(imageInfo);
         }
 
-        [ExceptionHandling]
+        [WcfError]
         public FileResult Download(ImageInfo imageInfo)
         {
             var image = _client.DownloadImage(imageInfo);
@@ -28,18 +29,37 @@ namespace ImageClient.Controllers
         }
 
         [HttpGet]
-        public ActionResult Upload()
+        public ActionResult Upload(ImageInfo uploadedImage)
         {
-            return View(new ImageInfo());
+            return View();
         }
 
         [HttpPost]
-        [ExceptionHandling]
         public ActionResult Upload(HttpPostedFileBase upload, ImageInfo imageInfo)
         {
-            if (upload != null && imageInfo.Name.Split('.').LastOrDefault() == "jpg")
+            ModelState.Clear();
+            if (upload == null)
+            {
+                ModelState.AddModelError("Image", "Select a photo");
+            }
+            if (imageInfo.Name == null)
+            {
+                ModelState.AddModelError("Name", "Name field is required");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(imageInfo);
+            }
+
+            try
             {
                 _client.UploadImage(new ImageInfo { Name = imageInfo.Name }, upload.InputStream);
+            }
+            catch (FaultException exception)
+            {
+                ModelState.AddModelError("Exception", exception.Message);
+                return View(imageInfo);
             }
 
             return RedirectToAction("Index", "Home");

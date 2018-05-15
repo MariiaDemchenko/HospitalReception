@@ -6,9 +6,9 @@ namespace Microsoft.ServiceModel.ImageViewer.Contracts.DataContracts
     [DataContract]
     public class ImageInfo
     {
-        [DataMember] public string Name;
-        [DataMember] public DateTime Date;
-        [DataMember] public Constants.ImageSize Size;
-        [DataMember] public long ImageSizeBytes;
+        [DataMember] public string Name { get; set; }
+        [DataMember] public DateTime Date { get; set; }
+        [DataMember] public Constants.ImageSize Size { get; set; }
+        [DataMember] public long ImageSizeBytes { get; set; }
     }
 }

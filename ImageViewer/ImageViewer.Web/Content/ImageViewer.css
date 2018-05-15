@@ -119,6 +119,10 @@ a {
     margin-left: 15px;
 }
 
+.error-message {
+    margin-left: 20px;
+}
+
 .select.selected i {
     color: #007bff;
 }

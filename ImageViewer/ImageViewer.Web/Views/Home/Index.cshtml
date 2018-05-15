@@ -3,9 +3,7 @@
 }
 @model ImageClient.ImageServiceReference.ImageInfo[]
 
-<div class="page-header">
-    <h2>Albums</h2>
-</div>
+<div class="page-header"></div>
 
 @Html.ActionLink("UPLOAD IMAGE", "Upload", "Image", null, new { @class = "btn form-menu btn-outline-primary" })
 
@@ -36,14 +34,3 @@
         }
     }
 </div>
-
-<script>
-    $(function () {
-        $("btnImage").on("click",
-            function () {
-                alert($(this).data("imageName"));
-            });
-
-
-    });
-</script>

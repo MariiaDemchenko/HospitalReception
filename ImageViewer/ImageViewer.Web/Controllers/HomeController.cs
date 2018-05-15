@@ -12,7 +12,7 @@ namespace ImageClient.Controllers
             _client = new ImageViewerClient();
         }
 
-        [ExceptionHandling]
+        [WcfError]
         public ActionResult Index()
         {
             var imageFiles = _client.GetAllImages();

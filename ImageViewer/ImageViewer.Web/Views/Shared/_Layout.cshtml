@@ -15,12 +15,6 @@
         <button class="navbar-toggler" aria-expanded="false" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">@Html.ActionLink("Gallery", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                <li class="nav-item">@Html.ActionLink("Upload image", "Upload", "Image", new { area = "" }, new { @class = "nav-link" })</li>
-            </ul>
-        </div>
     </div>
     <div class="container body-content">
         @RenderBody()

@@ -3,22 +3,36 @@
 }
 @model ImageClient.ImageServiceReference.ImageInfo
 
-<div class="page-header">
-    <h2>Upload image</h2>
-</div>
+<div class="page-header"></div>
 
 <form id="imageForm" action="Upload" method="post" enctype="multipart/form-data">
-
+    @if (!ViewData.ModelState.IsValid && @ViewData.ModelState["Exception"] != null)
+    {
+        <span class="field-validation-error text-danger error-message">
+            @ViewData.ModelState["Exception"].Errors[0].ErrorMessage
+        </span>
+    }
     <div class="row form-menu">
         @Html.DisplayNameFor(m => m.Name)
-        @Html.EditorFor(m => m.Name, new { @htmlAttributes = new { @class = "form-control btn-menu" } })
+        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control btn-menu" } })
     </div>
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Name"] != null)
+    {
+        <span class="field-validation-error text-danger error-message">
+            @ViewData.ModelState["Name"].Errors[0].ErrorMessage
+        </span>
+    }
 
     <div class="form-menu">
         <label for="file">Upload Image:</label>
         <input type="file" name="upload" id="file" accept="image/jpeg" />
     </div>
-
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Image"] != null)
+    {
+        <span class="field-validation-error text-danger error-message">
+            @ViewData.ModelState["Image"].Errors[0].ErrorMessage
+        </span>
+    }
     <div class="img-container photo-frame col-7">
         <img id="displayedImage" class="image" src="/Content/Images/emptyImage.jpg" />
     </div>
@@ -26,13 +40,13 @@
     <input type="submit" value="UPLOAD" class="btn btn-outline-primary btn-menu form-menu" />
 </form>
 
-
-
 <script>
     $(function () {
+
         $("input[type=file]").change(function () {
             if (event.target.files.length > 0) {
-                var tmppath = URL.createObjectURL(event.target.files[0]);
+                var file = event.target.files[0];
+                var tmppath = URL.createObjectURL(file);
                 $("#displayedImage").fadeIn("fast").attr("src", tmppath);
             } else {
                 $("#displayedImage").fadeIn("fast").attr("src", "/Content/Images/emptyImage.jpg");
