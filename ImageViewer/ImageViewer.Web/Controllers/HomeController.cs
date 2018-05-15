@@ -1,4 +1,5 @@
-﻿using ImageClient.ImageServiceReference;
+﻿using ImageClient.Filters;
+using ImageClient.ImageServiceReference;
 using System.Web.Mvc;
 
 namespace ImageClient.Controllers
@@ -11,6 +12,7 @@ namespace ImageClient.Controllers
             _client = new ImageViewerClient();
         }
 
+        [ExceptionHandling]
         public ActionResult Index()
         {
             var imageFiles = _client.GetAllImages();

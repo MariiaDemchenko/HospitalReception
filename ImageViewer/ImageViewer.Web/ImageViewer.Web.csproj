@@ -154,7 +154,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
-    <Compile Include="Filters\ExceptionHandlingAttributeMVC.cs" />
+    <Compile Include="Filters\ExceptionHandlingAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -192,10 +192,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="Connected Services\ImageServiceReference\Service1.wsdl" />
     <None Include="Connected Services\ImageServiceReference\Service4.xsd">
       <SubType>Designer</SubType>
     </None>

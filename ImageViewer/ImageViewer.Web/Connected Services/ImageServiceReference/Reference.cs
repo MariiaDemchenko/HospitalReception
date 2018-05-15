@@ -181,39 +181,31 @@ namespace ImageClient.ImageServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://Microsoft.ServiceModel.ImageViewer.Contracts", ConfigurationName="ImageServiceReference.IImageViewer")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ImageServiceReference.IImageViewer")]
     public interface IImageViewer {
         
         // CODEGEN: Generating message contract since the operation GetAllImages is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/GetAllImages", ReplyAction="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/GetAllImagesResp" +
-            "onse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IImageViewer/GetAllImages", ReplyAction="http://tempuri.org/IImageViewer/GetAllImagesResponse")]
         ImageClient.ImageServiceReference.FilesData GetAllImages(ImageClient.ImageServiceReference.GetAllImagesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/GetAllImages", ReplyAction="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/GetAllImagesResp" +
-            "onse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IImageViewer/GetAllImages", ReplyAction="http://tempuri.org/IImageViewer/GetAllImagesResponse")]
         System.Threading.Tasks.Task<ImageClient.ImageServiceReference.FilesData> GetAllImagesAsync(ImageClient.ImageServiceReference.GetAllImagesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/DownloadImage", ReplyAction="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/DownloadImageRes" +
-            "ponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ImageClient.ImageServiceReference.ImageProcessingFault), Action="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/DownloadImageIma" +
-            "geProcessingFaultFault", Name="ImageProcessingFault", Namespace="http://schemas.datacontract.org/2004/07/Microsoft.ServiceModel.ImageViewer.Contra" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IImageViewer/DownloadImage", ReplyAction="http://tempuri.org/IImageViewer/DownloadImageResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ImageClient.ImageServiceReference.ImageProcessingFault), Action="http://tempuri.org/IImageViewer/DownloadImageImageProcessingFaultFault", Name="ImageProcessingFault", Namespace="http://schemas.datacontract.org/2004/07/Microsoft.ServiceModel.ImageViewer.Contra" +
             "cts.DataContracts")]
         System.IO.Stream DownloadImage(ImageClient.ImageServiceReference.ImageInfo data);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/DownloadImage", ReplyAction="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/DownloadImageRes" +
-            "ponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IImageViewer/DownloadImage", ReplyAction="http://tempuri.org/IImageViewer/DownloadImageResponse")]
         System.Threading.Tasks.Task<System.IO.Stream> DownloadImageAsync(ImageClient.ImageServiceReference.ImageInfo data);
         
         // CODEGEN: Generating message contract since the operation UploadImage is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/UploadImage", ReplyAction="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/UploadImageRespo" +
-            "nse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ImageClient.ImageServiceReference.ImageProcessingFault), Action="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/UploadImageImage" +
-            "ProcessingFaultFault", Name="ImageProcessingFault", Namespace="http://schemas.datacontract.org/2004/07/Microsoft.ServiceModel.ImageViewer.Contra" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IImageViewer/UploadImage", ReplyAction="http://tempuri.org/IImageViewer/UploadImageResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ImageClient.ImageServiceReference.ImageProcessingFault), Action="http://tempuri.org/IImageViewer/UploadImageImageProcessingFaultFault", Name="ImageProcessingFault", Namespace="http://schemas.datacontract.org/2004/07/Microsoft.ServiceModel.ImageViewer.Contra" +
             "cts.DataContracts")]
         ImageClient.ImageServiceReference.UploadImageResponse UploadImage(ImageClient.ImageServiceReference.ImageData request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/UploadImage", ReplyAction="http://Microsoft.ServiceModel.ImageViewer.Contracts/IImageViewer/UploadImageRespo" +
-            "nse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IImageViewer/UploadImage", ReplyAction="http://tempuri.org/IImageViewer/UploadImageResponse")]
         System.Threading.Tasks.Task<ImageClient.ImageServiceReference.UploadImageResponse> UploadImageAsync(ImageClient.ImageServiceReference.ImageData request);
     }
     
@@ -230,10 +222,10 @@ namespace ImageClient.ImageServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="FilesData", WrapperNamespace="http://Microsoft.ServiceModel.ImageViewer.Contracts", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="FilesData", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
     public partial class FilesData {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://Microsoft.ServiceModel.ImageViewer.Contracts", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
         public ImageClient.ImageServiceReference.ImageInfo[] ImageFiles;
         
         public FilesData() {
@@ -247,13 +239,13 @@ namespace ImageClient.ImageServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="ImageData", WrapperNamespace="http://Microsoft.ServiceModel.ImageViewer.Contracts", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ImageData", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
     public partial class ImageData {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://Microsoft.ServiceModel.ImageViewer.Contracts")]
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://tempuri.org/")]
         public ImageClient.ImageServiceReference.ImageInfo ImageInfo;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://Microsoft.ServiceModel.ImageViewer.Contracts", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
         public System.IO.Stream ImageStream;
         
         public ImageData() {

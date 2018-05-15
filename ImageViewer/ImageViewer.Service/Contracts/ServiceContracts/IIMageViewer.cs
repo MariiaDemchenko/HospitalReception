@@ -5,7 +5,7 @@ using System.ServiceModel;
 
 namespace Microsoft.ServiceModel.ImageViewer.Contracts.ServiceContracts
 {
-    [ServiceContract(Namespace = "http://Microsoft.ServiceModel.ImageViewer.Contracts")]
+    [ServiceContract]
     [ServiceKnownType(typeof(ImageInfo))]
     public interface IImageViewer
     {

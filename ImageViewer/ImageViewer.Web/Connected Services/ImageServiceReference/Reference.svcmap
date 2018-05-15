@@ -23,12 +23,11 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="Service4.xsd" MetadataType="Schema" ID="0193995b-e699-418c-ada5-ed174ed29ed7" SourceId="1" SourceUrl="http://localhost:8000/ImageViewer/Service?xsd=xsd2" />
-    <MetadataFile FileName="Service.xsd" MetadataType="Schema" ID="6100c496-227d-44a2-a9a7-12f5dc135cba" SourceId="1" SourceUrl="http://localhost:8000/ImageViewer/Service?xsd=xsd4" />
     <MetadataFile FileName="Service41.xsd" MetadataType="Schema" ID="2ee6c73a-2a8c-42e2-ab54-60d84ce9d118" SourceId="1" SourceUrl="http://localhost:8000/ImageViewer/Service?xsd=xsd1" />
     <MetadataFile FileName="Service42.xsd" MetadataType="Schema" ID="9816258d-9614-4b72-80d5-102675111b72" SourceId="1" SourceUrl="http://localhost:8000/ImageViewer/Service?xsd=xsd0" />
     <MetadataFile FileName="Service43.xsd" MetadataType="Schema" ID="e633eb74-eb8d-4c2f-86f3-946f46279987" SourceId="1" SourceUrl="http://localhost:8000/ImageViewer/Service?xsd=xsd3" />
     <MetadataFile FileName="Service1.disco" MetadataType="Disco" ID="c6346c61-c6e3-4660-8eb6-bd6e4490f1b4" SourceId="1" SourceUrl="http://localhost:8000/ImageViewer/Service?disco" />
-    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="57d54fad-8234-4688-86a2-93cc260c974f" SourceId="1" SourceUrl="http://localhost:8000/ImageViewer/Service?wsdl=wsdl0" />
+    <MetadataFile FileName="Service.xsd" MetadataType="Schema" ID="6100c496-227d-44a2-a9a7-12f5dc135cba" SourceId="1" SourceUrl="http://localhost:8000/ImageViewer/Service?xsd=xsd4" />
     <MetadataFile FileName="CalculatorService1.wsdl" MetadataType="Wsdl" ID="66a1d63e-276d-4d62-b3fd-f78f33a08c69" SourceId="1" SourceUrl="http://localhost:8000/ImageViewer/Service?wsdl" />
   </Metadata>
   <Extensions>

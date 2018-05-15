@@ -2,7 +2,7 @@
 
 namespace ImageClient.Filters
 {
-    public class ExceptionHandlingAttributeMvc : HandleErrorAttribute
+    public class ExceptionHandlingAttribute : HandleErrorAttribute
     {
         public string Message { get; set; }
 

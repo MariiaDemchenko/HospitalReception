@@ -1,5 +1,6 @@
 ﻿using ImageClient.Filters;
 using ImageClient.ImageServiceReference;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,7 +19,8 @@ namespace ImageClient.Controllers
         {
             return View(imageInfo);
         }
-        
+
+        [ExceptionHandling]
         public FileResult Download(ImageInfo imageInfo)
         {
             var image = _client.DownloadImage(imageInfo);
@@ -32,10 +34,10 @@ namespace ImageClient.Controllers
         }
 
         [HttpPost]
-        [ExceptionHandlingAttributeMvc]
+        [ExceptionHandling]
         public ActionResult Upload(HttpPostedFileBase upload, ImageInfo imageInfo)
         {
-            if (upload != null)
+            if (upload != null && imageInfo.Name.Split('.').LastOrDefault() == "jpg")
             {
                 _client.UploadImage(new ImageInfo { Name = imageInfo.Name }, upload.InputStream);
             }

@@ -49,7 +49,7 @@
     <Compile Include="Contracts\DataContracts\ImageProcessingFault.cs" />
     <Compile Include="Contracts\MessageContracts\ImageData.cs" />
     <Compile Include="Contracts\ServiceContracts\IIMageViewer.cs" />
-    <Compile Include="Services\ImageViewer.cs" />
+    <Compile Include="ImageViewer.cs" />
     <Compile Include="Contracts\MessageContracts\FilesData.cs" />
     <Compile Include="Contracts\DataContracts\ImageInfo.cs" />
     <Compile Include="Program.cs" />
