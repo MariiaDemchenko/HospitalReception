@@ -2,7 +2,7 @@
 
 namespace HospitalReception.DAL.Models
 {
-    public class Department
+    public class Department : IEntityBase
     {
         public int Id { get; set; }
         public string Name { get; set; }

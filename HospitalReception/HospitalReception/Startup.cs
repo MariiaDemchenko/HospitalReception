@@ -1,4 +1,7 @@
-﻿using Microsoft.Owin;
+﻿using System;
+using Microsoft.Owin;
+using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(HospitalReception.Startup))]
@@ -9,6 +12,17 @@ namespace HospitalReception
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            app.UseCors(CorsOptions.AllowAll);
+
+            OAuthAuthorizationServerOptions option = new OAuthAuthorizationServerOptions
+            {
+                TokenEndpointPath = new PathString("/token"),
+                Provider = new ApplicationOAuthProvider(),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
+                AllowInsecureHttp = true
+            };
+            app.UseOAuthAuthorizationServer(option);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }
 }

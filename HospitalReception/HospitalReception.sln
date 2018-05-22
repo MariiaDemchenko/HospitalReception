@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalReception.Web", "HospitalReception\HospitalReception.Web.csproj", "{B3123097-98AA-409C-8CAB-5221DBF4C2C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalReception.WebApi", "HospitalReception\HospitalReception.WebApi.csproj", "{B3123097-98AA-409C-8CAB-5221DBF4C2C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalReception.DAL", "HospitalReception.DAL\HospitalReception.DAL.csproj", "{2C413D96-C389-4E98-8D6B-037D47E68DF6}"
 EndProject

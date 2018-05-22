@@ -1,12 +1,11 @@
-﻿using System;
-using HospitalReception.DAL;
+﻿using HospitalReception.DAL;
 using HospitalReception.DAL.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
+using System;
 
 namespace HospitalReception
 {
@@ -18,6 +17,7 @@ namespace HospitalReception
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(HospitalReceptionDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user

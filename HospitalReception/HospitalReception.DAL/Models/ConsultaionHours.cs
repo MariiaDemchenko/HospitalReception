@@ -2,7 +2,7 @@
 
 namespace HospitalReception.DAL.Models
 {
-    public class ConsultaionHours
+    public class ConsultaionHours : IEntityBase
     {
         public int Id { get; set; }
         public int DoctorId { get; set; }

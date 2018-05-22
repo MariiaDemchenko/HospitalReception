@@ -1,0 +1,54 @@
+<div class="container body-content" text-align="center">
+    <h2>User registration</h2>
+    <form class="form-horizontal" novalidate [formGroup]="myform" (ngSubmit)="OnSubmit()" [ngClass]="{
+        'has-danger': myform.errors,
+        'has-success': myform.valid
+   }">
+        <div class="form-control-feedback" *ngIf="myform.errors">
+            <ul>
+                <li class="form-control-feedback" *ngFor="let error of myform.errors">
+                    {{error}}
+                </li>
+            </ul>
+        </div>
+        <div class="form-group" [ngClass]="{
+            'has-danger': UserName.invalid && (UserName.dirty || UserName.touched),
+            'has-success': UserName.valid && (UserName.dirty || UserName.touched)
+       }">
+            <label>User name</label>
+            <input class="form-control" formControlName="UserName" required>
+            <div class="form-control-feedback" *ngIf="UserName.errors && (UserName.dirty || UserName.touched)">
+                <p *ngIf="UserName.errors && UserName.errors.required">User name is required</p>               
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+         'has-danger': Email.invalid && (Email.dirty || Email.touched),
+         'has-success': Email.valid && (Email.dirty || Email.touched)
+    }">
+            <label>Email</label>
+            <input type="email" class="form-control" formControlName="Email" required>
+            <div class="form-control-feedback" *ngIf="Email.errors && (Email.dirty || Email.touched)">
+                <p *ngIf="Email.errors && Email.errors.required">Email is required</p>
+                <p *ngIf="Password.errors && Password.errors.pattern">The email address must contain at least the @ character</p>
+
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+         'has-danger': Password.invalid && (Password.dirty || Password.touched),
+         'has-success': Password.valid && (Password.dirty || Password.touched)
+    }">
+            <label>Password</label>
+            <input type="password" class="form-control" formControlName="Password" required>
+            <div class="form-control-feedback" *ngIf="Password.errors && (Password.dirty || Password.touched)">
+                <p *ngIf="Password.errors && Password.errors.required">Password is required</p>
+                <p *ngIf="Password.errors && Password.errors.minlength">Password must be 8 characters long, we need another {{Password.errors.minlength.requiredLength - Password.errors.minlength.actualLength}}
+                    characters </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <input [disabled]="!myform.valid" class="btn btn-outline-primary btn-submit" type="submit" value="Register">
+        </div>
+    </form>
+</div>

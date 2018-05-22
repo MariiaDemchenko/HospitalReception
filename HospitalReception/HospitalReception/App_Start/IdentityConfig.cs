@@ -51,7 +51,7 @@ namespace HospitalReception
                 RequireUniqueEmail = true
             };
 
-            // Configure validation logic for passwords
+            // Configure validatioasdn logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
