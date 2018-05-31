@@ -6,7 +6,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './user/register/register.component';
 import { UserService } from './shared/user.service';
-import { HttpClientModule } from '@angular/common/http';
+import { DoctorsService } from './shared/doctors/doctors.service';
+import { ImagesService } from './shared/images/images.service';
+import { DepartmentsService } from './shared/departments/departments.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import {routerConfig} from '../router.config';
 import { CoursesComponent } from './courses/courses.component';
@@ -19,6 +22,8 @@ import { ActivatedRoute } from '@angular/router';
 import { SignInComponent } from './user/sign-in/sign-in.component';
 import { UserComponent } from './user/user.component';
 import { AuthGuard } from './auth/auth.guard';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { SignOutComponent } from './user/sign-out/sign-out.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,8 @@ import { AuthGuard } from './auth/auth.guard';
     SideMenuComponent,
     CoursesCategoryComponent,
     SignInComponent,
-    UserComponent
+    UserComponent,
+    SignOutComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,9 @@ import { AuthGuard } from './auth/auth.guard';
     ReactiveFormsModule,
     RouterModule.forRoot(routerConfig)
   ],
-  providers: [UserService, AuthGuard],
+  // tslint:disable-next-line:max-line-length
+  providers: [UserService, DoctorsService, ImagesService, DepartmentsService, AuthGuard, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

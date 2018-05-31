@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HospitalReception.ViewModels
+﻿namespace HospitalReception.ViewModels
 {
     public class DoctorViewModel
     {
@@ -11,6 +6,7 @@ namespace HospitalReception.ViewModels
         public string LastName { get; set; }
         public int DepartmentId { get; set; }
         public string Department { get; set; }
+        public string ImageId { get; set; }
         public double Rating { get; set; }
     }
 }

@@ -43,16 +43,13 @@ export class SignInComponent implements OnInit {
   }
 
   OnSubmit(form: NgForm) {
-    alert('hrrr');
     this.userService.userAuthentication(this.myform.value)
-      // tslint:disable-next-line:max-line-length
       .subscribe((data: any) => {
         localStorage.setItem('userToken', data.access_token);
         this.router.navigate(['/home']);
       },
         (err: HttpErrorResponse) => {
           this.isLoginError = true;
-          alert(err.message);
           this.myform.setErrors(['Invalid credentials']);
         });
   }

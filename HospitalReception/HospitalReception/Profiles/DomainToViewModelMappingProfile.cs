@@ -17,7 +17,7 @@ namespace HospitalReception.Profiles
             CreateMap<Doctor, DoctorViewModel>()
                 .ForMember(vm => vm.Department, map => map.MapFrom(x => x.Department.Name));
             CreateMap<Department, DepartmentViewModel>()
-                .ForMember(vm => vm.NumberOfMovies, map => map.MapFrom(x => x.Doctors.Count));
+                .ForMember(vm => vm.NumberOfDoctors, map => map.MapFrom(x => x.Doctors.Count));
         }
     }
 }

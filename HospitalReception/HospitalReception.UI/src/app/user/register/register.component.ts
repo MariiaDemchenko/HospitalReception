@@ -51,6 +51,6 @@ export class RegisterComponent implements OnInit {
 
     this.userService.registerUser(this.myform.value)
        .subscribe((data: any) => {
-         if (data.Succeeded) { alert('yesy'); this.myform.reset(); } else {  alert('LLLL'); this.myform.setErrors(data.Errors); } });
+         if (data.Succeeded) { this.myform.reset(); } else {  this.myform.setErrors(data.Errors); } });
   }
 }

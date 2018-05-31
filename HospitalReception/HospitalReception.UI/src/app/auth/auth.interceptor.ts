@@ -1,9 +1,11 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpUserEvent, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpUserEvent, HttpEvent, HttpEventType } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { UserService } from '../shared/user.service';
-import 'rxjs/add/operator/do';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { of } from 'rxjs/observable/of';
+import { tap, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -20,14 +22,14 @@ export class AuthInterceptor implements HttpInterceptor {
                 headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('userToken'))
             });
             return next.handle(clonedreq)
-                .do(
-                succ => { },
-                err => {
-                    if (err.status === 401) {
-                        this.router.navigateByUrl('/login');
-                    }
-                }
-                );
+            .pipe(
+                tap(succ => {  },
+                    err => {
+                        if (err.status === 401) {
+                            this.router.navigateByUrl('/login');
+                        }
+                    })
+            );
         } else {
             this.router.navigateByUrl('/login');
         }

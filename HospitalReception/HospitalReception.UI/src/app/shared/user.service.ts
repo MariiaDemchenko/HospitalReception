@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Response} from '@angular/http';
-import {Observable} from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { User } from './user.model';
+import { EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-readonly rootUrl = 'http://localhost:55434';
+  authChanged: EventEmitter<any> = new EventEmitter();
+
+  readonly rootUrl = 'http://localhost:55434';
   constructor(private http: HttpClient) { }
 
   registerUser(user: User) {
-    alert(user);
-    alert(user.Email);
-    alert(user.Password);
     const body: User = {
-      UserName : user.UserName,
-      Password : user.Password,
+      UserName: user.UserName,
+      Password: user.Password,
       Email: user.Email,
       FirstName: user.FirstName,
       LastName: user.LastName
@@ -35,7 +35,6 @@ readonly rootUrl = 'http://localhost:55434';
   }
 
   getUserClaims() {
-    alert(this.rootUrl + '/api/users/getUserClaims');
-    return  this.http.get(this.rootUrl + '/api/users/getUserClaims');
-   }
+    return this.http.get(this.rootUrl + '/api/users/getUserClaims');
+  }
 }

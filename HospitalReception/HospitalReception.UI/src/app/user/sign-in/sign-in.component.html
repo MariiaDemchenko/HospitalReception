@@ -1,5 +1,5 @@
 <div class="container body-content" text-align="center">
-    <h2>User registration</h2>
+    <h2>Login</h2>
     <form class="form-horizontal" novalidate [formGroup]="myform" (ngSubmit)="OnSubmit()" [ngClass]="{
         'has-danger': myform.errors,
         'has-success': myform.valid
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="form-group">
-            <input [disabled]="!myform.valid" class="btn btn-outline-primary btn-submit" type="submit" value="Register">
+            <input [disabled]="!myform.valid" class="btn btn-outline-primary btn-submit" type="submit" value="Sign in">
         </div>
     </form>
 </div>

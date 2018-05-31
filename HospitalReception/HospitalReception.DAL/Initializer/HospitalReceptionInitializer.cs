@@ -44,7 +44,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 1,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 1
                     },
                     new Doctor
                     {
@@ -53,7 +54,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 2,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 2
                     },
                     new Doctor
                     {
@@ -62,7 +64,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 3.8,
                         CreatedUserId = userId,
                         DepartmentId = 2,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 3
                     },
                     new Doctor
                     {
@@ -71,7 +74,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 2,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 4
                     },
                     new Doctor
                     {
@@ -80,7 +84,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 3,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 5
                     },
                     new Doctor
                     {
@@ -89,7 +94,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 4,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 6
                     },
                     new Doctor
                     {
@@ -98,7 +104,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 4.0,
                         CreatedUserId = userId,
                         DepartmentId = 5,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 7
                     },
                     new Doctor
                     {
@@ -107,7 +114,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 3,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 8
                     },
                     new Doctor
                     {
@@ -116,7 +124,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 4,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 9
                     },
                     new Doctor
                     {
@@ -125,7 +134,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 5,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 10
                     },
                     new Doctor
                     {
@@ -134,7 +144,8 @@ namespace HospitalReception.DAL.Initializer
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 2,
-                        CreationDate = new DateTime(2018, 5, 18)
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 11
                     }
                 };
 

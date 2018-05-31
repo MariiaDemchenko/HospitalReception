@@ -34,14 +34,13 @@ namespace HospitalReception.Controllers.Api
         public LoginViewModel GetUserClaims()
         {
             var identityClaims = (ClaimsIdentity)User.Identity;
-            IEnumerable<Claim> claims = identityClaims.Claims;
-            LoginViewModel model = new LoginViewModel()
+
+            return new LoginViewModel
             {
                 UserName = identityClaims.FindFirst("Username").Value,
                 Email = identityClaims.FindFirst("Email").Value,
                 LoggedOn = identityClaims.FindFirst("LoggedOn").Value
-            };
-            return model;
+            }; 
         }
     }
 }

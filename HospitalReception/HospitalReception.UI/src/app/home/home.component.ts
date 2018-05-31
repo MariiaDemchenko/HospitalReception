@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../shared/user.service';
+import { DoctorsService } from '../shared/doctors/doctors.service';
+import { NgModule } from '@angular/core';
+import { ImagesService } from '../shared/images/images.service';
 
 @Component({
   selector: 'app-home',
@@ -9,18 +12,24 @@ import { UserService } from '../shared/user.service';
 })
 export class HomeComponent implements OnInit {
   userClaims: any;
+  doctors: any;
 
-  constructor(private router: Router, private userService: UserService) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private router: Router, private userService: UserService, private doctorsService: DoctorsService, private imagesService: ImagesService) {
+  }
 
-  ngOnInit() {
-    alert('init');
-    this.userService.getUserClaims().subscribe((data: any) => {
-      this.userClaims = data;
+  getImage(imageId: string) {
+    return this.imagesService.getImage(imageId).subscribe((data: any) => {
+      return data;
     });
   }
 
-  Logout() {
-    localStorage.removeItem('userToken');
-    this.router.navigate(['/login']);
+  ngOnInit() {
+    this.userService.getUserClaims().subscribe((data: any) => {
+      this.userService.authChanged.emit(data);
+    });
+    this.doctors = this.doctorsService.getAllDoctors().subscribe((data: any) => {
+      this.doctors = data;
+    });
   }
 }

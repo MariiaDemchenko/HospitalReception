@@ -18,14 +18,26 @@
         <a class="nav-link" routerLink="courses">Courses</a>
       </li>
     </ul>
-    <ul class="navbar-nav ml-auto my-2 my-lg-0">
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+      <li class="nav-item" *ngIf="userClaims">
+        <a class="nav-link">{{userClaims.UserName}} </a>
+      </li>
+      <li class="nav-item">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      </li>
+      <li class="nav-item">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="register">Register</a>
-        </li>
-      </ul>
-
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="register">Register</a>
+      </li>
+      <li class="nav-item" *ngIf="userClaims">
+        <a class="nav-link" routerLink="logoff">Log off</a>
+      </li>
+      <li class="nav-item" *ngIf="!userClaims">
+        <a class="nav-link" routerLink="login">Log in</a>
+      </li>
+    </ul>
   </div>
 </nav>
 <router-outlet></router-outlet>

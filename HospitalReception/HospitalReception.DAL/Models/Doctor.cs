@@ -7,6 +7,7 @@ namespace HospitalReception.DAL.Models
     {
         public int Id { get; set; }
         public int DepartmentId { get; set; }
+        public int ImageId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public double Rating { get; set; }

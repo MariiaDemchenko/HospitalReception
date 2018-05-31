@@ -19,7 +19,6 @@ namespace HospitalReception.Controllers.Api
         }
 
         [Route("new")]
-        [Route("latest")]
         public IHttpActionResult Get(HttpRequestMessage request)
         {
             var doctors = _doctorsRepository.GetAll();
