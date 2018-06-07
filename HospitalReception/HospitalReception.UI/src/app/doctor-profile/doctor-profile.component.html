@@ -1,0 +1,7 @@
+<div>
+  <img src="http://localhost:55434/api/images/{{doctor.ImageId}}">
+  <h3> Doctor {{ doctor.FirstName}} {{doctor.LastName}}</h3>
+  <h2> Department: {{doctor.Department }}</h2>
+  <button type="button" (click)="navigate(doctor.Id)" class="btn btn-menu btn-outline-primary">
+    <i class="fa fa-edit"></i>EDIT</button>
+</div>

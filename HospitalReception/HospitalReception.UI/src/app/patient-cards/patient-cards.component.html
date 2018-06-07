@@ -1,0 +1,75 @@
+<div class="row">
+</div>
+<button class="btn btn-menu btn-outline-success" (click)="addPatient()">ADD PATIENT</button>
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Edit patient card</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" novalidate [formGroup]="myform" (ngSubmit)="onUpload()" [ngClass]="{
+            'has-danger': myform.errors,
+            'has-success': myform.valid
+       }">
+            <div>
+                <div class="col-5">
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
+                  'has-danger': FirstName.invalid && (FirstName.dirty || FirstName.touched),
+                  'has-success': FirstName.valid && (FirstName.dirty || FirstName.touched)
+             }">
+                            <div class="form-control-feedback" *ngIf="FirstName.errors && (FirstName.dirty || FirstName.touched)">
+                                <p *ngIf="FirstName.errors && FirstName.errors.required">First name is required</p>
+                            </div>
+                            <div class="col-6">First Name</div>
+                            <input class="form-control" formControlName="FirstName" required>
+                        </div>
+                    </div>
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
+                                'has-danger': Email.invalid && (Email.dirty || Email.touched),
+                                'has-success': Email.valid && (Email.dirty || Email.touched)
+                           }">
+                            <label>Email</label>
+                            <input type="email" class="form-control" formControlName="Email" required>
+                            <div class="form-control-feedback" *ngIf="Email.errors && (Email.dirty || Email.touched)">
+                                <p *ngIf="Email.errors && Email.errors.required">Email is required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="row input-group">
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="d2" #c2="ngModel" [(ngModel)]="selectedBirthDate" ngbDatepicker
+                                    #d2="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+                                        <img src="assets/calendar-icon.png" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <button type="button" (click)="editPatient()" class="row input-item btn btn-outline-primary btn-menu">SAVE CHANGES</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+    </div>
+</ng-template>
+<div class="row">
+    <div *ngFor="let patient of patients" class="photo img-thumbnail">
+        <div class="col-xs-6 col-lg-4">
+            <h3>{{ patient.FirstName}} {{patient.LastName}}</h3>
+            <h5>{{ patient.Phone }}</h5>
+            <h5>{{ patient.Email }}</h5>
+            <button class="btn btn-outline-primary mb-2 mr-2" (click)="openLg(content, patient.Id)">
+                <i class="fa fa-edit"></i>
+            </button>
+        </div>
+    </div>
+</div>

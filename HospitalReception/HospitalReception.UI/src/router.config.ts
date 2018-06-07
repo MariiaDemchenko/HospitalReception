@@ -1,14 +1,18 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './app/home/home.component';
 import { AboutComponent } from './app/about/about.component';
-import { CoursesComponent } from './app/courses/courses.component';
-import { CourseCardsComponent } from './app/course-cards/course-cards.component';
+import { DoctorsComponent } from './app/doctors/doctors.component';
+import { DoctorProfilesComponent } from './app/doctor-profiles/doctor-profiles.component';
 import { SideMenuComponent } from './app/categories-menu/categories-menu.component';
-import { CoursesCategoryComponent } from './app/course-category/course-category.component';
+import { DoctorProfileComponent } from './app/doctor-profile/doctor-profile.component';
 import { RegisterComponent } from './app/user/register/register.component';
 import { SignInComponent } from './app/user/sign-in/sign-in.component';
 import { SignOutComponent } from './app/user/sign-out/sign-out.component';
 import { AuthGuard } from './app/auth/auth.guard';
+import { DoctorProfileEditComponent } from './app/doctor-profile-edit/doctor-profile-edit.component';
+import { PatientCardsComponent } from './app/patient-cards/patient-cards.component';
+import { PatientsComponent } from './app/patients/patients.component';
+import { PatientEditCardComponent } from './app/patient-edit-card/patient-edit-card.component';
 
 export const routerConfig: Routes = [
     {
@@ -18,22 +22,20 @@ export const routerConfig: Routes = [
         children: [
             {
                 path: '',
-                component: CourseCardsComponent
+                component: DoctorProfilesComponent
+            },
+            {
+                path: 'add',
+                component: DoctorProfileEditComponent
             },
             {
                 path: ':id',
-                component: CoursesCategoryComponent
+                component: DoctorProfileComponent,
             },
             {
-                path: '',
-                outlet: 'sidemenu',
-                component: SideMenuComponent
+                path: 'edit/:id',
+                component: DoctorProfileEditComponent
             },
-            {
-                path: ':id',
-                outlet: 'sidemenu',
-                component: SideMenuComponent
-            }
         ]
     },
     {
@@ -54,26 +56,30 @@ export const routerConfig: Routes = [
     },
     {
         path: 'courses',
-        component: CoursesComponent,
+        component: DoctorsComponent,
         children: [
             {
                 path: '',
-                component: CourseCardsComponent
+                component: DoctorProfilesComponent
             },
             {
                 path: ':id',
-                component: CoursesCategoryComponent
-            },
+                component: DoctorProfileComponent
+            }
+        ]
+    },
+    {
+        path: 'patients',
+        component: PatientsComponent,
+        children: [
             {
                 path: '',
-                outlet: 'sidemenu',
-                component: SideMenuComponent
+                component: PatientCardsComponent
             },
             {
-                path: ':id',
-                outlet: 'sidemenu',
-                component: SideMenuComponent
-            }
+                path: 'add',
+                component: PatientEditCardComponent
+            },
         ]
     },
     {

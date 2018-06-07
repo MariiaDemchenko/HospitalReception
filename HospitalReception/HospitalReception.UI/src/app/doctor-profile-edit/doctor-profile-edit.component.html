@@ -1,0 +1,55 @@
+<div class="jumbotron">
+  <h1 *ngIf="!add">Edit profile: {{doctor.FirstName}} {{doctor.LastName}}</h1>
+  <h1 *ngIf="add">Add new doctor's profile</h1>
+</div>
+
+<form class="form-horizontal" novalidate [formGroup]="myform" (ngSubmit)="onUpload()" [ngClass]="{
+      'has-danger': myform.errors,
+      'has-success': myform.valid
+ }">
+  <div>
+    <img [src]="tmpPath">
+    <button type="button" (click)="fileInput.click()" class="btn btn-outline-primary btn-menu">CHANGE PHOTO</button>
+    <div class="col-5">
+      <div class="row input-item">
+        <input type="hidden" class="form-control" value={{doctor.Id}}>
+      </div>
+      <div class="row input-item">
+        <div class="form-group" [ngClass]="{
+            'has-danger': FirstName.invalid && (FirstName.dirty || FirstName.touched),
+            'has-success': FirstName.valid && (FirstName.dirty || FirstName.touched)
+       }">
+          <div class="form-control-feedback" *ngIf="FirstName.errors && (FirstName.dirty || FirstName.touched)">
+            <p *ngIf="FirstName.errors && FirstName.errors.required">First name is required</p>
+          </div>
+          <div class="col-6">First Name</div>
+          <input class="form-control" formControlName="FirstName" required>
+        </div>
+        <div class="form-group" [ngClass]="{
+          'has-danger': LastName.invalid && (LastName.dirty || LastName.touched),
+          'has-success': LastName.valid && (LastName.dirty || LastName.touched)
+     }">
+          <div class="form-control-feedback" *ngIf="LastName.errors && (LastName.dirty || LastName.touched)">
+            <p *ngIf="LastName.errors && LastName.errors.required">Last name is required</p>
+          </div>
+          <div class="col-6">Last Name</div>
+          <input class="form-control" formControlName="LastName" required>
+        </div>
+
+        <div class="row input-item">
+          <label>Departments: </label>
+          <select (change)="selectedDepartmentChanged($event.target.value)" class="form-control">
+
+            <option *ngFor="let department of departments" value={{department.Id}} [selected]="department.Id === doctor.DepartmentId">
+              {{department.Name}}
+            </option>
+          </select>
+        </div>
+
+        <input style="display: none" #fileInput type="file" (change)="onFileSelected($event)">
+
+        <button type="button" (click)="onUpload()" class="btn btn-outline-primary btn-menu">SAVE CHANGES</button>
+      </div>
+    </div>
+  </div>
+</form>

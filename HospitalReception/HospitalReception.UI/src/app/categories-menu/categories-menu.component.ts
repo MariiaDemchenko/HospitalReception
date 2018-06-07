@@ -12,7 +12,6 @@ export class SideMenuComponent implements OnInit {
   departments: any;
 
   constructor(route: ActivatedRoute, private departmentsService: DepartmentsService) {
-    route.params.subscribe(params => console.log('side menu id parameter', params['id']));
   }
   ngOnInit() {
     this.departmentsService.getAllDepartments().subscribe((data: any) => {

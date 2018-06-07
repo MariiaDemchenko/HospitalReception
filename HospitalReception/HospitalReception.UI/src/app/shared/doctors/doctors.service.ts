@@ -18,4 +18,18 @@ export class DoctorsService {
   getAllDoctors() {
     return this.http.get(this.rootUrl + '/api/doctors/new');
   }
+
+  getDoctorById(id: number) {
+    return this.http.get(this.rootUrl + '/api/doctors/' + id);
+  }
+
+  addDoctor(fd: FormData) {
+    // tslint:disable-next-line:prefer-cons
+    return this.http.post(this.rootUrl + '/api/doctors/add', fd);
+  }
+
+  editDoctor(fd: FormData, id: number) {
+    // tslint:disable-next-line:prefer-const
+    return this.http.post(this.rootUrl + '/api/doctors/edit/' + id, fd);
+  }
 }
