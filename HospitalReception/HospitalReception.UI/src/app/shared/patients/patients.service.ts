@@ -24,4 +24,9 @@ export class PatientsService {
   addPatient(patient: Patient) {
     return this.http.post(this.rootUrl + '/api/patients/add', patient);
   }
+
+  getConsultationHours(id: number) {
+    // tslint:disable-next-line:prefer-const
+    return this.http.get(this.rootUrl + '/api/doctors/consultationHours/' + id);
+  }
 }

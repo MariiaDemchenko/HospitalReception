@@ -3,16 +3,11 @@
     <p>This is a list of our hospital doctors
     </p>
 </div>
+<button class="btn btn-edit-form btn-outline-success" (click)="addDoctor()">ADD DOCTOR</button>
 <div class="row">
-    <button class="btn btn-menu btn-outline-success" (click)="addDoctor()">ADD DOCTOR</button>
-</div>
-<div class="row">
-    <div *ngFor="let doctor of doctors" class="photo img-thumbnail">
-        <div class="col-xs-6 col-lg-4">
-            <h3>{{ doctor.FirstName}} {{doctor.LastName}}</h3>
-            <h5>{{ doctor.Department }}</h5>
-            <img src="http://localhost:55434/api/images/{{doctor.ImageId}}">
-            <a class="btn btn-secondary" (click)="navigate(doctor.Id)" role="button">View profile</a>
-        </div>
-    </div>
+    <a *ngFor="let doctor of doctors" class="photo img-thumbnail" href='/doctors/{{doctor.Id}}'>
+        <h4 class='doctor-name'>{{ doctor.FirstName}} {{doctor.LastName}}</h4>
+        <h5>{{ doctor.Department }}</h5>
+        <img src="http://localhost:55434/api/images/{{doctor.ImageId}}">
+    </a>
 </div>

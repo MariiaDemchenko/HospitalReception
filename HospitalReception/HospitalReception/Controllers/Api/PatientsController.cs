@@ -47,7 +47,7 @@ namespace HospitalReception.Controllers.Api
 
             patientToEdit.FirstName = patient.FirstName;
             patientToEdit.LastName = patient.LastName;
-            
+
             _patientsRepository.Edit(patientToEdit);
             _unitOfWork.Save();
             return Ok();

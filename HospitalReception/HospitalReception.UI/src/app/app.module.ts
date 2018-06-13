@@ -28,6 +28,10 @@ import { PatientCardsComponent } from './patient-cards/patient-cards.component';
 import { PatientsComponent } from './patients/patients.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PatientEditCardComponent } from './patient-edit-card/patient-edit-card.component';
+import { DoctorsScheduleComponent } from './doctors-schedule/doctors-schedule.component';
+import { SchedulerComponent } from './doctors-schedule/scheduler.component';
+import { HttpModule } from '@angular/http';
+import { EventService } from './services/event.service';
 
 @NgModule({
   declarations: [
@@ -45,18 +49,21 @@ import { PatientEditCardComponent } from './patient-edit-card/patient-edit-card.
     DoctorProfileEditComponent,
     PatientCardsComponent,
     PatientsComponent,
-    PatientEditCardComponent
+    PatientEditCardComponent,
+    DoctorsScheduleComponent,
+    SchedulerComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routerConfig),
     NgbModule.forRoot()
   ],
   // tslint:disable-next-line:max-line-length
-  providers: [UserService, DoctorsService, ImagesService, DepartmentsService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  providers: [UserService, DoctorsService, ImagesService, DepartmentsService, EventService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

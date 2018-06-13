@@ -23,7 +23,7 @@
                             <div class="form-control-feedback" *ngIf="FirstName.errors && (FirstName.dirty || FirstName.touched)">
                                 <p *ngIf="FirstName.errors && FirstName.errors.required">First name is required</p>
                             </div>
-                            <div class="col-6">First Name</div>
+                            <label>First Name</label>
                             <input class="form-control" formControlName="FirstName" required>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                     #d2="ngbDatepicker">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
-                                        <img src="assets/calendar-icon.png" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                                        <i class="fa fa-calendar-alt" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i> 
                                     </button>
                                 </div>
                             </div>
@@ -63,10 +63,33 @@
 </ng-template>
 <div class="row">
     <div *ngFor="let patient of patients" class="photo img-thumbnail">
+        <table class="table-striped table-bordered">
+            <tr>
+                <td>
+                    Patient
+                </td>
+                <td>
+                    {{patient.FirstName}} {{patient.LastName}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Phone
+                </td>
+                <td>
+                    {{patient.Phone }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Email
+                </td>
+                <td>
+                    {{patient.Email }}
+                </td>
+            </tr>
+        </table>
         <div class="col-xs-6 col-lg-4">
-            <h3>{{ patient.FirstName}} {{patient.LastName}}</h3>
-            <h5>{{ patient.Phone }}</h5>
-            <h5>{{ patient.Email }}</h5>
             <button class="btn btn-outline-primary mb-2 mr-2" (click)="openLg(content, patient.Id)">
                 <i class="fa fa-edit"></i>
             </button>

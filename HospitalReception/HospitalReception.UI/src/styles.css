@@ -35,9 +35,22 @@ a {
     text-decoration: none !important;
 }
 
+.doctor-profile{
+    margin: 30px;
+}
+
+.doctor-information{
+    margin-top: 15px;
+}
+
+.btn-edit-form{
+    margin-top: 10px;
+}
+
 .album, .photo {
-    max-width: 90%;
+    width: 30%;
     margin: 10px auto;
+    text-align: center;
 }
 
     .photo:hover .photo-name {
@@ -114,8 +127,8 @@ a {
     margin: 0 0 5px 0;
 }
 
-.album-name {
-    text-transform: uppercase;
+.doctor-name {
+    white-space: nowrap;
 }
 
 .form-menu {
@@ -138,6 +151,10 @@ a {
 
 .btn-menu {
     margin: 5px;
+}
+
+.doctor-short-info{
+    margin: 15px;
 }
 
 .select.selected i {

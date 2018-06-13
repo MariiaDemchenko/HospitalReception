@@ -273,9 +273,164 @@ namespace HospitalReception.DAL.Initializer
                         CreationDate = new DateTime(2018, 5, 18)
                     }
                 };
+                
+                var consultationHours = new List<ConsultaionHours>
+                {
+                    new ConsultaionHours
+                    {
+                        DoctorId = 1,
+                        DayOfWeek = DayOfWeek.Monday,
+                        StartHour = 9,
+                        StartMinutes = 0,
+                        EndHour = 15,
+                        EndMinutes = 30
+                    },
+                    new ConsultaionHours
+                    {
+                        DoctorId = 1,
+                        DayOfWeek = DayOfWeek.Tuesday,
+                        StartHour = 15,
+                        StartMinutes = 0,
+                        EndHour = 21,
+                        EndMinutes = 0
+                    },
+                    new ConsultaionHours
+                    {
+                        DoctorId = 1,
+                        DayOfWeek = DayOfWeek.Wednesday,
+                        StartHour = 13,
+                        StartMinutes = 30,
+                        EndHour = 17,
+                        EndMinutes = 0
+                    },
+                    new ConsultaionHours
+                    {
+                        DoctorId = 2,
+                        DayOfWeek = DayOfWeek.Thursday,
+                        StartHour = 9,
+                        StartMinutes = 0,
+                        EndHour = 21,
+                        EndMinutes = 0
+                    },
+                    new ConsultaionHours
+                    {
+                        DoctorId = 2,
+                        DayOfWeek = DayOfWeek.Friday,
+                        StartHour = 15,
+                        StartMinutes = 30,
+                        EndHour = 21,
+                        EndMinutes = 0
+                    },
+                    new ConsultaionHours
+                    {
+                        DoctorId = 3,
+                        DayOfWeek = DayOfWeek.Saturday,
+                        StartHour = 9,
+                        StartMinutes = 0,
+                        EndHour = 15,
+                        EndMinutes = 0
+                    }
+                };
+
+                var appointments = new List<Appointment>
+                {
+                    new Appointment
+                    {
+                        DoctorId = 1,
+                        PatientId = 1,
+                        StartDate = new DateTime(2018, 6, 4, 9, 0, 0, DateTimeKind.Local),
+                        EndDate = new DateTime(2018, 6, 4, 9, 30, 0, DateTimeKind.Local),
+                        Description = "Regular consultation",
+                        CreatedUserId = userId,
+                        CreationDate = new DateTime(2018, 5, 18)
+                    },
+                    new Appointment
+                    {
+                        DoctorId = 1,
+                        PatientId = 2,
+                        Description = "Full observation",
+                        StartDate = new DateTime(2018, 6, 4, 10, 0, 0, DateTimeKind.Local),
+                        EndDate = new DateTime(2018, 6, 4, 13, 0, 0, DateTimeKind.Local),
+                        CreatedUserId = userId,
+                        CreationDate = new DateTime(2018, 5, 18)
+                    },
+                    new Appointment
+                    {
+                        DoctorId = 1,
+                        PatientId = 3,
+                        Description = "Operation",
+                        StartDate = new DateTime(2018, 6, 5, 18, 0, 0, DateTimeKind.Local),
+                        EndDate = new DateTime(2018, 6, 5, 20, 0, 0, DateTimeKind.Local),
+                        CreatedUserId = userId,
+                        CreationDate = new DateTime(2018, 5, 18)
+                    },
+                    new Appointment
+                    {
+                        DoctorId = 2,
+                        PatientId = 1,
+                        Description = "Basic Consultation",
+                        StartDate = new DateTime(2018, 6, 7, 15, 0, 0, DateTimeKind.Local),
+                        EndDate = new DateTime(2018, 6, 7, 15, 30, 0, DateTimeKind.Local),
+                        CreatedUserId = userId,
+                        CreationDate = new DateTime(2018, 5, 18)
+                    },
+                    new Appointment
+                    {
+                        DoctorId = 2,
+                        PatientId = 2,
+                        Description = "Some consultation",
+                        StartDate = new DateTime(2018, 6, 8, 15, 0, 0, DateTimeKind.Local),
+                        EndDate = new DateTime(2018, 6, 8, 17, 0, 0, DateTimeKind.Local),
+                        CreatedUserId = userId,
+                        CreationDate = new DateTime(2018, 5, 18)
+                    },
+                    new Appointment
+                    {
+                        DoctorId = 2,
+                        PatientId = 1,
+                        Description = "Procedures",
+                        StartDate = new DateTime(2018, 6, 8, 17, 0, 0, DateTimeKind.Local),
+                        EndDate = new DateTime(2018, 6, 8, 18, 30, 0, DateTimeKind.Local),
+                        CreatedUserId = userId,
+                        CreationDate = new DateTime(2018, 5, 18)
+                    },
+                    new Appointment
+                    {
+                        DoctorId = 2,
+                        PatientId = 3,
+                        Description = "Procedures",
+                        StartDate = new DateTime(2018, 6, 8, 18, 0, 0, DateTimeKind.Local),
+                        EndDate = new DateTime(2018, 6, 8, 19, 30, 0, DateTimeKind.Local),
+                        CreatedUserId = userId,
+                        CreationDate = new DateTime(2018, 5, 18)
+                    },
+                    new Appointment
+                    {
+                        DoctorId = 2,
+                        PatientId = 4,
+                        Description = "Procedures",
+                        StartDate = new DateTime(2018, 6, 8, 19, 0, 0, DateTimeKind.Local),
+                        EndDate = new DateTime(2018, 6, 8, 20, 30, 0, DateTimeKind.Local),
+                        CreatedUserId = userId,
+                        CreationDate = new DateTime(2018, 5, 18)
+                    },
+                    new Appointment
+                    {
+                        DoctorId = 2,
+                        PatientId = 5,
+                        Description = "Procedures",
+                        StartDate = new DateTime(2018, 6, 8, 20, 0, 0, DateTimeKind.Local),
+                        EndDate = new DateTime(2018, 6, 8, 21, 30, 0, DateTimeKind.Local),
+                        CreatedUserId = userId,
+                        CreationDate = new DateTime(2018, 5, 18)
+                    }
+                };
 
                 context.Doctors.AddRange(doctors);
                 context.Patients.AddRange(patients);
+                context.SaveChanges();
+                context.ConsultaionHours.AddRange(consultationHours);
+                context.Appointments.AddRange(appointments);
                 context.SaveChanges();
             }
         }

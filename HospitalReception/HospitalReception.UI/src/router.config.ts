@@ -13,6 +13,7 @@ import { DoctorProfileEditComponent } from './app/doctor-profile-edit/doctor-pro
 import { PatientCardsComponent } from './app/patient-cards/patient-cards.component';
 import { PatientsComponent } from './app/patients/patients.component';
 import { PatientEditCardComponent } from './app/patient-edit-card/patient-edit-card.component';
+import { DoctorsScheduleComponent } from './app/doctors-schedule/doctors-schedule.component';
 
 export const routerConfig: Routes = [
     {
@@ -43,6 +44,10 @@ export const routerConfig: Routes = [
         component: AboutComponent
     },
     {
+        path: 'doctors-schedule/:id',
+        component: DoctorsScheduleComponent
+    },
+    {
         path: 'register',
         component: RegisterComponent
     },
@@ -55,7 +60,7 @@ export const routerConfig: Routes = [
         component: SignOutComponent
     },
     {
-        path: 'courses',
+        path: 'doctors',
         component: DoctorsComponent,
         children: [
             {

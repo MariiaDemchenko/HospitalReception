@@ -1,0 +1,15 @@
+<div class="doctor-short-info">
+  <h3>{{ selectedDoctor.FirstName}} {{selectedDoctor.LastName}}</h3>
+  <h5>{{ selectedDoctor.Department }}</h5>
+  <img src="http://localhost:55434/api/images/{{selectedDoctor.ImageId}}">
+
+  <select (change)="selectedDoctorChanged($event.target.value)" class="form-control">
+    <option *ngFor="let doctor of doctors" value={{doctor.Id}} [selected]="doctor.Id === selectedDoctorId">
+      {{doctor.FirstName}}
+    </option>
+  </select>
+</div>
+
+
+
+<scheduler></scheduler>

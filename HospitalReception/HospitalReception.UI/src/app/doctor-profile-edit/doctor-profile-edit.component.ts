@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Doctor } from '../shared/doctors/doctor.model';
 import { DoctorsService } from '../shared/doctors/doctors.service';
 import { HttpClient } from '@angular/common/http';
@@ -30,7 +30,7 @@ export class DoctorProfileEditComponent implements OnInit {
   Email: FormControl;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private route: ActivatedRoute, private doctorsService: DoctorsService,
+  constructor(private router: Router, private route: ActivatedRoute, private doctorsService: DoctorsService,
     private departmentService: DepartmentsService, private http: HttpClient) {
   }
 
@@ -58,9 +58,13 @@ export class DoctorProfileEditComponent implements OnInit {
     fd.append('lastName', this.LastName.value);
     fd.append('departmentId', this.doctor.DepartmentId);
     if (this.add) {
-      this.doctorsService.addDoctor(fd).subscribe();
+      this.doctorsService.addDoctor(fd).subscribe((data: any) =>
+        this.router.navigate(['/home'])
+      );
     } else {
-      this.doctorsService.editDoctor(fd, this.doctor.Id).subscribe();
+      this.doctorsService.editDoctor(fd, this.doctor.Id).subscribe((data: any) =>
+      this.router.navigate(['/home'])
+    );
     }
   }
 

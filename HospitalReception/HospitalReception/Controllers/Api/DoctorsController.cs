@@ -21,11 +21,16 @@ namespace HospitalReception.Controllers.Api
     public class DoctorsController : ApiController
     {
         private readonly IEntityBaseRepository<Doctor> _doctorsRepository;
+        private readonly IEntityBaseRepository<ConsultaionHours> _consultationHoursRepository;
+        private readonly IEntityBaseRepository<Appointment> _appointmentsRepository;
+
         private readonly IUnitOfWork _unitOfWork;
 
-        public DoctorsController(IEntityBaseRepository<Doctor> doctorsRepository, IUnitOfWork unitOfWork)
+        public DoctorsController(IEntityBaseRepository<Doctor> doctorsRepository, IEntityBaseRepository<ConsultaionHours> consultationHoursRepository, IEntityBaseRepository<Appointment> appointmentsRepository, IUnitOfWork unitOfWork)
         {
             _doctorsRepository = doctorsRepository;
+            _consultationHoursRepository = consultationHoursRepository;
+            _appointmentsRepository = appointmentsRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -89,6 +94,53 @@ namespace HospitalReception.Controllers.Api
             _doctorsRepository.Add(doctorToAdd);
             _unitOfWork.Save();
 
+            return Ok();
+        }
+
+        [Route("consultationHours/{id}")]
+        public IHttpActionResult GetDoctorConsultationHours(int id)
+        {
+            var consultations = _consultationHoursRepository.GetAll().Where(c => c.DoctorId == id);
+            var consultationHours = Mapper.Map<IEnumerable<ConsultaionHours>, IEnumerable<ConsultationHoursViewModel>>(consultations);
+            return Ok(consultationHours);
+        }
+
+        [Route("appointments/{id}")]
+        public IHttpActionResult GetDoctorAppointments(int id)
+        {
+            var appointments = _appointmentsRepository.GetAll().Where(c => c.DoctorId == id);
+            var appointmentViewModel = Mapper.Map<IEnumerable<Appointment>, IEnumerable<AppointmentViewModel>>(appointments);
+            return Ok(appointmentViewModel);
+        }
+
+        [HttpPost]
+        [Route("appointments/add")]
+        public IHttpActionResult AddDoctorAppointment(Appointment appointment)
+        {
+            appointment.CreatedUserId = User.Identity.GetUserId();
+            appointment.CreationDate = DateTime.Now;
+            _appointmentsRepository.Add(appointment);
+            _unitOfWork.Save();
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("appointments/edit")]
+        public IHttpActionResult EditAppointment(Appointment appointment)
+        {
+            appointment.CreationDate = DateTime.Now;
+            _appointmentsRepository.Edit(appointment);
+            _unitOfWork.Save();
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("appointments/{id}")]
+        public IHttpActionResult DeleteAppointment(int id)
+        {
+            var appointmentToDelete = _appointmentsRepository.GetSingle(id);
+            _appointmentsRepository.Delete(appointmentToDelete);
+            _unitOfWork.Save();
             return Ok();
         }
 

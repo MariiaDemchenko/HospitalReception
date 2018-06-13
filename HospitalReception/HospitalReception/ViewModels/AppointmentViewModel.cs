@@ -1,29 +1,26 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using HospitalReception.Converters;
 using Newtonsoft.Json;
+using System;
 
-namespace HospitalReception.DAL.Models
+namespace HospitalReception.ViewModels
 {
-    public class Appointment : IEntityBase
+    public class AppointmentViewModel
     {
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
         [JsonProperty(PropertyName = "patientId")]
         public int PatientId { get; set; }
+        [JsonProperty(PropertyName = "patientFullName")]
+        public string PatientFullName { get; set; }
         [JsonProperty(PropertyName = "doctorId")]
         public int DoctorId { get; set; }
         [JsonProperty(PropertyName = "text")]
         public string Description { get; set; }
         [JsonProperty(PropertyName = "start_date")]
+        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTime StartDate { get; set; }
         [JsonProperty(PropertyName = "end_date")]
+        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTime EndDate { get; set; }
-        [ForeignKey("User")]
-        public string CreatedUserId { get; set; }
-        public DateTime CreationDate { get; set; }
-
-        public virtual Patient Patient { get; set; }
-        public virtual Doctor Doctor { get; set; }
-        public virtual ApplicationUser User { get; set; }
     }
 }
