@@ -1,0 +1,139 @@
+mongo
+
+use PhotosDb
+
+db.Photos.insertMany([{'Name':'black', 'ServerName':'black', 'Format':'jpg', 'Owner':'Test',   'CameraModel':'Samsung', 'ShotDate':new Date(2016, 11, 10, 9, 12), 'LensFocalLength': 5},
+{'Name':'blue', 'ServerName':'blue', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Samsung', 'ShotDate':new Date(2016, 11, 10, 9, 12), 'LensFocalLength': 5},
+{'Name':'brown', 'ServerName':'brown', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Samsung', 'ShotDate':new Date(2016, 11, 10, 9, 12), 'LensFocalLength': 5},
+{'Name':'building', 'ServerName':'building',  'Format':'jpg', 'Format':'jpg','Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'clearLake', 'ServerName':'clearLake',  'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'coffee', 'ServerName':'coffee', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'colors', 'ServerName':'colors', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'darkblue', 'ServerName':'darkblue', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3},
+{'Name':'desert', 'ServerName':'desert', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3},
+{'Name':'dessert', 'ServerName':'dessert', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3},
+{'Name':'emptyImage', 'ServerName':'emptyImage', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3}
+])
+
+db.Photos.insertMany([{'Name':'forest', 'ServerName':'forest', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Samsung', 'ShotDate':new Date(2016, 11, 10, 9, 12), 'LensFocalLength': 5},
+{'Name':'gray', 'ServerName':'gray', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Samsung', 'ShotDate':new Date(2016, 11, 10, 9, 12), 'LensFocalLength': 5},
+{'Name':'green', 'ServerName':'green', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Samsung', 'ShotDate':new Date(2016, 11, 10, 9, 12), 'LensFocalLength': 5},
+{'Name':'lake', 'ServerName':'lake', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Samsung', 'ShotDate':new Date(2016, 11, 10, 9, 12), 'LensFocalLength': 5},
+{'Name':'lavender', 'ServerName':'lavender', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Samsung', 'ShotDate':new Date(2016, 11, 10, 9, 12), 'LensFocalLength': 5},
+{'Name':'limegreen', 'ServerName':'limegreen', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'meadow', 'ServerName':'meadow', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'mountains', 'ServerName':'mountains', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3},
+{'Name':'orange', 'ServerName':'orange', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3}
+])
+
+db.Photos.insertMany([{'Name':'pears', 'ServerName':'pears', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'pink', 'ServerName':'pink', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'purple', 'ServerName':'purple', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'raspberries', 'ServerName':'raspberries', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'red', 'ServerName':'red', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'Test', 'ShotDate':new Date(2019, 11, 12, 14, 12), 'LensFocalLength': 1},
+{'Name':'sky', 'ServerName':'sky', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3},
+{'Name':'skyblue', 'ServerName':'skyblue', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3},
+{'Name':'smoky', 'ServerName':'smoky', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3},
+{'Name':'sunrize', 'ServerName':'sunrize', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelB', 'ShotDate':new Date(2019, 8, 12, 13, 12), 'LensFocalLength': 3},
+{'Name':'sunset', 'ServerName':'sunset', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelB', 'ShotDate':new Date(2019, 8, 12, 13, 12), 'LensFocalLength': 3}
+])
+
+db.Photos.insertMany([{'Name':'turqoise', 'ServerName':'turqoise', 'Format':'jpg',  'Owner':'Test', 'CameraModel':'ModelB', 'ShotDate':new Date(2019, 8, 12, 13, 12), 'LensFocalLength': 3},
+{'Name':'volcano', 'ServerName':'volcano', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelB', 'ShotDate':new Date(2019, 8, 12, 13, 12), 'LensFocalLength': 3},
+{'Name':'waterfall', 'ServerName':'waterfall', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelB', 'ShotDate':new Date(2019, 8, 12, 13, 12), 'LensFocalLength': 3},
+{'Name':'white', 'ServerName':'white', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelB', 'ShotDate':new Date(2019, 8, 12, 13, 12), 'LensFocalLength': 3},
+{'Name':'whitewash', 'ServerName':'whitewash', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3},
+{'Name':'wooden', 'ServerName':'wooden', 'Format':'jpg', 'Owner':'Test','CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3},
+{'Name':'yellow', 'ServerName':'yellow', 'Format':'jpg', 'Owner':'Test', 'CameraModel':'ModelA', 'ShotDate':new Date(2018, 10, 12, 14, 12), 'LensFocalLength': 3}
+])
+
+
+db.Albums.insertMany([{'Name':'Colors', 'Description':'Whitespace pictures', 'Owner':'Test', 'Photos':[
+db.Photos.findOne({ "Name": "blue"})._id.str,
+db.Photos.findOne({ "Name": "black"})._id.str,
+db.Photos.findOne({ "Name": "brown"})._id.str,
+db.Photos.findOne({ "Name": "colors"})._id.str,
+db.Photos.findOne({ "Name": "darkblue"})._id.str,
+db.Photos.findOne({ "Name": "desert"})._id.str,
+db.Photos.findOne({ "Name": "gray"})._id.str,
+db.Photos.findOne({ "Name": "green"})._id.str,
+db.Photos.findOne({ "Name": "lavender"})._id.str,
+db.Photos.findOne({ "Name": "limegreen"})._id.str,
+db.Photos.findOne({ "Name": "orange"})._id.str,
+db.Photos.findOne({ "Name": "pink"})._id.str,
+db.Photos.findOne({ "Name": "purple"})._id.str,
+db.Photos.findOne({ "Name": "red"})._id.str,
+db.Photos.findOne({ "Name": "skyblue"})._id.str,
+db.Photos.findOne({ "Name": "smoky"})._id.str,
+db.Photos.findOne({ "Name": "turqoise"})._id.str,
+db.Photos.findOne({ "Name": "white"})._id.str,
+db.Photos.findOne({ "Name": "whitewash"})._id.str,
+db.Photos.findOne({ "Name": "wooden"})._id.str,
+db.Photos.findOne({ "Name": "yellow"})._id.str
+]}, 
+{'Name':'Nature', 	 'Description':'Pictures of nature',   'Owner':'Photographer', 'Photos':[
+db.Photos.findOne({ "Name": "meadow"})._id.str,
+db.Photos.findOne({ "Name": "sky"})._id.str,
+db.Photos.findOne({ "Name": "sunrize"})._id.str,
+db.Photos.findOne({ "Name": "sunset"})._id.str,
+db.Photos.findOne({ "Name": "volcano"})._id.str,
+db.Photos.findOne({ "Name": "waterfall"})._id.str
+]},
+{'Name':'Common', 	 'Description':'Common album',   'Owner':'Test', 'Photos':[
+db.Photos.findOne({ "Name": "blue"})._id.str,
+db.Photos.findOne({ "Name": "black"})._id.str,
+db.Photos.findOne({ "Name": "brown"})._id.str,
+db.Photos.findOne({ "Name": "colors"})._id.str,
+db.Photos.findOne({ "Name": "darkblue"})._id.str,
+db.Photos.findOne({ "Name": "desert"})._id.str,
+db.Photos.findOne({ "Name": "gray"})._id.str,
+db.Photos.findOne({ "Name": "green"})._id.str,
+db.Photos.findOne({ "Name": "lavender"})._id.str,
+db.Photos.findOne({ "Name": "limegreen"})._id.str,
+db.Photos.findOne({ "Name": "orange"})._id.str,
+db.Photos.findOne({ "Name": "pink"})._id.str,
+db.Photos.findOne({ "Name": "purple"})._id.str,
+db.Photos.findOne({ "Name": "red"})._id.str,
+db.Photos.findOne({ "Name": "skyblue"})._id.str,
+db.Photos.findOne({ "Name": "smoky"})._id.str,
+db.Photos.findOne({ "Name": "turqoise"})._id.str,
+db.Photos.findOne({ "Name": "white"})._id.str,
+db.Photos.findOne({ "Name": "whitewash"})._id.str,
+db.Photos.findOne({ "Name": "wooden"})._id.str,
+db.Photos.findOne({ "Name": "yellow"})._id.str,
+db.Photos.findOne({ "Name": "pears"})._id.str,
+db.Photos.findOne({ "Name": "raspberries"})._id.str,
+db.Photos.findOne({ "Name": "clearLake"})._id.str,
+db.Photos.findOne({ "Name": "lake"})._id.str,
+db.Photos.findOne({ "Name": "building"})._id.str,
+db.Photos.findOne({ "Name": "mountains"})._id.str,
+db.Photos.findOne({ "Name": "forest"})._id.str,
+db.Photos.findOne({ "Name": "dessert"})._id.str,
+db.Photos.findOne({ "Name": "coffee"})._id.str
+]},
+{'Name':'Fruits', 	 'Description':'Fruits pictures',   'Owner':'Photographer', Photos:[
+db.Photos.findOne({ "Name": "pears"})._id.str,
+db.Photos.findOne({ "Name": "raspberries"})._id.str
+]},
+{'Name':'Lakes',  	 'Description':'Lakes album',   'Owner':'Test', 'Photos':[
+db.Photos.findOne({ "Name": "clearLake"})._id.str,
+db.Photos.findOne({ "Name": "lake"})._id.str
+]},
+{'Name':'Buildings', 'Description':'Some buildings',   'Owner':'Photographer', 'Photos': [
+db.Photos.findOne({ "Name": "building"})._id.str
+]},
+{'Name':'Sky',		 'Description':'Sky photo',   'Owner':'Test', 'Photos': [
+]},
+{'Name':'Mountains', 'Description':'Mountains pictures',   'Owner':'Photographer', 'Photos': [
+db.Photos.findOne({ "Name": "mountains"})._id.str
+]},
+{'Name':'Forests',	 'Description':'Forest album',   'Owner':'Test', 'Photos': [
+db.Photos.findOne({ "Name": "forest"})._id.str
+]},
+{'Name':'Food',		 'Description':'Some food',   'Owner':'Photographer', 'Photos': [
+db.Photos.findOne({ "Name": "dessert"})._id.str
+]},
+{'Name':'Coffee',	 'Description':'Coffee photos',   'Owner':'Test', 'Photos': [
+db.Photos.findOne({ "Name": "coffee"})._id.str
+]}
+])

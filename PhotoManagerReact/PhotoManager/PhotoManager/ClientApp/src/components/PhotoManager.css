@@ -1,0 +1,40 @@
+﻿.photo-frame {
+    height: 300px;
+    width: 300px;
+}
+
+.menu-btn {
+    margin: 5px;
+    margin-left: 15px;
+}
+
+.photo-viewer {
+    margin-left: 45px;
+}
+.menu-icon {
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.menu {
+    margin-left: 15px;
+}
+
+.title {
+    margin-left: 30px
+}
+
+.info-fields {
+    margin: 10px;
+    margin-left: 15px;
+}
+
+
+.photo-with-description img{
+
+    margin: 10px;
+}
+
+.form-control.has-error {
+    border-color: #a94442
+}
