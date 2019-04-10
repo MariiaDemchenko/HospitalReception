@@ -1,5 +1,3 @@
-mongo
-
 use PhotosDb
 
 db.Photos.insertMany([{'Name':'black', 'ServerName':'black', 'Format':'jpg', 'Owner':'Test',   'CameraModel':'Samsung', 'ShotDate':new Date(2016, 11, 10, 9, 12), 'LensFocalLength': 5},
