@@ -16,11 +16,6 @@ namespace PhotoManager.DAL.Repositories
             _users = database.GetCollection<User>("Users");
         }
 
-        public IUser Get(IUser user)
-        {
-            return _users.Find(u => user.Email == u.Email && user.Password == u.Password).FirstOrDefault() as IUser;
-        }
-
         public IUser GetByEmail(string email)
         {
             return _users.Find(u => u.Email == email).FirstOrDefault() as IUser;
@@ -37,21 +32,6 @@ namespace PhotoManager.DAL.Repositories
             };
             _users.InsertOne(userToInsert);
             return user;
-        }
-                
-        public void Update(string id, IUser userIn)
-        {
-            _users.ReplaceOne(user => user.Id == id, userIn as User);
-        }
-
-        public void Remove(IUser userIn)
-        {
-            _users.DeleteOne(user => user.Id == userIn.Id);
-        }
-
-        public void Remove(string id)
-        {
-            _users.DeleteOne(user => user.Id == id);
         }
     }
 }

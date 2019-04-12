@@ -1,15 +1,11 @@
 ﻿using PhotoManager.BLL.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PhotoManager.BLL.Repositories
 {
     public interface IAlbumRepository
     {
         IEnumerable<IAlbum> Get(int start, int count);
-
-        IAlbum Get(string id);
 
         IAlbum Create(IAlbum album);
 

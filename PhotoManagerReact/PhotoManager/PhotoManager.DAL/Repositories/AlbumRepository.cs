@@ -34,11 +34,6 @@ namespace PhotoManager.DAL.Repositories
             return albums;
         }
 
-        public IAlbum Get(string id)
-        {
-            return _albums.Find(album => album.Id == id).FirstOrDefault() as IAlbum;
-        }
-
         public string ValidateAlbum(IAlbum albumIn)
         {
             var validationError = string.Empty;
@@ -86,6 +81,5 @@ namespace PhotoManager.DAL.Repositories
         {
             _albums.DeleteMany(album => albumsId.Contains(album.Id));
         }
-        
     }
 }

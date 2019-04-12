@@ -36,7 +36,7 @@ namespace PhotoManager.DAL.Repositories
             {
                 photo.Albums = _albums.Find(album => album.Photos.Contains(photo.Id)).ToList().Select(album => album.Id).ToList();
             }
-            
+
             return photos;
         }
 
@@ -113,11 +113,6 @@ namespace PhotoManager.DAL.Repositories
                     session.AbortTransaction();
                 }
             }
-        }
-
-        public void Remove(string id)
-        {
-            _photos.DeleteOne(album => album.Id == id);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace PhotoManager.BLL.Models
         string CameraModel { get; set; }
 
         DateTime ShotDate { get; set; }
-        
+
         int LensFocalLength { get; set; }
 
         List<string> Albums { get; set; }

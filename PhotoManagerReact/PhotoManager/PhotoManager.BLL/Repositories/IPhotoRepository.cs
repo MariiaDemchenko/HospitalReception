@@ -1,7 +1,5 @@
 ﻿using PhotoManager.BLL.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PhotoManager.BLL.Repositories
 {
@@ -18,7 +16,5 @@ namespace PhotoManager.BLL.Repositories
         void Update(string id, IPhoto albumIn);
 
         void Remove(IPhoto photo, string albumId);
-
-        void Remove(string id);
     }
 }
