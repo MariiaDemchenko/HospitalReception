@@ -9,7 +9,6 @@ import Layout from './components/Layout';
 import Login from './components/Login';
 import PhotoAdd from './components/PhotoAdd';
 import PhotoEdit from './components/PhotoEdit';
-import PhotoGallery from './components/PhotoGallery';
 import './components/PhotoManager.css';
 import PhotoView from './components/PhotoView';
 import Register from './components/Register';
@@ -25,6 +24,5 @@ export default () => (
         <Route path='/photoEdit/' component={PhotoEdit} />
         <Route path='/photoView/' component={PhotoView} />
         <Route path='/photoAdd/:albumId' component={PhotoAdd} />
-        <Route path='/photoGallery/:pageIndex' component={PhotoGallery} />
     </Layout>
 );
