@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,12 +6,10 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using PhotoManager.AutomapperProfiles;
 using PhotoManager.BLL.Repositories;
 using PhotoManager.DAL.Repositories;
-using System;
-using System.Text;
+using PhotoManager.Extensions;
 
 namespace PhotoManager
 {
@@ -34,31 +31,20 @@ namespace PhotoManager
                 configuration.RootPath = "ClientApp/build";
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = "PhotoManagerIssuer",
-                    ValidAudience = "PhotoManagerAudience",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("IssuerSigningSecretKey")),
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = TimeSpan.Zero
-                };
-            });
+            services.ConfigureJwtHandler(Configuration);
 
-            var mediaServerPath = Configuration.GetSection("MediaServerPath").Value;
-            var imagesFolder = Configuration.GetSection("ImagesCatalog").Value;
-            var thumbsFolder = Configuration.GetSection("ThumbsCatalog").Value;
+            var mediaServerUrl = Configuration.GetSection("MediaServerSettings").GetSection("MediaServerUrl").Value;
+            var imagesFolder = Configuration.GetSection("MediaServerSettings").GetSection("ImagesCatalog").Value;
+            var thumbsFolder = Configuration.GetSection("MediaServerSettings").GetSection("ThumbsCatalog").Value;
+
+            var imagesPath = mediaServerUrl + imagesFolder;
+            var thumbsPath = mediaServerUrl + thumbsFolder;
 
             var automapperConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new AlbumProfile(mediaServerPath + imagesFolder, mediaServerPath + thumbsFolder));
-                mc.AddProfile(new PhotoProfile(mediaServerPath + imagesFolder, mediaServerPath + thumbsFolder));
-                mc.AddProfile(new UserProfile(mediaServerPath + imagesFolder, mediaServerPath + thumbsFolder));
+                mc.AddProfile(new AlbumProfile(imagesPath, thumbsPath));
+                mc.AddProfile(new PhotoProfile(imagesPath, thumbsPath));
+                mc.AddProfile(new UserProfile(imagesPath, thumbsPath));
             });
 
             var mapper = automapperConfig.CreateMapper();
@@ -67,9 +53,11 @@ namespace PhotoManager
             services.AddSingleton(mapper);
             services.AddSingleton<IHashcodeHelper>(new HashcodeHelper());
 
-            services.AddScoped<IAlbumRepository>(provider => new AlbumRepository(Configuration.GetConnectionString("PhotosDb")));
-            services.AddScoped<IPhotoRepository>(provider => new PhotoRepository(Configuration.GetConnectionString("PhotosDb")));
-            services.AddScoped<IUserRepository>(provider => new UserRepository(Configuration.GetConnectionString("PhotosDb")));
+            var connectionString = Configuration.GetConnectionString("PhotosDb");
+
+            services.AddScoped<IAlbumRepository>(provider => new AlbumRepository(connectionString));
+            services.AddScoped<IPhotoRepository>(provider => new PhotoRepository(connectionString));
+            services.AddScoped<IUserRepository>(provider => new UserRepository(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

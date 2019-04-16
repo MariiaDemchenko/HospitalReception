@@ -44,7 +44,7 @@ class Albums extends Component {
             const albums = selectedAlbums.map(album => ({ albumId: album.albumId }))
             const onRemoveSuccess = this.props.onRemoveSuccess
             const onRemoveError = this.props.onRemoveError
-            var request = axios.post(`api/Albums/RemoveAlbums`, albums)
+            var request = axios.delete(`api/Albums/RemoveAlbum`, albums[0])
             request
                 .then(function (response) {
                     if (response.status === 200) {

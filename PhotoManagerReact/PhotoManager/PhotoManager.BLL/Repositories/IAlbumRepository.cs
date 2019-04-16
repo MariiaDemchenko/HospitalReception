@@ -5,14 +5,12 @@ namespace PhotoManager.BLL.Repositories
 {
     public interface IAlbumRepository
     {
-        IEnumerable<IAlbum> Get(int start, int count);
+        IEnumerable<IAlbum> Get(int start, int? count = null);
 
         IAlbum Create(IAlbum album);
 
         void Update(string id, IAlbum albumIn);
 
-        void RemoveMany(IEnumerable<string> id);
-
-        string ValidateAlbum(IAlbum albumIn);
+        void Remove(string id);
     }
 }

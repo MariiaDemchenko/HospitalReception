@@ -51,7 +51,7 @@ class AlbumPhotos extends Component {
             const selectedPhotos = this.props.albumPhotos.filter(photo => photo.isSelected === true);
             const photos = selectedPhotos.map(photo => ({ photoId: photo.photoId, albumId: this.props.match.params.albumId }))
             const onRemoveSuccess = this.props.onRemoveSuccess
-            axios.post(`api/Photos/RemovePhotos`, photos)
+            axios.delete(`api/Photos/RemovePhoto`, photos[0])
                 .then(function (response) {
                     if (response.status === 200) {
                         onRemoveSuccess()

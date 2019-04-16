@@ -46,7 +46,7 @@ db.Photos.insertMany([{'Name':'turqoise', 'ServerName':'turqoise', 'Format':'jpg
 ])
 
 
-db.Albums.insertMany([{'Name':'Colors', 'Description':'Whitespace pictures', 'Owner':'Test', 'Photos':[
+db.Albums.insertMany([{'Name':'Colors', 'Description':'Whitespace pictures', 'Cover': 'blue.jpg', 'Owner':'Test', 'Photos':[
 db.Photos.findOne({ "Name": "blue"})._id.str,
 db.Photos.findOne({ "Name": "black"})._id.str,
 db.Photos.findOne({ "Name": "brown"})._id.str,
@@ -69,7 +69,7 @@ db.Photos.findOne({ "Name": "whitewash"})._id.str,
 db.Photos.findOne({ "Name": "wooden"})._id.str,
 db.Photos.findOne({ "Name": "yellow"})._id.str
 ]}, 
-{'Name':'Nature', 	 'Description':'Pictures of nature',   'Owner':'Photographer', 'Photos':[
+{'Name':'Nature', 	 'Description':'Pictures of nature', 'Cover':'meadow.jpg', 'Owner':'Photographer', 'Photos':[
 db.Photos.findOne({ "Name": "meadow"})._id.str,
 db.Photos.findOne({ "Name": "sky"})._id.str,
 db.Photos.findOne({ "Name": "sunrize"})._id.str,
@@ -77,7 +77,7 @@ db.Photos.findOne({ "Name": "sunset"})._id.str,
 db.Photos.findOne({ "Name": "volcano"})._id.str,
 db.Photos.findOne({ "Name": "waterfall"})._id.str
 ]},
-{'Name':'Common', 	 'Description':'Common album',   'Owner':'Test', 'Photos':[
+{'Name':'Common', 	 'Description':'Common album', 'Cover':'blue.jpg', 'Owner':'Test', 'Photos':[
 db.Photos.findOne({ "Name": "blue"})._id.str,
 db.Photos.findOne({ "Name": "black"})._id.str,
 db.Photos.findOne({ "Name": "brown"})._id.str,
@@ -109,29 +109,29 @@ db.Photos.findOne({ "Name": "forest"})._id.str,
 db.Photos.findOne({ "Name": "dessert"})._id.str,
 db.Photos.findOne({ "Name": "coffee"})._id.str
 ]},
-{'Name':'Fruits', 	 'Description':'Fruits pictures',   'Owner':'Photographer', Photos:[
+{'Name':'Fruits', 	 'Description':'Fruits pictures', 'Owner':'Photographer', 'Cover':'pears.jpg', Photos:[
 db.Photos.findOne({ "Name": "pears"})._id.str,
 db.Photos.findOne({ "Name": "raspberries"})._id.str
 ]},
-{'Name':'Lakes',  	 'Description':'Lakes album',   'Owner':'Test', 'Photos':[
+{'Name':'Lakes',  	 'Description':'Lakes album', 'Owner':'Test', 'Cover':'clearLake.jpg', 'Photos':[
 db.Photos.findOne({ "Name": "clearLake"})._id.str,
 db.Photos.findOne({ "Name": "lake"})._id.str
 ]},
-{'Name':'Buildings', 'Description':'Some buildings',   'Owner':'Photographer', 'Photos': [
+{'Name':'Buildings', 'Description':'Some buildings', 'Owner':'Photographer', 'Cover':'building.jpg', 'Photos': [
 db.Photos.findOne({ "Name": "building"})._id.str
 ]},
-{'Name':'Sky',		 'Description':'Sky photo',   'Owner':'Test', 'Photos': [
+{'Name':'Sky',		 'Description':'Sky photo', 'Owner':'Test', 'Cover':'', 'Photos': [
 ]},
-{'Name':'Mountains', 'Description':'Mountains pictures',   'Owner':'Photographer', 'Photos': [
+{'Name':'Mountains', 'Description':'Mountains pictures', 'Owner':'Photographer', 'Cover':'mountains.jpg', 'Photos': [
 db.Photos.findOne({ "Name": "mountains"})._id.str
 ]},
-{'Name':'Forests',	 'Description':'Forest album',   'Owner':'Test', 'Photos': [
+{'Name':'Forests',	 'Description':'Forest album', 'Owner':'Test', 'Cover':'forest.jpg', 'Photos': [
 db.Photos.findOne({ "Name": "forest"})._id.str
 ]},
-{'Name':'Food',		 'Description':'Some food',   'Owner':'Photographer', 'Photos': [
+{'Name':'Food',		 'Description':'Some food',   'Owner':'Photographer', 'Cover':'dessert.jpg', 'Photos': [
 db.Photos.findOne({ "Name": "dessert"})._id.str
 ]},
-{'Name':'Coffee',	 'Description':'Coffee photos',   'Owner':'Test', 'Photos': [
+{'Name':'Coffee',	 'Description':'Coffee photos',   'Owner':'Test', 'Cover':'coffee.jpg',  'Photos': [
 db.Photos.findOne({ "Name": "coffee"})._id.str
 ]}
 ])

@@ -21,27 +21,13 @@ namespace PhotoManager.DAL.Repositories
             _photos = database.GetCollection<Photo>("Photos");
         }
 
-        public IEnumerable<IAlbum> Get(int start, int count)
+        public IEnumerable<IAlbum> Get(int start, int? count = null)
         {
             start = start < 0 ? 0 : start;
-            var albums = _albums.Find(album => true).Skip(start).Limit(count).ToList() as IEnumerable<IAlbum>;
+            var albums = count == null ? _albums.Find(album => true).Skip(start):
+                _albums.Find(album => true).Skip(start).Limit(count);
 
-            foreach (var album in albums)
-            {
-                var photoPath = _photos.Find(photo => album.Photos.Contains(photo.Id))?.ToList()?.Select(p => new { Name = p.ServerName, p.Format })?.FirstOrDefault();
-                album.Cover = photoPath != null ? $"{photoPath.Name}.{photoPath.Format}" : "emptyImage.jpg";
-            }
-            return albums;
-        }
-
-        public string ValidateAlbum(IAlbum albumIn)
-        {
-            var validationError = string.Empty;
-            if (_albums.Find(album => album.AlbumName == albumIn.AlbumName && album.Id != albumIn.Id).Any())
-            {
-                validationError = "Album name must be unique";
-            }
-            return validationError;
+            return albums.ToList();
         }
 
         public IAlbum Create(IAlbum album)
@@ -55,10 +41,6 @@ namespace PhotoManager.DAL.Repositories
                 Owner = album.Owner,
                 Photos = album.Photos
             };
-            if (_albums.Find(a => a.AlbumName == albumToReplace.AlbumName).Any())
-            {
-                return null;
-            }
             _albums.InsertOne(albumToReplace as Album);
             return album;
         }
@@ -77,9 +59,9 @@ namespace PhotoManager.DAL.Repositories
             _albums.ReplaceOne(album => album.Id == id, albumToReplace);
         }
 
-        public void RemoveMany(IEnumerable<string> albumsId)
+        public void Remove(string albumId)
         {
-            _albums.DeleteMany(album => albumsId.Contains(album.Id));
+            _albums.DeleteOne(album => album.Id == albumId);
         }
     }
 }

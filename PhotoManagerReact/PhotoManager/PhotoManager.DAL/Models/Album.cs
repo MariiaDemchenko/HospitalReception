@@ -23,6 +23,7 @@ namespace PhotoManager.DAL.Models
         [BsonElement("Photos")]
         public List<string> Photos { get; set; }
 
+        [BsonElement("Cover")]
         public string Cover { get; set; }
     }
 }

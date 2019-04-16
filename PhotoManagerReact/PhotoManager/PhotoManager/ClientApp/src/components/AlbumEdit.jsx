@@ -42,15 +42,28 @@ class AlbumEdit extends Component {
         if (this.props.postSaveChanges) {
             const onRequestSuccess = this.props.onRequestSuccess
             const onRequestError = this.props.onRequestError
-            axios.post(`api/Albums/EditAlbum`, this.props.selectedAlbum)
-                .then(function (response) {
-                    if (response.status === 200) {
-                        onRequestSuccess()
-                    }
-                })
-                .catch(function (error) {
-                    onRequestError(error.response.data)
-                });
+            if (this.props.match.params.albumId === "0") {
+                axios.post(`api/Albums/AddAlbum`, this.props.selectedAlbum)
+                    .then(function (response) {
+                        if (response.status === 200) {
+                            onRequestSuccess()
+                        }
+                    })
+                    .catch(function (error) {
+                        onRequestError(error.response.data)
+                    });
+            }
+            else {
+                axios.put(`api/Albums/EditAlbum`, this.props.selectedAlbum)
+                    .then(function (response) {
+                        if (response.status === 200) {
+                            onRequestSuccess()
+                        }
+                    })
+                    .catch(function (error) {
+                        onRequestError(error.response.data)
+                    });
+            }
         }
         return (
             <div>

@@ -185,7 +185,7 @@ export const reducer = (state, action) => {
             ...state,
             albums: state.albums.map((album, i) => ({
                 ...album,
-                isSelected: i !== action.index ? album.isSelected : (album.hasOwnProperty("isSelected") ? !album.isSelected : true)
+                isSelected: i !== action.index ? false : !album.isSelected
             }))
         }
     }

@@ -18,33 +18,64 @@ namespace PhotoManager.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IPhotoRepository _repository;
-        private readonly string _mediaServerPath;
+        private readonly IConfiguration _configuration;
+        private readonly string _imagesPath;
+        private readonly string _thumbsPath;
 
         public object ImageFormat { get; private set; }
 
         public PhotosController(IMapper mapper, IPhotoRepository repository, IConfiguration configuration)
         {
             _mapper = mapper;
-            _repository = repository;
-            _mediaServerPath = configuration.GetSection("MediaServerPath").Value;
+            _repository = repository;            
+            _configuration = configuration;
         }
 
         [HttpGet("[action]")]
-        public IEnumerable<PhotoViewModel> GetPhotosByAlbumId(string albumId, int pageIndex, int pageSize)
+        public IEnumerable<PhotoViewModel> GetAllPhotos(int pageIndex, int pageSize)
         {
-            var photos = _repository.GetByAlbumId(pageIndex * pageSize, pageSize, albumId).ToList();
-            var photoViewModels = photos.Select(photo => _mapper.Map<PhotoViewModel>(photo));
-            return photoViewModels;
+            var photos = _repository.GetAll(pageIndex * pageSize, pageSize).ToList();
+            return photos.Select(photo => _mapper.Map<PhotoViewModel>(photo));
         }
-
-        [HttpGet("[action]")]
-        public PhotoViewModel GetPhotoById(string photoId)
-        {
-            var photo = _repository.Get(photoId);
-            return _mapper.Map<PhotoViewModel>(photo);
-        }               
 
         [HttpPost("[action]")]
+        [Authorize]
+        [DisableRequestSizeLimit]
+        public async Task<ActionResult> AddPhotos([FromBody]IEnumerable<PhotoViewModel> photos)
+        {
+            foreach (var photo in photos)
+            {
+                try
+                {
+                    var imageToReplace = FromDataURLToByteArray(photo.PhotoUrl);
+                    if (photo.PhotoId == null)
+                    {
+                        photo.ServerName = Guid.NewGuid().ToString();
+                        photo.Format = "jpg";
+                    }
+
+                    if (imageToReplace != null)
+                    {
+                        if (!IsJpgExtension(imageToReplace))
+                        {
+                            return BadRequest($"{photo.PhotoName}: Wrong image format. Only jpg allowed.");
+                        }
+
+                        await System.IO.File.WriteAllBytesAsync($"{GetImagesPath()}/{photo.ServerName}.jpg", imageToReplace);
+                        await System.IO.File.WriteAllBytesAsync($"{GetThumbsPath()}/{photo.ServerName}.jpg", GetThumb(imageToReplace));
+                    }
+
+                    _repository.Create(_mapper.Map<Photo>(photo), photo.AlbumId);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Error processing photo: " + ex.Message);
+                }
+            }
+            return Ok("Updated successfully");
+        }
+
+        [HttpPut("[action]")]
         [Authorize]
         [DisableRequestSizeLimit]
         public async Task<ActionResult> EditPhotos([FromBody]IEnumerable<PhotoViewModel> photos)
@@ -67,18 +98,11 @@ namespace PhotoManager.Controllers
                             return BadRequest($"{photo.PhotoName}: Wrong image format. Only jpg allowed.");
                         }
 
-                        await System.IO.File.WriteAllBytesAsync($"{"//mdemchenko/MediaServer/images"}/{photo.ServerName}.jpg", imageToReplace);
-                        await System.IO.File.WriteAllBytesAsync($"{"//mdemchenko/MediaServer/thumbs"}/{photo.ServerName}.jpg", GetThumb(imageToReplace));
+                        await System.IO.File.WriteAllBytesAsync($"{GetImagesPath()}/{photo.ServerName}.jpg", imageToReplace);
+                        await System.IO.File.WriteAllBytesAsync($"{GetThumbsPath()}/{photo.ServerName}.jpg", GetThumb(imageToReplace));
                     }
 
-                    if (photo.PhotoId == null)
-                    {
-                        _repository.Create(_mapper.Map<Photo>(photo), photo.AlbumId);
-                    }
-                    else
-                    {
-                        _repository.Update(photo.PhotoId, _mapper.Map<Photo>(photo));
-                    }
+                    _repository.Update(photo.PhotoId, _mapper.Map<Photo>(photo));
                 }
                 catch (Exception ex)
                 {
@@ -88,30 +112,19 @@ namespace PhotoManager.Controllers
             return Ok("Updated successfully");
         }
 
-        [HttpPost("[action]")]
+        [HttpDelete("[action]")]
         [Authorize]
-        [DisableRequestSizeLimit]
-        public ActionResult RemovePhotos([FromBody]IEnumerable<PhotoViewModel> photos)
+        public ActionResult RemovePhoto([FromBody]PhotoViewModel photo)
         {
-            foreach (var photo in photos)
+            try
             {
-                try
-                {
-                    _repository.Remove(_mapper.Map<Photo>(photo), photo.AlbumId);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest("Error processing photos: " + ex.Message);
-                }
+                _repository.Remove(_mapper.Map<Photo>(photo), photo.AlbumId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error processing photos: " + ex.Message);
             }
             return Ok();
-        }        
-
-        [HttpGet("[action]")]
-        public IEnumerable<PhotoViewModel> GetAllPhotos(int pageIndex, int pageSize)
-        {
-            var photos = _repository.GetAll(pageIndex * pageSize, pageSize).ToList();
-            return photos.Select(photo => _mapper.Map<PhotoViewModel>(photo));
         }
 
         #region utils
@@ -168,6 +181,16 @@ namespace PhotoManager.Controllers
             }
             string base64 = data[1];
             return Convert.FromBase64String(base64);
+        }
+
+        private string GetImagesPath()
+        {
+            return $"{_configuration.GetSection("MediaServerSettings").GetSection("MediaServerPath").Value}/{_configuration.GetSection("MediaServerSettings").GetSection("ImagesCatalog").Value}";
+        }
+
+        private string GetThumbsPath()
+        {
+            return $"{_configuration.GetSection("MediaServerSettings").GetSection("MediaServerPath").Value}/{_configuration.GetSection("MediaServerSettings").GetSection("ThumbsCatalog").Value}";
         }
         #endregion
     }

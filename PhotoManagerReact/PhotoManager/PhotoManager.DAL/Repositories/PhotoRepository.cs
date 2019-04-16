@@ -25,7 +25,7 @@ namespace PhotoManager.DAL.Repositories
         {
             start = start < 0 ? 0 : start;
             var photosId = _albums.Find(album => album.Id == albumId).FirstOrDefault().Photos;
-            return _photos.Find(photo => photosId.Contains(photo.Id)).Skip(start).Limit(count).ToList() as IEnumerable<IPhoto>;
+            return _photos.Find(photo => photosId.Contains(photo.Id)).Skip(start).Limit(count).ToList();
         }
 
         public IEnumerable<IPhoto> GetAll(int start, int count)
@@ -96,7 +96,12 @@ namespace PhotoManager.DAL.Repositories
 
         public void Remove(IPhoto photo, string albumId)
         {
-            var albumToReplace = _albums.Find(album => album.Id == albumId).FirstOrDefault();
+            var albumToReplace = _albums.Find(album => album.Id == albumId)?.FirstOrDefault();
+
+            if (albumToReplace == null || albumToReplace.Photos == null)
+            {
+                return;
+            }
 
             using (var session = _client.StartSession())
             {

@@ -5,13 +5,15 @@ import * as Album from './AlbumPhotos';
 import * as Albums from './Albums';
 import * as Login from './Login';
 import * as Photo from './Photo';
+import * as Home from './Home';
 
 export default function configureStore(history, initialState) {
     const reducers = {
         albumPhotos: Album.reducer,
         albums: Albums.reducer,
         photo: Photo.reducer,
-        login: Login.reducer
+        login: Login.reducer,
+        home: Home.reducer
     };
 
     const middleware = [

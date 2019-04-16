@@ -13,53 +13,86 @@ namespace PhotoManager.Controllers
     public class AlbumsController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IAlbumRepository _repository;
+        private readonly IAlbumRepository _albumRepository;
+        private readonly IPhotoRepository _photoRepository;
 
-        public AlbumsController(IAlbumRepository repository, IMapper mapper)
+        public AlbumsController(IAlbumRepository albumRepository, IPhotoRepository photoRepository, IMapper mapper)
         {
             _mapper = mapper;
-            _repository = repository;
+            _albumRepository = albumRepository;
+            _photoRepository = photoRepository;
         }
 
         [HttpGet("[action]")]
         public ActionResult<AlbumViewModel> GetAllAlbums(int pageIndex, int pageSize)
         {
-            var albums = _repository.Get(pageIndex * pageSize, pageSize).ToList();
+            var albums = _albumRepository.Get(pageIndex * pageSize, pageSize).ToList();
             var albumViewModels = albums.Select(album => _mapper.Map<AlbumViewModel>(album));
             return Ok(albumViewModels);
         }
 
         [HttpPost("[action]")]
-        [DisableRequestSizeLimit]
-        
-        public ActionResult RemoveAlbums([FromBody]IEnumerable<AlbumViewModel> albums)
+        [Authorize]
+        public ActionResult<AlbumViewModel> AddAlbum([FromBody]AlbumViewModel album)
         {
-            _repository.RemoveMany(albums.Select(a => a.AlbumId));
+            var albumIn = _mapper.Map<Album>(album);
+
+            var error = ValidateAlbum(albumIn);
+            if (!string.IsNullOrEmpty(error))
+            {
+                return BadRequest(error);
+            }
+            if (albumIn.Photos?.Count > 0)
+            {
+                albumIn.Cover = GetCover(albumIn.Photos);
+            }
+            _albumRepository.Create(albumIn);
             return Ok();
         }
 
-        [HttpPost("[action]")]
+        [HttpPut("[action]")]
         [Authorize]
         public ActionResult<AlbumViewModel> EditAlbum([FromBody]AlbumViewModel album)
         {
             var albumIn = _mapper.Map<Album>(album);
 
-            var error = _repository.ValidateAlbum(albumIn);
+            var error = ValidateAlbum(albumIn);
             if (!string.IsNullOrEmpty(error))
             {
                 return BadRequest(error);
             }
 
-            if (albumIn.Id == null)
+            if (albumIn.Photos?.Count > 0)
             {
-                _repository.Create(albumIn);
+                albumIn.Cover = GetCover(albumIn.Photos);
             }
-            else
-            {
-                _repository.Update(album.AlbumId, albumIn);
-            }
-
+            _albumRepository.Update(album.AlbumId, albumIn);
             return Ok();
         }
+
+        [HttpDelete("[action]")]
+        public ActionResult RemoveAlbum([FromBody]AlbumViewModel album)
+        {
+            _albumRepository.Remove(album.AlbumId);
+            return Ok();
+        }
+
+        #region utils
+        private string GetCover(List<string> photos)
+        {
+            var coverPhoto = _photoRepository.Get(photos.FirstOrDefault());
+            return $"{coverPhoto?.ServerName}.{coverPhoto?.Format}";
+        }
+
+        private string ValidateAlbum(Album albumIn)
+        {
+            var validationError = string.Empty;
+            if (_albumRepository.Get(0).Any(album => album.AlbumName == albumIn.AlbumName && album.Id != albumIn.Id))
+            {
+                validationError = "Album name must be unique";
+            }
+            return validationError;
+        }
+        #endregion
     }
 }

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PhotoManager.BLL.Repositories;
 using PhotoManager.Models;
@@ -17,12 +18,14 @@ namespace PhotoManager.Controllers
         private readonly IMapper _mapper;
         private readonly IUserRepository _repository;
         private readonly IHashcodeHelper _hashHelper;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(IUserRepository repository, IMapper mapper, IHashcodeHelper hashHelper)
+        public UsersController(IUserRepository repository, IMapper mapper, IHashcodeHelper hashHelper, IConfiguration configuration)
         {
             _repository = repository;
             _mapper = mapper;
             _hashHelper = hashHelper;
+            _configuration = configuration;
         }
 
         [HttpPost("[action]")]
@@ -67,15 +70,15 @@ namespace PhotoManager.Controllers
 
         private string GenerateToken(UserViewModel userInfo)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("IssuerSigningSecretKey"));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtSettings").GetSection("SecurityKey").Value));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken("PhotoManagerIssuer",
-              "PhotoManagerAudience",
+            var token = new JwtSecurityToken(_configuration.GetSection("JwtSettings").GetSection("ValidIssuer").Value,
+              _configuration.GetSection("JwtSettings").GetSection("ValidAudience").Value,
               null,
               expires: DateTime.Now.AddMinutes(120),
               signingCredentials: credentials);
-            
+
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }

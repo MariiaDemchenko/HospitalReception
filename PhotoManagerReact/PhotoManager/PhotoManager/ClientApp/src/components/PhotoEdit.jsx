@@ -30,7 +30,7 @@ class PhotoEdit extends Component {
         if (this.props.postSaveChanges) {
             const onRequestSuccess = this.props.onRequestSuccess
             const onRequestError = this.props.onRequestError
-            axios.post(`api/Photos/EditPhotos`, this.props.selectedPhotos)
+            axios.put(`api/Photos/EditPhotos`, this.props.selectedPhotos)
                 .then(function (response) {
                     if (response.status === 200) {
                         onRequestSuccess()

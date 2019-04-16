@@ -56,7 +56,7 @@ const initialState = {
 
 export const actionCreators = {
     requestAlbumPhotos: (pageIndex, selectedIndex) => async (dispatch) => {
-        const url = `api/Photos/GetPhotosByAlbumId?albumId=${selectedIndex}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
+        const url = `api/AlbumPhotos/GetAlbumPhotos/${selectedIndex}?pageIndex=${pageIndex}&pageSize=${pageSize}`;
         dispatch({ type: requestAlbumPhotosType, pageIndex });
         const response = await fetch(url);
         const albumPhotos = await response.json();
@@ -179,10 +179,10 @@ export const reducer = (state, action) => {
     }
 
     if (action.type === removePhotoType) {
-        if (state.albumPhotos.filter(albumPhoto => albumPhoto.isSelected).length === 0) {
+        if (state.albumPhotos.filter(albumPhoto => albumPhoto.isSelected).length !== 1) {
             return {
                 ...state,
-                alertMessage: "Please select photos to remove",
+                alertMessage: "Please select one photo to remove",
                 alertId: state.alertId + 1,
                 alertType: "info"
             }

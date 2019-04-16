@@ -31,7 +31,7 @@ class PhotoAdd extends Component {
             const onRequestSuccess = this.props.onRequestSuccess
             const onRequestError = this.props.onRequestError
             const photos = this.props.selectedPhotos.map(photo => ({ ...photo, albumId: this.props.match.params.albumId }))
-            axios.post(`api/Photos/EditPhotos`, photos)
+            axios.post(`api/Photos/AddPhotos`, photos)
                 .then(function (response) {
                     if (response.status === 200) {
                         onRequestSuccess()
