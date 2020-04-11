@@ -29,4 +29,9 @@ export class PatientsService {
     // tslint:disable-next-line:prefer-const
     return this.http.get(this.rootUrl + '/api/doctors/consultationHours/' + id);
   }
+
+  getCardRecords(id: number) {
+    // tslint:disable-next-line:prefer-const
+    return this.http.get(this.rootUrl + '/api/doctors/consultationHours/' + id);
+  }
 }

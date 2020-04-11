@@ -1,0 +1,41 @@
+<div>
+  <table class="table table-bordered table-striped doctor-information">
+    <tr>
+      <td>Patient</td>
+      <td>{{patient.FirstName}} {{patient.LastName}}</td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td>{{patient.Email }}</td>
+    </tr>
+    <tr>
+      <td>Phone</td>
+      <td>{{patient.PhoneNumber }}</td>
+    </tr>
+    <tr>
+      <td>Birth Date</td>
+      <td>{{patient.BirthDate }}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="btn-edit-form alert alert-success" *ngFor="let appointment of pagedItems">
+    {{appointment.AppointmentDate}} <strong>{{appointment.Department}}</strong> <a href="/../doctors/{{appointment.DoctorId}}" class="alert-link">{{appointment.Doctor}}</a> {{appointment.Description}} 
+</div>
+<ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+        <a class="page-link" (click)="setPage(1)">First</a>
+    </li>
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+        <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+    </li>
+    <li *ngFor="let page of pager.pages" class="page-item" [ngClass]="{active:pager.currentPage === page}">
+        <a class="page-link" (click)="setPage(page)">{{page}}</a>
+    </li>
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+    </li>
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+    </li>
+</ul>

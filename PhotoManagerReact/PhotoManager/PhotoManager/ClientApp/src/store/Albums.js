@@ -216,7 +216,7 @@ export const reducer = (state, action) => {
 
     if (action.type === removeSuccessType) {
         return {
-            pageIndex: 0,
+            pageIndex: 0,  
             postSaveChanges: false,
             alertMessage: "The albums have been removed successfully",
             alertId: state.alertId + 1,

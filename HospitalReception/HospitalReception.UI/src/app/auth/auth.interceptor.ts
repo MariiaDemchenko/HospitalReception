@@ -1,9 +1,9 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpUserEvent, HttpEvent, HttpEventType } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { UserService } from '../shared/user.service';
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DoctorsService } from '../shared/doctors/doctors.service';
 import { ImagesService } from '../shared/images/images.service';
 import { NgModule } from '@angular/core';
+import {Doctor} from '../shared/doctors/doctor.model';
 
 @Component({
   selector: 'app-doctor-profiles',
@@ -11,7 +12,7 @@ import { NgModule } from '@angular/core';
 })
 
 export class DoctorProfilesComponent implements OnInit {
-  doctors: any;
+  doctors: Doctor[];
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, private route: ActivatedRoute, private doctorsService: DoctorsService, private imagesService: ImagesService) {
   }
@@ -24,8 +25,8 @@ export class DoctorProfilesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.doctors = this.doctorsService.getAllDoctors().subscribe((data: any) => {
-      this.doctors = data;
-    });
+    this.doctorsService.getAllDoctors().subscribe( 
+      doctors => this.doctors = doctors
+    );
   }
 }

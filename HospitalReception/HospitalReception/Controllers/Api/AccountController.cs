@@ -34,6 +34,13 @@ namespace HospitalReception.Controllers.Api
         {
             var identityClaims = (ClaimsIdentity)User.Identity;
 
+            var x = new LoginViewModel
+            {
+                UserName = identityClaims.FindFirst("Username").Value,
+                Email = identityClaims.FindFirst("Email").Value,
+                LoggedOn = identityClaims.FindFirst("LoggedOn").Value
+            };
+
             return new LoginViewModel
             {
                 UserName = identityClaims.FindFirst("Username").Value,

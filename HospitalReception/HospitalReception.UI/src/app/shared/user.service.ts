@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import { User } from './user.model';
 import { EventEmitter } from '@angular/core';
 
@@ -23,8 +25,9 @@ export class UserService {
       FirstName: user.FirstName,
       LastName: user.LastName
     };
+    const reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', 'No-Auth': 'True' });
 
-    return this.http.post(this.rootUrl + '/api/users/register', body);
+    return this.http.post(this.rootUrl + '/api/users/register', body, { headers: reqHeader });
   }
 
   userAuthentication(user: User) {
