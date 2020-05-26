@@ -225,6 +225,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
+    <Compile Include="Controllers\Api\LookupsController.cs" />
+    <Compile Include="Controllers\Api\DisabilityGroupsController.cs" />
+    <Compile Include="Controllers\Api\EducationTypesController.cs" />
     <Compile Include="Controllers\Api\DoctorsController.cs" />
     <Compile Include="Controllers\Api\DepartmentsController.cs" />
     <Compile Include="Controllers\Api\ImagesController.cs" />
@@ -241,6 +244,12 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\AppointmentViewModel.cs" />
     <Compile Include="ViewModels\ConsultationHoursViewModel.cs" />
+    <Compile Include="ViewModels\GenderViewModel.cs" />
+    <Compile Include="ViewModels\OrganizationViewModel.cs" />
+    <Compile Include="ViewModels\HabitationMemberViewModel.cs" />
+    <Compile Include="ViewModels\InformationSourceViewModel.cs" />
+    <Compile Include="ViewModels\DisabilityGroupViewModel.cs" />
+    <Compile Include="ViewModels\EducationTypeViewModel.cs" />
     <Compile Include="ViewModels\DepartmentViewModel.cs" />
     <Compile Include="ViewModels\DoctorViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />

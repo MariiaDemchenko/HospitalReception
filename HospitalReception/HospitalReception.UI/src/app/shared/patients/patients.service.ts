@@ -18,6 +18,7 @@ export class PatientsService {
   }
 
   editPatient(patient: Patient) {
+    alert(JSON.stringify(patient));
     return this.http.post(this.rootUrl + '/api/patients', patient);
   }
 

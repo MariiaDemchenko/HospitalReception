@@ -24,9 +24,14 @@ namespace HospitalReception.Controllers.Api
         }
 
         [Route("")]
-        public IHttpActionResult Get(HttpRequestMessage request)
+        public IHttpActionResult Get()
         {
             var patients = _patientsRepository.GetAll();
+            foreach(var patient in patients)
+            {
+                var birthDate = patient.BirthDate;
+                patient.BirthDate = new DateTime(birthDate.Year, birthDate.Month, birthDate.Day, birthDate.Hour, birthDate.Minute, birthDate.Second, DateTimeKind.Local);
+            }
             IEnumerable<PatientViewModel> patientsViewModel = Mapper.Map<IEnumerable<Patient>, IEnumerable<PatientViewModel>>(patients);
             return Ok(patientsViewModel);
         }
@@ -44,9 +49,14 @@ namespace HospitalReception.Controllers.Api
         public IHttpActionResult Edit(Patient patient)
         {
             var patientToEdit = _patientsRepository.GetSingle(patient.Id);
-
             patientToEdit.FirstName = patient.FirstName;
             patientToEdit.LastName = patient.LastName;
+            patientToEdit.DisabilityGroupId = patient.DisabilityGroupId;
+            patientToEdit.BirthDate = patient.BirthDate;
+            patientToEdit.EducationId = patient.EducationId;
+            patientToEdit.GenderId = patient.GenderId;
+            patientToEdit.InformationSourceId = patient.InformationSourceId;
+            patientToEdit.HabitationMemberId = patient.HabitationMemberId;
 
             _patientsRepository.Edit(patientToEdit);
             _unitOfWork.Save();

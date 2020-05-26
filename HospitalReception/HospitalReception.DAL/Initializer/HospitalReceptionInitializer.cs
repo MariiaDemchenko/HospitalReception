@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HospitalReception.DAL.Initializer
 {
-    public class HospitalReceptionInitializer : DropCreateDatabaseIfModelChanges<HospitalReceptionDbContext>
+    public class HospitalReceptionInitializer : CreateDatabaseIfNotExists<HospitalReceptionDbContext>
     {
         protected override void Seed(HospitalReceptionDbContext context)
         {
@@ -274,9 +274,9 @@ namespace HospitalReception.DAL.Initializer
                     }
                 };
                 
-                var consultationHours = new List<ConsultaionHours>
+                var consultationHours = new List<ConsultationHours>
                 {
-                    new ConsultaionHours
+                    new ConsultationHours
                     {
                         DoctorId = 1,
                         DayOfWeek = DayOfWeek.Monday,
@@ -285,7 +285,7 @@ namespace HospitalReception.DAL.Initializer
                         EndHour = 15,
                         EndMinutes = 30
                     },
-                    new ConsultaionHours
+                    new ConsultationHours
                     {
                         DoctorId = 1,
                         DayOfWeek = DayOfWeek.Tuesday,
@@ -294,7 +294,7 @@ namespace HospitalReception.DAL.Initializer
                         EndHour = 21,
                         EndMinutes = 0
                     },
-                    new ConsultaionHours
+                    new ConsultationHours
                     {
                         DoctorId = 1,
                         DayOfWeek = DayOfWeek.Wednesday,
@@ -303,7 +303,7 @@ namespace HospitalReception.DAL.Initializer
                         EndHour = 17,
                         EndMinutes = 0
                     },
-                    new ConsultaionHours
+                    new ConsultationHours
                     {
                         DoctorId = 2,
                         DayOfWeek = DayOfWeek.Thursday,
@@ -312,7 +312,7 @@ namespace HospitalReception.DAL.Initializer
                         EndHour = 21,
                         EndMinutes = 0
                     },
-                    new ConsultaionHours
+                    new ConsultationHours
                     {
                         DoctorId = 2,
                         DayOfWeek = DayOfWeek.Friday,
@@ -321,7 +321,7 @@ namespace HospitalReception.DAL.Initializer
                         EndHour = 21,
                         EndMinutes = 0
                     },
-                    new ConsultaionHours
+                    new ConsultationHours
                     {
                         DoctorId = 3,
                         DayOfWeek = DayOfWeek.Saturday,
@@ -429,7 +429,7 @@ namespace HospitalReception.DAL.Initializer
                 context.Doctors.AddRange(doctors);
                 context.Patients.AddRange(patients);
                 context.SaveChanges();
-                context.ConsultaionHours.AddRange(consultationHours);
+                context.ConsultationHours.AddRange(consultationHours);
                 context.Appointments.AddRange(appointments);
                 context.SaveChanges();
             }

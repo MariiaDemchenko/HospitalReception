@@ -21,12 +21,12 @@ namespace HospitalReception.Controllers.Api
     public class DoctorsController : ApiController
     {
         private readonly IEntityBaseRepository<Doctor> _doctorsRepository;
-        private readonly IEntityBaseRepository<ConsultaionHours> _consultationHoursRepository;
+        private readonly IEntityBaseRepository<ConsultationHours> _consultationHoursRepository;
         private readonly IEntityBaseRepository<Appointment> _appointmentsRepository;
 
         private readonly IUnitOfWork _unitOfWork;
 
-        public DoctorsController(IEntityBaseRepository<Doctor> doctorsRepository, IEntityBaseRepository<ConsultaionHours> consultationHoursRepository, IEntityBaseRepository<Appointment> appointmentsRepository, IUnitOfWork unitOfWork)
+        public DoctorsController(IEntityBaseRepository<Doctor> doctorsRepository, IEntityBaseRepository<ConsultationHours> consultationHoursRepository, IEntityBaseRepository<Appointment> appointmentsRepository, IUnitOfWork unitOfWork)
         {
             _doctorsRepository = doctorsRepository;
             _consultationHoursRepository = consultationHoursRepository;
@@ -101,7 +101,7 @@ namespace HospitalReception.Controllers.Api
         public IHttpActionResult GetDoctorConsultationHours(int id)
         {
             var consultations = _consultationHoursRepository.GetAll().Where(c => c.DoctorId == id);
-            var consultationHours = Mapper.Map<IEnumerable<ConsultaionHours>, IEnumerable<ConsultationHoursViewModel>>(consultations);
+            var consultationHours = Mapper.Map<IEnumerable<ConsultationHours>, IEnumerable<ConsultationHoursViewModel>>(consultations);
             return Ok(consultationHours);
         }
 

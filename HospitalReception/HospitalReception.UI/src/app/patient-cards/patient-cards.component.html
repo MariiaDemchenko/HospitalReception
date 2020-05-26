@@ -13,7 +13,7 @@
             'has-danger': myform.errors,
             'has-success': myform.valid
        }">
-            <div>
+            <div class="row">
                 <div class="col-5">
                     <div class="row input-item">
                         <div class="form-group" [ngClass]="{
@@ -29,6 +29,30 @@
                     </div>
                     <div class="row input-item">
                         <div class="form-group" [ngClass]="{
+                  'has-danger': LastName.invalid && (LastName.dirty || LastName.touched),
+                  'has-success': LastName.valid && (LastName.dirty || LastName.touched)
+             }">
+                            <div class="form-control-feedback" *ngIf="LastName.errors && (LastName.dirty || LastName.touched)">
+                                <p *ngIf="LastName.errors && LastName.errors.required">Last name is required</p>
+                            </div>
+                            <label>Last Name</label>
+                            <input class="form-control" formControlName="LastName" required>
+                        </div>
+                    </div>
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
+                  'has-danger': MiddleName.invalid && (MiddleName.dirty || MiddleName.touched),
+                  'has-success': MiddleName.valid && (MiddleName.dirty || MiddleName.touched)
+             }">
+                            <div class="form-control-feedback" *ngIf="MiddleName.errors && (MiddleName.dirty || MiddleName.touched)">
+                                <p *ngIf="MiddleName.errors && MiddleName.errors.required">Middle name is required</p>
+                            </div>
+                            <label>Middle Name</label>
+                            <input class="form-control" formControlName="MiddleName" required>
+                        </div>
+                    </div>
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
                                 'has-danger': Email.invalid && (Email.dirty || Email.touched),
                                 'has-success': Email.valid && (Email.dirty || Email.touched)
                            }">
@@ -39,8 +63,93 @@
                             </div>
                         </div>
                     </div>
-                    <form class="form-inline">
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
+                                'has-danger': Gender.invalid && (Gender.dirty || Gender.touched),
+                                'has-success': Gender.valid && (Gender.dirty || Gender.touched)
+                           }">
+                            <label>Gender</label>
+                            <select (change)="selectedGenderChanged($event.target.value)" class="form-control">
+
+                                <option *ngFor="let gender of genders" value={{gender.Id}} [selected]="gender.Id === selectedPatient.GenderId">
+                                  {{gender.Name}}
+                                </option>
+                              </select>
+                        </div>
+                    </div>
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
+                                'has-danger': Education.invalid && (Education.dirty || Education.touched),
+                                'has-success': Education.valid && (Education.dirty || Education.touched)
+                           }">
+                            <label>Education</label>
+                            <select (change)="selectedEducationTypeChanged($event.target.value)" class="form-control">
+
+                                <option *ngFor="let educationType of educationTypes" value={{educationType.Id}} [selected]="educationType.Id === selectedPatient.EducationId">
+                                  {{educationType.Name}}
+                                </option>
+                              </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
+                                'has-danger': DisabilityGroup.invalid && (DisabilityGroup.dirty || DisabilityGroup.touched),
+                                'has-success': DisabilityGroup.valid && (DisabilityGroup.dirty || DisabilityGroup.touched)
+                           }">
+                            <label>Disability Group</label>
+                            <select (change)="selectedDisabilityGroupChanged($event.target.value)" class="form-control">
+
+                                <option *ngFor="let disabilityGroup of disabilityGroups" value={{disabilityGroup.Id}} [selected]="disabilityGroup.Id === selectedPatient.DisabilityGroupId">
+                                  {{disabilityGroup.Name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
+                                'has-danger': InformationSource.invalid && (InformationSource.dirty || InformationSource.touched),
+                                'has-success': InformationSource.valid && (InformationSource.dirty || InformationSource.touched)
+                           }">
+                            <label>Information Source</label>
+                            <select (change)="selectedInformationSourceChanged($event.target.value)" class="form-control">
+
+                                <option *ngFor="let informationSource of informationSources" value={{informationSource.Id}} [selected]="informationSource.Id === selectedPatient.InformationSourceId">
+                                  {{informationSource.Name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
+                                'has-danger': HabitationMember.invalid && (HabitationMember.dirty || HabitationMember.touched),
+                                'has-success': HabitationMember.valid && (HabitationMember.dirty || HabitationMember.touched)
+                           }">
+                            <label>Habitation Member</label>
+                            <select (change)="selectedHabitationMemberChanged($event.target.value)" class="form-control">
+
+                                <option *ngFor="let habitationMember of habitationMembers" value={{habitationMember.Id}} [selected]="habitationMember.Id === selectedPatient.HabitationMemberId">
+                                  {{habitationMember.Name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row input-item">
+                        <div class="form-group" [ngClass]="{
+                                'has-danger': Policlinic.invalid && (Policlinic.dirty || Policlinic.touched),
+                                'has-success': Policlinic.valid && (Policlinic.dirty || Policlinic.touched)
+                           }">
+                            <label>Policlinic</label>
+                            <input class="form-control" formControlName="Policlinic" required>
+                            <div class="form-control-feedback" *ngIf="Policlinic.errors && (Policlinic.dirty || Policlinic.touched)">
+                                <p *ngIf="Policlinic.errors && Policlinic.errors.required">Policlinic is required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="row input-item">
                         <div class="form-group">
+                            <label>Birth Date</label>
                             <div class="row input-group">
                                 <input class="form-control" placeholder="yyyy-mm-dd" name="d2" #c2="ngModel" [(ngModel)]="selectedBirthDate" ngbDatepicker
                                     #d2="ngbDatepicker">

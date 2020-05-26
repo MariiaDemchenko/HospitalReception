@@ -6,12 +6,22 @@ namespace HospitalReception.DAL.Infrastructure
 {
     public interface IHospitalReceptionDbContext
     {
-        DbSet<Patient> Patients { get; set; }
-        DbSet<Doctor> Doctors { get; set; }
-        DbSet<Department> Depatments { get; set; }
-        DbSet<ConsultaionHours> ConsultaionHours { get; set; }
+        DbSet<Address> Address { get; set; }
         DbSet<Appointment> Appointments { get; set; }
-
+        DbSet<Area> Areas { get; set; }
+        DbSet<ConsultationHours> ConsultationHours { get; set; }
+        DbSet<Department> Depatments { get; set; }
+        DbSet<DisabilityGroup> DisabilityGroups { get; set; }
+        DbSet<Doctor> Doctors { get; set; }
+        DbSet<EducationType> EducationTypes { get; set; }
+        DbSet<Gender> Genders { get; set; }
+        DbSet<HabitationMember> HabitationMembers { get; set; }
+        DbSet<InformationSource> InformationSources { get; set; }
+        DbSet<LocalityType> LocalityTypes { get; set; }
+        DbSet<Organization> Organizations { get; set; }
+        DbSet<Patient> Patients { get; set; }
+        DbSet<Phone> Phones { get; set; }
+        DbSet<Region> Region { get; set; }
         int SaveChanges();
         void Dispose();
         DbEntityEntry Entry<TEntity>(object entity);
