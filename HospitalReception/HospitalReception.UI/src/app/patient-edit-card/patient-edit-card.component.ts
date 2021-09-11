@@ -4,16 +4,17 @@ import { Patient } from '../shared/patients/patient.model';
 import { PatientsService } from '../shared/patients/patients.service';
 import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
 
   fromModel(date: Date): NgbDateStruct {
-    return (date && date.getFullYear) ? { year: date.getFullYear(), month: date.getMonth(), day: date.getDate() } : null;
+    return (date && date.getFullYear) ? { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } : null;
   }
 
   toModel(date: NgbDateStruct): Date {
-    return date ? new Date(date.year, date.month, date.day) : null;
+    return date ? new Date(date.year, date.month - 1, date.day) : null;
   }
 }
 
@@ -26,13 +27,14 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
 export class PatientEditCardComponent implements OnInit {
 
   constructor(private patientsService: PatientsService, private router: Router) {
-    this.selectedBirthDate = new Date(2018, 2, 2);
+    this.selectedBirthDate = new Date();
   }
 
   FirstName: FormControl;
   LastName: FormControl;
+  MiddleName: FormControl;
   Email: FormControl;
-  Phone: FormControl;
+  PhoneNumber: FormControl;
   BirthDate: FormControl;
 
   myform: FormGroup;
@@ -50,22 +52,27 @@ export class PatientEditCardComponent implements OnInit {
     this.FirstName = new FormControl('', [
       Validators.required
     ]);
+    this.MiddleName = new FormControl('', [
+      Validators.required
+    ]);
     this.LastName = new FormControl('', [
       Validators.required
     ]);
     this.Email = new FormControl('', [
       Validators.required,
-      Validators.email
+      Validators.pattern('[^ @]*@[^ @]*')
     ]);
-    this.Phone = new FormControl('', [
-      Validators.required
+    this.PhoneNumber = new FormControl('', [
+      Validators.required,
+      Validators.pattern('[0-9]+')
     ]);
-    this.BirthDate = new FormControl('', [
-      Validators.required
-    ]);
+    this.BirthDate = new FormControl('');
   }
 
   addPatient() {
+    const datePipe = new DatePipe('en-US');
+    this.selectedBirthDate = new Date(this.selectedBirthDate.getFullYear(),
+      this.selectedBirthDate.getMonth(), this.selectedBirthDate.getDate() + 1);
     this.BirthDate.setValue(this.selectedBirthDate);
     this.patientsService.addPatient(this.myform.value).subscribe((data: any) => this.router.navigate(['/patients']));
   }
@@ -73,9 +80,10 @@ export class PatientEditCardComponent implements OnInit {
   createForm() {
     this.myform = new FormGroup({
       Email: this.Email,
-      Phone: this.Phone,
+      PhoneNumber: this.PhoneNumber,
       BirthDate: this.BirthDate,
       FirstName: this.FirstName,
+      MiddleName: this.MiddleName,
       LastName: this.LastName,
     });
   }

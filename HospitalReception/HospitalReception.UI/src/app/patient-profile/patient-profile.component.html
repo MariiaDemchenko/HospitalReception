@@ -1,3 +1,7 @@
+<script src="node_modules/chart.js/Chart.min.js"></script>
+<script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <div>
   <table class="table table-bordered table-striped doctor-information">
     <tr>
@@ -19,23 +23,95 @@
   </table>
 </div>
 
-<div class="btn-edit-form alert alert-success" *ngFor="let appointment of pagedItems">
-    {{appointment.AppointmentDate}} <strong>{{appointment.Department}}</strong> <a href="/../doctors/{{appointment.DoctorId}}" class="alert-link">{{appointment.Doctor}}</a> {{appointment.Description}} 
-</div>
-<ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-        <a class="page-link" (click)="setPage(1)">First</a>
-    </li>
-    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-        <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
-    </li>
-    <li *ngFor="let page of pager.pages" class="page-item" [ngClass]="{active:pager.currentPage === page}">
-        <a class="page-link" (click)="setPage(page)">{{page}}</a>
-    </li>
-    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-        <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
-    </li>
-    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-        <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
-    </li>
-</ul>
+
+
+<button type="button" (click)="predictRisk()" class="row input-item btn btn-outline-primary btn-menu col-4" >ATHEROSCLEROSIS RISK</button>
+
+<label class="label label-danger col-4">{{atherosclerosisRisk}}</label>
+
+<button type="button" (click)="predictRisk()" class="row input-item btn btn-outline-primary btn-menu col-4" >INFARCTION RISK</button>
+
+<label class="label label-success col-4">{{infarctionRisk}}</label>
+
+<mat-tab-group>
+  <mat-tab label="General Information"> 
+    <table mat-table [dataSource]="patient.Measurements" style="width: 100%;">
+      <ng-container matColumnDef="Label">
+          <th mat-header-cell *matHeaderCellDef> Label</th>
+          <td mat-cell *matCellDef="let measurement"> {{measurement.Label}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Value">
+          <th mat-header-cell *matHeaderCellDef> Value </th>
+          <td mat-cell *matCellDef="let measurement"> {{measurement.Value}} </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>  
+    </table>  
+  </mat-tab>
+  <mat-tab label="Current Health State"> 
+    <table mat-table [dataSource]="patient.Measurements" style="width: 100%;">
+      <ng-container matColumnDef="Label">
+          <th mat-header-cell *matHeaderCellDef> Label</th>
+          <td mat-cell *matCellDef="let measurement"> {{measurement.Label}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Value">
+          <th mat-header-cell *matHeaderCellDef> Value </th>
+          <td mat-cell *matCellDef="let measurement"> {{measurement.Value}} </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>  
+    </table>  
+  </mat-tab>
+  <mat-tab label="Charts"> 
+    <div style="display: block">
+      
+      <label id="example-radio-group-label" class="h3">Blood Pressure Monitoring </label>
+      <p></p>
+        <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="chart" (change)="radioChange()">
+        <mat-radio-button class="example-radio-button col-3" *ngFor="let chart of charts" [value]="chart" >
+    {{chart}}</mat-radio-button>
+</mat-radio-group>
+      <canvas mdbChart
+          [chartType]="chartType"
+          [datasets]="chartDatasets"
+          [labels]="chartLabels"
+          [colors]="chartColors"
+          [options]="chartOptions"
+          [legend]="true">
+      </canvas>
+    </div>
+</mat-tab>
+  <mat-tab label="Appointments"> 
+    <div class="btn-edit-form alert alert-success" *ngFor="let appointment of pagedItems">
+      {{appointment.AppointmentDate}} <strong>{{appointment.Department}}</strong> <a href="/../doctors/{{appointment.DoctorId}}" class="alert-link">{{appointment.Doctor}}</a> {{appointment.Description}} 
+  </div>
+  <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+          <a class="page-link" (click)="setPage(1)">First</a>
+      </li>
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+          <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+      </li>
+      <li *ngFor="let page of pager.pages" class="page-item" [ngClass]="{active:pager.currentPage === page}">
+          <a class="page-link" (click)="setPage(page)">{{page}}</a>
+      </li>
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+      </li>
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+      </li>
+  </ul>  
+  
+  </mat-tab>
+</mat-tab-group>
+
+
+

@@ -7,7 +7,9 @@ import { EducationTypesService } from '../shared/education-types/education-types
 import { NgbModal, ModalDismissReasons, NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Patient } from '../shared/patients/patient.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { DatePipe } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+
 
 @Injectable()
 export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
@@ -33,23 +35,34 @@ export class PatientCardsComponent implements OnInit {
   LastName: FormControl;
   MiddleName: FormControl;
   Email: FormControl;
-  Phone: FormControl;
+  PhoneNumber: FormControl;
   BirthDate: FormControl;
   Gender: FormControl;
   Education: FormControl;
+  Employment: FormControl;
+  Organization: FormControl;
   DisabilityGroup: FormControl;
+  LocalityName: FormControl;
   InformationSource: FormControl;
   HabitationMember: FormControl;
   Policlinic: FormControl;
+  LocalityType: FormControl;
+  Region: FormControl;
 
   myform: FormGroup;
 
   patients: any;
+  displayedColumns: string[] =
+  ['FirstName', 'MiddleName', 'LastName', 'Phone', 'Email', 'BirthDate', 'Gender', 'action-view', 'action-edit'];
   genders: any;
   educationTypes: any;
+  employmentTypes: any;
+  localityTypes: any;
+  regions: any;
   disabilityGroups: any;
   informationSources: any;
   habitationMembers: any;
+  policlinics: any;
 
   selectedPatient: Patient;
   selectedBirthDate: Date;
@@ -68,11 +81,16 @@ export class PatientCardsComponent implements OnInit {
   }
 
   ngOnInit() {
+    const datePipe = new DatePipe('en-US');
     this.createFormControls();
     this.createForm();
     this.patients = this.patientsService.getAllPatients().subscribe((data: any) => {
       this.patients = data;
+      this.patients.forEach(patient => {
+          patient.BirthDate = datePipe.transform(patient.BirthDate, 'dd-MM-yyyy');
+        });
     });
+
 
     this.educationTypesService.getAllGenders().subscribe((data: any) =>
     this.genders = data);
@@ -88,6 +106,18 @@ export class PatientCardsComponent implements OnInit {
 
     this.educationTypesService.getAllHabitationMembers().subscribe((data: any) =>
     this.habitationMembers = data);
+
+    this.educationTypesService.getAllPoliclinics().subscribe((data: any) =>
+    this.policlinics = data);
+
+    this.educationTypesService.getAllRegions().subscribe((data: any) =>
+    this.regions = data);
+
+    this.educationTypesService.getAllEmploymentTypes().subscribe((data: any) =>
+    this.employmentTypes = data);
+
+    this.educationTypesService.getAllLocalityTypes().subscribe((data: any) =>
+    this.localityTypes = data);
   }
 
   selectedGenderChanged(filterVal: any) {
@@ -95,7 +125,10 @@ export class PatientCardsComponent implements OnInit {
   }
 
   selectedEducationTypeChanged(filterVal: any) {
+    alert('changed');
     this.selectedPatient.EducationId = filterVal;
+    alert(this.selectedPatient.EducationId);
+    this.myform.value.EducationId = filterVal;
   }
 
   selectedDisabilityGroupChanged(filterVal: any) {
@@ -108,6 +141,25 @@ export class PatientCardsComponent implements OnInit {
 
   selectedHabitationMemberChanged(filterVal: any) {
     this.selectedPatient.HabitationMemberId = filterVal;
+  }
+
+  selectedPoliclinicChanged(filterVal: any) {
+    this.selectedPatient.PoliclinicId = filterVal;
+  }
+
+  selectedEmploymentTypeChanged(filterVal: any) {
+    this.selectedPatient.EmploymentId = filterVal;
+    this.myform.value.EmploymentId = filterVal;
+  }
+
+  selectedLocalityTypeChanged(filterVal: any) {
+    this.selectedPatient.LocalityTypeId = filterVal;
+    this.myform.value.LocalityTypeId = filterVal;
+  }
+
+  selectedRegionChanged(filterVal: any) {
+    this.selectedPatient.RegionId = filterVal;
+    this.myform.value.RegionId = filterVal;
   }
 
 
@@ -144,14 +196,28 @@ export class PatientCardsComponent implements OnInit {
     this.Policlinic = new FormControl('', [
       Validators.required
     ]);
+    this.LocalityName = new FormControl('');
     this.Email = new FormControl('', [
       Validators.required,
-      Validators.email
+      Validators.pattern('[^ @]*@[^ @]*')
     ]);
-    this.Phone = new FormControl('', [
-      Validators.required
+    this.PhoneNumber = new FormControl('', [
+      Validators.required,
+      Validators.pattern('[0-9]+')
     ]);
     this.BirthDate = new FormControl('', [
+      Validators.required
+    ]);
+    this.Employment = new FormControl('', [
+      Validators.required
+    ]);
+    this.LocalityType = new FormControl('', [
+      Validators.required
+    ]);
+    this.Organization = new FormControl('', [
+      Validators.required
+    ]);
+    this.Region = new FormControl('', [
       Validators.required
     ]);
   }
@@ -160,25 +226,44 @@ export class PatientCardsComponent implements OnInit {
     this.myform = new FormGroup({
       Id: this.Id,
       Email: this.Email,
-      Phone: this.Phone,
+      PhoneNumber: this.PhoneNumber,
       BirthDate: this.BirthDate,
       FirstName: this.FirstName,
       LastName: this.LastName,
       MiddleName: this.MiddleName,
+      LocalityName: this.LocalityName,
       Gender: this.Gender,
       Education: this.Education,
       DisabilityGroup: this.DisabilityGroup,
       InformationSource: this.InformationSource,
       HabitationMember: this.HabitationMember,
-      Policlinic: this.Policlinic
+      Policlinic: this.Policlinic,
+      Employment: this.Employment,
+      LocalityType: this.LocalityType,
+      Region: this.Region,
     });
   }
 
   editPatient() {
+
+    const datePipe = new DatePipe('en-US');
+    this.selectedPatient.FirstName = this.FirstName.value;
+    this.selectedPatient.LastName = this.LastName.value;
+    this.selectedPatient.MiddleName = this.MiddleName.value;
+    this.selectedPatient.PhoneNumber = this.PhoneNumber.value;
+    this.selectedPatient.Email = this.Email.value;
+    this.selectedPatient.LocalityName = this.LocalityName.value;
+
     this.selectedPatient.BirthDate = this.selectedBirthDate.toLocaleDateString();
+    alert('edit' + JSON.stringify(this.selectedPatient));
     this.patientsService.editPatient(this.selectedPatient).subscribe((data: any) => {
       this.modalReference.close();
-      this.patientsService.getAllPatients().subscribe((patientsData: any) => this.patients = patientsData);
+      this.patientsService.getAllPatients().subscribe((patientsData: any) => {
+        this.patients = patientsData;
+        this.patients.forEach(patient => {
+          patient.BirthDate = datePipe.transform(patient.BirthDate, 'dd-MM-yyyy');
+        });
+      });
     });
   }
 
@@ -190,15 +275,20 @@ export class PatientCardsComponent implements OnInit {
       this.MiddleName.setValue(this.selectedPatient.MiddleName);
       this.LastName.setValue(this.selectedPatient.LastName);
       this.Email.setValue(this.selectedPatient.Email);
+      this.LocalityName.setValue(this.selectedPatient.LocalityName);
       this.Gender.setValue(this.selectedPatient.Gender);
       this.Education.setValue(this.selectedPatient.Education);
       this.DisabilityGroup.setValue(this.selectedPatient.DisabilityGroup);
       this.InformationSource.setValue(this.selectedPatient.InformationSource);
       this.HabitationMember.setValue(this.selectedPatient.HabitationMember);
       this.Policlinic.setValue(this.selectedPatient.Policlinic);
-      this.Phone.setValue(this.selectedPatient.PhoneNumber);
+      this.PhoneNumber.setValue(this.selectedPatient.PhoneNumber);
       this.BirthDate.setValue(this.selectedPatient.BirthDate);
       this.selectedBirthDate = new Date(this.selectedPatient.BirthDate);
+      this.BirthDate.setValue(this.selectedPatient.Employment);
+      this.Employment.setValue(this.selectedPatient.Employment);
+      this.LocalityType.setValue(this.selectedPatient.LocalityType);
+      this.Region.setValue(this.selectedPatient.Region);
       this.modalReference = this.modalService.open(content, { size: 'lg' });
     });
   }

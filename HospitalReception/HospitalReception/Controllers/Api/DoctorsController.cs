@@ -34,6 +34,11 @@ namespace HospitalReception.Controllers.Api
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// запрос на выборку всех докторов
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [Route("new")]
         public IHttpActionResult Get(HttpRequestMessage request)
         {
@@ -42,6 +47,24 @@ namespace HospitalReception.Controllers.Api
             return Ok(doctorsViewModel);
         }
 
+        /// <summary>
+        /// запрос на выборку докторов, ассоциированных с заданным департаментом
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("department/{id}")]
+        public IHttpActionResult GetByDepartmentId(int id)
+        {
+            var doctors = _doctorsRepository.GetAll();
+            IEnumerable<DoctorViewModel> doctorsViewModel = Mapper.Map<IEnumerable<Doctor>, IEnumerable<DoctorViewModel>>(doctors);
+            return Ok(doctorsViewModel.Where(d => d.DepartmentId == id));
+        }
+
+        /// <summary>
+        /// запрос доктора по id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("{id}")]
         public IHttpActionResult Get(int id)
         {
@@ -50,6 +73,10 @@ namespace HospitalReception.Controllers.Api
             return Ok(doctorsViewModel);
         }
 
+        /// <summary>
+        /// добавление  доктора
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("add")]
         public async Task<IHttpActionResult> Add()
@@ -97,6 +124,12 @@ namespace HospitalReception.Controllers.Api
             return Ok();
         }
 
+        /// <summary>
+        /// запрос приемных часов доктора
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
         [Route("consultationHours/{id}")]
         public IHttpActionResult GetDoctorConsultationHours(int id)
         {
@@ -105,6 +138,56 @@ namespace HospitalReception.Controllers.Api
             return Ok(consultationHours);
         }
 
+        [Authorize]
+        [Route("consultationHours/{id}/closest/{duration}")]
+        public IHttpActionResult GetClosestDoctorConsultationHours(int id, int duration)
+        {
+            var consultations = _consultationHoursRepository.GetAll().Where(c => c.DoctorId == id).ToList();
+            var appointments = _appointmentsRepository.GetAll().Where(a => a.DoctorId == id).ToList();
+
+            var currentDate = DateTime.Today;
+            ConsultationHours currentConsultation;
+            var slotIsFound = false;
+            var timeSlot = new TimeSlotViewModel();
+
+            for (var day = currentDate; !slotIsFound; day = day.AddDays(1))
+            {
+                currentConsultation = consultations.FirstOrDefault(c => c.DayOfWeek == day.DayOfWeek);
+                if (currentConsultation != null)
+                {
+                    for (var hour = currentConsultation.StartHour; hour <= currentConsultation.EndHour && !slotIsFound; hour++)
+                    {
+                        var maxMinutes = hour == currentConsultation.EndHour ? currentConsultation.EndMinutes : 60;
+                        for (var minute = currentConsultation.StartMinutes;
+                            minute < maxMinutes && !slotIsFound;
+                            minute += duration)
+                        {
+                            var startTime = new DateTime(day.Year, day.Month, day.Day, hour, minute, 0);
+                            var endTime = startTime.AddMinutes(duration);
+                            if (DateTime.Now >= startTime)
+                            {
+                                continue;
+                            }
+                            var reservedAppointmentsCount =
+                                appointments.Count(a => a.EndDate > startTime && a.StartDate < endTime);
+                            if (reservedAppointmentsCount == 0)
+                            {
+                                timeSlot = new TimeSlotViewModel { StartDate = startTime, EndDate = endTime };
+                                slotIsFound = true;
+                            }
+                        }
+                    }
+                }
+            }
+            return Ok(timeSlot);
+        }
+
+        /// <summary>
+        /// запрос назначенных визитов доктора
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
         [Route("appointments/{id}")]
         public IHttpActionResult GetDoctorAppointments(int id)
         {
@@ -113,6 +196,12 @@ namespace HospitalReception.Controllers.Api
             return Ok(appointmentViewModel);
         }
 
+        /// <summary>
+        /// добавление нового визита
+        /// </summary>
+        /// <param name="appointment"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpPost]
         [Route("appointments/add")]
         public IHttpActionResult AddDoctorAppointment(Appointment appointment)
@@ -121,9 +210,16 @@ namespace HospitalReception.Controllers.Api
             appointment.CreationDate = DateTime.Now;
             _appointmentsRepository.Add(appointment);
             _unitOfWork.Save();
-            return Ok();
+            var appointmentViewModel = Mapper.Map<Appointment, AppointmentViewModel>(appointment);
+            return Ok(appointmentViewModel);
         }
 
+        /// <summary>
+        /// редактирование визита
+        /// </summary>
+        /// <param name="appointment"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpPut]
         [Route("appointments/edit")]
         public IHttpActionResult EditAppointment(Appointment appointment)
@@ -134,6 +230,12 @@ namespace HospitalReception.Controllers.Api
             return Ok();
         }
 
+        /// <summary>
+        /// удаление визита
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpDelete]
         [Route("appointments/{id}")]
         public IHttpActionResult DeleteAppointment(int id)
@@ -144,6 +246,7 @@ namespace HospitalReception.Controllers.Api
             return Ok();
         }
 
+        [Authorize]
         [HttpPost]
         [Route("edit/{id}")]
         public async Task<IHttpActionResult> Edit(int id)
@@ -166,7 +269,9 @@ namespace HospitalReception.Controllers.Api
             if (!string.IsNullOrEmpty(localFileName))
             {
                 var imageBytes = File.ReadAllBytes(localFileName);
-                int.TryParse(_doctorsRepository?.GetAll().ToList().LastOrDefault()?.ImageId.ToString(), out imageId);
+                var doctors1 = _doctorsRepository.GetAll().OrderBy(d => d.ImageId);
+                int.TryParse(_doctorsRepository.GetAll().ToList().OrderBy(d => d.ImageId).LastOrDefault()?.ImageId.ToString(),
+                    out imageId);
                 imageId++;
                 imagePath = Path.Combine(targetPath, imageId + ".jpg");
                 File.WriteAllBytes(imagePath, imageBytes);

@@ -4,11 +4,14 @@ using System.Data.Entity.Infrastructure;
 
 namespace HospitalReception.DAL.Infrastructure
 {
+    /// <summary>
+    /// Контест для работы с базами данных
+    /// </summary>
     public interface IHospitalReceptionDbContext
     {
         DbSet<Address> Address { get; set; }
         DbSet<Appointment> Appointments { get; set; }
-        DbSet<Area> Areas { get; set; }
+        DbSet<LocalityType> LocalityTypes { get; set; }
         DbSet<ConsultationHours> ConsultationHours { get; set; }
         DbSet<Department> Depatments { get; set; }
         DbSet<DisabilityGroup> DisabilityGroups { get; set; }
@@ -17,7 +20,6 @@ namespace HospitalReception.DAL.Infrastructure
         DbSet<Gender> Genders { get; set; }
         DbSet<HabitationMember> HabitationMembers { get; set; }
         DbSet<InformationSource> InformationSources { get; set; }
-        DbSet<LocalityType> LocalityTypes { get; set; }
         DbSet<Organization> Organizations { get; set; }
         DbSet<Patient> Patients { get; set; }
         DbSet<Phone> Phones { get; set; }

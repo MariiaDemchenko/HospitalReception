@@ -2,6 +2,9 @@
 
 namespace HospitalReception.DAL.Models
 {
+    /// <summary>
+    /// модель приемных часов доктора
+    /// </summary>
     public class ConsultationHours : IEntityBase
     {
         public int Id { get; set; }

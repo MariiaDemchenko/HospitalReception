@@ -34,4 +34,20 @@ export class EducationTypesService {
   getAllHabitationMembers() {
     return this.http.get(this.rootUrl + '/api/lookups/habitationMembers');
   }
+
+  getAllPoliclinics() {
+    return this.http.get(this.rootUrl + '/api/lookups/policlinics');
+  }
+
+  getAllEmploymentTypes() {
+    return this.http.get(this.rootUrl + '/api/lookups/employmentTypes');
+  }
+
+  getAllLocalityTypes() {
+    return this.http.get(this.rootUrl + '/api/lookups/localityTypes');
+  }
+
+  getAllRegions() {
+    return this.http.get(this.rootUrl + '/api/lookups/regions');
+  }
 }

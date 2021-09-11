@@ -39,93 +39,111 @@ namespace HospitalReception.DAL.Initializer
                 {
                     new Doctor
                     {
-                        FirstName = "Ivanov",
-                        LastName = "Alexander",
+                        FirstName = "Maxim",
+                        LastName = "Ivanov",
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 1,
                         CreationDate = new DateTime(2018, 5, 18),
-                        ImageId = 1
+                        ImageId = 1,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
                     },
                     new Doctor
                     {
-                        FirstName = "Ivanova",
-                        LastName = "Natalia",
+                        FirstName = "Natalia",
+                        LastName = "Ivanova",
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 2,
                         CreationDate = new DateTime(2018, 5, 18),
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
                         ImageId = 2
                     },
                     new Doctor
                     {
-                        FirstName = "Petrov",
-                        LastName = "Ivan",
+                        FirstName = "Ivan",
+                        LastName = "Petrov",
                         Rating = 3.8,
                         CreatedUserId = userId,
                         DepartmentId = 2,
                         CreationDate = new DateTime(2018, 5, 18),
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
                         ImageId = 3
                     },
                     new Doctor
                     {
-                        FirstName = "Alekseev",
-                        LastName = "Ivan",
+                        FirstName = "Ivan",
+                        LastName = "Alekseev",
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 2,
                         CreationDate = new DateTime(2018, 5, 18),
-                        ImageId = 4
+                        ImageId = 4,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
                     },
                     new Doctor
                     {
-                        FirstName = "Alekseev",
-                        LastName = "Petr",
+                        FirstName = "Petr",
+                        LastName = "Alekseev",
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 3,
                         CreationDate = new DateTime(2018, 5, 18),
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
                         ImageId = 5
                     },
                     new Doctor
                     {
-                        FirstName = "Petrov",
-                        LastName = "Alexander",
+                        FirstName = "Alexander",
+                        LastName = "Petrov",
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 4,
                         CreationDate = new DateTime(2018, 5, 18),
-                        ImageId = 6
+                        ImageId = 6,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
                     },
                     new Doctor
                     {
-                        FirstName = "Ivanova",
-                        LastName = "Anna",
+                        FirstName = "Tatiana",
+                        LastName = "Ivanova",
                         Rating = 4.0,
                         CreatedUserId = userId,
                         DepartmentId = 5,
                         CreationDate = new DateTime(2018, 5, 18),
-                        ImageId = 7
+                        ImageId = 7,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
                     },
                     new Doctor
                     {
-                        FirstName = "Alekseeva",
-                        LastName = "Nataila",
+                        FirstName = "Nataila",
+                        LastName = "Alekseeva",
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 3,
                         CreationDate = new DateTime(2018, 5, 18),
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
                         ImageId = 8
                     },
                     new Doctor
                     {
-                        FirstName = "Petrov",
-                        LastName = "Aleksey",
+                        FirstName = "Alexey",
+                        LastName = "Petrov",
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 4,
                         CreationDate = new DateTime(2018, 5, 18),
-                        ImageId = 9
+                        ImageId = 9,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
                     },
                     new Doctor
                     {
@@ -135,17 +153,213 @@ namespace HospitalReception.DAL.Initializer
                         CreatedUserId = userId,
                         DepartmentId = 5,
                         CreationDate = new DateTime(2018, 5, 18),
-                        ImageId = 10
+                        ImageId = 10,
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor"
                     },
                     new Doctor
                     {
-                        FirstName = "A",
-                        LastName = "Alexander",
+                        FirstName = "Alexander",
+                        LastName = "Abramson",
                         Rating = 5.0,
                         CreatedUserId = userId,
                         DepartmentId = 2,
                         CreationDate = new DateTime(2018, 5, 18),
-                        ImageId = 11
+                        ImageId = 11,
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
+                    },
+                    new Doctor
+                    {
+                        FirstName = "John",
+                        LastName = "Robins",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 1,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 12,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Alexander",
+                        LastName = "Smith",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 1,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 13,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Adam",
+                        LastName = "Green",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 2,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
+                        ImageId = 14
+                    },
+                    new Doctor
+                    {
+                        FirstName = "James",
+                        LastName = "Colins",
+                        Rating = 3.8,
+                        CreatedUserId = userId,
+                        DepartmentId = 2,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
+                        ImageId = 15
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Bill",
+                        LastName = "White",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 2,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 16,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Sam",
+                        LastName = "Mitchell",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 3,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
+                        ImageId = 17
+                    },
+                    new Doctor
+                    {
+                        FirstName = "George",
+                        LastName = "Adamson",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 4,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 18,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Anna",
+                        LastName = "Ivanova",
+                        Rating = 4.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 5,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 19,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Nataila",
+                        LastName = "Alekseeva",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 3,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
+                        ImageId = 20
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Aleksey",
+                        LastName = "Petrov",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 4,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 21,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Valery",
+                        LastName = "Grigorov",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 5,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 22,
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor"
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Alexander",
+                        LastName = "Angular",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 2,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 23,
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Anastasia",
+                        LastName = "Alekseeva",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 3,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
+                        ImageId = 24
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Aleksey",
+                        LastName = "Petrov",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 4,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 25,
+                        Education = "Voronezh State University",
+                        Position = "Intern"
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Alexey",
+                        LastName = "Grigorov",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 5,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 26,
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor"
+                    },
+                    new Doctor
+                    {
+                        FirstName = "Alexander",
+                        LastName = "Alexandrov",
+                        Rating = 5.0,
+                        CreatedUserId = userId,
+                        DepartmentId = 2,
+                        CreationDate = new DateTime(2018, 5, 18),
+                        ImageId = 27,
+                        Education = "Voronezh Medical Academy",
+                        Position = "Doctor",
                     }
                 };
 

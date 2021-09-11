@@ -42,7 +42,7 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  OnSubmit(form: NgForm) {
+  OnSubmit() {
     this.userService.userAuthentication(this.myform.value)
       .subscribe((data: any) => {
         localStorage.setItem('userToken', data.access_token);

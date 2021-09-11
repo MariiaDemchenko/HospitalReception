@@ -1,15 +1,27 @@
-<div class=doctor-profile>
+<div class="jumbotron">
+  <h1>Our doctors</h1>
+</div>
+<h3 class="btn-edit-form">
+  Doctor {{ doctor.FirstName}} {{doctor.LastName}}
+</h3>
+<div>
   <img src="http://localhost:55434/api/images/{{doctor.ImageId}}">
   <table class="table table-bordered table-striped doctor-information">
-    <tr>
-      <td>Doctor</td>
-      <td>{{ doctor.FirstName}} {{doctor.LastName}}</td>
-    </tr>
     <tr>
       <td>Department</td>
       <td>{{doctor.Department }}</td>
     </tr>
+    <tr>
+      <td>Position</td>
+      <td>{{doctor.Position }}</td>
+    </tr>
+    <tr>
+        <td>Education</td>
+        <td>{{doctor.Education }}</td>
+      </tr>
   </table>
-  <button type="button" (click)="navigate(doctor.Id)" class="btn btn-menu btn-outline-primary">
+  <button type="button" (click)="navigate(doctor.Id)" class="btn btn-menu btn-outline-primary" *ngIf="userClaims">
     <i class="fa fa-edit"></i>EDIT</button>
+  <button type="button" (click)="navigateToAppointment(doctor.Id)" class="btn btn-menu btn-outline-primary" *ngIf="userClaims">
+    <i class="fa fa-edit"></i>NEW APPOINTMENT</button>
 </div>

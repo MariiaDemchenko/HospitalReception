@@ -14,12 +14,12 @@ import { PatientCardsComponent } from './app/patient-cards/patient-cards.compone
 import { PatientsComponent } from './app/patients/patients.component';
 import { PatientEditCardComponent } from './app/patient-edit-card/patient-edit-card.component';
 import { DoctorsScheduleComponent } from './app/doctors-schedule/doctors-schedule.component';
+import { PatientProfileComponent } from './app/patient-profile/patient-profile.component';
 
 export const routerConfig: Routes = [
     {
         path: 'home',
         component: HomeComponent,
-        canActivate: [AuthGuard],
         children: [
             {
                 path: '',
@@ -27,7 +27,8 @@ export const routerConfig: Routes = [
             },
             {
                 path: 'add',
-                component: DoctorProfileEditComponent
+                component: DoctorProfileEditComponent,
+                canActivate: [AuthGuard]
             },
             {
                 path: ':id',
@@ -35,8 +36,14 @@ export const routerConfig: Routes = [
             },
             {
                 path: 'edit/:id',
-                component: DoctorProfileEditComponent
+                component: DoctorProfileEditComponent,
+                canActivate: [AuthGuard],
             },
+            {
+                path: '',
+                outlet: 'sidemenu',
+                component: SideMenuComponent
+            }
         ]
     },
     {
@@ -45,7 +52,8 @@ export const routerConfig: Routes = [
     },
     {
         path: 'doctors-schedule/:id',
-        component: DoctorsScheduleComponent
+        component: DoctorsScheduleComponent,
+        canActivate: [AuthGuard],
     },
     {
         path: 'register',
@@ -70,12 +78,22 @@ export const routerConfig: Routes = [
             {
                 path: ':id',
                 component: DoctorProfileComponent
+            },
+            {
+                path: 'department/:departmentId',
+                component: DoctorProfilesComponent
+            },
+            {
+                path: '',
+                outlet: 'sidemenu',
+                component: SideMenuComponent
             }
         ]
     },
     {
         path: 'patients',
         component: PatientsComponent,
+        canActivate: [AuthGuard],
         children: [
             {
                 path: '',
@@ -85,6 +103,10 @@ export const routerConfig: Routes = [
                 path: 'add',
                 component: PatientEditCardComponent
             },
+            {
+                path: ':id',
+                component: PatientProfileComponent
+            }
         ]
     },
     {

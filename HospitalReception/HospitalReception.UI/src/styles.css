@@ -1,7 +1,9 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 div.jumbotron{
     margin: 0px;
     padding: 2rem;
-    background-color: blue;
+    background-color: #3498db;
     color: #fff;
 }
 
@@ -47,18 +49,17 @@ a {
     margin-top: 10px;
 }
 
+
+
 .album, .photo {
-    width: 30%;
+    width: 100%;
     margin: 10px auto;
     text-align: center;
+    padding: 15px;
 }
 
     .photo:hover .photo-name {
         color: #3498db
-    }
-
-    .photo:hover {
-        background: #3498db
     }
 
     .album:hover .album-name {
@@ -69,17 +70,22 @@ a {
         background: #3498db
     }
 
+    .photo:hover {
+        background: #5cb85c
+    }
+
 .photo-frame-bg {
     height: 250px;
     background: #eee;
 }
 
 .photo-frame {
-    height: 300px;
+    height: 250px;
+    background: #eee;
 }
 
 .album-frame {
-    height: 250px;
+    height: 220px;
     background: #eee;
 }
 
@@ -197,7 +203,6 @@ i {
 
     .selected-icon.edit {
         cursor: pointer;
-        float: right;
         padding: 0 10px;
         visibility: hidden;
     }
@@ -216,9 +221,8 @@ i {
     visibility: visible;
 }
 
-.selectable .selected-icon.edit {
+.selected-icon.edit {
     cursor: pointer;
-    float: right;
     padding: 0 10px;
     visibility: visible;
 }
@@ -260,7 +264,7 @@ i {
     padding: 0 5px;
 }
 
-.selected-icon:hover.select i {
+.selected-icon:hover.select {
     color: #007bff
 }
 
@@ -268,8 +272,12 @@ i {
     color: #dc3545
 }
 
-.selected-icon:hover.edit i {
-    color: #ffc107
+.selected-icon:hover.edit {
+    color: #3498db
+}
+
+.selected-icon:hover.edit i{
+    color: #3498db
 }
 
 .markedToDelete.selected-icon.remove i {
@@ -381,6 +389,11 @@ body {
 .doctor-profile {
 
 }
+ 
+/* .table-bordered, .table-bordered th {
+    border: 2px solid gray;
+    border-radius: 4px;
+} */
 
 .panel-body h4 {
     color: #a55400;
@@ -607,6 +620,28 @@ ul.pagination > li
     width: 34px;
 }
 
+.dhx_cal_event.employee_event div{
+    background-color: #FF9933 !important;
+    color: white !important;
+    font-size: 10pt;
+}
+
 .red {
     color: red;
 }
+
+.dhx_cal_event .dhx_title{
+    padding-top: 0 !important;
+    font-size: 10pt !important;
+}
+
+.dhx_cal_event .dhx_body{
+    padding-top: 0 !important;
+    font-size: 7pt !important;
+}
+
+.ng-select .ng-select-container{
+    width: 295px !important;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

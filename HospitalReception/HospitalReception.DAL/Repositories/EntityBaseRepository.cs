@@ -80,5 +80,18 @@ namespace HospitalReception.DAL.Repositories
             DbEntityEntry dbEntityEntry = DbContext.Entry<T>(entity);
             dbEntityEntry.State = EntityState.Deleted;
         }
+
+        public virtual double Predict(Array entity)
+        {
+            //DbEntityEntry dbEntityEntry = DbContext.Entry<T>(entity);
+
+            //var patientToEdit = _patientsRepository.GetSingle(patient.Id);
+
+
+            //var model = Keras.Models.Model.LoadModel("C://Users/mdemchenko/ML/Atherosclerosis/sens_06");
+            //var output = model.Predict(new Numpy.NDarray(entity));
+
+            return (double)1;
+        }
     }
 }

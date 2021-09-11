@@ -11,14 +11,14 @@ namespace HospitalReception
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            //ConfigureAuth(app);
             app.UseCors(CorsOptions.AllowAll);
 
             OAuthAuthorizationServerOptions option = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/token"),
                 Provider = new ApplicationOAuthProvider(),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 AllowInsecureHttp = true
             };
             app.UseOAuthAuthorizationServer(option);

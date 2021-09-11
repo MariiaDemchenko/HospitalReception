@@ -1,6 +1,6 @@
 ﻿namespace HospitalReception.DAL.Models
 {
-    public class Area : IEntityBase
+    public class LocalityType : IEntityBase
     {
         public int Id { get; set; }
         public string NameLocal { get; set; }

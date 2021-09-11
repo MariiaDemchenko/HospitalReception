@@ -4,6 +4,9 @@ using System;
 
 namespace HospitalReception.ViewModels
 {
+    /// <summary>
+    /// модель представления визитов к врачу
+    /// </summary>
     public class AppointmentViewModel
     {
         [JsonProperty(PropertyName = "id")]

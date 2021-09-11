@@ -1,47 +1,93 @@
-<form class="form-horizontal" novalidate [formGroup]="myform" (ngSubmit)="onUpload()" [ngClass]="{
+<form class="form-horizontal" novalidate [formGroup]="myform" [ngClass]="{
   'has-danger': myform.errors,
   'has-success': myform.valid
 }">
+  <div class="btn-edit-form alert alert-info" role="alert">
+    Add a new patient
+  </div>
   <div>
-    <div class="col-5">
-      <div class="row input-item">
-        <div class="form-group" [ngClass]="{
+    <div>
+      <div class="form-group" [ngClass]="{
         'has-danger': FirstName.invalid && (FirstName.dirty || FirstName.touched),
         'has-success': FirstName.valid && (FirstName.dirty || FirstName.touched)
    }">
-          <div class="form-control-feedback" *ngIf="FirstName.errors && (FirstName.dirty || FirstName.touched)">
-            <p *ngIf="FirstName.errors && FirstName.errors.required">First name is required</p>
-          </div>
-          <div class="col-6">First Name</div>
-          <input class="form-control" formControlName="FirstName" required>
+        <label>First Name</label>
+        <input class="form-control" formControlName="FirstName">
+        <div class="form-control-feedback" *ngIf="FirstName.errors && (FirstName.dirty || FirstName.touched)">
+          <p *ngIf="FirstName.errors && FirstName.errors.required">First name is required</p>
         </div>
       </div>
-      <div class="row input-item">
-        <div class="form-group" [ngClass]="{
-                      'has-danger': Email.invalid && (Email.dirty || Email.touched),
-                      'has-success': Email.valid && (Email.dirty || Email.touched)
-                 }">
-          <label>Email</label>
-          <input type="email" class="form-control" formControlName="Email" required>
-          <div class="form-control-feedback" *ngIf="Email.errors && (Email.dirty || Email.touched)">
-            <p *ngIf="Email.errors && Email.errors.required">Email is required</p>
-          </div>
+      <div class="form-group" [ngClass]="{
+        'has-danger': LastName.invalid && (LastName.dirty || LastName.touched),
+        'has-success': LastName.valid && (LastName.dirty || LastName.touched)
+   }">
+        <label>Last Name</label>
+        <input class="form-control" formControlName="LastName">
+        <div class="form-control-feedback" *ngIf="LastName.errors && (LastName.dirty || LastName.touched)">
+          <p *ngIf="LastName.errors && LastName.errors.required">Last name is required</p>
         </div>
       </div>
-      <form class="form-inline">
-        <div class="form-group">
-          <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="d2" #c2="ngModel" [(ngModel)]="selectedBirthDate" ngbDatepicker
-              #d2="ngbDatepicker">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
-                <i class="fa fa-edit"></i>
-              </button>
+      <div class="form-group" [ngClass]="{
+        'has-danger': MiddleName.invalid && (MiddleName.dirty || MiddleName.touched),
+        'has-success': MiddleName.valid && (MiddleName.dirty || MiddleName.touched)
+   }">
+        <label>Middle Name</label>
+        <input class="form-control" formControlName="MiddleName">
+        <div class="form-control-feedback" *ngIf="MiddleName.errors && (MiddleName.dirty || MiddleName.touched)">
+          <p *ngIf="MiddleName.errors && MiddleName.errors.required">Middle name is required</p>
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{
+        'has-danger': Email.invalid && (Email.dirty || Email.touched),
+        'has-success': Email.valid && (Email.dirty || Email.touched)
+   }">
+        <label>Email</label>
+        <input type="email" class="form-control" formControlName="Email">
+        <div class="form-control-feedback" *ngIf="Email.errors && (Email.dirty || Email.touched)">
+          <p *ngIf="Email.errors && Email.errors.required">Email is required</p>
+          <p *ngIf="Email.errors && Email.errors.pattern">The email address must contain at least the @ character</p>
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{
+        'has-danger': PhoneNumber.invalid && (PhoneNumber.dirty || PhoneNumber.touched),
+        'has-success': PhoneNumber.valid && (PhoneNumber.dirty || PhoneNumber.touched)
+   }">
+        <label>Phone</label>
+        <input class="form-control" formControlName="PhoneNumber">
+        <div class="form-control-feedback" *ngIf="PhoneNumber.errors && (PhoneNumber.dirty || PhoneNumber.touched)">
+          <p *ngIf="PhoneNumber.errors && PhoneNumber.errors.required">Phone is required</p>
+          <p *ngIf="PhoneNumber.errors && PhoneNumber.errors.pattern">The phone number must contain only numbers</p>
+        </div>
+      </div>
+      <div>
+        <label>Birth Day</label>
+        <form class="form-inline">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="d2" #c2="ngModel" [(ngModel)]="selectedBirthDate" ngbDatepicker
+                #d2="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+                  <i class="fa fa-calendar-alt"></i>
+                </button>
+              </div>
             </div>
           </div>
+        </form>
+      </div>
+      <div class="form-group" [ngClass]="{
+        'has-danger': PhoneNumber.invalid && (PhoneNumber.dirty || PhoneNumber.touched),
+        'has-success': PhoneNumber.valid && (PhoneNumber.dirty || PhoneNumber.touched)
+   }">
+        <label>Phone</label>
+        <input class="form-control" formControlName="PhoneNumber">
+        <div class="form-control-feedback" *ngIf="PhoneNumber.errors && (PhoneNumber.dirty || PhoneNumber.touched)">
+          <p *ngIf="PhoneNumber.errors && PhoneNumber.errors.required">Phone is required</p>
+          <p *ngIf="PhoneNumber.errors && PhoneNumber.errors.pattern">The phone number must contain only numbers</p>
         </div>
-      </form>
+      </div>
+
     </div>
   </div>
-  <button type="button" (click)="addPatient()" class="btn btn-outline-primary btn-menu">SAVE CHANGES</button>
+  <button type="button" (click)="addPatient()" class="btn btn-edit-form btn-outline-primary" [disabled]="!myform.valid">SAVE CHANGES</button>
 </form>

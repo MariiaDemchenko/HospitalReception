@@ -1,5 +1,8 @@
 ﻿namespace HospitalReception.ViewModels
 {
+    /// <summary>
+    /// модель представления приемных часов врача
+    /// </summary>
     public class ConsultationHoursViewModel
     {
         public int StartHour { get; set; }

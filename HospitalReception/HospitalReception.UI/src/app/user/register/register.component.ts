@@ -1,6 +1,7 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { NgForm, FormGroupDirective, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../shared/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
   UserName: FormControl;
   Errors: string;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
@@ -48,9 +49,9 @@ export class RegisterComponent implements OnInit {
 
   OnSubmit() {
     // this.userService.registerUser(this.myform.value)
-
     this.userService.registerUser(this.myform.value)
-       .subscribe((data: any) => {
-         if (data.Succeeded) { this.myform.reset(); } else {  this.myform.setErrors(data.Errors); } });
+      .subscribe((data: any) => {
+        if (data.Succeeded) { this.router.navigate(['/login']); } else { this.myform.setErrors(data.Errors); }
+      });
   }
 }

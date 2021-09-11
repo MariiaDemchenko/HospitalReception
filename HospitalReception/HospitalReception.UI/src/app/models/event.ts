@@ -6,4 +6,5 @@ export class Event {
     patientId: string;
     patientFullName: string;
     doctorId: string;
+    color: string;
 }

@@ -6,4 +6,7 @@ export class Doctor {
     DepartmentId: string;
     Department: string;
     ImageId: string;
+    Position: string;
+    Education: string;
+    FullName: string;
 }

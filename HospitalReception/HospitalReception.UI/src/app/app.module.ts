@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './user/register/register.component';
 import { UserService } from './shared/user.service';
+import { PagerService } from './shared/pager/pager.service';
 import { DoctorsService } from './shared/doctors/doctors.service';
 import { ImagesService } from './shared/images/images.service';
 import { DepartmentsService } from './shared/departments/departments.service';
@@ -30,8 +31,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PatientEditCardComponent } from './patient-edit-card/patient-edit-card.component';
 import { DoctorsScheduleComponent } from './doctors-schedule/doctors-schedule.component';
 import { SchedulerComponent } from './doctors-schedule/scheduler.component';
-import { HttpModule } from '@angular/http';
+// import { HttpClientModule } from '@angular/http';
 import { EventService } from './services/event.service';
+import { AlertsModule } from 'angular-alert-module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 @NgModule({
   declarations: [
@@ -51,19 +61,28 @@ import { EventService } from './services/event.service';
     PatientsComponent,
     PatientEditCardComponent,
     DoctorsScheduleComponent,
-    SchedulerComponent
+    SchedulerComponent,
+    PatientProfileComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routerConfig),
-    NgbModule.forRoot()
+    NgbModule,
+    AlertsModule.forRoot(),
+    NgSelectModule,
+    BrowserAnimationsModule,
+    NgbModule,
+    MatTableModule,
+    MatTabsModule,
+    MDBBootstrapModule.forRoot(),
+    MatRadioModule
   ],
   // tslint:disable-next-line:max-line-length
-  providers: [UserService, DoctorsService, ImagesService, DepartmentsService, EventService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  providers: [UserService, DoctorsService, ImagesService, DepartmentsService, EventService, AuthGuard, PagerService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,  multi: true }
   ],
   bootstrap: [AppComponent]
 })

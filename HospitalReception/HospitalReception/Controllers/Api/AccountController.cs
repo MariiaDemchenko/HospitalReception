@@ -11,7 +11,7 @@ namespace HospitalReception.Controllers.Api
     [RoutePrefix("api/users")]
     public class AccountController : ApiController
     {
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         [Route("register")]
         public IdentityResult Register(RegisterViewModel model)
         {
@@ -33,13 +33,6 @@ namespace HospitalReception.Controllers.Api
         public LoginViewModel GetUserClaims()
         {
             var identityClaims = (ClaimsIdentity)User.Identity;
-
-            var x = new LoginViewModel
-            {
-                UserName = identityClaims.FindFirst("Username").Value,
-                Email = identityClaims.FindFirst("Email").Value,
-                LoggedOn = identityClaims.FindFirst("LoggedOn").Value
-            };
 
             return new LoginViewModel
             {

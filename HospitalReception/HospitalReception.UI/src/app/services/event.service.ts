@@ -10,6 +10,7 @@ export class EventService {
   constructor(private http: Http) { }
 
   get(doctorId: number): Promise<Event[]> {
+    // alert('GET APPOINTMENTS');
     return this.http.get(this.rootUrl + '/api/doctors/appointments/' + doctorId)
       .toPromise()
       .then(ExtractData)

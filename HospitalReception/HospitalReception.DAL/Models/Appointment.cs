@@ -4,12 +4,15 @@ using Newtonsoft.Json;
 
 namespace HospitalReception.DAL.Models
 {
+    /// <summary>
+    /// модель визитов к доктору
+    /// </summary>
     public class Appointment : IEntityBase
     {
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
         [JsonProperty(PropertyName = "patientId")]
-        public int PatientId { get; set; }
+        public int? PatientId { get; set; }
         [JsonProperty(PropertyName = "doctorId")]
         public int DoctorId { get; set; }
         [JsonProperty(PropertyName = "text")]

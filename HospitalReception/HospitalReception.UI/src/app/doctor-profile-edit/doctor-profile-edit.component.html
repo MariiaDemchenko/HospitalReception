@@ -1,8 +1,20 @@
+<div class="jumbotron">
+  <h1>Our doctors</h1>
+</div>
+
+<div *ngIf="doctor.Id != undefined" class="btn-edit-form alert alert-success" role="alert">
+  Edit a doctor profile
+</div>
+
+<div *ngIf="doctor.Id == undefined" class="btn-edit-form alert alert-info" role="alert">
+  Add a new doctor profile
+</div>
+
 <form class="form-horizontal" novalidate [formGroup]="myform" (ngSubmit)="onUpload()" [ngClass]="{
       'has-danger': myform.errors,
       'has-success': myform.valid
  }">
-  <div class="doctor-profile">
+  <div>
     <img [src]="tmpPath">
     <div class="col-5">
       <div class="row">
@@ -12,25 +24,25 @@
         <input type="hidden" class="form-control" value={{doctor.Id}}>
       </div>
       <div class="row">
-        <div class="form-group" [ngClass]="{
+        <div [ngClass]="{
             'has-danger': FirstName.invalid && (FirstName.dirty || FirstName.touched),
             'has-success': FirstName.valid && (FirstName.dirty || FirstName.touched)
        }">
+          <label>First Name</label>
+          <input class="form-control" formControlName="FirstName" required>
           <div class="form-control-feedback" *ngIf="FirstName.errors && (FirstName.dirty || FirstName.touched)">
             <p *ngIf="FirstName.errors && FirstName.errors.required">First name is required</p>
           </div>
-          <label>First Name</label>
-          <input class="form-control" formControlName="FirstName" required>
         </div>
-        <div class="form-group" [ngClass]="{
+        <div [ngClass]="{
           'has-danger': LastName.invalid && (LastName.dirty || LastName.touched),
           'has-success': LastName.valid && (LastName.dirty || LastName.touched)
      }">
+          <label>Last Name </label>
+          <input class="form-control" formControlName="LastName" required>
           <div class="form-control-feedback" *ngIf="LastName.errors && (LastName.dirty || LastName.touched)">
             <p *ngIf="LastName.errors && LastName.errors.required">Last name is required</p>
           </div>
-          <label>Last Name </label>
-          <input class="form-control" formControlName="LastName" required>
         </div>
 
         <div>
@@ -44,11 +56,9 @@
         </div>
 
         <input style="display: none" #fileInput type="file" (change)="onFileSelected($event)">
-
-
       </div>
       <div class="row">
-        <button type="button" (click)="onUpload()" class="btn btn-outline-primary btn-edit-form">SAVE CHANGES</button>
+        <button [disabled]="!myform.valid" type="button" (click)="onUpload()" class="btn btn-outline-primary btn-edit-form">SAVE CHANGES</button>
       </div>
     </div>
   </div>

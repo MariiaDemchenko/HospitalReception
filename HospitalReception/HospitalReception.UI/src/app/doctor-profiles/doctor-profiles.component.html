@@ -1,13 +1,36 @@
 <div class="jumbotron">
     <h1>Our doctors</h1>
-    <p>This is a list of our hospital doctors
-    </p>
 </div>
-<button class="btn btn-edit-form btn-outline-success" (click)="addDoctor()">ADD DOCTOR</button>
+<button class="btn btn-edit-form btn-outline-success" (click)="addDoctor()" *ngIf="userClaims">ADD DOCTOR</button>
+
 <div class="row">
-    <a *ngFor="let doctor of doctors" class="photo img-thumbnail" href='/doctors/{{doctor.Id}}'>
-        <h4 class='doctor-name'>{{ doctor.FirstName}} {{doctor.LastName}}</h4>
-        <h5>{{ doctor.Department }}</h5>
-        <img src="http://localhost:55434/api/images/{{doctor.ImageId}}">
-    </a>
+    <div *ngFor="let item of pagedItems" class="col-4 text-center">
+        <div class="album img-thumbnail">
+            <a class="album-frame d-flex" href='/doctors/{{item.Id}}'>
+                <img src="http://localhost:55434/api/images/{{item.ImageId}}" class="image">
+            </a>
+            <a class="album-footer">
+                <h4 class='doctor-name'>{{item.FirstName}} {{item.LastName}}</h4>
+                <h5>{{item.Department }}</h5>
+            </a>
+        </div>
+    </div>
 </div>
+<ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+        <a class="page-link" (click)="setPage(1)">First</a>
+    </li>
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+        <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+    </li>
+    <li *ngFor="let page of pager.pages" class="page-item" [ngClass]="{active:pager.currentPage === page}">
+        <a class="page-link" (click)="setPage(page)">{{page}}</a>
+    </li>
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+    </li>
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+    </li>
+</ul>
+<router-outlet name="sidemenu"></router-outlet>

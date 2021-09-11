@@ -1,4 +1,5 @@
 ﻿using HospitalReception.DAL.Models;
+using Numpy;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -15,5 +16,7 @@ namespace HomeCinema.Data.Repositories
         void Add(T entity);
         void Delete(T entity);
         void Edit(T entity);
+
+        double Predict(Array entity);
     }
 }

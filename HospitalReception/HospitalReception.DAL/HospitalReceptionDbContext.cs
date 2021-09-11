@@ -1,7 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Net.Mime;
-using HospitalReception.DAL.Infrastructure;
-using HospitalReception.DAL.Initializer;
 using HospitalReception.DAL.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -17,7 +14,7 @@ namespace HospitalReception.DAL
 
         public DbSet<Address> Address { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Area> Areas { get; set; }
+        public DbSet<LocalityType> LocalityTypes { get; set; }
         public DbSet<ConsultationHours> ConsultationHours { get; set; }
         public DbSet<Department> Depatments { get; set; }
         public DbSet<DisabilityGroup> DisabilityGroups { get; set; }
@@ -26,16 +23,13 @@ namespace HospitalReception.DAL
         public DbSet<Gender> Genders { get; set; }
         public DbSet<HabitationMember> HabitationMembers { get; set; }
         public DbSet<InformationSource> InformationSources { get; set; }
-        public DbSet<LocalityType> LocalityTypes { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Region> Region { get; set; }
 
         public static HospitalReceptionDbContext Create()
-        {
-            
-            
+        {    
             return new HospitalReceptionDbContext();
         }
     }

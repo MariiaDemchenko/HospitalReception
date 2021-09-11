@@ -8,8 +8,6 @@ namespace HospitalReception.DAL.Models
         public int Id { get; set; }
         [ForeignKey("Region")]
         public int RegionId { get; set; }
-        [ForeignKey("Area")]
-        public int AreaId { get; set; }
         public string PostCode { get; set; }
         [ForeignKey("LocalityType")]
         public int LocalityTypeId { get; set; }
@@ -18,7 +16,6 @@ namespace HospitalReception.DAL.Models
         public DateTime UpdatedAt { get; set; }
 
         public virtual Region Region { get; set; }
-        public virtual Area Area { get; set; }
         public virtual LocalityType LocalityType { get; set; }
     }
 }

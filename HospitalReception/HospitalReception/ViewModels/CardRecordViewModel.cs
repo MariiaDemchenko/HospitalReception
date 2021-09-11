@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace HospitalReception.ViewModels
 {
-    public class CardRecord
+    /// <summary>
+    /// модель представления медицинской карты пациента
+    /// </summary>
+    public class CardRecordViewModel
     {
         public string Doctor { get; set; }
         public int DoctorId { get; set; }

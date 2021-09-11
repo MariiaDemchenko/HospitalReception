@@ -12,13 +12,10 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="about">About</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" routerLink="doctors-schedule/1">Doctors' schedule</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="courses">Doctors</a>
+        <a class="nav-link" routerLink="doctors">Doctors</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="patients">Patients</a>
@@ -26,15 +23,13 @@
     </ul>
     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
       <li class="nav-item" *ngIf="userClaims">
-        <a class="nav-link">{{userClaims.UserName}} </a>
+          <ng-select [items]="patients" (change)="selectedPatientChanged()" bindLabel="FullName" bindValue="Id" [(ngModel)]="selectedPatientId">
+            </ng-select>
       </li>
-      <li class="nav-item">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      <li class="nav-item" *ngIf="userClaims">
+        <a class="nav-link" routerLink="login">Hello, {{userClaims.UserName}}!</a>
       </li>
-      <li class="nav-item">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!userClaims">
         <a class="nav-link" routerLink="register">Register</a>
       </li>
       <li class="nav-item" *ngIf="userClaims">
@@ -46,4 +41,5 @@
     </ul>
   </div>
 </nav>
-<router-outlet></router-outlet>
+<router-outlet>
+</router-outlet>

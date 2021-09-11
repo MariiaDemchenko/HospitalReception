@@ -18,7 +18,7 @@
             <label>User name</label>
             <input class="form-control" formControlName="UserName" required>
             <div class="form-control-feedback" *ngIf="UserName.errors && (UserName.dirty || UserName.touched)">
-                <p *ngIf="UserName.errors && UserName.errors.required">User name is required</p>               
+                <p *ngIf="UserName.errors && UserName.errors.required">User name is required</p>
             </div>
         </div>
 
@@ -30,8 +30,7 @@
             <input type="email" class="form-control" formControlName="Email" required>
             <div class="form-control-feedback" *ngIf="Email.errors && (Email.dirty || Email.touched)">
                 <p *ngIf="Email.errors && Email.errors.required">Email is required</p>
-                <p *ngIf="Password.errors && Password.errors.pattern">The email address must contain at least the @ character</p>
-
+                <p *ngIf="Email.errors && Email.errors.pattern">The email address must contain at least the @ character</p>
             </div>
         </div>
 

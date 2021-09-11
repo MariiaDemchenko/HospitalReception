@@ -4,6 +4,7 @@ import { DoctorsService } from '../shared/doctors/doctors.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { Doctor } from '../shared/doctors/doctor.model';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-course-category',
@@ -16,15 +17,20 @@ export class DoctorProfileComponent implements OnInit {
   private sub: any;
   doctor: Doctor;
   selectedFile: File = null;
-  constructor(private router: Router, private route: ActivatedRoute, private doctorsService: DoctorsService, private http: HttpClient) { }
+  userClaims: any;
+  constructor(private router: Router, private route: ActivatedRoute, private doctorsService: DoctorsService,
+    private http: HttpClient, private userService: UserService) { }
 
   onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];
   }
 
   navigate(id: string) {
-    const path = 'edit';
     this.router.navigate(['/home/edit', id]);
+  }
+
+  navigateToAppointment(id: string) {
+    this.router.navigate(['/doctors-schedule', id]);
   }
 
   onUpload() {
@@ -37,6 +43,10 @@ export class DoctorProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.getUserClaims().subscribe((data: any) => {
+      this.userService.authChanged.emit(data);
+      this.userClaims = data;
+    });
 
     this.route.params.subscribe(params => {
       this.id = params['id'];

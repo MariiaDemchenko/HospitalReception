@@ -1,12 +1,12 @@
-﻿using System.Data.Entity;
-using System.Reflection;
-using System.Web.Http;
-using Autofac;
+﻿using Autofac;
+using Autofac.Integration.WebApi;
 using HomeCinema.Data.Repositories;
 using HospitalReception.DAL;
 using HospitalReception.DAL.Infrastructure;
 using HospitalReception.DAL.Repositories;
-using Autofac.Integration.WebApi;
+using System.Data.Entity;
+using System.Reflection;
+using System.Web.Http;
 
 namespace HospitalReception
 {
@@ -16,10 +16,7 @@ namespace HospitalReception
         {
             var config = GlobalConfiguration.Configuration;
             var builder = new ContainerBuilder();
-            //var config = GlobalConfiguration.Configuration;
-            //builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            // EF HomeCinemaContext
             builder.RegisterType<HospitalReceptionDbContext>()
                 .As<DbContext>()
                 .InstancePerRequest();
@@ -39,14 +36,6 @@ namespace HospitalReception
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-            //builder.RegisterType<PhotoManagerDbContext>().As<IPhotoManagerDbContext>().InstancePerRequest();
-            //builder.RegisterType<AlbumRepository>().As<IAlbumRepository>();
-            //builder.RegisterType<PhotoRepository>().As<IPhotoRepository>();
-            //builder.RegisterType<UserRepository>().As<IUserRepository>();
-            //builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-
-            //var container = builder.Build();
-            //config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
     }
 }

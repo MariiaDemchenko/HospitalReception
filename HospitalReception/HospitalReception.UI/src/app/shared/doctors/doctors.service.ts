@@ -15,8 +15,12 @@ export class DoctorsService {
   readonly rootUrl = 'http://localhost:55434';
   constructor(private http: HttpClient) { }
 
-  getAllDoctors(): Observable<any> {
-    return this.http.get(this.rootUrl + '/api/doctors/new');
+  getAllDoctors() {
+    return this.http.get(this.rootUrl + '/api/doctors/new', );
+  }
+
+  getDoctorsByDepartmentId(id: number) {
+    return this.http.get(this.rootUrl + '/api/doctors/department/' + id, );
   }
 
   getDoctorById(id: number) {
